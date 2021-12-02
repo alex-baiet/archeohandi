@@ -33,6 +33,7 @@ nbproject/
 /fuel/packages/oil/
 /fuel/packages/orm/
 /fuel/packages/parser/
+/ignore/
 
 # dynamically generated files
 /fuel/app/logs/*/*/*
