@@ -7,7 +7,7 @@ use Fuel\Core\Response;
 use Fuel\Core\View;
 
 class Controller_Operations extends Controller_Template{
-	//L'action index sert pour la page index de opération qui affiche les différents opération
+	// Page d'affichages de toutes les opérations
 	public function action_index(){
 		//Permet de récupérer toutes les informations pour le système de filtre
 		$query = DB::query('SELECT id_site FROM operations ORDER BY id_site ASC');
