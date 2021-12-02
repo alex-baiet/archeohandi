@@ -1,3 +1,10 @@
+# Nouveau .gitignore
+
+workspace.code-workspace
+
+
+# Ancien .gitignore
+
 # temp files from editors
 *~
 *.bak
@@ -11,8 +18,8 @@ build
 nbproject/
 
 # hidden files created by Windows
-Thumbs.db
-desktop.ini
+#Thumbs.db
+#desktop.ini
 
 # the composer package lock file and install directory
 /composer.lock
