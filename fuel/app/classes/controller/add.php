@@ -47,28 +47,7 @@ class Controller_Add extends Controller_Template {
 		$all_organisme = $query->execute();
 		$all_organisme = $all_organisme->_results;
 
-		//Fonction qui permet de vérifier si ce qui est envoyé correspond à des caractères valides
-		function verif_alpha($str, $type) {
-			//Enlève les espaces, tabulations, etc au début et fin de la chaine de caractère
-			trim($str);
-			//Enlève les espaces, tabulations, etc au début et fin de la chaine de caractère
-			strip_tags($str);
 
-			if ($type == "alpha") : preg_match('/([^A-Za-zàáâãäåçèéêëìíîïðòóôõöùúûüýÿ ])/', $str, $result);
-			endif;
-
-			if ($type == "alphatout") : preg_match('/([^A-Za-z0-9àáâãäåçèéêëìíîïðòóôõöùúûüýÿ ])/', $str, $result);
-			endif;
-
-			if ($type == "alphanum") : preg_match('/([^A-Za-z0-9,-;()\/ ])/', $str, $result);
-			endif;
-
-			if (!empty($result)) {
-				return false;
-			} else {
-				return $str;
-			}
-		}
 
 		if (Input::post("confirm_operation")) {
 			//Initialisation des variables 
@@ -77,7 +56,9 @@ class Controller_Add extends Controller_Template {
 			//Pour chaque champs, nous vérifions si elle est pas vide, quelle corresponde au caractère valide et si tout est correct la variable valeurs ajoute la valeur dans sa variable. Et en cas d'erreur, la variable erreurs ajoute l'erreur du problème
 
 			//Pour les différents select, nous vérifions que les différentes entités existent dans la BDD
-			if (!empty(Input::post('adresse'))) : if (verif_alpha(Input::post('adresse'), 'alphatout') != false) : $adresse = verif_alpha(Input::post('adresse'), 'alphatout');
+			if (!empty(Input::post('adresse'))) :
+				if (Helper::verif_alpha(Input::post('adresse'), 'alphatout') != false) :
+					$adresse = Helper::verif_alpha(Input::post('adresse'), 'alphatout');
 					$valeurs .= '&adresse=' . $adresse;
 				else : $erreurs .= "&erreur_alpha_adresse";
 				endif;
@@ -85,7 +66,8 @@ class Controller_Add extends Controller_Template {
 			endif;
 
 			if (!empty(Input::post('annee'))) :
-				if (is_numeric(Input::post('annee'))) : $valeurs .= '&annee=' . Input::post('annee');
+				if (is_numeric(Input::post('annee'))) :
+					$valeurs .= '&annee=' . Input::post('annee');
 					$annee = Input::post('annee');
 				else : $erreurs .= "&erreur_annee";
 				endif;
@@ -148,32 +130,32 @@ class Controller_Add extends Controller_Template {
 			if (!empty(Input::post('a_revoir'))) : $a_revoir = trim(strip_tags(Input::post('a_revoir')));
 				$valeurs .= '&a_revoir=' . $a_revoir;
 			endif;
-			if (!empty(Input::post('EA'))) : if (verif_alpha(Input::post('EA'), 'alphanum') != false) : $EA = verif_alpha(Input::post('EA'), 'alphanum');
+			if (!empty(Input::post('EA'))) : if (Helper::verif_alpha(Input::post('EA'), 'alphanum') != false) : $EA = Helper::verif_alpha(Input::post('EA'), 'alphanum');
 					$valeurs .= '&EA=' . $EA;
 				else : $erreurs .= "&erreur_alpha_ea";
 				endif;
 			endif;
-			if (!empty(Input::post('OA'))) : if (verif_alpha(Input::post('OA'), 'alphanum') != false) : $OA = verif_alpha(Input::post('OA'), 'alphanum');
+			if (!empty(Input::post('OA'))) : if (Helper::verif_alpha(Input::post('OA'), 'alphanum') != false) : $OA = Helper::verif_alpha(Input::post('OA'), 'alphanum');
 					$valeurs .= '&OA=' . $OA;
 				else : $erreurs .= "&erreur_alpha_oa";
 				endif;
 			endif;
-			if (!empty(Input::post('patriarche'))) : if (verif_alpha(Input::post('patriarche'), 'alphanum') != false) : $patriarche = verif_alpha(Input::post('patriarche'), 'alphanum');
+			if (!empty(Input::post('patriarche'))) : if (Helper::verif_alpha(Input::post('patriarche'), 'alphanum') != false) : $patriarche = Helper::verif_alpha(Input::post('patriarche'), 'alphanum');
 					$valeurs .= '&patriarche=' . $patriarche;
 				else : $erreurs .= "&erreur_alpha_patriarche";
 				endif;
 			endif;
-			if (!empty(Input::post('numero_operation'))) : if (verif_alpha(Input::post('numero_operation'), 'alphanum') != false) : $num_op = verif_alpha(Input::post('numero_operation'), 'alphanum');
+			if (!empty(Input::post('numero_operation'))) : if (Helper::verif_alpha(Input::post('numero_operation'), 'alphanum') != false) : $num_op = Helper::verif_alpha(Input::post('numero_operation'), 'alphanum');
 					$valeurs .= '&numero_op=' . $num_op;
 				else : $erreurs .= "&erreur_alpha_numop";
 				endif;
 			endif;
-			if (!empty(Input::post('arrete_prescription'))) : if (verif_alpha(Input::post('arrete_prescription'), 'alphanum') != false) : $prescription = verif_alpha(Input::post('arrete_prescription'), 'alphanum');
+			if (!empty(Input::post('arrete_prescription'))) : if (Helper::verif_alpha(Input::post('arrete_prescription'), 'alphanum') != false) : $prescription = Helper::verif_alpha(Input::post('arrete_prescription'), 'alphanum');
 					$valeurs .= '&arrete_prescription=' . $prescription;
 				else : $erreurs .= "&erreur_alpha_prescription";
 				endif;
 			endif;
-			if (!empty(Input::post('responsable_op'))) : if (verif_alpha(Input::post('responsable_op'), 'alpha') != false) : $RO = verif_alpha(Input::post('responsable_op'), 'alpha');
+			if (!empty(Input::post('responsable_op'))) : if (Helper::verif_alpha(Input::post('responsable_op'), 'alpha') != false) : $RO = Helper::verif_alpha(Input::post('responsable_op'), 'alpha');
 					$valeurs .= '&responsable_op=' . $RO;
 				else : $erreurs .= "&erreur_alpha_ro";
 				endif;
@@ -183,7 +165,7 @@ class Controller_Add extends Controller_Template {
 			if (!empty(Input::post('anthropologue'))) :
 				foreach (Input::post('anthropologue') as $key => $val) :
 					if (!empty($key)) :
-						if (verif_alpha($val, 'alpha') != false) :
+						if (Helper::verif_alpha($val, 'alpha') != false) :
 							if (array_key_last(Input::post('anthropologue')) == $key) : $anthropologue .= $val;
 							else : $anthropologue .= $val . ', ';
 							endif;
@@ -197,7 +179,7 @@ class Controller_Add extends Controller_Template {
 			if (!empty(Input::post('paleopathologiste'))) :
 				foreach (Input::post('paleopathologiste') as $key => $val) :
 					if (!empty($key)) :
-						if (verif_alpha($val, 'alpha') != false) :
+						if (Helper::verif_alpha($val, 'alpha') != false) :
 							if (array_key_last(Input::post('paleopathologiste')) == $key) : $paleopathologiste .= $val;
 							else : $paleopathologiste .= $val . ', ';
 							endif;
@@ -304,8 +286,8 @@ class Controller_Add extends Controller_Template {
 
 			foreach (Input::post('id_sujet') as $key => $val) :
 				if ($val != null) :
-					if (verif_alpha($val, 'alphanum') != false) :
-						$val = verif_alpha($val, 'alphanum');
+					if (Helper::verif_alpha($val, 'alphanum') != false) :
+						$val = Helper::verif_alpha($val, 'alphanum');
 						$valeurs .= '&id_sujet_' . $key . '=' . $val;
 						$array[$key] += array('id_sujet' => $val);
 					else : $erreurs .= "&erreur_alpha_sujet_" . $key;
@@ -467,8 +449,8 @@ class Controller_Add extends Controller_Template {
 			if (Input::post('num_inventaire') != NULL) :
 				foreach (Input::post('num_inventaire') as $key => $val) :
 					if (!empty($key)) :
-						if (verif_alpha($val, 'alphanum') != false) :
-							$val = verif_alpha($val, 'alphanum');
+						if (Helper::verif_alpha($val, 'alphanum') != false) :
+							$val = Helper::verif_alpha($val, 'alphanum');
 							$valeurs .= '&num_inventaire_' . $key . '=' . $val;
 							$array[$key] += array('num_inventaire' => $val);
 						else : $erreurs .= "&erreur_alpha_num_inventaire_" . $key;
@@ -499,8 +481,8 @@ class Controller_Add extends Controller_Template {
 			if (Input::post('adresse_depot') != NULL) :
 				foreach (Input::post('adresse_depot') as $key => $val) :
 					if (!empty($key)) :
-						if (verif_alpha($val, 'alphatout') != false) :
-							$val = verif_alpha($val, 'alphatout');
+						if (Helper::verif_alpha($val, 'alphatout') != false) :
+							$val = Helper::verif_alpha($val, 'alphatout');
 							$valeurs .= '&adresse_depot_' . $key . '=' . $val;
 							$array[$key] += array('adresse_depot' => $val);
 						else : $erreurs .= "&erreur_alpha_adresse_depot_" . $key;
@@ -1056,8 +1038,7 @@ class Controller_Add extends Controller_Template {
 	}
 
 	//Pour l'ajout d'un sujet, nous reprennons le même principe que pour l'ajout d'une opération et de sujet sans l'aspect de l'opération
-	public function action_sujet($id)
-	{
+	public function action_sujet($id) {
 
 		$chronologie = DB::query('SELECT id_chronologie,nom_chronologie FROM chronologie_site ORDER BY nom_chronologie ASC')->execute();
 		$chronologie = $chronologie->_results;
@@ -1084,29 +1065,6 @@ class Controller_Add extends Controller_Template {
 		$appareil_compensatoire = $appareil_compensatoire->_results;
 
 		$erreurs = $valeurs = "";
-
-		function verif_alpha($str, $type)
-		{
-
-			trim($str);
-
-			strip_tags($str);
-
-			if ($type == "alpha") : preg_match('/([^A-Za-zàáâãäåçèéêëìíîïðòóôõöùúûüýÿ ])/', $str, $result);
-			endif;
-
-			if ($type == "alphatout") : preg_match('/([^A-Za-z0-9àáâãäåçèéêëìíîïðòóôõöùúûüýÿ ])/', $str, $result);
-			endif;
-
-			if ($type == "alphanum") : preg_match('/([^A-Za-z0-9,-;()\/ ])/', $str, $result);
-			endif;
-
-			if (!empty($result)) {
-				return false;
-			} else {
-				return $str;
-			}
-		}
 
 		if (Input::post("confirm_sujet_handicape")) {
 
@@ -1141,11 +1099,11 @@ class Controller_Add extends Controller_Template {
 				else : $erreurs .= "&erreur_chrono_vide_" . $key;
 				endif;
 			endforeach;
-
+			
 			foreach (Input::post('id_sujet') as $key => $val) :
 				if ($val != null) :
-					if (verif_alpha($val, 'alphanum') != false) :
-						$val = verif_alpha($val, 'alphanum');
+					if (Helper::verif_alpha($val, 'alphanum') != false) :
+						$val = Helper::verif_alpha($val, 'alphanum');
 						$valeurs .= '&id_sujet_' . $key . '=' . $val;
 						$array[$key] += array('id_sujet' => $val);
 					else : $erreurs .= "&erreur_alpha_sujet_" . $key;
@@ -1307,8 +1265,8 @@ class Controller_Add extends Controller_Template {
 			if (Input::post('num_inventaire') != NULL) :
 				foreach (Input::post('num_inventaire') as $key => $val) :
 					if (!empty($key)) :
-						if (verif_alpha($val, 'alphanum') != false) :
-							$val = verif_alpha($val, 'alphanum');
+						if (Helper::verif_alpha($val, 'alphanum') != false) :
+							$val = Helper::verif_alpha($val, 'alphanum');
 							$valeurs .= '&num_inventaire_' . $key . '=' . $val;
 							$array[$key] += array('num_inventaire' => $val);
 						else : $erreurs .= "&erreur_alpha_num_inventaire_" . $key;
@@ -1340,8 +1298,8 @@ class Controller_Add extends Controller_Template {
 			if (Input::post('adresse_depot') != NULL) :
 				foreach (Input::post('adresse_depot') as $key => $val) :
 					if (!empty($key)) :
-						if (verif_alpha($val, 'alphatout') != false) :
-							$val = verif_alpha($val, 'alphatout');
+						if (Helper::verif_alpha($val, 'alphatout') != false) :
+							$val = Helper::verif_alpha($val, 'alphatout');
 							$valeurs .= '&adresse_depot_' . $key . '=' . $val;
 							$array[$key] += array('adresse_depot' => $val);
 						else : $erreurs .= "&erreur_alpha_adresse_depot_" . $key;

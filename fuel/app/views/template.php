@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <header>
-  <title>
-    <?= $title; ?>
-  </title>
+  <title><?= $title; ?></title>
   <meta charset="utf-8">
   <meta name="author" content="Virgile Louin">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -48,7 +46,10 @@
       </div>
     </div>
   </nav>
+
+  <!-- Tout le contenu de la page -->
   <?= $content; ?>
+
   <footer class="footer mt-3 pt-5 sticky-bottom">
     <div class="container">
       <div class="text-center">
