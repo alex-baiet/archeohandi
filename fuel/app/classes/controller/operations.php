@@ -15,9 +15,10 @@ class Controller_Operations extends Controller_Template {
 		$all_user = Helper::querySelect("SELECT DISTINCT id_user FROM operations ORDER BY id_user");
 		$all_nom_op = Helper::querySelect("SELECT DISTINCT nom_op FROM operations ORDER BY nom_op");
 		$all_annee = Helper::querySelect("SELECT annee FROM operations ORDER BY annee DESC");
-		$operation = Helper::querySelect("SELECT id_site,id_user,nom_op,annee,X,Y FROM operations");
+		
+		$operation = Helper::querySelect("SELECT id_site, id_user, nom_op, annee, X, Y FROM operations");
 
-		//Permet de supprimer une opération quand l'alert de suppression est validée
+		//Permet de supprimer une opération quand le bouton de suppression est validée
 		if (Input::post('supp_op')) {
 			if (is_numeric(Input::post('supp_op'))) {
 				$query = DB::query('SELECT id_site FROM operations WHERE id_site='.Input::post('supp_op').' ');

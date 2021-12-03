@@ -1,3 +1,9 @@
+<?php
+
+use Fuel\Core\Asset;
+use Fuel\Core\Form;
+
+?>
 <!-- Entête de la page -->
 <div class="container">
 	
@@ -5,21 +11,21 @@
 	<h1 class="m-2">Opérations (<?= count($operations); ?>)</h1>
 
 	<!-- Bouton "Ajout d'un opération -->
-	<a class="btn btn-primary btn-sm" href="/public/add/operation">Ajouter une opération<i class="bi bi-plus-circle-fill"></i></a>
+	<a class="btn btn-primary btn-sm" href="/add/operation">Ajouter une opération<i class="bi bi-plus-circle-fill"></i></a>
 	
 	<p class="text-muted">Ici vous retrouvez toutes les informations sur les opérations.</p>
 
 	<div class="ml-3">
 		<button type="button" id="id_bouton_filtre" class="btn btn-danger">Afficher les filtres de recherche</button>
-		<a class="btn btn-secondary" href="/public/operations">Rafraichir la page
+		<a class="btn btn-secondary" href="/operations">Rafraichir la page
 			<i class="bi bi-arrow-repeat"></i>
 		</a>
+		
 		<!-- Système de recherche (filtre) -->
 		<div name="filtres_recherche" id="filtres_recherche" class="d-none mt-3">
 			<?= Form::open('/operations'); ?>
 			<div class="form-group ml-3">
 				<div class="form-check form-check-inline">
-					<?= Form::radio('radio', 'Id', true); ?>
 					<?= Form::label('#', 'Id'); ?>
 					<select class="form-select custom-select my-1 mr-2" style="width:15em" name="select_site">
 						<?php
@@ -30,7 +36,6 @@
 					</select>
 				</div>
 				<div class="form-check form-check-inline">
-					<?= Form::radio('radio', 'user'); ?>
 					<?= Form::label('Utilisateur', 'user'); ?>
 					<select class="form-select custom-select my-1 mr-2" style="width:15em" name="select_user">
 						<?php
@@ -41,7 +46,6 @@
 					</select>
 				</div>
 				<div class="form-check form-check-inline">
-					<?= Form::radio('radio', 'nom_op'); ?>
 					<?= Form::label('Nom de l\'opération', 'nom_op'); ?>
 					<select class="form-select custom-select my-1 mr-2" style="width:15em" name="select_op">
 						<?php
@@ -52,7 +56,6 @@
 					</select>
 				</div>
 				<div class="form-check form-check-inline">
-					<?= Form::radio('radio', 'annee', false); ?>
 					<?= Form::label('Année', 'annee'); ?>
 					<select class="form-select custom-select my-1 mr-2" style="width:15em" name="select_annee">
 						<?php
@@ -69,13 +72,14 @@
 	</div>
 
 	<?php
-	//Permet de vérifier si dans l'url il y a les différentes options et si oui, cela appel une fonction qui permet d'afficher un message  
-	array_key_exists('erreur_supp_op', $_GET) ? alertBootstrap('Le numéro de l\'opération n\'est pas correcte (nombres autorisés). La suppression ne peut pas s\'effectuer', 'danger') : null;
-	array_key_exists('erreur_supp_bdd', $_GET) ? alertBootstrap('Le numéro de l\'opération n\'existe pas. La suppression ne peut pas s\'effectuer', 'danger') : null;
+		//Permet de vérifier si dans l'url il y a les différentes options et si oui, cela appel une fonction qui permet d'afficher un message  
+		array_key_exists('erreur_supp_op', $_GET) ? alertBootstrap('Le numéro de l\'opération n\'est pas correcte (nombres autorisés). La suppression ne peut pas s\'effectuer', 'danger') : null;
+		array_key_exists('erreur_supp_bdd', $_GET) ? alertBootstrap('Le numéro de l\'opération n\'existe pas. La suppression ne peut pas s\'effectuer', 'danger') : null;
 
-	array_key_exists('success_ajout', $_GET) ? alertBootstrap('Les ajouts ont été effectué', 'success') : null;
-	array_key_exists('success_modif', $_GET) ? alertBootstrap('Modification effectuée', 'success') : null;
-	array_key_exists('success_supp_op', $_GET) ? alertBootstrap('Suppression effectuée', 'success') : null; ?>
+		array_key_exists('success_ajout', $_GET) ? alertBootstrap('Les ajouts ont été effectué', 'success') : null;
+		array_key_exists('success_modif', $_GET) ? alertBootstrap('Modification effectuée', 'success') : null;
+		array_key_exists('success_supp_op', $_GET) ? alertBootstrap('Suppression effectuée', 'success') : null;
+	?>
 </div>
 <br />
 <!-- Contenu de la page -->
@@ -100,27 +104,21 @@
 							<tr class="text-center">
 								<?php //echo '<td scope="col">'.$key['id_site'].'</td>';
 								?>
-								<?= '
-							<td>' . $key['id_user'] . '</td>'; ?>
-								<?= '
-							<td>' . $key['nom_op'] . '</td>'; ?>
-								<?= '
-							<td>' . $key['annee'] . '</td>'; ?>
-								<?= '
-							<td>' . $key['X'] . '</td>'; ?>
-								<?= '
-							<td>' . $key['Y'] . '</td>'; ?>
+								<?= '<td>' . $key['id_user'] . '</td>'; ?>
+								<?= '<td>' . $key['nom_op'] . '</td>'; ?>
+								<?= '<td>' . $key['annee'] . '</td>'; ?>
+								<?= '<td>' . $key['X'] . '</td>'; ?>
+								<?= '<td>' . $key['Y'] . '</td>'; ?>
 								<td class="col-auto">
-									<a title="Consulter #<?= $key['id_site']; ?>" href="/public/operations/view/<?= $key['id_site']; ?>">
-										<img class="icon see" width="30px" src="https://archeohandi.huma-num.fr/public/assets/img/reply.svg" alt="Consulter">
+									<a title="Consulter #<?= $key['id_site']; ?>" href="/operations/view/<?= $key['id_site']; ?>">
+										<?= Asset::img("reply.svg", array("class"=>"icon see", "width" => "30px", "alt" => "Consulter")) ?>
 									</a>
-									<a class="" title="Editer #
-										<?= $key['id_site']; ?>" href="/public/operations/edit/<?= $key['id_site']; ?>">
-										<img class="icon edit" width="24px" src="https://archeohandi.huma-num.fr/public/assets/img/pen.svg" alt="Éditer">
+									<a class="" title="Editer #<?= $key['id_site']; ?>" href="/operations/edit/<?= $key['id_site']; ?>">
+										<?= Asset::img("pen.svg", array("class"=>"icon edit", "width" => "24px", "alt" => "Éditer")) ?>
 									</a>
 									<form action="" method="post" id="form_suppr_<?= $key['id_site']; ?>">
 										<button type="button" class="btn" name="btn_supp_op" value="<?= $key['id_site']; ?>">
-											<img class="icon del" width="25px" src="https://archeohandi.huma-num.fr/public/assets/img/trash.svg" alt="Supprimer">
+											<?= Asset::img("trash.svg", array("class"=>"icon del", "width" => "25px", "alt" => "Supprimer")) ?>
 											<input type="hidden" name="supp_op" value="<?= $key['id_site']; ?>">
 										</button>
 									</form>
