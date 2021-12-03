@@ -6,9 +6,9 @@ use Fuel\Core\Input;
 use Fuel\Core\Response;
 use Fuel\Core\View;
 
-class Controller_Operations extends Controller_Template{
+class Controller_Operations extends Controller_Template {
 	// Page d'affichages de toutes les opérations
-	public function action_index(){
+	public function action_index() {
 		//Permet de récupérer toutes les informations pour le système de filtre
 		$query = DB::query('SELECT id_site FROM operations ORDER BY id_site ASC');
 		$all_site = $query->execute();

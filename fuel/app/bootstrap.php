@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Fuel is a fast, lightweight, community driven PHP 5.4+ framework.
  *
@@ -11,7 +12,7 @@
  */
 
 // Bootstrap the framework - THIS LINE NEEDS TO BE FIRST!
-require COREPATH.'bootstrap.php';
+require COREPATH . 'bootstrap.php';
 
 // Add framework overload classes here
 \Autoloader::add_classes(array(

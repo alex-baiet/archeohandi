@@ -336,4 +336,4 @@ function afficherLigne($noLigne,$chronologie,$type_depot,$type_sepulture,$diagno
       </center>';
 
       return $ligne;
-    }?>
+    }
