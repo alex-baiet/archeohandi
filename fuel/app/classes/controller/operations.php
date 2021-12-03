@@ -1,22 +1,64 @@
 <?php
 
 use Fuel\Core\Controller_Template;
+use Fuel\Core\Database_Result;
 use Fuel\Core\DB;
 use Fuel\Core\Input;
 use Fuel\Core\Response;
 use Fuel\Core\View;
 
 class Controller_Operations extends Controller_Template {
-	// Page d'affichages de toutes les opérations
+	/**
+	 * Récupère toutes les opérations en fonction des options de filtre entrées.
+	 * 
+	 * @return array
+	 */
+	private function getOperationArray() {
+		$operations = array();
+
+		// Cas ou aucun filtre n'est utilisé
+		if (Input::method() !== "POST") {
+			return Helper::querySelect("SELECT id_site, id_user, nom_op, annee, X, Y FROM operations");
+		} 
+
+		$filterId = Input::post("filter-id");
+		$filterUser = Input::post("filter-user");
+		$filterOp = Input::post("filter-op");
+		$filterYear = Input::post("filter-year");
+		$query = DB::select("id_site", "id_user", "nom_op", "annee", "X", "Y")->from("operations");
+
+		if (!empty($filterId)) $query->where("id_site", "=", $filterId);
+		if (!empty($filterUser)) $query->where("id_user", "=", $filterUser);
+		if (!empty($filterOp)) $query->where("nom_op", "=", $filterOp);
+		if (!empty($filterYear)) $query->where("annee", "=", $filterYear);
+
+		/** @var Database_Result */
+		$res = $query->execute();
+
+		return $res->as_array();
+	}
+
+	/** Page d'affichages de toutes les opérations */
 	public function action_index() {
+		$this->getOperationArray();
 		
 		//Permet de récupérer toutes les informations pour le système de filtre
-		$all_site = Helper::querySelect("SELECT id_site FROM operations ORDER BY id_site ASC");
-		$all_user = Helper::querySelect("SELECT DISTINCT id_user FROM operations ORDER BY id_user");
-		$all_nom_op = Helper::querySelect("SELECT DISTINCT nom_op FROM operations ORDER BY nom_op");
-		$all_annee = Helper::querySelect("SELECT annee FROM operations ORDER BY annee DESC");
+		$all_site = Helper::querySelectList("SELECT id_site FROM operations ORDER BY id_site ASC");
+		$all_user = Helper::querySelectList("SELECT DISTINCT id_user FROM operations ORDER BY id_user");
+		$all_nom_op = Helper::querySelectList("SELECT DISTINCT nom_op FROM operations ORDER BY nom_op");
+		$all_annee = Helper::querySelectList("SELECT annee FROM operations ORDER BY annee DESC");
+
+		$all_site = Helper::arrayValuesAreKeys($all_site);
+		$all_user = Helper::arrayValuesAreKeys($all_user);
+		$all_nom_op = Helper::arrayValuesAreKeys($all_nom_op);
+		$all_annee = Helper::arrayValuesAreKeys($all_annee);
+
+		$all_site[""] = "";
+		$all_user[""] = "";
+		$all_nom_op[""] = "";
+		$all_annee[""] = "";
 		
-		$operation = Helper::querySelect("SELECT id_site, id_user, nom_op, annee, X, Y FROM operations");
+		$operation = $this->getOperationArray();
 
 		//Permet de supprimer une opération quand le bouton de suppression est validée
 		if (Input::post('supp_op')) {
@@ -26,44 +68,12 @@ class Controller_Operations extends Controller_Template {
 				$if_op_ex= $if_op_ex->_results;
 
 				if (!empty($if_op_ex)) {
-					Response::redirect('/operations?&success_supp_op');
+					Response::redirect('/public/operations?&success_supp_op');
 				} else {
-					Response::redirect('/operations?&erreur_supp_bdd');
+					Response::redirect('/public/operations?&erreur_supp_bdd');
 				}
 			} else {
-				Response::redirect('/operations?&erreur_supp_op');
-			}
-		}
-
-		//Permet de faire la recherche du filtre
-		if (Input::post('recherche')) {
-			if (isset($_POST['radio'])) {
-				//Initialisation de qu'est ce qui est recherché et quelle l'information voulu
-				switch ($_POST['radio']) {
-					case 'Id':
-						$what='id_site';
-						$condition=Input::post('select_site');
-						break;
-					case 'user':
-						$what='id_user';
-						$condition=Input::post('select_user');
-						break;
-					case 'nom_op':
-						$what='nom_op';
-						$condition=Input::post('select_op');
-						break;
-					case 'annee':
-						$what='annee';
-						$condition=Input::post('select_annee');
-						break;
-					default:
-						$what="";
-						$condition="";
-						break;
-				}
-				//Récupère les données de ce qui recherché
-				$operation= DB::select()->from('operations')->where($what,$condition)->execute();
-				$operation=$operation->_results;
+				Response::redirect('/public/operations?&erreur_supp_op');
 			}
 		}
 
@@ -136,7 +146,7 @@ class Controller_Operations extends Controller_Template {
 			//Pour chaque champs, nous vérifions si elle est pas vide, quelle corresponde au caractère valide et si tout est correct la variable valeurs ajoute la valeur dans sa variable. Et en cas d'erreur, la variable erreurs ajoute l'erreur du problème
 
 			if(!empty(Input::post('adresse'))): 
-				if(verif_alpha(Input::post('adresse'), 'alphatout') != false): $adresse=verif_alpha(Input::post('adresse'), 'alphatout'); $valeurs.='&adresse='.$adresse; else: $erreurs.="&erreur_alpha_adresse"; endif; 
+				if(Helper::verif_alpha(Input::post('adresse'), 'alphatout') != false): $adresse=Helper::verif_alpha(Input::post('adresse'), 'alphatout'); $valeurs.='&adresse='.$adresse; else: $erreurs.="&erreur_alpha_adresse"; endif; 
 			else: $erreurs.="&erreur_adresse"; endif;
 
 			if(!empty(Input::post('annee'))):
@@ -197,49 +207,49 @@ class Controller_Operations extends Controller_Template {
 				$valeurs.='&a_revoir='.$a_revoir;
 			}
 			if(!empty(Input::post('EA'))) {
-				if(verif_alpha(Input::post('EA'), 'alphanum') != false) {
-					$EA=verif_alpha(Input::post('EA'),'alphanum');
+				if(Helper::verif_alpha(Input::post('EA'), 'alphanum') != false) {
+					$EA=Helper::verif_alpha(Input::post('EA'),'alphanum');
 					$valeurs.='&EA='.$EA;
 				} 
 				else $erreurs.="&erreur_alpha_ea";
 			}
 			if(!empty(Input::post('OA'))) {
-				if(verif_alpha(Input::post('OA'), 'alphanum') != false) {
-					$OA=verif_alpha(Input::post('OA'),'alphanum');
+				if(Helper::verif_alpha(Input::post('OA'), 'alphanum') != false) {
+					$OA=Helper::verif_alpha(Input::post('OA'),'alphanum');
 					$valeurs.='&OA='.$OA;
 				}
 				else $erreurs.="&erreur_alpha_oa";
 			}
 			if(!empty(Input::post('patriarche'))) {
-				if(verif_alpha(Input::post('patriarche'), 'alphanum') != false) {
-					$patriarche=verif_alpha(Input::post('patriarche'), 'alphanum');
+				if(Helper::verif_alpha(Input::post('patriarche'), 'alphanum') != false) {
+					$patriarche=Helper::verif_alpha(Input::post('patriarche'), 'alphanum');
 					$valeurs.='&patriarche='.$patriarche;
 				}
 				else $erreurs.="&erreur_alpha_patriarche"; 
 			}
 			if(!empty(Input::post('numero_operation'))) {
-				if(verif_alpha(Input::post('numero_operation'), 'alphanum') != false) {
-					$num_op=verif_alpha(Input::post('numero_operation'), 'alphanum');
+				if(Helper::verif_alpha(Input::post('numero_operation'), 'alphanum') != false) {
+					$num_op=Helper::verif_alpha(Input::post('numero_operation'), 'alphanum');
 					$valeurs.='&numero_op='.$num_op;
 				} 
 				else $erreurs.="&erreur_alpha_numop";
 			}
 			if(!empty(Input::post('arrete_prescription'))) {
-				if(verif_alpha(Input::post('arrete_prescription'), 'alphanum') != false): $prescription=verif_alpha(Input::post('arrete_prescription'), 'alphanum'); $valeurs.='&arrete_prescription='.$prescription; else: $erreurs.="&erreur_alpha_prescription"; endif; 
+				if(Helper::verif_alpha(Input::post('arrete_prescription'), 'alphanum') != false): $prescription=Helper::verif_alpha(Input::post('arrete_prescription'), 'alphanum'); $valeurs.='&arrete_prescription='.$prescription; else: $erreurs.="&erreur_alpha_prescription"; endif; 
 			}
 			if(!empty(Input::post('responsable_op'))) {
-				if(verif_alpha(Input::post('responsable_op'), 'alpha') != false): $RO=verif_alpha(Input::post('responsable_op'), 'alpha'); $valeurs.='&responsable_op='.$RO; else: $erreurs.="&erreur_alpha_ro"; endif; 
+				if(Helper::verif_alpha(Input::post('responsable_op'), 'alpha') != false): $RO=Helper::verif_alpha(Input::post('responsable_op'), 'alpha'); $valeurs.='&responsable_op='.$RO; else: $erreurs.="&erreur_alpha_ro"; endif; 
 			}
 			if(!empty(Input::post('anthropologue'))) {
-				if(verif_alpha(Input::post('anthropologue'), 'alpha') != false) {
-					$anthropologue=verif_alpha(Input::post('anthropologue'), 'alpha');
+				if(Helper::verif_alpha(Input::post('anthropologue'), 'alpha') != false) {
+					$anthropologue=Helper::verif_alpha(Input::post('anthropologue'), 'alpha');
 					$valeurs.='&anthropologue='.$anthropologue;
 				}
 				else $erreurs.="&erreur_alpha_anthro";
 			}
 			if(!empty(Input::post('paleopathologiste'))) {
-				if(verif_alpha(Input::post('paleopathologiste'), 'alpha') != false) {
-					$paleopathologiste=verif_alpha(Input::post('paleopathologiste'), 'alpha');
+				if(Helper::verif_alpha(Input::post('paleopathologiste'), 'alpha') != false) {
+					$paleopathologiste=Helper::verif_alpha(Input::post('paleopathologiste'), 'alpha');
 					$valeurs.='&paleopathologiste='.$paleopathologiste;
 				}
 				else $erreurs.="&erreur_alpha_paleo";
@@ -271,19 +281,5 @@ class Controller_Operations extends Controller_Template {
 		$data = array('modif_op'=> $modif_op, 'all_type_op'=>$all_type_op, 'all_organisme'=>$all_organisme);
 		$this->template->title = 'Modification de l\'opération '.$id;
 		$this->template->content=View::forge('operations/edit',$data);
-	}
-
-	//Fonction qui permet de vérifier si ce qui est envoyé correspond à des caractères valides
-	function verif_alpha($str,$type){
-		//Enlève les espaces, tabulations, etc au début et fin de la chaine de caractère
-		trim($str);
-		//Enlève les balises html pour éviter des problèmes d'affichage ou des attaques XSS
-		strip_tags($str);
-
-		if($type == "alpha") preg_match('/([^A-Za-zàáâãäåçèéêëìíîïðòóôõöùúûüýÿ ,])/',$str,$result);
-		if($type == "alphatout") preg_match('/([^A-Za-z0-9àáâãäåçèéêëìíîïðòóôõöùúûüýÿ ])/',$str,$result);
-		if($type == "alphanum") preg_match('/([^A-Za-z0-9,-;()\/ ])/',$str,$result);
-		if(!empty($result)) return false;
-		else return $str;
 	}
 }

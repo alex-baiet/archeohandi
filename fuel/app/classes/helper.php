@@ -28,7 +28,7 @@ class Helper {
 	 * @param string $sql
 	 * @return array
 	 */
-	static function querySelect($sql) {
+	public static function querySelect($sql) {
 		$query = DB::query($sql);
 		/** @var Database_Result */
 		$dbRes = $query->execute();
@@ -38,4 +38,35 @@ class Helper {
 		$res = $dbRes->as_array();
 		return $res;
 	}
+
+	/** 
+	 * Similaire à querySelect, mais sous un format plus simple pour les SELECT de une seule colonne
+	 * 
+	 * @param string $sql
+	 * @param string $keyName Nom de la colonne sélectionnée.
+	 * @return array Array des résultats sous forme d'une liste. ex: array("resultat 1", "resultat 2", ...)
+	 */
+	public static function querySelectList($sql) {
+		// Requete SQL
+		$resQuery = Helper::querySelect($sql);
+		
+		// Transformation de l'array
+		$resFinal = array();
+		foreach ($resQuery as $value) {
+			$key = array_key_first($value);
+			// echo "<pre>"; print_r($value); echo "</pre>";
+			$resFinal[] = $value[$key];
+		}
+
+		return $resFinal;
+	}
+
+	public static function arrayValuesAreKeys($array) {
+		$res = array();
+		foreach ($array as $key => $value) {
+			$res[$value] = $value;
+		}
+		return $res;
+	}
+
 }

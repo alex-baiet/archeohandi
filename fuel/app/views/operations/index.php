@@ -4,6 +4,7 @@ use Fuel\Core\Asset;
 use Fuel\Core\Form;
 
 ?>
+
 <!-- Entête de la page -->
 <div class="container">
 	
@@ -11,60 +12,53 @@ use Fuel\Core\Form;
 	<h1 class="m-2">Opérations (<?= count($operations); ?>)</h1>
 
 	<!-- Bouton "Ajout d'un opération -->
-	<a class="btn btn-primary btn-sm" href="/add/operation">Ajouter une opération<i class="bi bi-plus-circle-fill"></i></a>
+	<a class="btn btn-primary btn-sm" href="public/add/operation">Ajouter une opération<i class="bi bi-plus-circle-fill"></i></a>
 	
 	<p class="text-muted">Ici vous retrouvez toutes les informations sur les opérations.</p>
 
 	<div class="ml-3">
 		<button type="button" id="id_bouton_filtre" class="btn btn-danger">Afficher les filtres de recherche</button>
-		<a class="btn btn-secondary" href="/operations">Rafraichir la page
+		<a class="btn btn-secondary" href="public/operations">Rafraichir la page
 			<i class="bi bi-arrow-repeat"></i>
 		</a>
 		
 		<!-- Système de recherche (filtre) -->
+		<?php
+			/** @var array Tous les attributs communs des <select>. */
+			$selectAttr = array(
+				"class" => "form-select custom-select my-1 mr-2",
+				"style" => "width:15em"
+			);
+		?>
+
 		<div name="filtres_recherche" id="filtres_recherche" class="d-none mt-3">
 			<?= Form::open('/operations'); ?>
 			<div class="form-group ml-3">
+
+				<!-- Champ ID de l'operation -->
 				<div class="form-check form-check-inline">
-					<?= Form::label('#', 'Id'); ?>
-					<select class="form-select custom-select my-1 mr-2" style="width:15em" name="select_site">
-						<?php
-						foreach ($all_site as $key) :
-							echo '<option value="' . $key['id_site'] . '">' . $key['id_site'] . '</option>';
-						endforeach;
-						?>
-					</select>
+					<?= Form::label("Id de l'opération", 'filter_id'); ?>
+					<?= Form::select("filter_id", "", $all_site, $selectAttr); ?>
 				</div>
+
+				<!-- Champ recherche par utilisateur -->
 				<div class="form-check form-check-inline">
-					<?= Form::label('Utilisateur', 'user'); ?>
-					<select class="form-select custom-select my-1 mr-2" style="width:15em" name="select_user">
-						<?php
-						foreach ($all_user as $key) :
-							echo '<option value="' . $key['id_user'] . '">' . $key['id_user'] . '</option>';
-						endforeach;
-						?>
-					</select>
+					<?= Form::label('Créateur', 'filter_user'); ?>
+					<?= Form::select("filter_user", "", $all_user, $selectAttr); ?>
 				</div>
+
+				<!-- champ nom de l'opération -->
 				<div class="form-check form-check-inline">
-					<?= Form::label('Nom de l\'opération', 'nom_op'); ?>
-					<select class="form-select custom-select my-1 mr-2" style="width:15em" name="select_op">
-						<?php
-						foreach ($all_nom_op as $key) :
-							echo '<option value="' . $key['nom_op'] . '">' . $key['nom_op'] . '</option>';
-						endforeach;
-						?>
-					</select>
+					<?= Form::label("Nom de l'opération", 'filter_op'); ?>
+					<?= Form::select("filter_op", "", $all_nom_op, $selectAttr); ?>
 				</div>
+
+				<!-- Champ année -->
 				<div class="form-check form-check-inline">
-					<?= Form::label('Année', 'annee'); ?>
-					<select class="form-select custom-select my-1 mr-2" style="width:15em" name="select_annee">
-						<?php
-						foreach ($all_annee as $key) :
-							echo '<option value="' . $key['annee'] . '">' . $key['annee'] . '</option>';
-						endforeach;
-						?>
-					</select>
+					<?= Form::label('Année', 'filter_year'); ?>
+					<?= Form::select("filter_year", "", $all_annee, $selectAttr); ?>
 				</div>
+
 				<?= Form::submit('recherche', 'Rechercher', array('class' => 'btn btn-success btn-sm')); ?>
 			</div>
 		</div>
@@ -110,10 +104,10 @@ use Fuel\Core\Form;
 								<?= '<td>' . $key['X'] . '</td>'; ?>
 								<?= '<td>' . $key['Y'] . '</td>'; ?>
 								<td class="col-auto">
-									<a title="Consulter #<?= $key['id_site']; ?>" href="/operations/view/<?= $key['id_site']; ?>">
+									<a title="Consulter #<?= $key['id_site']; ?>" href="public/operations/view/<?= $key['id_site']; ?>">
 										<?= Asset::img("reply.svg", array("class"=>"icon see", "width" => "30px", "alt" => "Consulter")) ?>
 									</a>
-									<a class="" title="Editer #<?= $key['id_site']; ?>" href="/operations/edit/<?= $key['id_site']; ?>">
+									<a class="" title="Editer #<?= $key['id_site']; ?>" href="public/operations/edit/<?= $key['id_site']; ?>">
 										<?= Asset::img("pen.svg", array("class"=>"icon edit", "width" => "24px", "alt" => "Éditer")) ?>
 									</a>
 									<form action="" method="post" id="form_suppr_<?= $key['id_site']; ?>">
