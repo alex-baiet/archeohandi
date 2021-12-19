@@ -90,11 +90,7 @@ class Controller_Operations extends Controller_Template {
 
 	//L'action view sert pour la page view de opération qui affiche les détails d'une opération
 	public function action_view($id) {
-		//Permet de récupérer les informations de l'opération voulu
-		$query = DB::query('SELECT * FROM operations WHERE id_site='.$id.' ');
-		/** @var Database_Result */
-		$operation_details = $query->execute();
-		$operation_details = $operation_details->as_array();
+		// Récupération des informations de l'opération
 		$operation = Model_Helper::querySelectSingle('SELECT * FROM operations WHERE id_site='.$id);
 		if ($operation === null) Response::redirect("/operations");
 
@@ -106,22 +102,17 @@ class Controller_Operations extends Controller_Template {
 				$if_op_ex = $query->execute();
 				$if_op_ex= $if_op_ex->_results;
 
-				if (!empty($if_op_ex)){
-					Response::redirect('/operations/view/'.$id.'?&success_supp_sujet');
-				} else {
-					Response::redirect('/operations/view/'.$id.'?&erreur_supp_bdd');
-				}
-			} else {
-				Response::redirect('/operations/view/'.$id.'?&erreur_supp_sujet');
+				if (!empty($if_op_ex)) Response::redirect('/operations/view/'.$id.'?&success_supp_sujet');
+				else Response::redirect('/operations/view/'.$id.'?&erreur_supp_bdd');
 			}
+			else Response::redirect('/operations/view/'.$id.'?&erreur_supp_sujet');
+
 		}
 
-		$data = array('operation_details' => $operation_details);
-		foreach ($operation_details as $key) {
-			$this->template->title = 'Consultation de l\'opération '.$key['nom_op'];
-		}
-		
-		$this->template->content=View::forge('operations/view',$data);
+		// Ajout des données à la view
+		$data = array('operation' => $operation);
+		$this->template->title = 'Consultation de l\'opération '.$operation['nom_op'];
+		$this->template->content=View::forge('operations/view', $data);
 	}
 
 	//L'action edit sert pour la page edit de opération qui affiche les informations d'une opération pour les modifier
