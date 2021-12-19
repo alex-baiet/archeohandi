@@ -28,7 +28,6 @@ return array(
 	 */
 
 	 'base_url' => 'https://archeohandi.huma-num.fr/public/',
-	//  'base_url' => 'localhost:8080',
 
 	/**
 	 * -------------------------------------------------------------------------

@@ -12,13 +12,13 @@ use Fuel\Core\Form;
 	<h1 class="m-2">Opérations (<?= count($operations); ?>)</h1>
 
 	<!-- Bouton "Ajout d'un opération -->
-	<a class="btn btn-primary btn-sm" href="public/add/operation">Ajouter une opération<i class="bi bi-plus-circle-fill"></i></a>
+	<a class="btn btn-primary btn-sm" href="/public/add/operation">Ajouter une opération<i class="bi bi-plus-circle-fill"></i></a>
 	
 	<p class="text-muted">Ici vous retrouvez toutes les informations sur les opérations.</p>
 
 	<div class="ml-3">
 		<button type="button" id="id_bouton_filtre" class="btn btn-danger">Afficher les filtres de recherche</button>
-		<a class="btn btn-secondary" href="public/operations">Rafraichir la page
+		<a class="btn btn-secondary" href="/public/operations">Rafraichir la page
 			<i class="bi bi-arrow-repeat"></i>
 		</a>
 		
@@ -85,6 +85,7 @@ use Fuel\Core\Form;
 					<thead>
 						<tr class="text-center">
 							<!-- <th scope="col">#</th> -->
+							<th scope="col">Identifiant</th>
 							<th scope="col">Utilisateur de la saisie</th>
 							<th scope="col">Nom</th>
 							<th scope="col">Année</th>
@@ -96,8 +97,7 @@ use Fuel\Core\Form;
 					<tbody>
 						<?php foreach ($operations as $key) :  ?>
 							<tr class="text-center">
-								<?php //echo '<td scope="col">'.$key['id_site'].'</td>';
-								?>
+								<?= '<td>' . $key['id_site'] . '</td>'; ?>
 								<?= '<td>' . $key['id_user'] . '</td>'; ?>
 								<?= '<td>' . $key['nom_op'] . '</td>'; ?>
 								<?= '<td>' . $key['annee'] . '</td>'; ?>

@@ -26,11 +26,11 @@ class Controller_Operations extends Controller_Template {
 		$filterOp = Input::post("filter_op");
 		$filterYear = Input::post("filter_year");
 		$query = DB::select("id_site", "id_user", "nom_op", "annee", "X", "Y")->from("operations");
-
+		// Ajout des conditions à la requête
 		if (!empty($filterId)) $query->where("id_site", "=", $filterId);
 		if (!empty($filterUser)) $query->where("id_user", "=", $filterUser);
 		if (!empty($filterOp)) $query->where("nom_op", "=", $filterOp);
-		if (!empty($filterYear) || $filterYear == 0) $query->where("annee", "=", $filterYear);
+		if (!empty($filterYear) || $filterYear === "0") $query->where("annee", "=", $filterYear);
 
 		/** @var Database_Result */
 		$res = $query->execute();
@@ -58,7 +58,8 @@ class Controller_Operations extends Controller_Template {
 		
 		$operation = $this->getOperationArray();
 
-		//Permet de supprimer une opération quand le bouton de suppression est validée
+		// Permet de supprimer une opération quand le bouton de suppression est validée
+		// TODO: Supprimer POUR DE VRAI les données
 		if (Input::post('supp_op')) {
 			if (is_numeric(Input::post('supp_op'))) {
 				$query = DB::query('SELECT id_site FROM operations WHERE id_site='.Input::post('supp_op').' ');
@@ -95,6 +96,7 @@ class Controller_Operations extends Controller_Template {
 		$operation_details= $operation_details->_results;
 
 		//Permet de supprimer un sujet quand l'alert de suppression est validée
+		// TODO: Supprimer POUR DE VRAI les données
 		if (Input::post('supp_sujet')){
 			if (is_numeric(Input::post('supp_sujet'))) {
 				$query = DB::query('SELECT id_sujet_handicape FROM sujet_handicape WHERE id_sujet_handicape='.Input::post('supp_sujet').' ');
