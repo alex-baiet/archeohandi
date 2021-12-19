@@ -4,8 +4,8 @@ use Fuel\Core\Database_Exception;
 use Fuel\Core\Database_Result;
 use Fuel\Core\DB;
 
-/** Classe proposant des fonctions statiques divers. */
-class Helper {
+/** Classe proposant des fonctions statiques divers, juste pour faciliter la vie. */
+class Model_Helper {
 
 	/**
 	 * Permet de vérifier si ce qui est envoyé correspond à des caractères valides.
@@ -28,7 +28,7 @@ class Helper {
 	 * @param string $sql
 	 * @return array
 	 */
-	public static function querySelect($sql) {
+	public static function querySelect($sql): array {
 		$query = DB::query($sql);
 		/** @var Database_Result */
 		$dbRes = $query->execute();
@@ -37,6 +37,18 @@ class Helper {
 		}
 		$res = $dbRes->as_array();
 		return $res;
+	}
+
+	/**
+	 * Fait la requête SQL donnée et renvoie le premier résultat.
+	 * 
+	 * @param string $sql
+	 * @return array|null
+	 */
+	public static function querySelectSingle($sql) {
+		$res = Model_Helper::querySelect($sql);
+		if (count($res) === 0) return null;
+		return $res[0];
 	}
 
 	/** 
@@ -48,7 +60,7 @@ class Helper {
 	 */
 	public static function querySelectList($sql) {
 		// Requete SQL
-		$resQuery = Helper::querySelect($sql);
+		$resQuery = Model_Helper::querySelect($sql);
 		
 		// Transformation de l'array
 		$resFinal = array();

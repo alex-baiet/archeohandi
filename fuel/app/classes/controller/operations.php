@@ -18,7 +18,7 @@ class Controller_Operations extends Controller_Template {
 
 		// Cas ou aucun filtre n'est utilisé
 		if (Input::method() !== "POST") {
-			return Helper::querySelect("SELECT id_site, id_user, nom_op, annee, X, Y FROM operations");
+			return Model_Helper::querySelect("SELECT id_site, id_user, nom_op, annee, X, Y FROM operations");
 		} 
 
 		$filterId = Input::post("filter_id");
@@ -41,15 +41,15 @@ class Controller_Operations extends Controller_Template {
 	/** Page d'affichages de toutes les opérations */
 	public function action_index() {
 		//Permet de récupérer toutes les informations pour le système de filtre
-		$all_site = Helper::querySelectList("SELECT id_site FROM operations ORDER BY id_site ASC");
-		$all_user = Helper::querySelectList("SELECT DISTINCT id_user FROM operations ORDER BY id_user");
-		$all_nom_op = Helper::querySelectList("SELECT DISTINCT nom_op FROM operations ORDER BY nom_op");
-		$all_annee = Helper::querySelectList("SELECT annee FROM operations ORDER BY annee DESC");
+		$all_site = Model_Helper::querySelectList("SELECT id_site FROM operations ORDER BY id_site ASC");
+		$all_user = Model_Helper::querySelectList("SELECT DISTINCT id_user FROM operations ORDER BY id_user");
+		$all_nom_op = Model_Helper::querySelectList("SELECT DISTINCT nom_op FROM operations ORDER BY nom_op");
+		$all_annee = Model_Helper::querySelectList("SELECT annee FROM operations ORDER BY annee DESC");
 
-		$all_site = Helper::arrayValuesAreKeys($all_site);
-		$all_user = Helper::arrayValuesAreKeys($all_user);
-		$all_nom_op = Helper::arrayValuesAreKeys($all_nom_op);
-		$all_annee = Helper::arrayValuesAreKeys($all_annee);
+		$all_site = Model_Helper::arrayValuesAreKeys($all_site);
+		$all_user = Model_Helper::arrayValuesAreKeys($all_user);
+		$all_nom_op = Model_Helper::arrayValuesAreKeys($all_nom_op);
+		$all_annee = Model_Helper::arrayValuesAreKeys($all_annee);
 
 		$all_site[""] = "";
 		$all_user[""] = "";
@@ -92,8 +92,11 @@ class Controller_Operations extends Controller_Template {
 	public function action_view($id) {
 		//Permet de récupérer les informations de l'opération voulu
 		$query = DB::query('SELECT * FROM operations WHERE id_site='.$id.' ');
+		/** @var Database_Result */
 		$operation_details = $query->execute();
-		$operation_details= $operation_details->_results;
+		$operation_details = $operation_details->as_array();
+		$operation = Model_Helper::querySelectSingle('SELECT * FROM operations WHERE id_site='.$id);
+		if ($operation === null) Response::redirect("/operations");
 
 		//Permet de supprimer un sujet quand l'alert de suppression est validée
 		// TODO: Supprimer POUR DE VRAI les données
@@ -145,7 +148,7 @@ class Controller_Operations extends Controller_Template {
 			//Pour chaque champs, nous vérifions si elle est pas vide, quelle corresponde au caractère valide et si tout est correct la variable valeurs ajoute la valeur dans sa variable. Et en cas d'erreur, la variable erreurs ajoute l'erreur du problème
 
 			if(!empty(Input::post('adresse'))): 
-				if(Helper::verif_alpha(Input::post('adresse'), 'alphatout') != false): $adresse=Helper::verif_alpha(Input::post('adresse'), 'alphatout'); $valeurs.='&adresse='.$adresse; else: $erreurs.="&erreur_alpha_adresse"; endif; 
+				if(Model_Helper::verif_alpha(Input::post('adresse'), 'alphatout') != false): $adresse=Model_Helper::verif_alpha(Input::post('adresse'), 'alphatout'); $valeurs.='&adresse='.$adresse; else: $erreurs.="&erreur_alpha_adresse"; endif; 
 			else: $erreurs.="&erreur_adresse"; endif;
 
 			if(!empty(Input::post('annee'))):
@@ -206,49 +209,49 @@ class Controller_Operations extends Controller_Template {
 				$valeurs.='&a_revoir='.$a_revoir;
 			}
 			if(!empty(Input::post('EA'))) {
-				if(Helper::verif_alpha(Input::post('EA'), 'alphanum') != false) {
-					$EA=Helper::verif_alpha(Input::post('EA'),'alphanum');
+				if(Model_Helper::verif_alpha(Input::post('EA'), 'alphanum') != false) {
+					$EA=Model_Helper::verif_alpha(Input::post('EA'),'alphanum');
 					$valeurs.='&EA='.$EA;
 				} 
 				else $erreurs.="&erreur_alpha_ea";
 			}
 			if(!empty(Input::post('OA'))) {
-				if(Helper::verif_alpha(Input::post('OA'), 'alphanum') != false) {
-					$OA=Helper::verif_alpha(Input::post('OA'),'alphanum');
+				if(Model_Helper::verif_alpha(Input::post('OA'), 'alphanum') != false) {
+					$OA=Model_Helper::verif_alpha(Input::post('OA'),'alphanum');
 					$valeurs.='&OA='.$OA;
 				}
 				else $erreurs.="&erreur_alpha_oa";
 			}
 			if(!empty(Input::post('patriarche'))) {
-				if(Helper::verif_alpha(Input::post('patriarche'), 'alphanum') != false) {
-					$patriarche=Helper::verif_alpha(Input::post('patriarche'), 'alphanum');
+				if(Model_Helper::verif_alpha(Input::post('patriarche'), 'alphanum') != false) {
+					$patriarche=Model_Helper::verif_alpha(Input::post('patriarche'), 'alphanum');
 					$valeurs.='&patriarche='.$patriarche;
 				}
 				else $erreurs.="&erreur_alpha_patriarche"; 
 			}
 			if(!empty(Input::post('numero_operation'))) {
-				if(Helper::verif_alpha(Input::post('numero_operation'), 'alphanum') != false) {
-					$num_op=Helper::verif_alpha(Input::post('numero_operation'), 'alphanum');
+				if(Model_Helper::verif_alpha(Input::post('numero_operation'), 'alphanum') != false) {
+					$num_op=Model_Helper::verif_alpha(Input::post('numero_operation'), 'alphanum');
 					$valeurs.='&numero_op='.$num_op;
 				} 
 				else $erreurs.="&erreur_alpha_numop";
 			}
 			if(!empty(Input::post('arrete_prescription'))) {
-				if(Helper::verif_alpha(Input::post('arrete_prescription'), 'alphanum') != false): $prescription=Helper::verif_alpha(Input::post('arrete_prescription'), 'alphanum'); $valeurs.='&arrete_prescription='.$prescription; else: $erreurs.="&erreur_alpha_prescription"; endif; 
+				if(Model_Helper::verif_alpha(Input::post('arrete_prescription'), 'alphanum') != false): $prescription=Model_Helper::verif_alpha(Input::post('arrete_prescription'), 'alphanum'); $valeurs.='&arrete_prescription='.$prescription; else: $erreurs.="&erreur_alpha_prescription"; endif; 
 			}
 			if(!empty(Input::post('responsable_op'))) {
-				if(Helper::verif_alpha(Input::post('responsable_op'), 'alpha') != false): $RO=Helper::verif_alpha(Input::post('responsable_op'), 'alpha'); $valeurs.='&responsable_op='.$RO; else: $erreurs.="&erreur_alpha_ro"; endif; 
+				if(Model_Helper::verif_alpha(Input::post('responsable_op'), 'alpha') != false): $RO=Model_Helper::verif_alpha(Input::post('responsable_op'), 'alpha'); $valeurs.='&responsable_op='.$RO; else: $erreurs.="&erreur_alpha_ro"; endif; 
 			}
 			if(!empty(Input::post('anthropologue'))) {
-				if(Helper::verif_alpha(Input::post('anthropologue'), 'alpha') != false) {
-					$anthropologue=Helper::verif_alpha(Input::post('anthropologue'), 'alpha');
+				if(Model_Helper::verif_alpha(Input::post('anthropologue'), 'alpha') != false) {
+					$anthropologue=Model_Helper::verif_alpha(Input::post('anthropologue'), 'alpha');
 					$valeurs.='&anthropologue='.$anthropologue;
 				}
 				else $erreurs.="&erreur_alpha_anthro";
 			}
 			if(!empty(Input::post('paleopathologiste'))) {
-				if(Helper::verif_alpha(Input::post('paleopathologiste'), 'alpha') != false) {
-					$paleopathologiste=Helper::verif_alpha(Input::post('paleopathologiste'), 'alpha');
+				if(Model_Helper::verif_alpha(Input::post('paleopathologiste'), 'alpha') != false) {
+					$paleopathologiste=Model_Helper::verif_alpha(Input::post('paleopathologiste'), 'alpha');
 					$valeurs.='&paleopathologiste='.$paleopathologiste;
 				}
 				else $erreurs.="&erreur_alpha_paleo";

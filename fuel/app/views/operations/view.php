@@ -1,9 +1,12 @@
 <?php
+
+use Fuel\Core\Asset;
+use Fuel\Core\DB;
+
 foreach ($operation_details as $key) :
   $query = DB::query('SELECT nom,departement FROM commune WHERE id=' . $key['id_commune'] . ' ');
   $detail_commune = $query->execute();
   $detail_commune = $detail_commune->_results[0];
-
 
   $query = DB::query('SELECT nom FROM organisme WHERE id=' . $key['id_organisme'] . ' ');
   $organisme = $query->execute();
