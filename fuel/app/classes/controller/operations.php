@@ -13,11 +13,8 @@ class Controller_Operations extends Controller_Template {
 	 * 
 	 * @return array
 	 */
-	private function getOperationArray() {
+	private function getOperationArray(): array {
 		$operations = array();
-		echo "<pre>";
-		var_dump($_POST);
-		echo "</pre>";
 
 		// Cas ou aucun filtre n'est utilisé
 		if (Input::method() !== "POST") {
@@ -33,7 +30,7 @@ class Controller_Operations extends Controller_Template {
 		if (!empty($filterId)) $query->where("id_site", "=", $filterId);
 		if (!empty($filterUser)) $query->where("id_user", "=", $filterUser);
 		if (!empty($filterOp)) $query->where("nom_op", "=", $filterOp);
-		if (!empty($filterYear)) $query->where("annee", "=", $filterYear);
+		if (!empty($filterYear) || $filterYear == 0) $query->where("annee", "=", $filterYear);
 
 		/** @var Database_Result */
 		$res = $query->execute();
@@ -69,12 +66,12 @@ class Controller_Operations extends Controller_Template {
 				$if_op_ex= $if_op_ex->_results;
 
 				if (!empty($if_op_ex)) {
-					Response::redirect('/public/operations?&success_supp_op');
+					Response::redirect('/operations?&success_supp_op');
 				} else {
-					Response::redirect('/public/operations?&erreur_supp_bdd');
+					Response::redirect('/operations?&erreur_supp_bdd');
 				}
 			} else {
-				Response::redirect('/public/operations?&erreur_supp_op');
+				Response::redirect('/operations?&erreur_supp_op');
 			}
 		}
 
