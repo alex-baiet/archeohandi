@@ -59,7 +59,7 @@ use Fuel\Core\Form;
 					<?= Form::select("filter_year", "", $all_annee, $selectAttr); ?>
 				</div>
 
-				<?= Form::submit('recherche', 'Rechercher', array('class' => 'btn btn-success btn-sm')); ?>
+				<?= Form::submit(null, 'Rechercher', array('class' => 'btn btn-success btn-sm')); ?>
 			</div>
 		</div>
 		<?= Form::close(); ?>
@@ -104,10 +104,10 @@ use Fuel\Core\Form;
 								<?= '<td>' . $key['X'] . '</td>'; ?>
 								<?= '<td>' . $key['Y'] . '</td>'; ?>
 								<td class="col-auto">
-									<a title="Consulter #<?= $key['id_site']; ?>" href="public/operations/view/<?= $key['id_site']; ?>">
+									<a title="Consulter #<?= $key['id_site']; ?>" href="operations/view/<?= $key['id_site']; ?>">
 										<?= Asset::img("reply.svg", array("class"=>"icon see", "width" => "30px", "alt" => "Consulter")) ?>
 									</a>
-									<a class="" title="Editer #<?= $key['id_site']; ?>" href="public/operations/edit/<?= $key['id_site']; ?>">
+									<a class="" title="Editer #<?= $key['id_site']; ?>" href="operations/edit/<?= $key['id_site']; ?>">
 										<?= Asset::img("pen.svg", array("class"=>"icon edit", "width" => "24px", "alt" => "Éditer")) ?>
 									</a>
 									<form action="" method="post" id="form_suppr_<?= $key['id_site']; ?>">

@@ -9,7 +9,8 @@
 build
 .idea
 nbproject/
-workspace.code-workspace
+archeohandi.code-workspace
+.vscode/
 
 # hidden files created by Windows
 #Thumbs.db

@@ -15,16 +15,19 @@ class Controller_Operations extends Controller_Template {
 	 */
 	private function getOperationArray() {
 		$operations = array();
+		echo "<pre>";
+		var_dump($_POST);
+		echo "</pre>";
 
 		// Cas ou aucun filtre n'est utilisé
 		if (Input::method() !== "POST") {
 			return Helper::querySelect("SELECT id_site, id_user, nom_op, annee, X, Y FROM operations");
 		} 
 
-		$filterId = Input::post("filter-id");
-		$filterUser = Input::post("filter-user");
-		$filterOp = Input::post("filter-op");
-		$filterYear = Input::post("filter-year");
+		$filterId = Input::post("filter_id");
+		$filterUser = Input::post("filter_user");
+		$filterOp = Input::post("filter_op");
+		$filterYear = Input::post("filter_year");
 		$query = DB::select("id_site", "id_user", "nom_op", "annee", "X", "Y")->from("operations");
 
 		if (!empty($filterId)) $query->where("id_site", "=", $filterId);
@@ -40,8 +43,6 @@ class Controller_Operations extends Controller_Template {
 
 	/** Page d'affichages de toutes les opérations */
 	public function action_index() {
-		$this->getOperationArray();
-		
 		//Permet de récupérer toutes les informations pour le système de filtre
 		$all_site = Helper::querySelectList("SELECT id_site FROM operations ORDER BY id_site ASC");
 		$all_user = Helper::querySelectList("SELECT DISTINCT id_user FROM operations ORDER BY id_user");
@@ -108,7 +109,6 @@ class Controller_Operations extends Controller_Template {
 				} else {
 					Response::redirect('/operations/view/'.$id.'?&erreur_supp_bdd');
 				}
-
 			} else {
 				Response::redirect('/operations/view/'.$id.'?&erreur_supp_sujet');
 			}
