@@ -8,6 +8,7 @@ use Fuel\Core\Response;
 use Fuel\Core\View;
 use Model\Helper;
 use Model\Operation;
+use Model\Sujethandicape;
 
 class Controller_Operations extends Controller_Template {
 	/**
@@ -96,6 +97,20 @@ class Controller_Operations extends Controller_Template {
 		$operation = Operation::fetchSingle($id);
 		if ($operation === null) Response::redirect("/operations");
 
+		// Récupération des groupe_sujets
+		$idGroups = Helper::querySelectList('SELECT * FROM groupe_sujets WHERE id_operation=' . $operation->getIdSite());
+
+		// Récupération de tous les sujets handicapé des différents groupes
+		/** @var Sujethandicape[] */
+		$sujets = array();
+		foreach ($idGroups as $id) {
+			$results = Helper::querySelect('SELECT * FROM sujet_handicape WHERE id_groupe_sujets=' . $id);
+			foreach ($results as $res) {
+				// Ajout d'un sujet à la liste.
+				array_push($sujets, new Sujethandicape($res));
+			}
+		}
+
 		//Permet de supprimer un sujet quand l'alert de suppression est validée
 		// TODO: Supprimer POUR DE VRAI les données
 		if (Input::post('supp_sujet')){
@@ -111,7 +126,7 @@ class Controller_Operations extends Controller_Template {
 		}
 
 		// Ajout des données à la view
-		$data = array('operation' => $operation);
+		$data = array('operation' => $operation, 'sujets' => $sujets);
 		$this->template->title = 'Consultation de l\'opération '.$operation->getNomOp();
 		$this->template->content=View::forge('operations/view', $data);
 	}

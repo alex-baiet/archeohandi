@@ -1,13 +1,15 @@
 <?php
 
 use Fuel\Core\Asset;
-use Fuel\Core\DB;
 use Model\Operation;
+use Model\Sujethandicape;
 use Model\Typedepot;
 use Model\Typesepulture;
 
-/** @var Operation */
+/** @var Operation Operation actuelle. */
 $operation = $operation;
+/** @var Sujethandicape[] Liste des sujets handicapés concernés par l'opérations. */
+$sujets = $sujets;
 
 ?>
 <div class="container">
@@ -91,31 +93,10 @@ $operation = $operation;
 </div>
 <br />
 
-<?php
-
-$query = DB::query('SELECT id_groupe_sujets FROM groupe_sujets WHERE id_operation=' . $operation->getIdSite());
-$id_groupe_sujets = $query->execute();
-$id_groupe_sujets = $id_groupe_sujets->_results;
-
-foreach ($id_groupe_sujets as $operation => $val) :
-	$query = DB::query('SELECT * FROM sujet_handicape WHERE id_groupe_sujets=' . $val['id_groupe_sujets']);
-	$sujet_handicap = $query->execute();
-	$all_sujet_handicap[$operation] = $sujet_handicap->_results;
-endforeach;
-// Vérifie si l'opération sélectionnée possède des sujets et si oui les affiches et si non affiche aucun sujet
-?>
-<?php if (!empty($all_sujet_handicap)) : ?>
+<?php if (!empty($sujets)) : // Vérifie si l'opération sélectionnée possède des sujets et si oui les affiches et si non affiche aucun sujet ?>
 	<div class="container">
 		<div class="row">
-			<?php
-			$l_sujets_count = 0;
-			foreach ($all_sujet_handicap as $key) :
-				foreach ($key as $key2) :
-					$l_sujets_count++;
-				endforeach;
-			endforeach;
-			?>
-			<h2>Sujets handicapés (<?= $l_sujets_count; ?>)</h2>
+			<h2>Sujets handicapés (<?= count($sujets); ?>)</h2>
 			<div class="table-responsive">
 				<div class="scrollbar_view">
 					<table class="table table-striped table-hover table-bordered sticky" data-toggle="table" data-search="true">
@@ -131,43 +112,37 @@ endforeach;
 							</tr>
 						</thead>
 						<tbody>
-							<?php $i = 0;
-							asort($all_sujet_handicap);
-							foreach ($all_sujet_handicap as $key) :
-
-								foreach ($key as $key2) :
-									$i++;
-									$typeDepot = Typedepot::fetchSingle($key2["id_type_depot"]);
-
-									// $query = DB::query('SELECT nom FROM type_sepulture WHERE id=' . $key2['id_sepulture'] . ' ');
-									// $typeSepulture = $query->execute();
-									// $typeSepulture = $typeSepulture->_results[0]['nom'];
-									$typeSepulture = Typesepulture::fetchSingle($key2['id_sepulture']);
+							<?php
+							$i = 0;
+							asort($sujets);
+							foreach ($sujets as $sujet) :
+								$i++;
+								$typeDepot = Typedepot::fetchSingle($sujet->getIdTypeDepot());
+								$typeSepulture = Typesepulture::fetchSingle($sujet->getIdSepulture());
 							?>
-									<tr class="text-center">
-										<?= '<td>' . $key2['id_sujet_handicape'] . ' (' . $i . ')</td>' ?>
-										<?= '<td>' . $key2['sexe'] . '</td>' ?>
-										<?= '<td>' . $key2['datation'] . '</td>' ?>
-										<?= '<td>' . $key2['milieu_vie'] . '</td>' ?>
-										<?= '<td>' . $typeDepot->getNom() . '</td>' ?>
-										<?= '<td>' . $typeSepulture->getNom() . '</td>' ?>
-										<td class="col-auto">
-											<a title="Consulter #<?= $key2['id']; ?>" href="/public/sujet/view/<?= $key2['id']; ?>">
-												<img class="icon see" width="30px" src="https://archeohandi.huma-num.fr/public/assets/img/reply.svg" alt="Consulter">
-											</a>
-											<a title="Editer #<?= $key2['id']; ?>" href="/public/sujet/edit/<?= $key2['id']; ?>">
-												<img class="icon edit" width="24px" src="https://archeohandi.huma-num.fr/public/assets/img/pen.svg" alt="Éditer">
-											</a>
-											<form method="post" id="form_suppr_<?= $key2['id']; ?>">
-												<button type="button" class="btn" name="btn_supp_sujet" value="<?= $key2['id']; ?>">
-													<img class="icon del" width="25px" src="https://archeohandi.huma-num.fr/public/assets/img/trash.svg" alt="Supprimer">
-													<input type="hidden" name="supp_sujet" value="<?= $key2['id']; ?>">
-												</button>
-											</form>
-										</td>
-									</tr>
-							<?php endforeach;
-							endforeach; ?>
+								<tr class="text-center">
+									<?= '<td>' . $sujet->getIdSujetHandicape() . ' (' . $i . ')</td>' ?>
+									<?= '<td>' . $sujet->getSexe() . '</td>' ?>
+									<?= '<td>' . $sujet->getDatation() . '</td>' ?>
+									<?= '<td>' . $sujet->getMilieuVie() . '</td>' ?>
+									<?= '<td>' . $typeDepot->getNom() . '</td>' ?>
+									<?= '<td>' . $typeSepulture->getNom() . '</td>' ?>
+									<td class="col-auto">
+										<a title="Consulter #<?= $sujet->getId(); ?>" href="/public/sujet/view/<?= $sujet->getId(); ?>">
+											<img class="icon see" width="30px" src="https://archeohandi.huma-num.fr/public/assets/img/reply.svg" alt="Consulter">
+										</a>
+										<a title="Editer #<?= $sujet->getId(); ?>" href="/public/sujet/edit/<?= $sujet->getId(); ?>">
+											<img class="icon edit" width="24px" src="https://archeohandi.huma-num.fr/public/assets/img/pen.svg" alt="Éditer">
+										</a>
+										<form method="post" id="form_suppr_<?= $sujet->getId(); ?>">
+											<button type="button" class="btn" name="btn_supp_sujet" value="<?= $sujet->getId(); ?>">
+												<img class="icon del" width="25px" src="https://archeohandi.huma-num.fr/public/assets/img/trash.svg" alt="Supprimer">
+												<input type="hidden" name="supp_sujet" value="<?= $sujet->getId(); ?>">
+											</button>
+										</form>
+									</td>
+								</tr>
+							<?php endforeach; ?>
 						</tbody>
 					</table>
 				</div>

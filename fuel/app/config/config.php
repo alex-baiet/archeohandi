@@ -309,7 +309,8 @@ return array(
 			'Fuel\\Core\\ViewModel',
 			'Closure',
 			// A partir d'ici ce sont les classes personnelles
-			'Model\\Operation'
+			'Model\\Operation',
+			'Model\\Sujethandicape'
 		),
 	),
 

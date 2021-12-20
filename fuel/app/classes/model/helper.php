@@ -83,4 +83,11 @@ class Helper {
 		return $res;
 	}
 
+	/** Raccourci pour faire plus rapidement un var_dump entouré de <pre>. */
+	public static function varDump($value) {
+		echo "<pre>";
+		var_dump($value);
+		echo "</pre>";
+	}
+
 }

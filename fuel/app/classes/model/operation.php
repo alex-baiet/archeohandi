@@ -37,27 +37,27 @@ class Operation extends Model {
 	#endregion
 
 	/** Construit l'Operation depuis la liste des données. */
-	public function __construct(array $operation) {
-		$this->idSite = $operation["id_site"];
-		$this->idUser = $operation["id_user"];
-		$this->nomOp = $operation["nom_op"];
-		$this->aRevoir = $operation["a_revoir"];
-		$this->annee = $operation["annee"];
-		$this->idCommune = $operation["id_commune"];
-		$this->adresse = $operation["adresse"];
-		$this->x = $operation["X"];
-		$this->y = $operation["Y"];
-		$this->idOrganisme = $operation["id_organisme"];
-		$this->idTypeOp = $operation["id_type_op"];
-		$this->EA = $operation["EA"];
-		$this->OA = $operation["OA"];
-		$this->patriarche = $operation["patriarche"];
-		$this->numeroOperation = $operation["numero_operation"];
-		$this->arretePrescription = $operation["arrete_prescription"];
-		$this->responsableOp = $operation["responsable_op"];
-		$this->anthropologue = $operation["anthropologue"];
-		$this->paleopathologiste = $operation["paleopathologiste"];
-		$this->bibliographie = $operation["bibliographie"];
+	public function __construct(array $data) {
+		$this->idSite = $data["id_site"];
+		$this->idUser = $data["id_user"];
+		$this->nomOp = $data["nom_op"];
+		$this->aRevoir = $data["a_revoir"];
+		$this->annee = $data["annee"];
+		$this->idCommune = $data["id_commune"];
+		$this->adresse = $data["adresse"];
+		$this->x = $data["X"];
+		$this->y = $data["Y"];
+		$this->idOrganisme = $data["id_organisme"];
+		$this->idTypeOp = $data["id_type_op"];
+		$this->EA = $data["EA"];
+		$this->OA = $data["OA"];
+		$this->patriarche = $data["patriarche"];
+		$this->numeroOperation = $data["numero_operation"];
+		$this->arretePrescription = $data["arrete_prescription"];
+		$this->responsableOp = $data["responsable_op"];
+		$this->anthropologue = $data["anthropologue"];
+		$this->paleopathologiste = $data["paleopathologiste"];
+		$this->bibliographie = $data["bibliographie"];
 	}
 
 	/**
@@ -71,8 +71,8 @@ class Operation extends Model {
 		$res = Helper::querySelectSingle("SELECT * FROM operations WHERE id_site=$id");
 		if ($res === null) return null;
 
-		$operation = new Operation($res);
-		return $operation;
+		$obj = new Operation($res);
+		return $obj;
 	}
 
 	public function getIdSite() { return $this->idSite; }
