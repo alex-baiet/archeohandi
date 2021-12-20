@@ -1,4 +1,9 @@
 <?php
+
+use Fuel\Core\Asset;
+use Fuel\Core\DB;
+use Fuel\Core\Form;
+
 foreach ($modif_op as $key) : ?>
   <!-- Entête de la page -->
   <div class="container">

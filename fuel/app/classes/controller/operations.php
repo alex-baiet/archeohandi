@@ -150,25 +150,47 @@ class Controller_Operations extends Controller_Template {
 		//Initialisation des variables qui permettent de stocker les erreurs et les valeurs des différents champs pour les afficher sur la page en cas d'erreur
 		$erreurs=$valeurs="";
 
-		if (Input::post("modif_op")){
+		if (Input::post("modif_op")) {
+			/*
+			Pour chaque champs, nous vérifions si elle est pas vide,
+			qu'elle corresponde au caractère valide et si tout est correct la variable valeurs ajoute la valeur dans sa variable.
+			Et en cas d'erreur, la variable erreurs ajoute l'erreur du problème
+			*/
+			if(!empty(Input::post('adresse'))) {
+				if(Helper::verif_alpha(Input::post('adresse'), 'alphatout') != false) {
+					$adresse=Helper::verif_alpha(Input::post('adresse'), 'alphatout');
+					$valeurs.='&adresse='.$adresse;
+				}
+				else $erreurs.="&erreur_alpha_adresse";
+			}
+			else $erreurs.="&erreur_adresse";
 
-			//Pour chaque champs, nous vérifions si elle est pas vide, quelle corresponde au caractère valide et si tout est correct la variable valeurs ajoute la valeur dans sa variable. Et en cas d'erreur, la variable erreurs ajoute l'erreur du problème
+			if(!empty(Input::post('annee'))) {
+				if(is_numeric(Input::post('annee'))) {
+					$valeurs.='&annee='.Input::post('annee');
+					$annee = Input::post('annee');
+				}
+				else $erreurs.="&erreur_annee";
+			}
+			else $erreurs.="&erreur_annee_vide";
 
-			if(!empty(Input::post('adresse'))): 
-				if(Helper::verif_alpha(Input::post('adresse'), 'alphatout') != false): $adresse=Helper::verif_alpha(Input::post('adresse'), 'alphatout'); $valeurs.='&adresse='.$adresse; else: $erreurs.="&erreur_alpha_adresse"; endif; 
-			else: $erreurs.="&erreur_adresse"; endif;
+			if(!empty(Input::post('X'))) {
+				if(is_numeric(Input::post('X')) ) {
+					$valeurs.='&X='.Input::post('X');
+					$X=Input::post('X');
+				}
+				else $erreurs.="&erreur_X";
+			}
+			else $X="";
 
-			if(!empty(Input::post('annee'))):
-				if(is_numeric(Input::post('annee'))): $valeurs.='&annee='.Input::post('annee'); $annee = Input::post('annee'); else: $erreurs.="&erreur_annee"; endif;
-			else: $erreurs.="&erreur_annee_vide"; endif;
-
-			if(!empty(Input::post('X'))):
-				if(is_numeric(Input::post('X')) ): $valeurs.='&X='.Input::post('X'); $X=Input::post('X'); else: $erreurs.="&erreur_X"; endif;
-			else: $X=""; endif;
-
-			if(!empty(Input::post('Y'))):
-				if(is_numeric(Input::post('Y')) ): $valeurs.='&Y='.Input::post('Y'); $Y=Input::post('Y'); else: $erreurs.="&erreur_Y"; endif;
-			else: $Y=""; endif;
+			if(!empty(Input::post('Y'))) {
+				if(is_numeric(Input::post('Y')) ) {
+					$valeurs.='&Y='.Input::post('Y');
+					$Y=Input::post('Y');
+				}
+				else $erreurs.="&erreur_Y";
+			}
+			else $Y="";
 
 			if(Input::post('commune') != null) {
 				//Permet de récupérer juste le nom de la commune et non avec le département
