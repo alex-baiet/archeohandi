@@ -4,30 +4,15 @@ use Fuel\Core\Asset;
 use Fuel\Core\DB;
 use Model\Commune;
 use Model\Operation;
+use Model\Organisme;
+use Model\Typeoperation;
 
 /** @var Operation */
 $operation = $operation;
 
-// echo "<pre>";
-// $query = DB::query('SELECT nom,departement FROM commune WHERE id=' . $operation->getIdCommune());
-// $commune = $query->execute();
-// $commune = $commune->_results[0];
 $commune = Commune::fetchSingle($operation->getIdCommune());
-// var_dump($commune);
-
-$query = DB::query('SELECT nom FROM organisme WHERE id=' . $operation->getIdOrganisme());
-$organisme = $query->execute();
-if (isset($organisme->_results[0])) {
-  $organisme = $organisme->_results[0]['nom'];
-}
-// var_dump($organisme);
-
-$query = DB::query('SELECT nom FROM type_operation WHERE id=' . $operation->getIdTypeOp());
-$type_operation = $query->execute();
-$type_operation = $type_operation->_results[0]['nom'];
-// var_dump($type_operation);
-// var_dump($operation);
-// echo "</pre>";
+$organisme = Organisme::fetchSingle($operation->getIdOrganisme());
+$typeOp = Typeoperation::fetchSingle($operation->getIdTypeOp())
 ?>
 <div class="container">
   <h1 class="m-2">Opération <?= $operation->getNomOp(); ?>
@@ -55,10 +40,10 @@ $type_operation = $type_operation->_results[0]['nom'];
         <div class="p-2">Année de l'opération : <?= $operation->getAnnee(); ?></div>
       </div>
       <div class="col">
-        <div class="p-2">Type d'opération : <?= $type_operation; ?></div>
+        <div class="p-2">Type d'opération : <?= $typeOp->getNom(); ?></div>
       </div>
       <div class="col">
-        <div class="p-2">Organisme : <?php echo $organisme; ?></div>
+        <div class="p-2">Organisme : <?php echo $organisme->getNom(); ?></div>
       </div>
     </div>
     <div class="row">

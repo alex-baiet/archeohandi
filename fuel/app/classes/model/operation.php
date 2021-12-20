@@ -5,7 +5,7 @@ namespace Model;
 use Fuel\Core\Model;
 
 /** Représentation d'une opération dans la base de données. */
-class Operation extends Model{
+class Operation extends Model {
 	private $idSite;
 	private $idUser;
 	private $nomOp;
