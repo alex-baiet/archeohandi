@@ -2,30 +2,32 @@
 
 use Fuel\Core\Asset;
 use Fuel\Core\DB;
+use Model\Commune;
 use Model\Operation;
 
 /** @var Operation */
 $operation = $operation;
 
-echo "<pre>";
-$query = DB::query('SELECT nom,departement FROM commune WHERE id=' . $operation->getIdCommune());
-$detail_commune = $query->execute();
-$detail_commune = $detail_commune->_results[0];
-var_dump($detail_commune);
+// echo "<pre>";
+// $query = DB::query('SELECT nom,departement FROM commune WHERE id=' . $operation->getIdCommune());
+// $commune = $query->execute();
+// $commune = $commune->_results[0];
+$commune = Commune::fetchSingle($operation->getIdCommune());
+// var_dump($commune);
 
 $query = DB::query('SELECT nom FROM organisme WHERE id=' . $operation->getIdOrganisme());
 $organisme = $query->execute();
 if (isset($organisme->_results[0])) {
   $organisme = $organisme->_results[0]['nom'];
 }
-var_dump($organisme);
+// var_dump($organisme);
 
 $query = DB::query('SELECT nom FROM type_operation WHERE id=' . $operation->getIdTypeOp());
 $type_operation = $query->execute();
 $type_operation = $type_operation->_results[0]['nom'];
-var_dump($type_operation);
-var_dump($operation);
-echo "</pre>";
+// var_dump($type_operation);
+// var_dump($operation);
+// echo "</pre>";
 ?>
 <div class="container">
   <h1 class="m-2">Opération <?= $operation->getNomOp(); ?>
@@ -61,13 +63,13 @@ echo "</pre>";
     </div>
     <div class="row">
       <div class="col">
-        <div class="p-2">Département : <?= $detail_commune['departement']; ?></div>
+        <div class="p-2">Département : <?= $commune->getDepartement(); ?></div>
       </div>
       <div class="col">
-        <div class="p-2">Commune : <?= $detail_commune['nom']; ?></div>
+        <div class="p-2">Commune : <?= $commune->getNom(); ?></div>
       </div>
       <div class="col">
-        <div class="p-2">Adresse : <?= $operation->getAnnee(); ?></div>
+        <div class="p-2">Adresse : <?= $operation->getAdresse(); ?></div>
       </div>
     </div>
     <div class="row">

@@ -25,7 +25,6 @@ class Operation extends Model{
 	private $responsableOp;
 	private $anthropologue;
 	private $paleopathologiste;
-	private $etudePaleopathologique;
 	private $bibliographie;
 
 	/** Construit l'Operation depuis la liste des données. */
