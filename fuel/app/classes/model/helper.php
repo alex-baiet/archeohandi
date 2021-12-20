@@ -1,11 +1,13 @@
 <?php
 
+namespace Model;
+
 use Fuel\Core\Database_Exception;
 use Fuel\Core\Database_Result;
 use Fuel\Core\DB;
 
 /** Classe proposant des fonctions statiques divers, juste pour faciliter la vie. */
-class Model_Helper {
+class Helper {
 
 	/**
 	 * Permet de vérifier si ce qui est envoyé correspond à des caractères valides.
@@ -46,7 +48,7 @@ class Model_Helper {
 	 * @return array|null
 	 */
 	public static function querySelectSingle($sql) {
-		$res = Model_Helper::querySelect($sql);
+		$res = Helper::querySelect($sql);
 		if (count($res) === 0) return null;
 		return $res[0];
 	}
@@ -60,7 +62,7 @@ class Model_Helper {
 	 */
 	public static function querySelectList($sql) {
 		// Requete SQL
-		$resQuery = Model_Helper::querySelect($sql);
+		$resQuery = Helper::querySelect($sql);
 		
 		// Transformation de l'array
 		$resFinal = array();
