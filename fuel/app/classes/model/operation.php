@@ -6,6 +6,7 @@ use Fuel\Core\Model;
 
 /** Représentation d'une opération dans la base de données. */
 class Operation extends Model {
+	#region Values
 	private $idSite;
 	private $idUser;
 	private $nomOp;
@@ -26,6 +27,14 @@ class Operation extends Model {
 	private $anthropologue;
 	private $paleopathologiste;
 	private $bibliographie;
+
+	/** @var Commune|undefined */
+	private $commune;
+	/** @var Typeoperation|undefined */
+	private $typeOp;
+	/** @var Organisme|undefined */
+	private $organisme;
+	#endregion
 
 	/** Construit l'Operation depuis la liste des données. */
 	public function __construct(array $operation) {
@@ -86,4 +95,27 @@ class Operation extends Model {
 	public function getAnthropologue() { return $this->anthropologue; }
 	public function getPaleopathologiste() { return $this->paleopathologiste; }
 	public function getBibliographie() { return $this->bibliographie; }
+	
+	/**
+	 * @return Commune|null
+	 */
+	public function getCommune() {
+		if (!isset($this->commune)) $this->commune = Commune::fetchSingle($this->idCommune);
+		return $this->commune;
+	}
+	/**
+	 * @return Typeoperation|null
+	 */
+	public function getTypeOperation() {
+		if (!isset($this->typeOp)) $this->typeOp = Typeoperation::fetchSingle($this->idTypeOp);
+		return $this->typeOp;
+	}
+	/**
+	 * @return Organisme|null
+	 */
+	public function getOrganisme() {
+		if (!isset($this->organisme)) $this->organisme = Organisme::fetchSingle($this->idOrganisme);
+		return $this->organisme;
+	}
+	
 }

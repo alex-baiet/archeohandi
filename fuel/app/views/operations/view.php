@@ -2,17 +2,11 @@
 
 use Fuel\Core\Asset;
 use Fuel\Core\DB;
-use Model\Commune;
 use Model\Operation;
-use Model\Organisme;
-use Model\Typeoperation;
 
 /** @var Operation */
 $operation = $operation;
 
-$commune = Commune::fetchSingle($operation->getIdCommune());
-$organisme = Organisme::fetchSingle($operation->getIdOrganisme());
-$typeOp = Typeoperation::fetchSingle($operation->getIdTypeOp())
 ?>
 <div class="container">
   <h1 class="m-2">Opération <?= $operation->getNomOp(); ?>
@@ -40,18 +34,18 @@ $typeOp = Typeoperation::fetchSingle($operation->getIdTypeOp())
         <div class="p-2">Année de l'opération : <?= $operation->getAnnee(); ?></div>
       </div>
       <div class="col">
-        <div class="p-2">Type d'opération : <?= $typeOp->getNom(); ?></div>
+        <div class="p-2">Type d'opération : <?= $operation->getTypeOperation()->getNom(); ?></div>
       </div>
       <div class="col">
-        <div class="p-2">Organisme : <?php echo $organisme->getNom(); ?></div>
+        <div class="p-2">Organisme : <?= $operation->getOrganisme()->getNom(); ?></div>
       </div>
     </div>
     <div class="row">
       <div class="col">
-        <div class="p-2">Département : <?= $commune->getDepartement(); ?></div>
+        <div class="p-2">Département : <?= $operation->getCommune()->getDepartement(); ?></div>
       </div>
       <div class="col">
-        <div class="p-2">Commune : <?= $commune->getNom(); ?></div>
+        <div class="p-2">Commune : <?= $operation->getCommune()->getNom(); ?></div>
       </div>
       <div class="col">
         <div class="p-2">Adresse : <?= $operation->getAdresse(); ?></div>
@@ -95,7 +89,7 @@ $typeOp = Typeoperation::fetchSingle($operation->getIdTypeOp())
     <p>Bibliographie : <?= $operation->getBibliographie(); ?></p>
   </div>
 </div>
-<br />
+<br/>
 <?php
 
 $query = DB::query('SELECT id_groupe_sujets FROM groupe_sujets WHERE id_operation=' . $operation->getIdSite());
