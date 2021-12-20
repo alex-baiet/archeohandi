@@ -3,6 +3,8 @@
 use Fuel\Core\Asset;
 use Fuel\Core\DB;
 use Model\Operation;
+use Model\Typedepot;
+use Model\Typesepulture;
 
 /** @var Operation */
 $operation = $operation;
@@ -14,10 +16,7 @@ $operation = $operation;
 			<i class="bi bi-plus-circle-fill"></i>
 		</a>
 	</h1>
-	<p class="text-muted">Ici vous retrouvez toutes les informations de l'opération
-		<strong>
-			<?= $operation->getNomOp(); ?>
-		</strong> .
+	<p class="text-muted">Ici vous retrouvez toutes les informations de l'opération <strong><?= $operation->getNomOp(); ?></strong>.
 	</p>
 	<?php
 	array_key_exists('erreur_supp_sujet', $_GET) ? alertBootstrap('Le numéro du sujet n\'est pas correcte (nombres autorisés). La suppression ne peut pas s\'effectuer', 'danger') : null;
@@ -26,6 +25,7 @@ $operation = $operation;
 	array_key_exists('success_ajout', $_GET) ? alertBootstrap('Ajout effectué', 'success') : null;
 	array_key_exists('success_modif', $_GET) ? alertBootstrap('Modification effectuée', 'success') : null;
 	array_key_exists('success_supp_sujet', $_GET) ? alertBootstrap('Suppression effectuée', 'success') : null; ?>
+
 	<!-- Contenu de la page. Affichage des informations de l'opération -->
 	<div class="container" style="background-color: #F5F5F5;">
 		<h4>Informations</h4>
@@ -89,7 +89,8 @@ $operation = $operation;
 		<p>Bibliographie : <?= $operation->getBibliographie(); ?></p>
 	</div>
 </div>
-<br/>
+<br />
+
 <?php
 
 $query = DB::query('SELECT id_groupe_sujets FROM groupe_sujets WHERE id_operation=' . $operation->getIdSite());
@@ -102,7 +103,8 @@ foreach ($id_groupe_sujets as $operation => $val) :
 	$all_sujet_handicap[$operation] = $sujet_handicap->_results;
 endforeach;
 // Vérifie si l'opération sélectionnée possède des sujets et si oui les affiches et si non affiche aucun sujet
-if (!empty($all_sujet_handicap)) : ?>
+?>
+<?php if (!empty($all_sujet_handicap)) : ?>
 	<div class="container">
 		<div class="row">
 			<?php
@@ -135,21 +137,20 @@ if (!empty($all_sujet_handicap)) : ?>
 
 								foreach ($key as $key2) :
 									$i++;
-									$query = DB::query('SELECT nom FROM type_depot WHERE id=' . $key2['id_type_depot'] . ' ');
-									$nom_depot = $query->execute();
-									$nom_depot = $nom_depot->_results[0]['nom'];
+									$typeDepot = Typedepot::fetchSingle($key2["id_type_depot"]);
 
-									$query = DB::query('SELECT nom FROM type_sepulture WHERE id=' . $key2['id_sepulture'] . ' ');
-									$nom_sepulture = $query->execute();
-									$nom_sepulture = $nom_sepulture->_results[0]['nom'];
+									// $query = DB::query('SELECT nom FROM type_sepulture WHERE id=' . $key2['id_sepulture'] . ' ');
+									// $typeSepulture = $query->execute();
+									// $typeSepulture = $typeSepulture->_results[0]['nom'];
+									$typeSepulture = Typesepulture::fetchSingle($key2['id_sepulture']);
 							?>
 									<tr class="text-center">
 										<?= '<td>' . $key2['id_sujet_handicape'] . ' (' . $i . ')</td>' ?>
 										<?= '<td>' . $key2['sexe'] . '</td>' ?>
 										<?= '<td>' . $key2['datation'] . '</td>' ?>
 										<?= '<td>' . $key2['milieu_vie'] . '</td>' ?>
-										<?= '<td>' . $nom_depot . '</td>' ?>
-										<?= '<td>' . $nom_sepulture . '</td>' ?>
+										<?= '<td>' . $typeDepot->getNom() . '</td>' ?>
+										<?= '<td>' . $typeSepulture->getNom() . '</td>' ?>
 										<td class="col-auto">
 											<a title="Consulter #<?= $key2['id']; ?>" href="/public/sujet/view/<?= $key2['id']; ?>">
 												<img class="icon see" width="30px" src="https://archeohandi.huma-num.fr/public/assets/img/reply.svg" alt="Consulter">
