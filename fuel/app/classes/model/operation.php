@@ -143,14 +143,17 @@ class Operation extends Model {
 		}
 
 		// Tests de validation des données
-		// Test pour l'adresse
+		// Correction adresse
 		$res = Helper::verif_alpha($this->adresse, 'alphatout');
 		if ($res === false) $this->invalidate("L'adresse contient des caractères interdit.");
-		else $this->adresse = $res;
+		$this->adresse = Helper::secureString($this->adresse);
+
 		// Test année
 		if (!Helper::stringIsInt($this->annee)) $this->invalidate("L'année indiquée doit être un nombre.");
+		
 		// Test position X
 		if (!is_numeric($this->x)) $this->invalidate("La position sur x (longitude) indiquée doit être un nombre.");
+		
 		// Test position Y
 		if (!is_numeric($this->y)) $this->invalidate("La position sur y (latitude) indiquée doit être un nombre.");
 
