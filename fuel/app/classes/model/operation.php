@@ -88,6 +88,7 @@ class Operation extends Model {
 		return $obj;
 	}
 
+	#region Getters
 	public function getIdSite() { return $this->idSite; }
 	public function getIdUser() { return $this->idUser; }
 	public function getNomOp() { return $this->nomOp; }
@@ -108,7 +109,8 @@ class Operation extends Model {
 	public function getAnthropologue() { return $this->anthropologue; }
 	public function getPaleopathologiste() { return $this->paleopathologiste; }
 	public function getBibliographie() { return $this->bibliographie; }
-	
+	#endregion
+
 	/**
 	 * @return Commune|null
 	 */

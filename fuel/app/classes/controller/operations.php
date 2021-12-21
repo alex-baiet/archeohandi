@@ -1,6 +1,7 @@
 <?php
 
 use Fuel\Core\Controller_Template;
+use Fuel\Core\Database_Query_Builder_Insert;
 use Fuel\Core\Database_Result;
 use Fuel\Core\DB;
 use Fuel\Core\Input;
@@ -131,9 +132,15 @@ class Controller_Operations extends Controller_Template {
 		$all_organisme = $query->execute();
 		$all_organisme = $all_organisme->_results;
 
+		// Ajout d'une opération
+		if (Input::method() === "POST") {
+			echo "Tentative de création d'une opération...<br>";
 
+			Helper::varDump($_POST);
+		}
 
-		if (Input::post("confirm_operation")) {
+		// if (Input::post("confirm_operation")) {
+		if (false) {
 			//Initialisation des variables 
 			$anthropologue = $paleopathologiste = "";
 
@@ -314,7 +321,8 @@ class Controller_Operations extends Controller_Template {
 			endif;
 		}
 
-		if (Input::post("confirm_sujet_handicape")) {
+		// if (Input::post("confirm_sujet_handicape"))
+		if (false) {
 			//Pour chaque champs, nous vérifions si elle est pas vide, quelle corresponde au caractère valide et si tout est correct la variable valeurs ajoute la valeur dans sa variable. Et en cas d'erreur, la variable erreurs ajoute l'erreur du problème
 
 			//Pour les différents select, nous vérifions que les différentes entités existent dans la BDD

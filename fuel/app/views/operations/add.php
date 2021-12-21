@@ -1,37 +1,16 @@
+<?php
+
+use Fuel\Core\Asset;
+use Fuel\Core\Form;
+
+?>
+
 <!-- Contenu de la page partie opération -->
 <div class="" id="ajout_operation">
   <div class="container">
     <h1 class="m-2">Ajout d'une opération <a class="btn btn-sm btn-secondary" href="/public/operations/add">Rafraichir la page <i class="bi bi-arrow-repeat"></i></a></h1>
     <p class="text-muted">Ici vous pouvez ajouter une opération de façon simplifiée. Pour aller plus vite, vous pouvez utiliser la touche TAB <?= Asset::img('TAB.jpg', array('width' => '75px', 'height' => '35px')); ?> pour aller d'un champs texte à un autre.</p>
     <?= Form::open(array('action' => 'operations/add', 'method' => 'POST'));
-
-    //Permet de vérifier si dans l'url il y a les différentes options et si oui, cela appel une fonction qui permet d'afficher un message d'erreur ou d'information
-    array_key_exists('erreur_alpha_adresse', $_GET) ? alertBootstrap('L\'adresse ne correspond pas au pattern de validation (De A à Z, a à z, 0 à 9, l\'espace et les caractères suivant: àáâãäåçèéêëìíîïðòóôõöùúûüýÿ sont autorisés)', 'info') : null;
-    array_key_exists('erreur_alpha_ea', $_GET) ? alertBootstrap('L\'EA ne correspond pas au pattern de validation (De A à Z, a à z, 0 à 9, l\'espace et les caractères suivant: ,-;()/ sont autorisés)', 'info') : null;
-    array_key_exists('erreur_alpha_oa', $_GET) ? alertBootstrap('L\'OA ne correspond pas au pattern de validation (De A à Z, a à z, 0 à 9, l\'espace et les caractères suivant: ,-;()/ sont autorisés)', 'info') : null;
-    array_key_exists('erreur_alpha_patriarche', $_GET) ? alertBootstrap('Le patriarche ne correspond pas au pattern de validation (De A à Z, a à z, 0 à 9, l\'espace et les caractères suivant: ,-;()/ sont autorisés)', 'info') : null;
-    array_key_exists('erreur_alpha_numop', $_GET) ? alertBootstrap('Le numéro d\'opération ne correspond pas au pattern de validation (De A à Z, a à z, 0 à 9, l\'espace et les caractères suivant: ,-;()/ sont autorisés)', 'info') : null;
-    array_key_exists('erreur_alpha_prescription', $_GET) ? alertBootstrap('L\'arrêté prescription ne correspond pas au pattern de validation (De A à Z, a à z, 0 à 9, l\'espace et les caractères suivant: ,-;()/ sont autorisés)', 'info') : null;
-    array_key_exists('erreur_alpha_ro', $_GET) ? alertBootstrap('Le responsable de l\'opération ne correspond pas au pattern de validation (De A à Z, a à z, 0 à 9, l\'espace et les caractères suivant: ,-;()/ sont autorisés)', 'info') : null;
-    array_key_exists('erreur_alpha_anthro', $_GET) ? alertBootstrap('L\'anthropologiste ne correspond pas au pattern de validation (De A à Z, a à z, l\'espace et les caractères suivant: àáâãäåçèéêëìíîïðòóôõöùúûüýÿ sont autorisés)', 'info') : null;
-    array_key_exists('erreur_alpha_paleo', $_GET) ? alertBootstrap('Le paléopathologiste ne correspond pas au pattern de validation (De A à Z, a à z, l\'espace et les caractères suivant: àáâãäåçèéêëìíîïðòóôõöùúûüýÿ sont autorisés)', 'info') : null;
-
-    array_key_exists('erreur_adresse', $_GET) ? alertBootstrap('L\'adresse n\'est pas saisie', 'danger') : null;
-
-    array_key_exists('erreur_annee_vide', $_GET) ? alertBootstrap('L\'année est vide', 'danger') : null;
-    array_key_exists('erreur_annee', $_GET) ? alertBootstrap('L\'année n\'est pas correcte (chiffre autorisé)', 'danger') : null;
-
-    array_key_exists('erreur_X', $_GET) ? alertBootstrap('La position X n\'est pas un nombre', 'danger') : null;
-    array_key_exists('erreur_Y', $_GET) ? alertBootstrap('La position Y n\'est pas un nombre', 'danger') : null;
-
-    array_key_exists('erreur_commune_select', $_GET) ? alertBootstrap('Veuillez choisir une commune', 'danger') : null;
-    array_key_exists('erreur_commune', $_GET) ? alertBootstrap('La commune n\'existe pas', 'danger') : null;
-
-    array_key_exists('erreur_organisme_select', $_GET) ? alertBootstrap('Veuillez sélectionner l\'organisme', 'danger') : null;
-    array_key_exists('erreur_organisme', $_GET) ? alertBootstrap('L\'organisme ne correspond pas aux propositions', 'danger') : null;
-
-    array_key_exists('erreur_type_operation_select', $_GET) ? alertBootstrap('Veuillez sélectionner le type d\'opération', 'danger') : null;
-    array_key_exists('erreur_type_operation', $_GET) ? alertBootstrap('Le type d\'opération ne correspond pas aux propositions', 'danger') : null;
 
     //Permet de vérifier si il y a c'est option et si oui cela permet de savoir quelle option est cochée pour l'afficher
     if (array_key_exists('commune', $_GET)) : $commune_check = $_GET['commune'];
@@ -51,7 +30,8 @@
         <div class="row g-2">
           <div class="col-md-6">
             <div class="form-floating">
-              <input type="text" class="form-control" name="adresse" placeholder="Adresse" value="<?php if (array_key_exists('adresse', $_GET)) : echo $_GET['adresse'];
+              <input type="text" class="form-control" name="adresse" placeholder="Adresse" value="<?php
+                                                                                                  if (array_key_exists('adresse', $_GET)) : echo $_GET['adresse'];
                                                                                                   else : null;
                                                                                                   endif; ?>">
               <?= Form::label('Adresse', 'adresse'); ?>
