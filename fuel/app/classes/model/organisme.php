@@ -33,8 +33,13 @@ class Organisme extends Model {
 		return $obj;
 	}
 
-	/** Créer un <select> à partir de tous les organismes. */
-	public static function generateSelect($field = "organisme", $idSelectedOrga = "") {
+	/**
+	 * Créer un <select> à partir de tous les organismes.
+	 * 
+	 * @param string $field Valeur du "name" du select.
+	 * @param mixed $idSelected Identifiant de la valeur sélectionnée.
+	 */
+	public static function generateSelect(string $field = "organisme", $idSelected = ""): string {
 		// Récupération de tous les organismes
 		/** @var Organisme[] */
 		$organismes = array();
@@ -54,7 +59,7 @@ class Organisme extends Model {
 		$html = '<div class="form-floating">';
 		$html .= Form::select(
 			$field,
-			$idSelectedOrga,
+			$idSelected,
 			$options,
 			array("class" => "form-select my-4")
 		);

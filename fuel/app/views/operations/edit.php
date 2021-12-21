@@ -5,6 +5,7 @@ use Fuel\Core\DB;
 use Fuel\Core\Form;
 use Model\Operation;
 use Model\Organisme;
+use Model\Typeoperation;
 
 /** @var Operation */
 $operation = $operation;
@@ -125,20 +126,7 @@ $nom_commune = $nom_commune->_results[0]['nom'];
 			<?= Organisme::generateSelect("organisme", $operation->getIdOrganisme()); ?>
 		</div>
 		<div class="col-md-4">
-			<div class="form-floating">
-				<select class="form-select my-4" name="type_operation">
-					<option value="">Sélectionner</option>
-					<?php foreach ($all_type_op as $operation_type_op) :
-						echo '<option value="' . $operation_type_op['id'] . '"';
-						if (($type_op_check == $operation_type_op['id']) || ($operation->getIdTypeOp() == $operation_type_op['id'])) {
-							echo 'selected';
-						}
-						echo '>' . $operation_type_op['nom'] . '</option>';
-					endforeach;
-					?>
-				</select>
-				<?= Form::label('Type d\'opération', 'type_operation'); ?>
-			</div>
+			<?= Typeoperation::generateSelect("type_operation", $operation->getIdTypeOp()); ?>
 		</div>
 	</div>
 	<div class="row my-2">
