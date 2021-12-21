@@ -38,14 +38,14 @@ class Operation extends Model {
 	/**
 	 * Indique que l'objet est valide pour la base de données.
 	 * undefined signifie que l'objet n'a pas encore été vérifié.
-	 * @var bool|undefined 
+	 * @var bool|null 
 	 */
-	private $validated;
+	private $validated = null;
 	/**
 	 * Message indiquant pourquoi l'objet n'est pas valide.
-	 * @var string|undefined
+	 * @var string|null
 	 */
-	private $invalidReason;
+	private $invalidReason = null;
 	#endregion
 
 	/** Construit l'Operation depuis la liste des données. */
@@ -136,7 +136,7 @@ class Operation extends Model {
 	 */
 	public function validate() {
 		// L'objet à déjà été validé : on retourne le résultat précédent.
-		if (isset($this->validated)) {
+		if ($this->validated !== null) {
 			if ($this->validated) return true;
 			else return $this->invalidReason;
 		}
@@ -228,7 +228,7 @@ class Operation extends Model {
 	 */
 	public function saveOnDB(): bool {
 		// Validation des données
-		if (!isset($this->validated)) $this->validate();
+		if ($this->validated == null) $this->validate();
 		// Cas données non valide
 		if (!$this->validated) return false;
 
@@ -237,6 +237,39 @@ class Operation extends Model {
 		// Tout s'est bien passé.
 		return true;
 		
+	}
+
+	/** Ajoute les données de l'array donnée à l'objet. Pratique pour les POST et GET. */
+	public function mergeValues(array $data) {
+		$this->resetValidation();
+
+		$this->idSite = array_key_exists("id_site", $data) ? $data["id_site"] : $this->idSite;
+		$this->idUser = array_key_exists("id_user", $data) ? $data["id_user"] : $this->idUser;
+		$this->nomOp = array_key_exists("nom_op", $data) ? $data["nom_op"] : $this->nomOp;
+		$this->aRevoir = array_key_exists("a_revoir", $data) ? $data["a_revoir"] : $this->aRevoir;
+		$this->annee = array_key_exists("annee", $data) ? $data["annee"] : $this->annee;
+		$this->idCommune = array_key_exists("id_commune", $data) ? intval($data["id_commune"]) : $this->idCommune;
+		$this->adresse = array_key_exists("adresse", $data) ? $data["adresse"] : $this->adresse;
+		$this->x = array_key_exists("X", $data) ? $data["X"] : $this->x;
+		$this->y = array_key_exists("Y", $data) ? $data["Y"] : $this->y;
+		$this->idOrganisme = array_key_exists("id_organisme", $data) ? intval($data["id_organisme"]) : $this->idOrganisme;
+		$this->idTypeOp = array_key_exists("id_type_op", $data) ? intval($data["id_type_op"]) : $this->idTypeOp;
+		$this->EA = array_key_exists("EA", $data) ? $data["EA"] : $this->EA;
+		$this->OA = array_key_exists("OA", $data) ? $data["OA"] : $this->OA;
+		$this->patriarche = array_key_exists("patriarche", $data) ? $data["patriarche"] : $this->patriarche;
+		$this->numeroOperation = array_key_exists("numero_operation", $data) ? $data["numero_operation"] : $this->numeroOperation;
+		$this->arretePrescription = array_key_exists("arrete_prescription", $data) ? $data["arrete_prescription"] : $this->arretePrescription;
+		$this->responsableOp = array_key_exists("responsable_op", $data) ? $data["responsable_op"] : $this->responsableOp;
+		$this->anthropologue = array_key_exists("anthropologue", $data) ? $data["anthropologue"] : $this->anthropologue;
+		$this->paleopathologiste = array_key_exists("paleopathologiste", $data) ? $data["paleopathologiste"] : $this->paleopathologiste;
+		$this->bibliographie = array_key_exists("bibliographie", $data) ? $data["bibliographie"] : $this->bibliographie;
+
+	}
+
+	/** Annule la validation de l'objet. */
+	private function resetValidation() {
+		$this->validated = null;
+		$this->invalidReason = null;
 	}
 
 	/** Invalide les données, rendant impossible l'export des données en ligne. */

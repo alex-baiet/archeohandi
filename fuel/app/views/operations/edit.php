@@ -66,6 +66,8 @@ $query = DB::query('SELECT nom FROM commune WHERE id=' . $operation->getIdCommun
 $nom_commune = $query->execute();
 $nom_commune = $nom_commune->_results[0]['nom'];
 
+// Array des attributs les plus communs.
+$defaultAttr = array("type" => "text", "class" => "form-control", "placeholder" => "");
 
 //Pour chaque input, l'option value vérifie dans un premier si il existe dans l'url son champs qui lui est propre et affiche sa valeur en cas d'erreur et sinon elle affiche la valeur de l'opération pour ce champs là.
 ?>
@@ -73,17 +75,13 @@ $nom_commune = $nom_commune->_results[0]['nom'];
 	<div class="row my-2 pt-1">
 		<div class="col-md-6">
 			<div class="form-floating">
-				<input type="text" class="form-control" name="adresse" placeholder="Adresse" value="<?php if (array_key_exists('adresse', $_GET)) : echo $_GET['adresse'];
-																																														else : echo $operation->getAdresse();
-																																														endif; ?>">
+				<?= Form::input("adresse", $operation->getAdresse(), $defaultAttr); ?>
 				<?= Form::label('Adresse', 'adresse'); ?>
 			</div>
 		</div>
 		<div class="col-md-6">
 			<div class="form-floating">
-				<input type="number" class="form-control" name="annee" placeholder="1910" value="<?php if (array_key_exists('annee', $_GET)) : echo $_GET['annee'];
-																																													else : echo $operation->getAnnee();
-																																													endif; ?>">
+				<?= Form::input("annee", $operation->getAnnee(), array("type" => "number", "class" => "form-control", "placeholder" => "")); ?>
 				<?= Form::label('Année de l\'opération', 'annee'); ?>
 			</div>
 		</div>
@@ -91,35 +89,31 @@ $nom_commune = $nom_commune->_results[0]['nom'];
 	<div class="row my-2">
 		<div class="col-md-6">
 			<div class="form-floating">
-				<input type="number" class="form-control" name="X" step="any" value="<?php if (array_key_exists('X', $_GET)) : echo $_GET['X'];
-																																							else : echo $operation->getX();
-																																							endif; ?>">
+				<?= Form::input("X", $operation->getX(), array("type" => "number", "class" => "form-control", "placeholder" => "", "step" => "any")); ?>
 				<?= Form::label('Position X', 'X'); ?>
 			</div>
 		</div>
 		<div class="col-md-6">
 			<div class="form-floating">
-				<input type="number" class="form-control" name="Y" step="any" placeholder="50" value="<?php if (array_key_exists('Y', $_GET)) : echo $_GET['Y'];
-																																															else : echo $operation->getY();
-																																															endif; ?>">
+				<?= Form::input("Y", $operation->getY(), array("type" => "number", "class" => "form-control", "placeholder" => "", "step" => "any")); ?>
 				<?= Form::label('Position Y', 'Y'); ?>
 			</div>
 		</div>
 	</div>
 	<div class="col-md-12">
 		<?= Form::label('À revoir', 'a_revoir'); ?>
-		<textarea class="form-control" id="a_revoir" name="a_revoir"><?php if (array_key_exists('a_revoir', $_GET)) : echo $_GET['a_revoir'];
-																																	else : echo $operation->getARevoir();
-																																	endif; ?></textarea>
+		<?= Form::textarea("a_revoir", $operation->getARevoir(), array("class" => "form-control")); ?>
 	</div>
 	<div class="row">
 		<div class="col-md-4">
 			<div class="form-floating">
-				<input type="text" name="commune" id="commune" class="form-control border-info my-4" placeholder="Rechercher une commune ..." autocomplete="off" value="<?= $nom_commune; ?>" required>
-				<?= Form::label('Rechercher une commune', 'commune'); ?>
+				<?= Form::input("commune", $operation->getCommune()->getNom(), array("type" => "text", "class" => "form-control my-4")); ?>
+				<!-- <input type="text" name="commune" id="commune" class="form-control border-info my-4" placeholder="Rechercher une commune ..." autocomplete="off" value="<?= $nom_commune; ?>" required> -->
+				<?= Form::label('Commune', 'commune'); ?>
 			</div>
 			<div class="col-md-auto">
-				<div class="list-group" id="show-list"></div>
+				<!-- Zone d'autocomplétion ...? -->
+				<!-- <div class="list-group" id="show-list"></div> -->
 			</div>
 		</div>
 		<div class="col-md-4">
@@ -132,17 +126,13 @@ $nom_commune = $nom_commune->_results[0]['nom'];
 	<div class="row my-2">
 		<div class="col-md-6">
 			<div class="form-floating">
-				<input type="text" class="form-control" name="EA" placeholder="exemple" value="<?php if (array_key_exists('EA', $_GET)) : echo $_GET['EA'];
-																																												else : echo $operation->getEA();
-																																												endif; ?>">
+				<?= Form::input("EA", $operation->getEA(), $defaultAttr); ?>
 				<?= Form::label('EA', 'EA'); ?>
 			</div>
 		</div>
 		<div class="col-md-6">
 			<div class="form-floating">
-				<input type="text" class="form-control" name="OA" placeholder="exemple" value="<?php if (array_key_exists('OA', $_GET)) : echo $_GET['OA'];
-																																												else : echo $operation->getOA();
-																																												endif; ?>">
+				<?= Form::input("OA", $operation->getOA(), $defaultAttr); ?>
 				<?= Form::label('OA', 'OA'); ?>
 			</div>
 		</div>
@@ -150,35 +140,27 @@ $nom_commune = $nom_commune->_results[0]['nom'];
 	<div class="row my-2">
 		<div class="col-md-6">
 			<div class="form-floating">
-				<input type="text" class="form-control" name="patriarche" placeholder="exemple" value="<?php if (array_key_exists('patriarche', $_GET)) : echo $_GET['patriarche'];
-																																																else : echo $operation->getPatriarche();
-																																																endif; ?>">
+				<?= Form::input("patriarche", $operation->getPatriarche(), $defaultAttr); ?>
 				<?= Form::label('Patriarche', 'patriarche'); ?>
 			</div>
 		</div>
 		<div class="col-md-6">
 			<div class="form-floating">
-				<input type="text" class="form-control" name="numero_operation" placeholder="exemple" value="<?php if (array_key_exists('numero_op', $_GET)) : echo $_GET['numero_op'];
-																																																			else : echo $operation->getNumeroOperation();
-																																																			endif; ?>">
-				<?= Form::label('Numéro d\'opérations', 'numero_operation'); ?>
+				<?= Form::input("numero_operation", $operation->getNumeroOperation(), $defaultAttr); ?>
+				<?= Form::label('Numéro d\'opération', 'numero_operation'); ?>
 			</div>
 		</div>
 	</div>
 	<div class="row my-2">
 		<div class="col-md-6">
 			<div class="form-floating">
-				<input type="text" class="form-control" name="arrete_prescription" placeholder="exemple" value="<?php if (array_key_exists('arrete_prescription', $_GET)) : echo $_GET['arrete_prescription'];
-																																																				else : echo $operation->getArretePrescription();
-																																																				endif; ?>">
+				<?= Form::input("arrete_prescription", $operation->getArretePrescription(), $defaultAttr); ?>
 				<?= Form::label('Arrêté de prescription', 'arrete_prescription'); ?>
 			</div>
 		</div>
 		<div class="col-md-6">
 			<div class="form-floating">
-				<input type="text" class="form-control" name="responsable_op" placeholder="exemple" value="<?php if (array_key_exists('responsable_op', $_GET)) : echo $_GET['responsable_op'];
-																																																		else : echo $operation->getResponsableOp();
-																																																		endif; ?>">
+				<?= Form::input("responsable_op", $operation->getResponsableOp(), $defaultAttr); ?>
 				<?= Form::label('Responsable de l\'opération', 'responsable_op'); ?>
 			</div>
 		</div>
@@ -186,35 +168,27 @@ $nom_commune = $nom_commune->_results[0]['nom'];
 	<div class="row my-2">
 		<div class="col-md-6">
 			<div class="form-floating">
-				<input type="text" class="form-control" name="anthropologue" placeholder="Nom Prénom, etc." value="<?php if (array_key_exists('anthropologue', $_GET)) : echo $_GET['anthropologue'];
-																																																						else : echo $operation->getAnthropologue();
-																																																						endif; ?>">
+				<?= Form::input("anthropologue", $operation->getAnthropologue(), $defaultAttr); ?>
 				<?= Form::label('Anthropologue (Nom Prénom, etc.)', 'anthropologue'); ?>
 			</div>
 		</div>
 		<div class="col-md-6">
 			<div class="form-floating">
-				<input type="text" class="form-control" name="paleopathologiste" placeholder="Nom Prénom, etc." value="<?php if (array_key_exists('paleopathologiste', $_GET)) : echo $_GET['paleopathologiste'];
-																																																								else : $operation->getPaleopathologiste();
-																																																								endif; ?>">
+				<?= Form::input("paleopathologiste", $operation->getPaleopathologiste(), $defaultAttr); ?>
 				<?= Form::label('Paléopathologiste (Nom Prénom, etc.)', 'paleopathologiste'); ?>
 			</div>
 		</div>
 	</div>
 	<div class="col-md-12">
 		<?= Form::label('Bibliographie', 'bibliographie'); ?>
-		<div class="input-group">
-			<textarea class="form-control" name="bibliographie" rows="2"><?php if (array_key_exists('bibliographie', $_GET)) : echo $_GET['bibliographie'];
-																																		else : echo $operation->getBibliographie();
-																																		endif; ?></textarea>
-		</div>
+		<?= Form::textarea("bibliographie", $operation->getBibliographie(), array("class" => "form-control")); ?>
 	</div>
 	<br />
 	<div class="d-grid gap-2 d-md-block">
 		<a class="btn btn-secondary" href="/public/operations" role="button">Retour</a>
 	</div>
 	<div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-top: 10px;">
-		<?= Form::submit('modif_op', 'Modifier', array('class' => 'btn btn-success')); ?>
+		<?= Form::submit('submit', 'Modifier', array('class' => 'btn btn-success')); ?>
 	</div>
 </div>
 <?= Form::close(); ?>

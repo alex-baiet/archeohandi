@@ -133,20 +133,13 @@ class Controller_Operations extends Controller_Template {
 
 	//L'action edit sert pour la page edit de opération qui affiche les informations d'une opération pour les modifier
 	public function action_edit($id){
-		//Permet de récupérer les informations de l'opération qu'on veut modifier
-		// $query = DB::query('SELECT * FROM operations WHERE id_site='.$id.' ');
-		// $modif_op = $query->execute();
-		// $modif_op= $modif_op->_results;
+		// Récupération des informations de l'opération
 		$operation = Operation::fetchSingle($id);
-
-		//Permet de récupérer id et le nom pour les foreach
-		$query = DB::query('SELECT id,nom FROM type_operation');
-		$all_type_op = $query->execute();
-		$all_type_op= $all_type_op->_results;
-
-		$query = DB::query('SELECT id,nom FROM organisme');
-		$all_organisme = $query->execute();
-		$all_organisme= $all_organisme->_results;
+		
+		// Tentative de mise à jour de l'opération
+		if (Input::method() === "POST") {
+			$operation->mergeValues($_POST);
+		}
 
 		//Initialisation des variables qui permettent de stocker les erreurs et les valeurs des différents champs pour les afficher sur la page en cas d'erreur
 		$erreurs = $valeurs = "";
@@ -312,7 +305,7 @@ class Controller_Operations extends Controller_Template {
 			// Response::redirect('/operations?&success_modif');
 		}
 
-		$data = array('operation'=> $operation, 'all_type_op'=>$all_type_op, 'all_organisme'=>$all_organisme);
+		$data = array('operation'=> $operation);
 		$this->template->title = 'Modification de l\'opération '.$id;
 		$this->template->content=View::forge('operations/edit',$data);
 	}
