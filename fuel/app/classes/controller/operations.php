@@ -135,177 +135,26 @@ class Controller_Operations extends Controller_Template {
 	public function action_edit($id){
 		// Récupération des informations de l'opération
 		$operation = Operation::fetchSingle($id);
+		/** @var null|string */
+		$errors = null;
 		
 		// Tentative de mise à jour de l'opération
 		if (Input::method() === "POST") {
 			$operation->mergeValues($_POST);
+
+			$result = $operation->validate();
+			if ($result === true) {
+				// Les données sont valides : on met à jour la BDD
+				$operation->saveOnDB();
+
+				Response::redirect("/operations?success_modif");
+			} else {
+				// Les données ne sont pas valides : on affiche les problèmes
+				$errors = $result;
+			}
 		}
 
-		//Initialisation des variables qui permettent de stocker les erreurs et les valeurs des différents champs pour les afficher sur la page en cas d'erreur
-		$erreurs = $valeurs = "";
-
-		if (Input::post("modif_op")) {
-			/*
-			Pour chaque champs, nous vérifions si elle est pas vide,
-			qu'elle corresponde au caractère valide et si tout est correct la variable valeurs ajoute la valeur dans sa variable.
-			Et en cas d'erreur, la variable erreurs ajoute l'erreur du problème
-			*/
-			#region Garbage
-			// if(!empty(Input::post('adresse'))) {
-			// 	if(Helper::verif_alpha(Input::post('adresse'), 'alphatout') != false) {
-			// 		$adresse=Helper::verif_alpha(Input::post('adresse'), 'alphatout');
-			// 		$valeurs.='&adresse='.$adresse;
-			// 	}
-			// 	else $erreurs.="&erreur_alpha_adresse";
-			// }
-			// else $erreurs.="&erreur_adresse";
-
-			// if(!empty(Input::post('annee'))) {
-			// 	if(is_numeric(Input::post('annee'))) {
-			// 		$valeurs.='&annee='.Input::post('annee');
-			// 		$annee = Input::post('annee');
-			// 	}
-			// 	else $erreurs.="&erreur_annee";
-			// }
-			// else $erreurs.="&erreur_annee_vide";
-
-			// if(!empty(Input::post('X'))) {
-			// 	if(is_numeric(Input::post('X')) ) {
-			// 		$valeurs.='&X='.Input::post('X');
-			// 		$X=Input::post('X');
-			// 	}
-			// 	else $erreurs.="&erreur_X";
-			// }
-			// else $X="";
-
-			// if(!empty(Input::post('Y'))) {
-			// 	if(is_numeric(Input::post('Y')) ) {
-			// 		$valeurs.='&Y='.Input::post('Y');
-			// 		$Y=Input::post('Y');
-			// 	}
-			// 	else $erreurs.="&erreur_Y";
-			// }
-			// else $Y="";
-
-			// if(Input::post('commune') != null) {
-			// 	//Permet de récupérer juste le nom de la commune et non avec le département
-			// 	$nom_commune_for_id= preg_replace("(\((.*?)\))","",Input::post('commune'));
-			// 	//Récupère l'ID de la commune 
-			// 	$query = DB::query('SELECT id FROM commune WHERE nom="'.$nom_commune_for_id.'"');
-			// 	$if_commune_ex = $query->execute();
-			// 	$if_commune_ex=$if_commune_ex->_results;
-			// 	//Vérifie quelle existe dans la BDD
-			// 	if (!empty($if_commune_ex)) {
-			// 		$valeurs.='&commune='.Input::post('commune');
-			// 		$id_commune=$if_commune_ex[0]['id'];
-			// 	}
-			// 	else $erreurs.="&erreur_commune";
-			// }
-			// else $erreurs.="&erreur_commune_select";
-
-			// //Pour les différents select, nous vérifions que les différentes entités existent dans la BDD
-			// if(Input::post('organisme') != null) {
-			// 	$query = DB::query('SELECT nom FROM organisme WHERE id='.Input::post('organisme').'');
-			// 	$if_organisme_ex = $query->execute();
-			// 	$if_organisme_ex=$if_organisme_ex->_results;
-			// 	if(!empty($if_organisme_ex)) {
-			// 		$valeurs.='&organisme='.Input::post('organisme');
-			// 		$organisme=Input::post('organisme');
-			// 	}
-			// 	else $erreurs.="&erreur_organisme";
-			// }
-			// else $erreurs.="&erreur_organisme_select";
-
-			// if(Input::post('type_operation') != null) {
-			// 	$query = DB::query('SELECT nom FROM type_operation WHERE id='.Input::post('type_operation').'');
-			// 	$if_type_operation_ex = $query->execute();
-			// 	$if_type_operation_ex=$if_type_operation_ex->_results;
-			// 	if(!empty($if_type_operation_ex)) {
-			// 		$valeurs.='&type_op='.Input::post('type_operation');
-			// 		$type_operation=Input::post('type_operation');
-			// 	}
-			// 	else $erreurs.="&erreur_type_operation";
-			// }
-			// else $erreurs.="&erreur_type_operation_select";
-
-			// if (!empty(Input::post('a_revoir'))) {
-			// 	$a_revoir=trim(strip_tags(Input::post('a_revoir')));
-			// 	$valeurs.='&a_revoir='.$a_revoir;
-			// }
-			// if(!empty(Input::post('EA'))) {
-			// 	if(Helper::verif_alpha(Input::post('EA'), 'alphanum') != false) {
-			// 		$EA=Helper::verif_alpha(Input::post('EA'),'alphanum');
-			// 		$valeurs.='&EA='.$EA;
-			// 	} 
-			// 	else $erreurs.="&erreur_alpha_ea";
-			// }
-			// if(!empty(Input::post('OA'))) {
-			// 	if(Helper::verif_alpha(Input::post('OA'), 'alphanum') != false) {
-			// 		$OA=Helper::verif_alpha(Input::post('OA'),'alphanum');
-			// 		$valeurs.='&OA='.$OA;
-			// 	}
-			// 	else $erreurs.="&erreur_alpha_oa";
-			// }
-			// if(!empty(Input::post('patriarche'))) {
-			// 	if(Helper::verif_alpha(Input::post('patriarche'), 'alphanum') != false) {
-			// 		$patriarche=Helper::verif_alpha(Input::post('patriarche'), 'alphanum');
-			// 		$valeurs.='&patriarche='.$patriarche;
-			// 	}
-			// 	else $erreurs.="&erreur_alpha_patriarche"; 
-			// }
-			// if(!empty(Input::post('numero_operation'))) {
-			// 	if(Helper::verif_alpha(Input::post('numero_operation'), 'alphanum') != false) {
-			// 		$num_op=Helper::verif_alpha(Input::post('numero_operation'), 'alphanum');
-			// 		$valeurs.='&numero_op='.$num_op;
-			// 	} 
-			// 	else $erreurs.="&erreur_alpha_numop";
-			// }
-			// if(!empty(Input::post('arrete_prescription'))) {
-			// 	if(Helper::verif_alpha(Input::post('arrete_prescription'), 'alphanum') != false): $prescription=Helper::verif_alpha(Input::post('arrete_prescription'), 'alphanum'); $valeurs.='&arrete_prescription='.$prescription; else: $erreurs.="&erreur_alpha_prescription"; endif; 
-			// }
-			// if(!empty(Input::post('responsable_op'))) {
-			// 	if(Helper::verif_alpha(Input::post('responsable_op'), 'alpha') != false): $RO=Helper::verif_alpha(Input::post('responsable_op'), 'alpha'); $valeurs.='&responsable_op='.$RO; else: $erreurs.="&erreur_alpha_ro"; endif; 
-			// }
-			// if(!empty(Input::post('anthropologue'))) {
-			// 	if(Helper::verif_alpha(Input::post('anthropologue'), 'alpha') != false) {
-			// 		$anthropologue=Helper::verif_alpha(Input::post('anthropologue'), 'alpha');
-			// 		$valeurs.='&anthropologue='.$anthropologue;
-			// 	}
-			// 	else $erreurs.="&erreur_alpha_anthro";
-			// }
-			// if(!empty(Input::post('paleopathologiste'))) {
-			// 	if(Helper::verif_alpha(Input::post('paleopathologiste'), 'alpha') != false) {
-			// 		$paleopathologiste=Helper::verif_alpha(Input::post('paleopathologiste'), 'alpha');
-			// 		$valeurs.='&paleopathologiste='.$paleopathologiste;
-			// 	}
-			// 	else $erreurs.="&erreur_alpha_paleo";
-			// }
-
-			// if(!empty(Input::post('bibliographie'))) {
-			// 	$bibliographie=trim(strip_tags(Input::post('bibliographie')));
-			// 	$valeurs.='&bibliographie='.$bibliographie;
-			// }
-			#endregion
-
-			// //Si erreur est non vide, nous serrons redirigés avec les erreurs et les valeurs dans l'url pour les garder en mémoire
-			// if ($erreurs!="") {
-			// 	Response::redirect('/operations/edit/operation/'.$id.'?'.$erreurs.''.$valeurs.'');
-			// 	die;
-			// }
-
-			// //Permet de récupérer le nom de la commune
-			// $query = DB::query('SELECT nom FROM commune WHERE id='.$id_commune.'');
-			// $nom_commune = $query->execute();
-			// $nom_commune=$nom_commune->_results[0]['nom'];
-			// //Initialise le nom de l'opération
-			// $nom_op= $nom_commune.', '.$adresse.', '.$annee;
-			// //Met à jour l'opération
-			// $operation=DB::update('operations')->set(array('nom_op' => $nom_op,'a_revoir'=>$a_revoir,'annee'=>$annee,'id_commune'=> $id_commune,'adresse'=>$adresse,'X'=>$X,'Y'=>$Y,'id_organisme'=>$organisme, 'id_type_op'=>$type_operation,'EA'=>$EA,'OA'=>$OA,'patriarche'=>$patriarche,'numero_operation'=>$num_op,'arrete_prescription'=>$prescription,'responsable_op'=>$RO,'anthropologue'=>$anthropologue,'paleopathologiste'=>$paleopathologiste,'bibliographie'=>$bibliographie))->where('id_site',$id)->execute();
-
-			// Response::redirect('/operations?&success_modif');
-		}
-
-		$data = array('operation'=> $operation);
+		$data = array('operation'=> $operation, 'errors' => $errors);
 		$this->template->title = 'Modification de l\'opération '.$id;
 		$this->template->content=View::forge('operations/edit',$data);
 	}

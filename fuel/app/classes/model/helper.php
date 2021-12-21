@@ -112,4 +112,13 @@ class Helper {
 		echo "</pre>";
 	}
 
+	/** Affiche une alert bootstrap. */
+	public static function alertBootstrap(string $text, string $color) {
+		$text = str_replace("<br>", "fjsqlkfjmldsjklqs", $text);
+		echo '
+			<div class="alert alert-' . $color . ' alert-dismissible text-center my-2 fade show" role="alert">
+				' . $text . '
+				<button type="button" class="btn-close" data-dismiss="alert" aria-label="Fermer">
+			</div>';
+	}
 }

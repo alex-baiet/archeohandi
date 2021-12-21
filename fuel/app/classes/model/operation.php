@@ -2,6 +2,7 @@
 
 namespace Model;
 
+use Fuel\Core\DB;
 use Fuel\Core\Model;
 
 /** Représentation d'une opération dans la base de données. */
@@ -129,7 +130,7 @@ class Operation extends Model {
 		if (!isset($this->organisme)) $this->organisme = Organisme::fetchSingle($this->idOrganisme);
 		return $this->organisme;
 	}
-	
+
 	/**
 	 * Vérifie que toutes les valeurs sont correctes.
 	 * @return true|string Renvoie un string contenant un message d'erreurs en cas de test non passant, ou l'opération en cas de succès.
@@ -146,13 +147,10 @@ class Operation extends Model {
 		$res = Helper::verif_alpha($this->adresse, 'alphatout');
 		if ($res === false) $this->invalidate("L'adresse contient des caractères interdit.");
 		$this->adresse = $res;
-
 		// Test année
 		if (!Helper::stringIsInt($this->annee)) $this->invalidate("L'année indiquée doit être un nombre.");
-
 		// Test position X
 		if (!is_numeric($this->x)) $this->invalidate("La position sur x (longitude) indiquée doit être un nombre.");
-
 		// Test position Y
 		if (!is_numeric($this->y)) $this->invalidate("La position sur y (latitude) indiquée doit être un nombre.");
 
@@ -232,11 +230,17 @@ class Operation extends Model {
 		// Cas données non valide
 		if (!$this->validated) return false;
 
-		// Maj des données en ligne
+		if (Operation::fetchSingle($this->idSite) === null) {
+			// L'opération n'existe pas : on la rajoute à la BDD
+			echo "Operation::saveOnDB ne permet pas encore de sauvergarder des nouvelles données.<br>";
+		}
+		else {
+			// L'opération existe : on la met à jour
+			$res = DB::update("operations")->set($this->toArray())->where("id_site", $this->idSite)->execute();
+		}
 
 		// Tout s'est bien passé.
 		return true;
-		
 	}
 
 	/** Ajoute les données de l'array donnée à l'objet. Pratique pour les POST et GET. */
@@ -263,7 +267,43 @@ class Operation extends Model {
 		$this->anthropologue = array_key_exists("anthropologue", $data) ? $data["anthropologue"] : $this->anthropologue;
 		$this->paleopathologiste = array_key_exists("paleopathologiste", $data) ? $data["paleopathologiste"] : $this->paleopathologiste;
 		$this->bibliographie = array_key_exists("bibliographie", $data) ? $data["bibliographie"] : $this->bibliographie;
+	}
 
+	/** Affiche une alert bootstrap seulement si des erreurs existent. */
+	public function alertBootstrap(string $type) {
+		if ($this->validate() !== true) {
+			echo '
+				<div class="alert alert-' . $type . ' alert-dismissible text-center my-2 fade show" role="alert">
+					' . $this->invalidReason . '
+					<button type="button" class="btn-close" data-dismiss="alert" aria-label="Fermer">
+				</div>';
+		}
+	}
+
+	/** Renvoie l'array des données représentant l'objet. */
+	public function toArray(): array {
+		return array(
+			"id_site" => $this->idSite,
+			"id_user" => $this->idUser,
+			"nom_op" => $this->nomOp,
+			"a_revoir" => $this->aRevoir,
+			"annee" => $this->annee,
+			"id_commune" => $this->idCommune,
+			"adresse" => $this->adresse,
+			"X" => $this->x,
+			"Y" => $this->y,
+			"id_organisme" => $this->idOrganisme,
+			"id_type_op" => $this->idTypeOp,
+			"EA" => $this->EA,
+			"OA" => $this->OA,
+			"patriarche" => $this->patriarche,
+			"numero_operation" => $this->numeroOperation,
+			"arrete_prescription" => $this->arretePrescription,
+			"responsable_op" => $this->responsableOp,
+			"anthropologue" => $this->anthropologue,
+			"paleopathologiste" => $this->paleopathologiste,
+			"bibliographie" => $this->bibliographie,
+		);
 	}
 
 	/** Annule la validation de l'objet. */
