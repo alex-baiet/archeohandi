@@ -1,9 +1,9 @@
 <!-- Contenu de la page partie opération -->
 <div class="" id="ajout_operation">
   <div class="container">
-    <h1 class="m-2">Ajout d'une opération <a class="btn btn-sm btn-secondary" href="/public/add/operation">Rafraichir la page <i class="bi bi-arrow-repeat"></i></a></h1>
+    <h1 class="m-2">Ajout d'une opération <a class="btn btn-sm btn-secondary" href="/public/operations/add">Rafraichir la page <i class="bi bi-arrow-repeat"></i></a></h1>
     <p class="text-muted">Ici vous pouvez ajouter une opération de façon simplifiée. Pour aller plus vite, vous pouvez utiliser la touche TAB <?= Asset::img('TAB.jpg', array('width' => '75px', 'height' => '35px')); ?> pour aller d'un champs texte à un autre.</p>
-    <?= Form::open(array('action' => 'add/operation', 'method' => 'POST'));
+    <?= Form::open(array('action' => 'operations/add', 'method' => 'POST'));
 
     //Permet de vérifier si dans l'url il y a les différentes options et si oui, cela appel une fonction qui permet d'afficher un message d'erreur ou d'information
     array_key_exists('erreur_alpha_adresse', $_GET) ? alertBootstrap('L\'adresse ne correspond pas au pattern de validation (De A à Z, a à z, 0 à 9, l\'espace et les caractères suivant: àáâãäåçèéêëìíîïðòóôõöùúûüýÿ sont autorisés)', 'info') : null;
@@ -278,7 +278,7 @@
                     endif; ?></h4>
     <p class="text-muted">Ici vous pouvez ajouter des sujets handicapés.</p>
     <div class="container" style="background-color: #F5F5F5;">
-      <?= Form::open(array('action' => 'add/operation', 'method' => 'POST')); ?>
+      <?= Form::open(array('action' => 'operations/add', 'method' => 'POST')); ?>
       <div class="contenu" id="contenu">
         <?php //Appel la fonction quand l'utilsateur continu après l'ajout d'une opération
         if ($erreur_operation == 0) : echo afficherLigne(1, $chronologie, $type_depot, $type_sepulture, $diagnostic, $accessoire, $localisation_atteinte, $appareil_compensatoire, $pathologie, 0);
