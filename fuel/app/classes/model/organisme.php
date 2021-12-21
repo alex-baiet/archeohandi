@@ -2,6 +2,7 @@
 
 namespace Model;
 
+use Fuel\Core\Form;
 use Fuel\Core\Model;
 
 /** Représentation d'un organisme dans la base de données. */
@@ -30,6 +31,36 @@ class Organisme extends Model {
 
 		$obj = new Organisme($res);
 		return $obj;
+	}
+
+	/** Créer un <select> à partir de tous les organismes. */
+	public static function generateSelect($field = "organisme", $idSelectedOrga = "") {
+		// Récupération de tous les organismes
+		/** @var Organisme[] */
+		$organismes = array();
+		$results = Helper::querySelect("SELECT * FROM organisme;");
+		foreach ($results as $result) {
+			$organismes[] = new Organisme($result);
+		}
+		
+		// Création des options
+		$options = array();
+		$options[""] = "Sélectionner";
+		foreach ($organismes as $organisme) {
+			$options[$organisme->getId()] = $organisme->getNom();
+		}
+		
+		// Création du code HTML
+		$html = '<div class="form-floating">';
+		$html .= Form::select(
+			$field,
+			$idSelectedOrga,
+			$options,
+			array("class" => "form-select my-4")
+		);
+		$html .= Form::label('Organisme', $field);
+		$html .= '</div>';
+		return $html;
 	}
 
 	public function getId() { return $this->id; }
