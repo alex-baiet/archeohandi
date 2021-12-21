@@ -1,6 +1,7 @@
 <?php
 
 use Fuel\Core\Asset;
+use Model\Helper;
 use Model\Operation;
 use Model\Sujethandicape;
 use Model\Typedepot;
@@ -21,12 +22,13 @@ $sujets = $sujets;
 	<p class="text-muted">Ici vous retrouvez toutes les informations de l'opération <strong><?= $operation->getNomOp(); ?></strong>.
 	</p>
 	<?php
-	array_key_exists('erreur_supp_sujet', $_GET) ? alertBootstrap('Le numéro du sujet n\'est pas correcte (nombres autorisés). La suppression ne peut pas s\'effectuer', 'danger') : null;
-	array_key_exists('erreur_supp_bdd', $_GET) ? alertBootstrap('Le numéro du sujet n\'existe pas. La suppression ne peut pas s\'effectuer', 'danger') : null;
+	array_key_exists('erreur_supp_sujet', $_GET) ? Helper::alertBootstrap('Le numéro du sujet n\'est pas correcte (nombres autorisés). La suppression ne peut pas s\'effectuer', 'danger') : null;
+	array_key_exists('erreur_supp_bdd', $_GET) ? Helper::alertBootstrap('Le numéro du sujet n\'existe pas. La suppression ne peut pas s\'effectuer', 'danger') : null;
 
-	array_key_exists('success_ajout', $_GET) ? alertBootstrap('Ajout effectué', 'success') : null;
-	array_key_exists('success_modif', $_GET) ? alertBootstrap('Modification effectuée', 'success') : null;
-	array_key_exists('success_supp_sujet', $_GET) ? alertBootstrap('Suppression effectuée', 'success') : null; ?>
+	array_key_exists('success_ajout', $_GET) ? Helper::alertBootstrap('Ajout effectué', 'success') : null;
+	array_key_exists('success_modif', $_GET) ? Helper::alertBootstrap('Modification effectuée', 'success') : null;
+	array_key_exists('success_supp_sujet', $_GET) ? Helper::alertBootstrap('Suppression effectuée', 'success') : null;
+	?>
 
 	<!-- Contenu de la page. Affichage des informations de l'opération -->
 	<div class="container" style="background-color: #F5F5F5;">
@@ -164,12 +166,4 @@ endif; ?>
 		}
 	});
 </script>
-<?php //Fonction permettant d'afficher un message d'alert
-function alertBootstrap($text, $color)
-{
-	echo '<div class="alert alert-' . $color . ' alert-dismissible text-center my-2 fade show" role="alert">
-		' . $text . '
-		<button type="button" class="btn-close" data-dismiss="alert" aria-label="Fermer">
-		</div>';
-} ?>
 <?= Asset::css('scrollbar.css'); ?>

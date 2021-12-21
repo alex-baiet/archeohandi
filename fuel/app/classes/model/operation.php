@@ -146,7 +146,7 @@ class Operation extends Model {
 		// Test pour l'adresse
 		$res = Helper::verif_alpha($this->adresse, 'alphatout');
 		if ($res === false) $this->invalidate("L'adresse contient des caractères interdit.");
-		$this->adresse = $res;
+		else $this->adresse = $res;
 		// Test année
 		if (!Helper::stringIsInt($this->annee)) $this->invalidate("L'année indiquée doit être un nombre.");
 		// Test position X
@@ -169,42 +169,42 @@ class Operation extends Model {
 		// Test EA
 		$res = Helper::verif_alpha($this->EA, 'alphanum');
 		if ($res === false) $this->invalidate("La valeur \"EA\" contient des caractères interdit.");
-		$this->EA = $res;
+		else $this->EA = $res;
 
 		// Test OA
 		$res = Helper::verif_alpha($this->OA, 'alphanum');
 		if ($res === false) $this->invalidate("La valeur \"OA\" contient des caractères interdit.");
-		$this->OA = $res;
+		else $this->OA = $res;
 
 		// Test patriarche
 		$res = Helper::verif_alpha($this->patriarche, 'alphanum');
 		if ($res === false) $this->invalidate("Le patriarche contient des caractères interdit.");
-		$this->patriarche = $res;
+		else $this->patriarche = $res;
 
 		// Test numero operation
 		$res = Helper::verif_alpha($this->numeroOperation, 'alphanum');
 		if ($res === false) $this->invalidate("Le numéro d'opération contient des caractères interdit.");
-		$this->numeroOperation = $res;
+		else $this->numeroOperation = $res;
 
 		// Test arrete prescription
 		$res = Helper::verif_alpha($this->arretePrescription, 'alphanum');
 		if ($res === false) $this->invalidate("L'arrete de prescription contient des caractères interdit.");
-		$this->arretePrescription = $res;
+		else $this->arretePrescription = $res;
 
 		// Test responsable
 		$res = Helper::verif_alpha($this->responsableOp, 'alpha');
 		if ($res === false) $this->invalidate("Le nom du responsable contient des caractères interdit.");
-		$this->responsableOp = $res;
+		else $this->responsableOp = $res;
 
 		// Test anthropologue
 		$res = Helper::verif_alpha($this->anthropologue, 'alpha');
 		if ($res === false) $this->invalidate("Le nom de l'anthropologue contient des caractères interdit.");
-		$this->anthropologue = $res;
+		else $this->anthropologue = $res;
 
 		// Test paleopathologiste
 		$res = Helper::verif_alpha($this->paleopathologiste, 'alpha');
 		if ($res === false) $this->invalidate("Le nom du paléopathologiste contient des caractères interdit.");
-		$this->paleopathologiste = $res;
+		else $this->paleopathologiste = $res;
 
 		// Correction bibliographie
 		$this->bibliographie = Helper::secureString($this->bibliographie);
