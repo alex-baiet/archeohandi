@@ -11,8 +11,11 @@ class Helper {
 
 	/**
 	 * Permet de vérifier si ce qui est envoyé correspond à des caractères valides.
+	 * @return string|false Renvoie false uniquement si le texte n'est pas conforme,
+	 * ou renvoie le texte corrigé (si il est corrigeable).
 	 */
-	static function verif_alpha($str, $type) {
+	static function verif_alpha($str, $type = "alphatout") {
+		if (empty($str)) return "";
 		//Enlève les espaces, tabulations, etc au début et fin de la chaine de caractère
 		trim($str);
 		strip_tags($str);
@@ -21,7 +24,26 @@ class Helper {
 		if ($type == "alphatout") preg_match('/([^A-Za-z0-9àáâãäåçèéêëìíîïðòóôõöùúûüýÿ ])/', $str, $result);
 		if ($type == "alphanum") preg_match('/([^A-Za-z0-9,-;()\/ ])/', $str, $result);
 		if (!empty($result)) return false;
-		else return $str;
+		return $str;
+	}
+
+	/** Vérifie que la valeur représente un nombre entier. */
+	static function stringIsInt(string $value) {
+		return is_numeric($value) && strpos($value, '.') === false;
+	}
+
+	/** Renvoie la chaîne dans un format plus sécurisé en supprimant les tags HTML et les caractères inutiles. */
+	static function secureString(string $value): string {
+		return trim(strip_tags($value));
+	}
+
+	/**
+	 * Renvoie une valeur de l'array, ou null si la valeur n'existe pas.
+	 * @return string La valeur est retourné si elle existe, sinon un string vide est retourné.
+	 */
+	static function arrayGetString($key, array $array): string {
+		if (array_key_exists($key, $array)) return $array[$key];
+		return "";
 	}
 
 	/**

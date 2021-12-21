@@ -1,19 +1,19 @@
 <?php
 
 use Fuel\Core\Controller_Template;
-use Fuel\Core\Form;
 use Fuel\Core\Response;
+use Model\Helper;
+use Model\Operation;
 
 class Controller_Test extends Controller_Template {
 
 	public function action_index() {
 		$txt = "";
 
-		$v = array("a", "b", "c");
-
-		foreach ($v as $value) {
-			$txt = "$txt {$v[1]}";
-		}
+		Helper::varDump(Helper::stringIsInt("1.2"));
+		Helper::varDump(Helper::stringIsInt("1"));
+		$op = new Operation(array());
+		echo $op->validate();
 
 		return new Response($txt);
 	}
