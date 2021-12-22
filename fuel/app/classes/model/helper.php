@@ -42,7 +42,7 @@ class Helper {
 	 * @return string La valeur est retourné si elle existe, sinon un string vide est retourné.
 	 */
 	static function arrayGetString($key, array $array): string {
-		if (array_key_exists($key, $array)) return $array[$key];
+		if (array_key_exists($key, $array)) return $array[$key] !== null ? $array[$key] : "";
 		return "";
 	}
 

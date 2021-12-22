@@ -310,7 +310,9 @@ return array(
 			'Closure',
 			// A partir d'ici ce sont les classes personnelles
 			'Model\\Operation',
-			'Model\\Sujethandicape'
+			'Model\\Sujethandicape',
+			'Model\\Commune',
+			'Model\\Personne'
 		),
 	),
 

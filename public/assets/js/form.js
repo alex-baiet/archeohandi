@@ -41,3 +41,82 @@ function addPerson(name, nom) {
 function removePerson(name) {
 	$('#block_' + name).children().last().remove();
 }
+
+/**
+ * Ajoute l'autocomplétion à l'input donné en utilisant la base de données.
+ * 
+ * @param {string} id 
+ * @param {string} type 
+ */
+function addAutocomplete(id, type) {
+	// Récupération du champ
+	/** @type {HTMLFormElement} */
+	let input = document.getElementById(id);
+	if (input === null) {
+		console.error(`Le champ ${id} n'existe pas.`);
+		return;
+	}
+
+	// Création de la zone d'autocomplétion
+	let showList = document.createElement("div");
+	showList.className = "list-group";
+	showList.id = `${id}_list`;
+	showList.style.position = "absolute";
+	showList.style.zIndex = 1000;
+	input.parentNode.appendChild(showList);
+
+	// Assignation de l'action à faire à chaque modification du champ
+	input.onkeyup = function() {
+		let currentValue = input.value;
+    
+		if (currentValue != "") {
+			// Accès à la BDD via une autre page
+      $.ajax({
+        url: "https://archeohandi.huma-num.fr/public/fonction/action.php",
+        method: "POST",
+        data: {
+					id: id,
+					input: currentValue,
+					type: type
+				},
+        success: function (data) {
+					// Action effectué lors du retour de la reponse
+					showList.innerHTML = data;
+				}
+      });
+    }
+		else {
+			// Rien d'entré...
+      showList.innerHTML = "";
+    }
+	}
+
+	// Ajout action en cas de sélection d'une des autocomplétion
+	$(document).on("click", `.${id}-auto-complete`, function() {
+    input.value = $(this).text();
+    showList.innerHTML = "";
+  });
+}
+
+// function recherche_commune_depot(id){
+  
+//     $("#commune_depot_"+id).keyup(function () {
+//     var query = $(this).val();
+//     if (query != "") {
+//       $.ajax({
+//         url: "https://archeohandi.huma-num.fr/public/fonction/action.php",
+//         method: "POST",
+//         data: {query:query},
+//         success: function (data) { $("#show-list-depot_"+id).html(data); }
+//       });
+//     } else {
+//       $("#show-list-depot_"+id).html("");
+//     }
+//   });
+
+
+//   $(document).on("click", "a", function () {
+//     $("#commune_depot_"+id).val($(this).text());
+//     $("#show-list-depot_"+id).html("");
+//   });
+// }

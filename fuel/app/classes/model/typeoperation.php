@@ -61,7 +61,7 @@ class Typeoperation extends Model {
 			$field,
 			$idSelected,
 			$options,
-			array("class" => "form-select my-4")
+			array("class" => "form-select")
 		);
 		$html .= Form::label("Type d'opération", $field);
 		$html .= '</div>';

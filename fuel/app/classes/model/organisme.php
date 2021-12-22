@@ -61,7 +61,7 @@ class Organisme extends Model {
 			$field,
 			$idSelected,
 			$options,
-			array("class" => "form-select my-4")
+			array("class" => "form-select")
 		);
 		$html .= Form::label('Organisme', $field);
 		$html .= '</div>';

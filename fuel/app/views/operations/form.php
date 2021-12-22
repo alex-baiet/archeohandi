@@ -15,7 +15,9 @@ $defaultAttr = array("type" => "text", "class" => "form-control", "placeholder" 
 
 ?>
 
-<?= Asset::js("form.js"); ?>
+<?=
+Asset::js("form.js");
+?>
 
 <?= Form::open(array('action' => 'operations/edit/' . $operation->getIdSite() . '', 'method' => 'POST')); ?>
 <?php $operation->alertBootstrap("danger"); ?>
@@ -53,18 +55,16 @@ $defaultAttr = array("type" => "text", "class" => "form-control", "placeholder" 
 		<?= Form::label('À revoir', 'a_revoir'); ?>
 		<?= Form::textarea("a_revoir", $operation->getARevoir(), array("class" => "form-control")); ?>
 	</div>
-	<div class="row">
+
+	<div class="row my-4">
 		<div class="col-md-4">
 			<div class="form-floating">
-				<?= Form::input("commune", $operation->getCommune()->getNom(), array("type" => "text", "class" => "form-control my-4")); ?>
-				<!-- <input type="text" name="commune" id="commune" class="form-control border-info my-4" placeholder="Rechercher une commune ..." autocomplete="off" value="<?php // echo $nom_commune; ?>" required> -->
+				<?= Form::input("commune", $operation->getCommune()->getNom(), array("type" => "text", "class" => "form-control", "placeholder" => "")); ?>
 				<?= Form::label('Commune', 'commune'); ?>
-			</div>
-			<div class="col-md-auto">
-				<!-- Zone d'autocomplétion ...? -->
-				<!-- <div class="list-group" id="show-list"></div> -->
+				<script>addAutocomplete("form_commune", "commune");</script>
 			</div>
 		</div>
+
 		<div class="col-md-4">
 			<?= Organisme::generateSelect("id_organisme", $operation->getIdOrganisme()); ?>
 		</div>
@@ -72,6 +72,7 @@ $defaultAttr = array("type" => "text", "class" => "form-control", "placeholder" 
 			<?= Typeoperation::generateSelect("id_type_op", $operation->getIdTypeOp()); ?>
 		</div>
 	</div>
+
 	<div class="row my-2">
 		<div class="col-md-4">
 			<div class="form-floating">
@@ -106,10 +107,14 @@ $defaultAttr = array("type" => "text", "class" => "form-control", "placeholder" 
 			</div>
 		</div>
 	</div>
-	
+
 	<div class="row my-2">
 		<div class="col-md-6">
-			<?= Personne::generateSelect("id_responsable_op", "Responsable de l'opération", $operation->getIdResponsableOp()); ?>
+			<div class="form-floating">
+				<?= Form::input("id_reponsable_op", $operation->getIdResponsableOp(), array("type" => "text", "class" => "form-control", "placeholder" => "")); ?>
+				<?= Form::label("Responsable de l'opération", "id_responsable_op"); ?>
+				<script>addAutocomplete("form_id_reponsable_op", "personne");</script>
+			</div>
 		</div>
 	</div>
 

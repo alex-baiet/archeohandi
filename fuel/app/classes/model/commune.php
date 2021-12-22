@@ -18,17 +18,17 @@ class Commune extends Model {
 	private $population;
 
 	public function __construct(array $values) {
-		$this->id = $values["id"];
-		$this->x = $values["x"];
-		$this->y = $values["y"];
-		$this->z = $values["z"];
-		$this->codePostal = $values["code_postal"];
-		$this->nom = $values["nom"];
-		$this->departement = $values["departement"];
-		$this->region = $values["region"];
-		$this->pays = $values["pays"];
-		$this->superficie = $values["superficie"];
-		$this->population = $values["population"];
+		$this->id = Helper::arrayGetString("id", $values);
+		$this->x = Helper::arrayGetString("x", $values);
+		$this->y = Helper::arrayGetString("y", $values);
+		$this->z = Helper::arrayGetString("z", $values);
+		$this->codePostal = Helper::arrayGetString("code_postal", $values);
+		$this->nom = Helper::arrayGetString("nom", $values);
+		$this->departement = Helper::arrayGetString("departement", $values);
+		$this->region = Helper::arrayGetString("region", $values);
+		$this->pays = Helper::arrayGetString("pays", $values);
+		$this->superficie = Helper::arrayGetString("superficie", $values);
+		$this->population = Helper::arrayGetString("population", $values);
 	}
 
 	/**
