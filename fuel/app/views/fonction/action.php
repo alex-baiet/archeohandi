@@ -11,17 +11,19 @@ $communes = $communes;
 /** @var Personne[] */
 $people = $people;
 
+$attributs = "class='list-group-item list-group-item-action border-1 $id-auto-complete' style='cursor: pointer;'";
+
 ?>
 
 <?php if ($type === "commune"): ?>
 	<?php foreach ($communes as $com): // Affichage de tous les résultats pour les communes ?>
-		<a class="list-group-item list-group-item-action border-1 <?= $id ?>-auto-complete"><?= $com->getNom() ?> (<?= $com->getDepartement() ?>)</a>
+		<a <?= $attributs ?>><?= $com->getNom() ?> (<?= $com->getDepartement() ?>)</a>
 	<?php endforeach; ?>
 <?php endif; ?>
 
 <?php if ($type === "personne"): ?>
 	<?php foreach ($people as $person): // Affichage de tous les résultats pour les personnes ?>
-		<a class="list-group-item list-group-item-action border-1 <?= $id ?>-auto-complete"><?= $person->getNom() ?> <?= $person->getPrenom() ?></a>
+		<a <?= $attributs ?>><?= $person->getNom() ?> <?= $person->getPrenom() ?></a>
 	<?php endforeach; ?>
 <?php endif; ?>
 

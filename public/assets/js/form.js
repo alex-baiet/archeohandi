@@ -2,13 +2,60 @@
 Contient des scripts d'édition de formulaire.
 */
 
+/** @type {Map<string, int>} Contient les dernier numéro des champs de persones créé. */
+var lastPersonNum = new Map();
+
+/**
+ * Ajoute un champ texte pour une liste d'input.
+ * 
+ * @param {string} id nom de l'attribut "name".
+ * @param {string} nom Juste pour avoir un beau label.
+ */
+function addPerson(id, nom) {
+	// Maj numéro
+	if (!lastPersonNum.has(id)) lastPersonNum.set(id, 1);
+	else lastPersonNum.set(id, lastPersonNum.get(id) + 1);
+	let num = lastPersonNum.get(id);
+
+	// Récupération de l'input original et copie
+	let originalInput = document.getElementById(`${id}_0`);
+	let original = originalInput.parentNode;
+	let originalLabel = document.getElementById(`${id}_label_0`);
+	let copy = original.cloneNode(false);
+	let copyInput = originalInput.cloneNode(false);
+	let copyLabel = originalLabel.cloneNode(true);
+	copy.appendChild(copyInput);
+	copy.appendChild(copyLabel);
+
+	// Modidification de la copie
+	copyInput.id = `${id}_${num}`;
+	copyInput.value = "";
+
+	console.log(copyLabel);
+	copyLabel.id = `${id}_label_${num}`;
+	copyLabel.htmlFor = `${id}_${num}`;
+	
+	// Ajout de la copie
+	original.parentNode.appendChild(copy);
+	addAutocomplete(`form_id_anthropologue_${num}`, "personne");
+}
+
+/**
+ * Supprime un champ d'une liste d'input.
+ * 
+ * @param {string} name 
+ */
+function removePerson(name) {
+	$('#block_' + name).children().last().remove();
+}
+
 /**
  * Ajoute un champ texte pour une liste d'input.
  * 
  * @param {string} name nom de l'attribut "name".
  * @param {string} nom Juste pour avoir un beau label.
  */
-function addPerson(name, nom) {
+function addPersonOld(name, nom) {
 	var newDiv = document.createElement('div');
 	newDiv.classList.add('col-md-12');
 
@@ -38,7 +85,7 @@ function addPerson(name, nom) {
  * 
  * @param {string} name 
  */
-function removePerson(name) {
+function removePersonOld(name) {
 	$('#block_' + name).children().last().remove();
 }
 

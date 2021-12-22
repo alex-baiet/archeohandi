@@ -118,23 +118,44 @@ Asset::js("form.js");
 		</div>
 	</div>
 
+	<!-- Anthropologues -->
+	<?php
+	/** Créer les attributs pour les inputs des anthropologues et paleopathologistes. */
+	function generateAttr(string $id) {
+		return array("type" => "text", "class" => "form-control", "placeholder" => "", "id" => $id);
+	}
+
+	$anthropologues = $operation->getAnthropologues();
+	$defaultVal = count($anthropologues) > 0 ? $anthropologues[0]->getId() : "";
+	?>
 	<div class="row my-2">
 		<div class="col-md-6">
-			<?php
-			$people = $operation->getAnthropologues();
-			$defaultVal = count($people) > 0 ? $people[0]->getId() : "";
-			?>
-			<?= Personne::generateSelect("id_anthropologue[]", "Anthropologue", $defaultVal); ?>
-			<div id="block_anthropologue"></div>
+			<?php if (count($anthropologues) === 0): // Pas d'anthropologue : on créer un champ vide ?>
+				<div class="form-floating">
+					<?= Form::input("id_anthropologue[]", "", generateAttr("form_id_anthropologue_0")); ?>
+					<?= Form::label("Anthropologue", "id_anthropologue_0", array("id" => "form_id_anthropologue_label_0")); ?>
+				</div>
+				<script>addAutocomplete("form_id_anthropologue_0", "personne");</script>
+			<?php else: $i=0; // Création de tous les anthropologues ?>
+				<?php foreach ($anthropologues as $anthropo): ?>
+					<div class="form-floating">
+						<?= Form::input("id_anthropologue[]", $anthropologues[0]->getPrenom(), generateAttr("form_id_anthropologue_$i")); ?>
+						<?= Form::label("Anthropologue", "id_anthropologue_$i", array("id" => "form_id_anthropologue_label_$i")); ?>
+					</div>
+					<script>addAutocomplete("form_id_anthropologue_<?= $i ?>", "personne");</script>
+				<?php $i++; endforeach; ?>
+			<?php endif; ?>
 		</div>
+
 		<div class="col-md-6">
 			<div class="d-grid gap-2 d-md-flex my-2">
-				<button type="button" class="btn btn-primary me-md-2" onclick="addPerson('anthropologue', 'Anthropologue (Prénom NOM)');"><i class="bi bi-plus"></i></button>
-				<button type="button" class="btn btn-danger" onclick="removePerson('anthropologue');"><i class="bi bi-x"></i></button>
+				<button type="button" class="btn btn-primary me-md-2" onclick="addPerson('form_id_anthropologue');"><i class="bi bi-plus"></i></button>
+				<button type="button" class="btn btn-danger" onclick="removePerson('form_id_anthropologue');"><i class="bi bi-x"></i></button>
 			</div>
 		</div>
 	</div>
 
+	<!-- Paleopathologistes -->
 	<div class="row my-2">
 		<div class="col-md-6">
 			<div class="form-floating">
@@ -145,8 +166,8 @@ Asset::js("form.js");
 		</div>
 		<div class="col-md-6">
 			<div class="d-grid gap-2 d-md-flex my-2">
-				<button type="button" class="btn btn-primary me-md-2" onclick="addPerson('paleopathologiste', 'Paleopathologiste (Prénom NOM)');"><i class="bi bi-plus"></i></button>
-				<button type="button" class="btn btn-danger" onclick="ajout_supp_anthropo_et_paleo('paleopathologiste');"><i class="bi bi-x"></i></button>
+				<button type="button" class="btn btn-primary me-md-2" onclick="addPersonOld('paleopathologiste', 'Paleopathologiste (Prénom NOM)');"><i class="bi bi-plus"></i></button>
+				<button type="button" class="btn btn-danger" onclick="removePersonOld('paleopathologiste');"><i class="bi bi-x"></i></button>
 			</div>
 		</div>
 	</div>
