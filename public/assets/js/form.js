@@ -11,7 +11,7 @@ var lastPersonNum = new Map();
  * @param {string} id nom de l'attribut "name".
  * @param {string} nom Juste pour avoir un beau label.
  */
-function addPerson(id, nom) {
+function addPerson(id) {
 	// Maj numéro
 	if (!lastPersonNum.has(id)) lastPersonNum.set(id, 1);
 	else lastPersonNum.set(id, lastPersonNum.get(id) + 1);
@@ -31,7 +31,6 @@ function addPerson(id, nom) {
 	copyInput.id = `${id}_${num}`;
 	copyInput.value = "";
 
-	console.log(copyLabel);
 	copyLabel.id = `${id}_label_${num}`;
 	copyLabel.htmlFor = `${id}_${num}`;
 	
@@ -43,10 +42,22 @@ function addPerson(id, nom) {
 /**
  * Supprime un champ d'une liste d'input.
  * 
- * @param {string} name 
+ * @param {string} id
  */
-function removePerson(name) {
-	$('#block_' + name).children().last().remove();
+function removePerson(id) {
+	// Récupération de l'élément à supprimer
+	let toRemove = document.getElementById(`${id}_0`).parentElement.parentElement.lastElementChild;
+
+	// Test pour savoir si on peur le supprimer
+	for (const child of toRemove.children) {
+		if (child.id === `${id}_0`) {
+			console.log("Vous essayer de retirer le dernier champ... Action annulé.");
+			return;
+		}
+	}
+
+	// Suppression de l'élément
+	toRemove.remove();
 }
 
 /**
