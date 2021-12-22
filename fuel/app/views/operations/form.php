@@ -1,13 +1,21 @@
 <?php
 
+use Fuel\Core\Asset;
 use Fuel\Core\Form;
+use Model\Operation;
 use Model\Organisme;
+use Model\Personne;
 use Model\Typeoperation;
+
+/** @var Operation */
+$operation = $operation;
 
 /** Array des attributs les plus communs. */
 $defaultAttr = array("type" => "text", "class" => "form-control", "placeholder" => "");
 
 ?>
+
+<?= Asset::js("form.js"); ?>
 
 <?= Form::open(array('action' => 'operations/edit/' . $operation->getIdSite() . '', 'method' => 'POST')); ?>
 <?php $operation->alertBootstrap("danger"); ?>
@@ -58,23 +66,29 @@ $defaultAttr = array("type" => "text", "class" => "form-control", "placeholder" 
 			</div>
 		</div>
 		<div class="col-md-4">
-			<?= Organisme::generateSelect("organisme", $operation->getIdOrganisme()); ?>
+			<?= Organisme::generateSelect("id_organisme", $operation->getIdOrganisme()); ?>
 		</div>
 		<div class="col-md-4">
-			<?= Typeoperation::generateSelect("type_operation", $operation->getIdTypeOp()); ?>
+			<?= Typeoperation::generateSelect("id_type_op", $operation->getIdTypeOp()); ?>
 		</div>
 	</div>
 	<div class="row my-2">
-		<div class="col-md-6">
+		<div class="col-md-4">
 			<div class="form-floating">
 				<?= Form::input("EA", $operation->getEA(), $defaultAttr); ?>
 				<?= Form::label('EA', 'EA'); ?>
 			</div>
 		</div>
-		<div class="col-md-6">
+		<div class="col-md-4">
 			<div class="form-floating">
 				<?= Form::input("OA", $operation->getOA(), $defaultAttr); ?>
 				<?= Form::label('OA', 'OA'); ?>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="form-floating">
+				<?= Form::input("numero_operation", $operation->getNumeroOperation(), $defaultAttr); ?>
+				<?= Form::label('Numéro d\'opération', 'numero_operation'); ?>
 			</div>
 		</div>
 	</div>
@@ -87,39 +101,50 @@ $defaultAttr = array("type" => "text", "class" => "form-control", "placeholder" 
 		</div>
 		<div class="col-md-6">
 			<div class="form-floating">
-				<?= Form::input("numero_operation", $operation->getNumeroOperation(), $defaultAttr); ?>
-				<?= Form::label('Numéro d\'opération', 'numero_operation'); ?>
-			</div>
-		</div>
-	</div>
-	<div class="row my-2">
-		<div class="col-md-6">
-			<div class="form-floating">
 				<?= Form::input("arrete_prescription", $operation->getArretePrescription(), $defaultAttr); ?>
 				<?= Form::label('Arrêté de prescription', 'arrete_prescription'); ?>
 			</div>
 		</div>
+	</div>
+	
+	<div class="row my-2">
 		<div class="col-md-6">
-			<div class="form-floating">
-				<?= Form::input("responsable_op", $operation->getResponsableOp(), $defaultAttr); ?>
-				<?= Form::label('Responsable de l\'opération', 'responsable_op'); ?>
-			</div>
+			<?= Personne::generateSelect("id_responsable_op", "Responsable de l'opération", $operation->getIdResponsableOp()) // Form::input("responsable_op", $operation->getResponsableOp(), $defaultAttr); ?>
 		</div>
 	</div>
+
 	<div class="row my-2">
 		<div class="col-md-6">
 			<div class="form-floating">
-				<?= Form::input("anthropologue", $operation->getAnthropologue(), $defaultAttr); ?>
-				<?= Form::label('Anthropologue (Nom Prénom, etc.)', 'anthropologue'); ?>
+				<?= /* Personne::generateSelect("personne", $operation->getIdResponsableOp()) */Form::input("anthropologue", $operation->getAnthropologue(), $defaultAttr); ?>
+				<?= Form::label('Anthropologue (Prénom NOM)', 'anthropologue'); ?>
 			</div>
+			<div id="block_anthropologue"></div>
 		</div>
 		<div class="col-md-6">
-			<div class="form-floating">
-				<?= Form::input("paleopathologiste", $operation->getPaleopathologiste(), $defaultAttr); ?>
-				<?= Form::label('Paléopathologiste (Nom Prénom, etc.)', 'paleopathologiste'); ?>
+			<div class="d-grid gap-2 d-md-flex my-2">
+				<button type="button" class="btn btn-primary me-md-2" onclick="addPerson('anthropologue', 'Anthropologue (Prénom NOM)');"><i class="bi bi-plus"></i></button>
+				<button type="button" class="btn btn-danger" onclick="removePerson('anthropologue');"><i class="bi bi-x"></i></button>
 			</div>
 		</div>
 	</div>
+
+	<div class="row my-2">
+		<div class="col-md-6">
+			<div class="form-floating">
+				<?= Form::input("paleopathologiste", $operation->getPaleopathologiste(), $defaultAttr); ?>
+				<?= Form::label('Paléopathologiste (Nom Prénom)', 'paleopathologiste'); ?>
+			</div>
+			<div class="paleopathologiste" id="block_paleopathologiste"></div>
+		</div>
+		<div class="col-md-6">
+			<div class="d-grid gap-2 d-md-flex my-2">
+				<button type="button" class="btn btn-primary me-md-2" onclick="addPerson('paleopathologiste', 'Paleopathologiste (Prénom NOM)');"><i class="bi bi-plus"></i></button>
+				<button type="button" class="btn btn-danger" onclick="ajout_supp_anthropo_et_paleo('paleopathologiste');"><i class="bi bi-x"></i></button>
+			</div>
+		</div>
+	</div>
+
 	<div class="col-md-12">
 		<?= Form::label('Bibliographie', 'bibliographie'); ?>
 		<?= Form::textarea("bibliographie", $operation->getBibliographie(), array("class" => "form-control")); ?>

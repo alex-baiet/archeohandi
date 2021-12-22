@@ -31,7 +31,7 @@ class Personne extends Model {
 		$res = Helper::querySelectSingle("SELECT * FROM personne WHERE id=$id;");
 		if ($res === null) return null;
 
-		$obj = new Organisme($res);
+		$obj = new Personne($res);
 		return $obj;
 	}
 
@@ -39,22 +39,23 @@ class Personne extends Model {
 	 * Créer un <select> à partir de toutes les personnes.
 	 * 
 	 * @param string $field Valeur du "name" du select.
+	 * @param string $label Nom du label du select.
 	 * @param mixed $idSelected Identifiant de la valeur sélectionnée.
 	 */
-	public static function generateSelect(string $field = "personne", $idSelected = ""): string {
-		// Récupération de tous les organismes
+	public static function generateSelect(string $field = "personne", string $label = "Personne", $idSelected = ""): string {
+		// Récupération de tous les objects
 		/** @var Personne[] */
-		$organismes = array();
+		$objects = array();
 		$results = Helper::querySelect("SELECT * FROM personne;");
 		foreach ($results as $result) {
-			$organismes[] = new Personne($result);
+			$objects[] = new Personne($result);
 		}
 		
 		// Création des options
 		$options = array();
 		$options[""] = "Sélectionner";
-		foreach ($organismes as $organisme) {
-			$options[$organisme->getId()] = "{$organisme->getPrenom()} {$organisme->getNom()}";
+		foreach ($objects as $obj) {
+			$options[$obj->getId()] = "{$obj->getPrenom()} {$obj->getNom()}";
 		}
 		
 		// Création du code HTML
@@ -63,9 +64,9 @@ class Personne extends Model {
 			$field,
 			$idSelected,
 			$options,
-			array("class" => "form-select my-4")
+			array("class" => "form-select my-2")
 		);
-		$html .= Form::label('Organisme', $field);
+		$html .= Form::label($label, $field);
 		$html .= '</div>';
 		return $html;
 	}

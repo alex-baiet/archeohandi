@@ -24,11 +24,13 @@ class Operation extends Model {
 	private $patriarche;
 	private $numeroOperation;
 	private $arretePrescription;
-	private $responsableOp;
+	private $idResponsableOp;
 	private $anthropologue;
 	private $paleopathologiste;
 	private $bibliographie;
 
+	/** @var Personne|undefined */
+	private $responsableOp;
 	/** @var Commune|undefined */
 	private $commune;
 	/** @var Typeoperation|undefined */
@@ -67,7 +69,8 @@ class Operation extends Model {
 		$this->patriarche = Helper::arrayGetString("patriarche", $data);
 		$this->numeroOperation = Helper::arrayGetString("numero_operation", $data);
 		$this->arretePrescription = Helper::arrayGetString("arrete_prescription", $data);
-		$this->responsableOp = Helper::arrayGetString("responsable_op", $data);
+		$this->idResponsableOp = intval(Helper::arrayGetString("id_responsable_op", $data));
+		// $this->responsableOp = Helper::arrayGetString("responsable_op", $data);
 		$this->anthropologue = Helper::arrayGetString("anthropologue", $data);
 		$this->paleopathologiste = Helper::arrayGetString("paleopathologiste", $data);
 		$this->bibliographie = Helper::arrayGetString("bibliographie", $data);
@@ -105,7 +108,7 @@ class Operation extends Model {
 	public function getPatriarche() { return $this->patriarche; }
 	public function getNumeroOperation() { return $this->numeroOperation; }
 	public function getArretePrescription() { return $this->arretePrescription; }
-	public function getResponsableOp() { return $this->responsableOp; }
+	public function getIdResponsableOp() { return $this->idResponsableOp; }
 	public function getAnthropologue() { return $this->anthropologue; }
 	public function getPaleopathologiste() { return $this->paleopathologiste; }
 	public function getBibliographie() { return $this->bibliographie; }
@@ -131,6 +134,13 @@ class Operation extends Model {
 	public function getOrganisme() {
 		if (!isset($this->organisme)) $this->organisme = Organisme::fetchSingle($this->idOrganisme);
 		return $this->organisme;
+	}
+	/**
+	 * @return Personne|null
+	 */
+	public function getResponsableOp() {
+		if (!isset($this->responsableOp)) $this->responsableOp = Personne::fetchSingle($this->idResponsableOp);
+		return $this->responsableOp;
 	}
 
 	/**
@@ -197,9 +207,10 @@ class Operation extends Model {
 		else $this->arretePrescription = $res;
 
 		// Test responsable
-		$res = Helper::verif_alpha($this->responsableOp, 'alpha');
-		if ($res === false) $this->invalidate("Le nom du responsable contient des caractères interdit.");
-		else $this->responsableOp = $res;
+		// $res = Helper::verif_alpha($this->responsableOp, 'alpha');
+		// if ($res === false) $this->invalidate("Le nom du responsable contient des caractères interdit.");
+		// else $this->responsableOp = $res;
+		if ($this->getResponsableOp() === null) $this->invalidate("Le responsable n'existe pas.");
 
 		// Test anthropologue
 		$res = Helper::verif_alpha($this->anthropologue, 'alpha');
@@ -268,7 +279,7 @@ class Operation extends Model {
 		$this->patriarche = array_key_exists("patriarche", $data) ? $data["patriarche"] : $this->patriarche;
 		$this->numeroOperation = array_key_exists("numero_operation", $data) ? $data["numero_operation"] : $this->numeroOperation;
 		$this->arretePrescription = array_key_exists("arrete_prescription", $data) ? $data["arrete_prescription"] : $this->arretePrescription;
-		$this->responsableOp = array_key_exists("responsable_op", $data) ? $data["responsable_op"] : $this->responsableOp;
+		$this->idResponsableOp = array_key_exists("id_responsable_op", $data) ? intval($data["id_responsable_op"]) : $this->idResponsableOp;
 		$this->anthropologue = array_key_exists("anthropologue", $data) ? $data["anthropologue"] : $this->anthropologue;
 		$this->paleopathologiste = array_key_exists("paleopathologiste", $data) ? $data["paleopathologiste"] : $this->paleopathologiste;
 		$this->bibliographie = array_key_exists("bibliographie", $data) ? $data["bibliographie"] : $this->bibliographie;
@@ -304,7 +315,7 @@ class Operation extends Model {
 			"patriarche" => $this->patriarche,
 			"numero_operation" => $this->numeroOperation,
 			"arrete_prescription" => $this->arretePrescription,
-			"responsable_op" => $this->responsableOp,
+			"id_responsable_op" => $this->idResponsableOp,
 			"anthropologue" => $this->anthropologue,
 			"paleopathologiste" => $this->paleopathologiste,
 			"bibliographie" => $this->bibliographie,
