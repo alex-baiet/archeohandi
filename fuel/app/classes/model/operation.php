@@ -25,18 +25,23 @@ class Operation extends Model {
 	private $numeroOperation;
 	private $arretePrescription;
 	private $idResponsableOp;
-	private $anthropologue;
+	// private $anthropologue;
 	private $paleopathologiste;
 	private $bibliographie;
 
-	/** @var Personne|undefined */
-	private $responsableOp;
-	/** @var Commune|undefined */
-	private $commune;
-	/** @var Typeoperation|undefined */
-	private $typeOp;
-	/** @var Organisme|undefined */
-	private $organisme;
+	/** @var string[]|null */
+	private $idAnthropologues = null;
+
+	/** @var Commune|null */
+	private $commune = null;
+	/** @var Typeoperation|null */
+	private $typeOp = null;
+	/** @var Organisme|null */
+	private $organisme = null;
+	/** @var Personne|null */
+	private $responsableOp = null;
+	/** @var Personne[]|null */
+	private $anthropologues = null;
 
 	/**
 	 * Indique que l'objet est valide pour la base de données.
@@ -70,8 +75,7 @@ class Operation extends Model {
 		$this->numeroOperation = Helper::arrayGetString("numero_operation", $data);
 		$this->arretePrescription = Helper::arrayGetString("arrete_prescription", $data);
 		$this->idResponsableOp = intval(Helper::arrayGetString("id_responsable_op", $data));
-		// $this->responsableOp = Helper::arrayGetString("responsable_op", $data);
-		$this->anthropologue = Helper::arrayGetString("anthropologue", $data);
+		$this->idAnthropologues = Helper::arrayGetArray("id_anthropologues[]", $data);
 		$this->paleopathologiste = Helper::arrayGetString("paleopathologiste", $data);
 		$this->bibliographie = Helper::arrayGetString("bibliographie", $data);
 	}
@@ -109,7 +113,7 @@ class Operation extends Model {
 	public function getNumeroOperation() { return $this->numeroOperation; }
 	public function getArretePrescription() { return $this->arretePrescription; }
 	public function getIdResponsableOp() { return $this->idResponsableOp; }
-	public function getAnthropologue() { return $this->anthropologue; }
+	// public function getAnthropologue() { return $this->anthropologue; }
 	public function getPaleopathologiste() { return $this->paleopathologiste; }
 	public function getBibliographie() { return $this->bibliographie; }
 	#endregion
@@ -118,29 +122,60 @@ class Operation extends Model {
 	 * @return Commune|null
 	 */
 	public function getCommune() {
-		if (!isset($this->commune)) $this->commune = Commune::fetchSingle($this->idCommune);
+		if ($this->commune === null) $this->commune = Commune::fetchSingle($this->idCommune);
 		return $this->commune;
 	}
 	/**
 	 * @return Typeoperation|null
 	 */
 	public function getTypeOperation() {
-		if (!isset($this->typeOp)) $this->typeOp = Typeoperation::fetchSingle($this->idTypeOp);
+		if ($this->typeOp === null) $this->typeOp = Typeoperation::fetchSingle($this->idTypeOp);
 		return $this->typeOp;
 	}
 	/**
 	 * @return Organisme|null
 	 */
 	public function getOrganisme() {
-		if (!isset($this->organisme)) $this->organisme = Organisme::fetchSingle($this->idOrganisme);
+		if ($this->organisme === null) $this->organisme = Organisme::fetchSingle($this->idOrganisme);
 		return $this->organisme;
 	}
 	/**
 	 * @return Personne|null
 	 */
 	public function getResponsableOp() {
-		if (!isset($this->responsableOp)) $this->responsableOp = Personne::fetchSingle($this->idResponsableOp);
+		if ($this->responsableOp === null) $this->responsableOp = Personne::fetchSingle($this->idResponsableOp);
 		return $this->responsableOp;
+	}
+	/**
+	 * @return Personne[]
+	 */
+	public function getAnthropologues() {
+		// Anthropologues déjà définis : on renvoie directement le résultat
+		if ($this->anthropologues !== null) return $this->anthropologues;
+
+		$this->anthropologues = array();
+
+		// Récupération des anthropologues selon les id définis dans l'objet
+		if ($this->idAnthropologues !== null) {
+			foreach ($this->idAnthropologues as $id) {
+				$person = Personne::fetchSingle($id);
+				if ($person !== null) $this->anthropologues[] = $person;
+			}
+		}
+
+		// Récupération des anthropologues déjà défini sur la BDD si aucun n'est donnée
+		else {
+			$this->idAnthropologues = array();
+			$results = Helper::querySelect("SELECT * FROM etre_anthropologue WHERE id_operation={$this->idSite};");
+			foreach ($results as $res) {
+				$person = Personne::fetchSingle($res["id_personne"]);
+				if ($person !== null) {
+					$this->idAnthropologues[] = $person->getId();
+					$this->anthropologues[] = $person;
+				}
+			}
+		}
+		return $this->anthropologues;
 	}
 
 	/**
@@ -207,15 +242,12 @@ class Operation extends Model {
 		else $this->arretePrescription = $res;
 
 		// Test responsable
-		// $res = Helper::verif_alpha($this->responsableOp, 'alpha');
-		// if ($res === false) $this->invalidate("Le nom du responsable contient des caractères interdit.");
-		// else $this->responsableOp = $res;
 		if ($this->getResponsableOp() === null) $this->invalidate("Le responsable n'existe pas.");
 
-		// Test anthropologue
-		$res = Helper::verif_alpha($this->anthropologue, 'alpha');
-		if ($res === false) $this->invalidate("Le nom de l'anthropologue contient des caractères interdit.");
-		else $this->anthropologue = $res;
+		// Test anthropologues
+		// $res = Helper::verif_alpha($this->anthropologue, 'alpha');
+		// if ($res === false) $this->invalidate("Le nom de l'anthropologue contient des caractères interdit.");
+		// else $this->anthropologue = $res;
 
 		// Test paleopathologiste
 		$res = Helper::verif_alpha($this->paleopathologiste, 'alpha');
@@ -262,27 +294,35 @@ class Operation extends Model {
 	/** Ajoute les données de l'array donnée à l'objet. Pratique pour les POST et GET. */
 	public function mergeValues(array $data) {
 		$this->resetValidation();
+		
+		// Suppression des valeurs obsolètes
+		$this->commune = null;
+		$this->typeOp = null;
+		$this->organisme = null;
+		$this->responsableOp = null;
+		$this->anthropologues = null;
 
-		$this->idSite = array_key_exists("id_site", $data) ? $data["id_site"] : $this->idSite;
-		$this->idUser = array_key_exists("id_user", $data) ? $data["id_user"] : $this->idUser;
-		$this->nomOp = array_key_exists("nom_op", $data) ? $data["nom_op"] : $this->nomOp;
-		$this->aRevoir = array_key_exists("a_revoir", $data) ? $data["a_revoir"] : $this->aRevoir;
-		$this->annee = array_key_exists("annee", $data) ? $data["annee"] : $this->annee;
-		$this->idCommune = array_key_exists("id_commune", $data) ? intval($data["id_commune"]) : $this->idCommune;
-		$this->adresse = array_key_exists("adresse", $data) ? $data["adresse"] : $this->adresse;
-		$this->x = array_key_exists("X", $data) ? $data["X"] : $this->x;
-		$this->y = array_key_exists("Y", $data) ? $data["Y"] : $this->y;
-		$this->idOrganisme = array_key_exists("id_organisme", $data) ? intval($data["id_organisme"]) : $this->idOrganisme;
-		$this->idTypeOp = array_key_exists("id_type_op", $data) ? intval($data["id_type_op"]) : $this->idTypeOp;
-		$this->EA = array_key_exists("EA", $data) ? $data["EA"] : $this->EA;
-		$this->OA = array_key_exists("OA", $data) ? $data["OA"] : $this->OA;
-		$this->patriarche = array_key_exists("patriarche", $data) ? $data["patriarche"] : $this->patriarche;
-		$this->numeroOperation = array_key_exists("numero_operation", $data) ? $data["numero_operation"] : $this->numeroOperation;
-		$this->arretePrescription = array_key_exists("arrete_prescription", $data) ? $data["arrete_prescription"] : $this->arretePrescription;
-		$this->idResponsableOp = array_key_exists("id_responsable_op", $data) ? intval($data["id_responsable_op"]) : $this->idResponsableOp;
-		$this->anthropologue = array_key_exists("anthropologue", $data) ? $data["anthropologue"] : $this->anthropologue;
-		$this->paleopathologiste = array_key_exists("paleopathologiste", $data) ? $data["paleopathologiste"] : $this->paleopathologiste;
-		$this->bibliographie = array_key_exists("bibliographie", $data) ? $data["bibliographie"] : $this->bibliographie;
+		// Fusion des valeurs
+		if (array_key_exists("id_site", $data)) $this->idSite = $data["id_site"];
+		if (array_key_exists("id_user", $data)) $this->idUser = $data["id_user"];
+		if (array_key_exists("nom_op", $data)) $this->nomOp = $data["nom_op"];
+		if (array_key_exists("a_revoir", $data)) $this->aRevoir = $data["a_revoir"];
+		if (array_key_exists("annee", $data)) $this->annee = $data["annee"];
+		if (array_key_exists("id_commune", $data)) $this->idCommune = intval($data["id_commune"]);
+		if (array_key_exists("adresse", $data)) $this->adresse = $data["adresse"];
+		if (array_key_exists("X", $data)) $this->x = $data["X"];
+		if (array_key_exists("Y", $data)) $this->y = $data["Y"];
+		if (array_key_exists("id_organisme", $data)) $this->idOrganisme = intval($data["id_organisme"]);
+		if (array_key_exists("id_type_op", $data)) $this->idTypeOp = intval($data["id_type_op"]);
+		if (array_key_exists("EA", $data)) $this->EA = $data["EA"];
+		if (array_key_exists("OA", $data)) $this->OA = $data["OA"];
+		if (array_key_exists("patriarche", $data)) $this->patriarche = $data["patriarche"];
+		if (array_key_exists("numero_operation", $data)) $this->numeroOperation = $data["numero_operation"];
+		if (array_key_exists("arrete_prescription", $data)) $this->arretePrescription = $data["arrete_prescription"];
+		if (array_key_exists("id_responsable_op", $data)) $this->idResponsableOp = intval($data["id_responsable_op"]);
+		if (array_key_exists("id_anthropologues[]", $data)) $this->idAnthropologues = $data["id_anthropologues[]"];
+		if (array_key_exists("paleopathologiste", $data)) $this->paleopathologiste = $data["paleopathologiste"];
+		if (array_key_exists("bibliographie", $data)) $this->bibliographie = $data["bibliographie"];
 	}
 
 	/** Affiche une alert bootstrap seulement si des erreurs existent. */

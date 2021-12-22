@@ -109,16 +109,17 @@ $defaultAttr = array("type" => "text", "class" => "form-control", "placeholder" 
 	
 	<div class="row my-2">
 		<div class="col-md-6">
-			<?= Personne::generateSelect("id_responsable_op", "Responsable de l'opération", $operation->getIdResponsableOp()) // Form::input("responsable_op", $operation->getResponsableOp(), $defaultAttr); ?>
+			<?= Personne::generateSelect("id_responsable_op", "Responsable de l'opération", $operation->getIdResponsableOp()); ?>
 		</div>
 	</div>
 
 	<div class="row my-2">
 		<div class="col-md-6">
-			<div class="form-floating">
-				<?= /* Personne::generateSelect("personne", $operation->getIdResponsableOp()) */Form::input("anthropologue", $operation->getAnthropologue(), $defaultAttr); ?>
-				<?= Form::label('Anthropologue (Prénom NOM)', 'anthropologue'); ?>
-			</div>
+			<?php
+			$people = $operation->getAnthropologues();
+			$defaultVal = count($people) > 0 ? $people[0]->getId() : "";
+			?>
+			<?= Personne::generateSelect("id_anthropologue[]", "Anthropologue", $defaultVal); ?>
 			<div id="block_anthropologue"></div>
 		</div>
 		<div class="col-md-6">

@@ -47,6 +47,15 @@ class Helper {
 	}
 
 	/**
+	 * Renvoie une valeur de l'array, ou null si la valeur n'existe pas.
+	 * @return array|null La valeur est retourné si elle existe, sinon un null est retourné.
+	 */
+	static function arrayGetArray($key, array $array) {
+		if (array_key_exists($key, $array)) return $array[$key];
+		return null;
+	}
+
+	/**
 	 * Fait la requête SELECT donnée et renvoie le résultat directement sous forme d'un array.
 	 * 
 	 * @param string $sql
