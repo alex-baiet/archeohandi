@@ -5,20 +5,16 @@ use Fuel\Core\Form;
 use Fuel\Core\Response;
 use Model\Helper;
 use Model\Operation;
+use Model\Personne;
 
 class Controller_Test extends Controller_Template {
-
-	private function test(&$array) {
-		$array = array("vldfhfjkshjogsd,,,");
-	}
 
 	public function action_index() {
 		$txt = "";
 
-		$arr = null;
-		$this->test($arr);
+		$res = Personne::nameToId("Alex BALAIS");
 
-		Helper::varDump($arr);
+		Helper::varDump($res);
 
 		return new Response($txt);
 	}

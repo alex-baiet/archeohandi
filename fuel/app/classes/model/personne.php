@@ -3,6 +3,7 @@
 namespace Model;
 
 use Fuel\Core\Form;
+use Fuel\Core\FuelException;
 use Fuel\Core\Model;
 
 /** Représentation d'une personne dans la base de données. */
@@ -37,6 +38,7 @@ class Personne extends Model {
 
 	/**
 	 * Créer un <select> à partir de toutes les personnes.
+	 * @deprecated Une methode javascript existe pour faire une autocomplétion meilleure.
 	 * 
 	 * @param string $field Valeur du "name" du select.
 	 * @param string $label Nom du label du select.
@@ -69,6 +71,26 @@ class Personne extends Model {
 		$html .= Form::label($label, $field);
 		$html .= '</div>';
 		return $html;
+	}
+
+	/**
+	 * Récupère l'id à partir du nom de la personne.
+	 * 
+	 * @param string Le nom de la personne, au format "Prénom NOM".
+	 * @return int id de la personne en cas de succès.
+	 * @return false Si aucune personne ne correspond au paramètre donné.
+	 */
+	public static function nameToId(string $name) {
+		// Test du format (à compléter)
+		if (strpos($name, " ") === false) {
+			throw new FuelException("Le nom \"$name\" n'est pas au bon format.");
+		}
+
+		$names = explode(" ", $name);
+
+		$res = Helper::querySelectSingle("SELECT id FROM personne WHERE prenom=\"{$names[0]}\" AND nom=\"$names[1]\"");
+		if ($res === null) return false;
+		return intval($res["id"]);
 	}
 
 	public function getId() { return $this->id; }
