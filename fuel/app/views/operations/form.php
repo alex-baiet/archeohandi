@@ -59,7 +59,7 @@ Asset::js("form.js");
 	<div class="row my-4">
 		<div class="col-md-4">
 			<div class="form-floating">
-				<?= Form::input("commune", $operation->getCommune()->getNom(), array("type" => "text", "class" => "form-control", "placeholder" => "")); ?>
+				<?= Form::input("commune", $operation->getCommune()->getNom().', '.$operation->getCommune()->getDepartement(), array("type" => "text", "class" => "form-control", "placeholder" => "")); ?>
 				<?= Form::label('Commune', 'commune'); ?>
 				<script>addAutocomplete("form_commune", "commune");</script>
 			</div>

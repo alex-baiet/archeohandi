@@ -4,6 +4,7 @@ use Fuel\Core\Controller_Template;
 use Fuel\Core\DB;
 use Fuel\Core\Input;
 use Fuel\Core\Response;
+use Fuel\Core\View;
 
 class Controller_Add extends Controller_Template {
 

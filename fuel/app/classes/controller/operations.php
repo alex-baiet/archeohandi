@@ -1,7 +1,6 @@
 <?php
 
 use Fuel\Core\Controller_Template;
-use Fuel\Core\Database_Query_Builder_Insert;
 use Fuel\Core\Database_Result;
 use Fuel\Core\DB;
 use Fuel\Core\Input;
@@ -12,7 +11,7 @@ use Model\Operation;
 use Model\Sujethandicape;
 
 class Controller_Operations extends Controller_Template {
-	private const DEBUG = false;
+	private const DEBUG = true;
 
 	/**
 	 * Récupère toutes les opérations en fonction des options de filtre entrées.

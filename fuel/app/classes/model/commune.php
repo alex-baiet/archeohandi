@@ -2,7 +2,9 @@
 
 namespace Model;
 
+use Fuel\Core\FuelException;
 use Fuel\Core\Model;
+use InvalidArgumentException;
 
 class Commune extends Model {
 	private $id;
@@ -43,6 +45,26 @@ class Commune extends Model {
 		$res = Helper::querySelectSingle("SELECT * FROM commune WHERE id=$id;");
 		if ($res === null) return null;
 		return new Commune($res);
+	}
+
+	/**
+	 * Récupère l'id de la commune à partie du nom donné.
+	 * 
+	 * @param string $name Nom de la commune au format "Nom-de-la-Commune, Département"
+	 * @return int Identifiant de la commune
+	 * @return false En cas d'échec.
+	 */
+	public static function nameToId(string $name) {
+		// Vérification du format du nom
+		if (empty($name) || $name === ", ") return false;
+		if (strpos($name, ", ") === false) throw new InvalidArgumentException("$name n'est pas au bon format.");
+
+		// Récupération de l'id
+		$names = explode(", ", $name);
+		$res = Helper::querySelectSingle("SELECT id FROM commune WHERE nom=\"{$names[0]}\" AND departement=\"{$names[1]}\"");
+
+		if (count($res) === 0) return false;
+		return $res["id"];
 	}
 
 	public function getId() { return $this->id; }

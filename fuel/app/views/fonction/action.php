@@ -19,7 +19,7 @@ $attributs = "class='list-group-item list-group-item-action border-1 $id-auto-co
 
 <?php if ($type === "commune"): ?>
 	<?php for ($i=0; $i<count($communes) && $i<$maxResultCount; $i++): // Affichage de tous les résultats pour les communes ?>
-		<a <?= $attributs ?>><?= $communes[$i]->getNom() ?> (<?= $communes[$i]->getDepartement() ?>)</a>
+		<a <?= $attributs ?>><?= $communes[$i]->getNom() ?>, <?= $communes[$i]->getDepartement() ?></a>
 	<?php endfor; ?>
 <?php endif; ?>
 
