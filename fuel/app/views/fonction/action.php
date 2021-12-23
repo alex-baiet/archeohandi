@@ -10,21 +10,23 @@ $type = $type;
 $communes = $communes;
 /** @var Personne[] */
 $people = $people;
+/** @var int */
+$maxResultCount = $maxResultCount;
 
 $attributs = "class='list-group-item list-group-item-action border-1 $id-auto-complete' style='cursor: pointer;'";
 
 ?>
 
 <?php if ($type === "commune"): ?>
-	<?php foreach ($communes as $com): // Affichage de tous les résultats pour les communes ?>
-		<a <?= $attributs ?>><?= $com->getNom() ?> (<?= $com->getDepartement() ?>)</a>
-	<?php endforeach; ?>
+	<?php for ($i=0; $i<count($communes) && $i<$maxResultCount; $i++): // Affichage de tous les résultats pour les communes ?>
+		<a <?= $attributs ?>><?= $communes[$i]->getNom() ?> (<?= $communes[$i]->getDepartement() ?>)</a>
+	<?php endfor; ?>
 <?php endif; ?>
 
 <?php if ($type === "personne"): ?>
-	<?php foreach ($people as $person): // Affichage de tous les résultats pour les personnes ?>
-		<a <?= $attributs ?>><?= $person->getNom() ?> <?= $person->getPrenom() ?></a>
-	<?php endforeach; ?>
+	<?php for ($i=0; $i<count($people) && $i<$maxResultCount; $i++): // Affichage de tous les résultats pour les personnes ?>
+		<a <?= $attributs ?>><?= $people[$i]->getNom() ?> <?= $people[$i]->getPrenom() ?></a>
+	<?php endfor; ?>
 <?php endif; ?>
 
 <?php if (count($communes) === 0 && count($people) === 0): // Cas pas de résultats trouvés ?>

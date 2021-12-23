@@ -21,6 +21,8 @@ class Controller_Fonction extends Controller {
     $type = Input::post("type");
     /** Debut de texte a autocompléter */
     $input = Input::post("input");
+    /** @var int */
+    $maxResultCount = Input::post("max_result_count") !== null ? Input::post("max_result_count") : 10;
 
     /** @var Commune[] */
     $communes = array();
@@ -44,7 +46,8 @@ class Controller_Fonction extends Controller {
       "id" => $id,
       "type" => $type,
       "communes" => $communes,
-      "people" => $people
+      "people" => $people,
+      "maxResultCount" => $maxResultCount
     )));
   }
 }

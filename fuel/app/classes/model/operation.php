@@ -297,7 +297,10 @@ class Operation extends Model {
 		}
 		else {
 			// L'opération existe : on la met à jour
-			$res = DB::update("operations")->set($this->toArray())->where("id_site", $this->idSite)->execute();
+			$arr = $this->toArray();
+			unset($arr["id_anthropologue[]"]);
+			unset($arr["id_paleopathologiste[]"]);
+			$res = DB::update("operations")->set($arr)->where("id_site", $this->idSite)->execute();
 		}
 
 		// Tout s'est bien passé.
@@ -333,8 +336,8 @@ class Operation extends Model {
 		if (array_key_exists("numero_operation", $data)) $this->numeroOperation = $data["numero_operation"];
 		if (array_key_exists("arrete_prescription", $data)) $this->arretePrescription = $data["arrete_prescription"];
 		if (array_key_exists("id_responsable_op", $data)) $this->idResponsableOp = intval($data["id_responsable_op"]);
-		if (array_key_exists("id_anthropologues[]", $data)) $this->idAnthropologues = $data["id_anthropologues[]"];
-		if (array_key_exists("paleopathologiste", $data)) $this->paleopathologiste = $data["paleopathologiste"];
+		if (array_key_exists("id_anthropologue[]", $data)) $this->idAnthropologues = $data["id_anthropologues[]"];
+		if (array_key_exists("id_paleopathologiste[]", $data)) $this->paleopathologiste = $data["id_paleopathologiste[]"];
 		if (array_key_exists("bibliographie", $data)) $this->bibliographie = $data["bibliographie"];
 	}
 
@@ -369,8 +372,8 @@ class Operation extends Model {
 			"numero_operation" => $this->numeroOperation,
 			"arrete_prescription" => $this->arretePrescription,
 			"id_responsable_op" => $this->idResponsableOp,
-			"anthropologue" => $this->anthropologue,
-			"paleopathologiste" => $this->paleopathologiste,
+			"id_anthropologue[]" => $this->idAnthropologues,
+			"id_paleopathologiste[]" => $this->idPaleopathologistes,
 			"bibliographie" => $this->bibliographie,
 		);
 	}
