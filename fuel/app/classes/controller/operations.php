@@ -11,57 +11,46 @@ use Model\Operation;
 use Model\Sujethandicape;
 
 class Controller_Operations extends Controller_Template {
-	private const DEBUG = true;
-
-	/**
-	 * Récupère toutes les opérations en fonction des options de filtre entrées.
-	 * 
-	 * @return array
-	 */
-	private function getOperationArray(): array {
-		$operations = array();
-
-		// Cas ou aucun filtre n'est utilisé
-		if (Input::method() !== "POST") {
-			return Helper::querySelect("SELECT id_site, id_user, nom_op, annee, X, Y FROM operations");
-		} 
-
-		$filterId = Input::post("filter_id");
-		$filterUser = Input::post("filter_user");
-		$filterOp = Input::post("filter_op");
-		$filterYear = Input::post("filter_year");
-		$query = DB::select("id_site", "id_user", "nom_op", "annee", "X", "Y")->from("operations");
-		// Ajout des conditions à la requête
-		if (!empty($filterId)) $query->where("id_site", "=", $filterId);
-		if (!empty($filterUser)) $query->where("id_user", "=", $filterUser);
-		if (!empty($filterOp)) $query->where("nom_op", "=", $filterOp);
-		if (!empty($filterYear) || $filterYear === "0") $query->where("annee", "=", $filterYear);
-
-		/** @var Database_Result */
-		$res = $query->execute();
-
-		return $res->as_array();
-	}
+	private const DEBUG = false;
 
 	/** Page d'affichages de toutes les opérations */
 	public function action_index() {
-		//Permet de récupérer toutes les informations pour le système de filtre
-		$all_site = Helper::querySelectList("SELECT id_site FROM operations ORDER BY id_site ASC");
-		$all_user = Helper::querySelectList("SELECT DISTINCT id_user FROM operations ORDER BY id_user");
-		$all_nom_op = Helper::querySelectList("SELECT DISTINCT nom_op FROM operations ORDER BY nom_op");
-		$all_annee = Helper::querySelectList("SELECT annee FROM operations ORDER BY annee DESC");
+		// Récupération des opérations
+		$operations = Operation::fetchAll();
 
-		$all_site = Helper::arrayValuesAreKeys($all_site);
-		$all_user = Helper::arrayValuesAreKeys($all_user);
-		$all_nom_op = Helper::arrayValuesAreKeys($all_nom_op);
-		$all_annee = Helper::arrayValuesAreKeys($all_annee);
+		// Préparation des valeurs de recherches
+		$all_site = array();
+		foreach ($operations as $op) { $all_site[$op->getIdSite()] = $op->getIdSite(); }
+		$all_user = array();
+		foreach ($operations as $op) { $all_user[$op->getIdUser()] = $op->getIdUser(); }
+		$all_nom_op = array();
+		foreach ($operations as $op) { $all_nom_op[$op->getNomOp()] = $op->getNomOp(); }
+		$all_annee = array();
+		foreach ($operations as $op) { $all_annee[$op->getAnnee()] = $op->getAnnee(); }
 
 		$all_site[""] = "";
 		$all_user[""] = "";
 		$all_nom_op[""] = "";
 		$all_annee[""] = "";
-		
-		$operation = $this->getOperationArray();
+
+		// Tri selon la recherche
+		if (Input::method() === "GET") {
+			
+			$filterId = Input::get("filter_id");
+			$filterUser = Input::get("filter_user");
+			$filterOp = Input::get("filter_op");
+			$filterYear = Input::get("filter_year");
+
+			for ($i=count($operations) -1; $i >= 0; $i--) { 
+				$op = $operations[$i];
+				$toRemove = false;
+				if (!empty($filterId) && $op->getIdSite() != $filterId) $toRemove = true;
+				if (!empty($filterUser) && $op->getIdUser() != $filterUser) $toRemove = true;
+				if (!empty($filterOp) && $op->getNomOp() != $filterOp) $toRemove = true;
+				if ((!empty($filterYear) || $filterYear === "0") && $op->getAnnee() != $filterYear) $toRemove = true;
+				if ($toRemove) unset($operations[$i]);
+			}
+		}
 
 		// Permet de supprimer une opération quand le bouton de suppression est validée
 		// TODO: Supprimer POUR DE VRAI les données
@@ -83,7 +72,7 @@ class Controller_Operations extends Controller_Template {
 
 		// Ajout des valeurs à la view.
 		$data = array(
-			'operations' => $operation,
+			'operations' => $operations,
 			'all_site' => $all_site,
 			'all_user' => $all_user,
 			'all_nom_op' => $all_nom_op,

@@ -2,7 +2,18 @@
 
 use Fuel\Core\Asset;
 use Fuel\Core\Form;
+use Model\Operation;
 
+/** @var Operation[] */
+$operations = $operations;
+/** @var array */
+$all_site = $all_site;
+/** @var array */
+$all_user = $all_user;
+/** @var array */
+$all_nom_op = $all_nom_op;
+/** @var array */
+$all_annee = $all_annee;
 ?>
 
 <!-- Entête de la page -->
@@ -32,7 +43,7 @@ use Fuel\Core\Form;
 		?>
 
 		<div name="filtres_recherche" id="filtres_recherche" class="d-none mt-3">
-			<?= Form::open('/operations'); ?>
+			<?= Form::open(array("action" => "/operations", "method" => "GET")); ?>
 			<div class="form-group ml-3">
 
 				<!-- Champ ID de l'operation -->
@@ -95,25 +106,25 @@ use Fuel\Core\Form;
 						</tr>
 					</thead>
 					<tbody>
-						<?php foreach ($operations as $key) :  ?>
+						<?php foreach ($operations as $op) :  ?>
 							<tr class="text-center">
-								<?= '<td>' . $key['id_site'] . '</td>'; ?>
-								<?= '<td>' . $key['id_user'] . '</td>'; ?>
-								<?= '<td>' . $key['nom_op'] . '</td>'; ?>
-								<?= '<td>' . $key['annee'] . '</td>'; ?>
-								<?= '<td>' . $key['X'] . '</td>'; ?>
-								<?= '<td>' . $key['Y'] . '</td>'; ?>
+								<td><?= $op->getIdSite() ?></td>
+								<td><?= $op->getIdUser() ?></td>
+								<td><?= $op->getNomOp() ?></td>
+								<td><?= $op->getAnnee() ?></td>
+								<td><?= $op->getX() ?></td>
+								<td><?= $op->getY() ?></td>
 								<td class="col-auto">
-									<a title="Consulter #<?= $key['id_site']; ?>" href="/public/operations/view/<?= $key['id_site']; ?>">
+									<a title="Consulter #<?= $op->getIdSite(); ?>" href="/public/operations/view/<?= $op->getIdSite(); ?>">
 										<?= Asset::img("reply.svg", array("class"=>"icon see", "width" => "30px", "alt" => "Consulter")) ?>
 									</a>
-									<a class="" title="Editer #<?= $key['id_site']; ?>" href="/public/operations/edit/<?= $key['id_site']; ?>">
+									<a class="" title="Editer #<?= $op->getIdSite(); ?>" href="/public/operations/edit/<?= $op->getIdSite(); ?>">
 										<?= Asset::img("pen.svg", array("class"=>"icon edit", "width" => "24px", "alt" => "Éditer")) ?>
 									</a>
-									<form action="" method="post" id="form_suppr_<?= $key['id_site']; ?>">
-										<button type="button" class="btn" name="btn_supp_op" value="<?= $key['id_site']; ?>">
+									<form action="" method="post" id="form_suppr_<?= $op->getIdSite(); ?>">
+										<button type="button" class="btn" name="btn_supp_op" value="<?= $op->getIdSite(); ?>">
 											<?= Asset::img("trash.svg", array("class"=>"icon del", "width" => "25px", "alt" => "Supprimer")) ?>
-											<input type="hidden" name="supp_op" value="<?= $key['id_site']; ?>">
+											<input type="hidden" name="supp_op" value="<?= $op->getIdSite(); ?>">
 										</button>
 									</form>
 								</td>

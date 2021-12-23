@@ -11,7 +11,6 @@ class Operation extends Model {
 	#region Values
 	private $idSite;
 	private $idUser;
-	private $nomOp;
 	private $aRevoir;
 	private $annee;
 	private $idCommune;
@@ -78,7 +77,6 @@ class Operation extends Model {
 		// Fusion des valeurs
 		if (isset($data["id_site"])) $this->idSite = $data["id_site"];
 		if (isset($data["id_user"])) $this->idUser = $data["id_user"];
-		if (isset($data["nom_op"])) $this->nomOp = $data["nom_op"];
 		if (isset($data["a_revoir"])) $this->aRevoir = $data["a_revoir"];
 		if (isset($data["annee"])) $this->annee = $data["annee"];
 		if (isset($data["id_commune"])) $this->idCommune = intval($data["id_commune"]);
@@ -116,10 +114,22 @@ class Operation extends Model {
 		return $obj;
 	}
 
+	/**
+	 * Récupère TOUTES les opérations.
+	 * @return Operation[]
+	 */
+	public static function fetchAll() {
+		$results = Helper::querySelect("SELECT * FROM operations");
+		$operations = array();
+		foreach ($results as $res) {
+			$operations[] = new Operation($res);
+		}
+		return $operations;
+	}
+
 	#region Getters
 	public function getIdSite() { return $this->idSite; }
 	public function getIdUser() { return $this->idUser; }
-	public function getNomOp() { return $this->nomOp; }
 	public function getARevoir() { return $this->aRevoir; }
 	public function getAnnee() { return $this->annee; }
 	public function getIdCommune() { return $this->idCommune; }
@@ -137,6 +147,8 @@ class Operation extends Model {
 	public function getBibliographie() { return $this->bibliographie; }
 	#endregion
 
+	/** Créer un nom pour l'opération */
+	public function getNomOp(): string { return "{$this->getCommune()->getNom()}, {$this->adresse}, {$this->annee}"; }
 	/**
 	 * @return Commune|null
 	 */
@@ -360,7 +372,6 @@ class Operation extends Model {
 		return array(
 			"id_site" => $this->idSite,
 			"id_user" => $this->idUser,
-			"nom_op" => $this->nomOp,
 			"a_revoir" => $this->aRevoir,
 			"annee" => $this->annee,
 			"id_commune" => $this->idCommune,
