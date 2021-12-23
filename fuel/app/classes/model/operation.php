@@ -25,12 +25,12 @@ class Operation extends Model {
 	private $numeroOperation;
 	private $arretePrescription;
 	private $idResponsableOp;
-	// private $anthropologue;
-	private $paleopathologiste;
 	private $bibliographie;
 
 	/** @var string[]|null */
 	private $idAnthropologues = null;
+	/** @var string[]|null */
+	private $idPaleopathologistes = null;
 
 	/** @var Commune|null */
 	private $commune = null;
@@ -42,6 +42,8 @@ class Operation extends Model {
 	private $responsableOp = null;
 	/** @var Personne[]|null */
 	private $anthropologues = null;
+	/** @var Personne[]|null */
+	private $paleopathologistes = null;
 
 	/**
 	 * Indique que l'objet est valide pour la base de données.
@@ -63,19 +65,20 @@ class Operation extends Model {
 		$this->nomOp = Helper::arrayGetString("nom_op", $data);
 		$this->aRevoir = Helper::arrayGetString("a_revoir", $data);
 		$this->annee = Helper::arrayGetString("annee", $data);
-		$this->idCommune = intval(Helper::arrayGetString("id_commune", $data));
+		$this->idCommune = Helper::arrayGetInt("id_commune", $data);
 		$this->adresse = Helper::arrayGetString("adresse", $data);
 		$this->x = Helper::arrayGetString("X", $data);
 		$this->y = Helper::arrayGetString("Y", $data);
-		$this->idOrganisme = intval(Helper::arrayGetString("id_organisme", $data));
-		$this->idTypeOp = intval(Helper::arrayGetString("id_type_op", $data));
+		$this->idOrganisme = Helper::arrayGetInt("id_organisme", $data);
+		$this->idTypeOp = Helper::arrayGetInt("id_type_op", $data);
 		$this->EA = Helper::arrayGetString("EA", $data);
 		$this->OA = Helper::arrayGetString("OA", $data);
 		$this->patriarche = Helper::arrayGetString("patriarche", $data);
 		$this->numeroOperation = Helper::arrayGetString("numero_operation", $data);
 		$this->arretePrescription = Helper::arrayGetString("arrete_prescription", $data);
-		$this->idResponsableOp = intval(Helper::arrayGetString("id_responsable_op", $data));
-		$this->idAnthropologues = Helper::arrayGetArray("id_anthropologues[]", $data);
+		$this->idResponsableOp = Helper::arrayGetInt("id_responsable_op", $data);
+		$this->idAnthropologues = Helper::arrayGetArray("id_anthropologue[]", $data);
+		$this->idPaleopathologistes = Helper::arrayGetArray("id_paleopathologiste[]", $data);
 		$this->paleopathologiste = Helper::arrayGetString("paleopathologiste", $data);
 		$this->bibliographie = Helper::arrayGetString("bibliographie", $data);
 	}
@@ -113,8 +116,6 @@ class Operation extends Model {
 	public function getNumeroOperation() { return $this->numeroOperation; }
 	public function getArretePrescription() { return $this->arretePrescription; }
 	public function getIdResponsableOp() { return $this->idResponsableOp; }
-	// public function getAnthropologue() { return $this->anthropologue; }
-	public function getPaleopathologiste() { return $this->paleopathologiste; }
 	public function getBibliographie() { return $this->bibliographie; }
 	#endregion
 
@@ -147,35 +148,47 @@ class Operation extends Model {
 		return $this->responsableOp;
 	}
 	/**
+	 * Renvoie une liste de personne en fonction des différents paramètres données.
+	 * @param array|null &$ids Liste des identifiant définis.
+	 * @param array|null &$people Liste des personnes déjà récupérées.
+	 * @param array &$tableName Nom de la table où recherché en cas d'informations manquantes.
 	 * @return Personne[]
 	 */
-	public function getAnthropologues() {
-		// Anthropologues déjà définis : on renvoie directement le résultat
-		if ($this->anthropologues !== null) return $this->anthropologues;
+	private function getPersonnes(&$ids, &$people, string $tableName) {
+		// personnes déjà définis : on renvoie directement le résultat
+		if ($people !== null) return $people;
 
-		$this->anthropologues = array();
+		$people = array();
 
-		// Récupération des anthropologues selon les id définis dans l'objet
-		if ($this->idAnthropologues !== null) {
-			foreach ($this->idAnthropologues as $id) {
+		// Récupération des personnes selon les id définis dans l'objet
+		if ($ids !== null) {
+			foreach ($ids as $id) {
 				$person = Personne::fetchSingle($id);
-				if ($person !== null) $this->anthropologues[] = $person;
+				if ($person !== null) $people[] = $person;
 			}
 		}
 
-		// Récupération des anthropologues déjà défini sur la BDD si aucun n'est donnée
+		// Récupération des personnes déjà défini sur la BDD si aucun n'est donnée
 		else {
-			$this->idAnthropologues = array();
-			$results = Helper::querySelect("SELECT * FROM etre_anthropologue WHERE id_operation={$this->idSite};");
+			$ids = array();
+			$results = Helper::querySelect("SELECT * FROM $tableName WHERE id_operation={$this->idSite};");
 			foreach ($results as $res) {
 				$person = Personne::fetchSingle($res["id_personne"]);
 				if ($person !== null) {
-					$this->idAnthropologues[] = $person->getId();
-					$this->anthropologues[] = $person;
+					$ids[] = $person->getId();
+					$people[] = $person;
 				}
 			}
 		}
-		return $this->anthropologues;
+		return $people;
+	}
+	/** @return Personne[] */
+	public function getAnthropologues() {
+		return $this->getPersonnes($this->idAnthropologues, $this->anthropologues, "etre_anthropologue");
+	}
+	/** @return Personne[] */
+	public function getPaleopathologistes() {
+		return $this->getPersonnes($this->idPaleopathologistes, $this->paleopathologistes, "etre_paleopathologiste");
 	}
 
 	/**

@@ -8,23 +8,17 @@ use Model\Operation;
 
 class Controller_Test extends Controller_Template {
 
+	private function test(&$array) {
+		$array = array("vldfhfjkshjogsd,,,");
+	}
+
 	public function action_index() {
 		$txt = "";
 
-		// Helper::varDump(Helper::stringIsInt("1.2"));
-		// Helper::varDump(Helper::stringIsInt("1"));
-		// $op = new Operation(array());
-		// echo $op->validate();
+		$arr = null;
+		$this->test($arr);
 
-		Helper::varDump($_POST);
-
-		$txt .= Form::open(array('method' => 'POST'));
-
-		$txt .= "<input name='coucou[]'>";
-		$txt .= "<input name='coucou[]'>";
-		$txt .= Form::submit();
-
-		$txt .= Form::close();
+		Helper::varDump($arr);
 
 		return new Response($txt);
 	}

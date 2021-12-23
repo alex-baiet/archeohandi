@@ -15,9 +15,9 @@ class Personne extends Model {
 	 * Créer l'objet à partir des données en paramètre.
 	 */
 	public function __construct(array $data) {
-		$this->id = $data["id"];
-		$this->nom = $data["nom"];
-		$this->prenom = $data["prenom"];
+		$this->id = Helper::arrayGetInt("id", $data);
+		$this->nom = Helper::arrayGetString("nom", $data);
+		$this->prenom = Helper::arrayGetString("prenom", $data);
 	}
 
 	/**

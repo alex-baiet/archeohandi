@@ -39,7 +39,7 @@ function addPerson(id) {
 	
 	// Ajout de la copie
 	original.parentNode.appendChild(copy);
-	addAutocomplete(`form_id_anthropologue_${num}`, "personne");
+	addAutocomplete(`${id}_${num}`, "personne");
 }
 
 /**

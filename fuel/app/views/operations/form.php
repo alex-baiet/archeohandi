@@ -126,25 +126,17 @@ Asset::js("form.js");
 	}
 
 	$anthropologues = $operation->getAnthropologues();
-	$defaultVal = count($anthropologues) > 0 ? $anthropologues[0]->getId() : "";
+	if (count($anthropologues) === 0) $anthropologues[] = new Personne(array());
 	?>
 	<div class="row my-2">
 		<div class="col-md-6">
-			<?php if (count($anthropologues) === 0): // Pas d'anthropologue : on créer un champ vide ?>
+			<?php for ($i = 0; $i < count($anthropologues); $i++): ?>
 				<div class="form-floating">
-					<?= Form::input("id_anthropologue[]", "", generateAttr("form_id_anthropologue_0")); ?>
-					<?= Form::label("Anthropologue", "id_anthropologue_0", array("id" => "form_id_anthropologue_label_0")); ?>
+					<?= Form::input("id_anthropologue[]", $anthropologues[$i]->getPrenom(), generateAttr("form_id_anthropologue_$i")); ?>
+					<?= Form::label("Anthropologue", "id_anthropologue_$i", array("id" => "form_id_anthropologue_label_$i")); ?>
 				</div>
-				<script>addAutocomplete("form_id_anthropologue_0", "personne");</script>
-			<?php else: $i=0; // Création de tous les anthropologues ?>
-				<?php foreach ($anthropologues as $anthropo): ?>
-					<div class="form-floating">
-						<?= Form::input("id_anthropologue[]", $anthropologues[0]->getPrenom(), generateAttr("form_id_anthropologue_$i")); ?>
-						<?= Form::label("Anthropologue", "id_anthropologue_$i", array("id" => "form_id_anthropologue_label_$i")); ?>
-					</div>
-					<script>addAutocomplete("form_id_anthropologue_<?= $i ?>", "personne");</script>
-				<?php $i++; endforeach; ?>
-			<?php endif; ?>
+				<script>addAutocomplete("form_id_anthropologue_<?= $i ?>", "personne");</script>
+			<?php endfor; ?>
 		</div>
 
 		<div class="col-md-6">
@@ -156,18 +148,25 @@ Asset::js("form.js");
 	</div>
 
 	<!-- Paleopathologistes -->
+	<?php
+	$paleos = $operation->getPaleopathologistes();
+	if (count($paleos) === 0) $paleos[] = new Personne(array());
+	?>
 	<div class="row my-2">
 		<div class="col-md-6">
-			<div class="form-floating">
-				<?= Form::input("paleopathologiste", $operation->getPaleopathologiste(), $defaultAttr); ?>
-				<?= Form::label('Paléopathologiste (Nom Prénom)', 'paleopathologiste'); ?>
-			</div>
-			<div class="paleopathologiste" id="block_paleopathologiste"></div>
+			<?php for ($i = 0; $i < count($paleos); $i++): ?>
+				<div class="form-floating">
+					<?= Form::input("id_paleapathologiste[]", $paleos[$i]->getPrenom(), generateAttr("form_id_paleopathologiste_$i")); ?>
+					<?= Form::label("Paleopathologiste", "id_paleopathologiste_$i", array("id" => "form_id_paleopathologiste_label_$i")); ?>
+				</div>
+				<script>addAutocomplete("form_id_paleopathologiste_<?= $i ?>", "personne");</script>
+			<?php endfor; ?>
 		</div>
+
 		<div class="col-md-6">
 			<div class="d-grid gap-2 d-md-flex my-2">
-				<button type="button" class="btn btn-primary me-md-2" onclick="addPersonOld('paleopathologiste', 'Paleopathologiste (Prénom NOM)');"><i class="bi bi-plus"></i></button>
-				<button type="button" class="btn btn-danger" onclick="removePersonOld('paleopathologiste');"><i class="bi bi-x"></i></button>
+				<button type="button" class="btn btn-primary me-md-2" onclick="addPerson('form_id_paleopathologiste');"><i class="bi bi-plus"></i></button>
+				<button type="button" class="btn btn-danger" onclick="removePersonOld('form_id_paleopathologiste');"><i class="bi bi-x"></i></button>
 			</div>
 		</div>
 	</div>
