@@ -5,6 +5,9 @@ Contient des scripts d'édition de formulaire.
 /** @type {Map<string, int>} Contient les dernier numéro des champs de persones créé. */
 var lastPersonNum = new Map();
 
+/** @type {HTMLElement[]} Contient tous les champs d'autocomplétion. */
+var autocompleteField = [];
+
 /**
  * Ajoute un champ texte pour une liste d'input.
  * 
@@ -122,6 +125,7 @@ function addAutocomplete(id, type) {
 	showList.style.position = "absolute";
 	showList.style.zIndex = 1000;
 	input.parentNode.appendChild(showList);
+	autocompleteField.push(showList);
 
 	// Assignation de l'action à faire à chaque modification du champ
 	input.onkeyup = function() {
@@ -155,6 +159,19 @@ function addAutocomplete(id, type) {
     showList.innerHTML = "";
   });
 }
+
+/** Vide toutes les listes d'autocomplétion. */
+function emptyAutocompletes() {
+	for (const autocomp of autocompleteField) {
+		autocomp.innerHTML = "";
+	}
+}
+
+// Prépare le document pour pouvoir fermer les autocomplétions automatiquement.
+$(document).ready(function () {
+	$(document).on("click", function () { emptyAutocompletes(); });
+	$(document).on("select", function () { emptyAutocompletes(); });
+});
 
 // function recherche_commune_depot(id){
   
