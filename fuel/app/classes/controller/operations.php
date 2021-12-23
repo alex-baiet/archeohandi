@@ -1,7 +1,6 @@
 <?php
 
 use Fuel\Core\Controller_Template;
-use Fuel\Core\Database_Result;
 use Fuel\Core\DB;
 use Fuel\Core\Input;
 use Fuel\Core\Response;
@@ -32,6 +31,11 @@ class Controller_Operations extends Controller_Template {
 		$all_user[""] = "";
 		$all_nom_op[""] = "";
 		$all_annee[""] = "";
+
+		sort($all_site);
+		sort($all_user);
+		sort($all_nom_op);
+		sort($all_annee);
 
 		// Tri selon la recherche
 		if (Input::method() === "GET") {
