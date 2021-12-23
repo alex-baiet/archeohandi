@@ -111,7 +111,8 @@ Asset::js("form.js");
 	<div class="row my-2">
 		<div class="col-md-6">
 			<div class="form-floating">
-				<?= Form::input("id_reponsable_op", $operation->getIdResponsableOp(), array("type" => "text", "class" => "form-control", "placeholder" => "")); ?>
+				<?= Form::input("id_reponsable_op", $operation->getResponsableOp()->getNom().' '.$operation->getResponsableOp()->getPrenom(),
+					array("type" => "text", "class" => "form-control", "placeholder" => "")); ?>
 				<?= Form::label("Responsable de l'opération", "id_responsable_op"); ?>
 				<script>addAutocomplete("form_id_reponsable_op", "personne");</script>
 			</div>
@@ -132,7 +133,8 @@ Asset::js("form.js");
 		<div class="col-md-6">
 			<?php for ($i = 0; $i < count($anthropologues); $i++): ?>
 				<div class="form-floating">
-					<?= Form::input("anthropologues[]", $anthropologues[$i]->getPrenom(), generateAttr("form_anthropologue_$i")); ?>
+					<?php $fullName = empty($anthropologues[$i]->getNom()) ? "" : $anthropologues[$i]->getNom().' '.$anthropologues[$i]->getPrenom(); ?>
+					<?= Form::input("anthropologues[]", $fullName, generateAttr("form_anthropologue_$i")); ?>
 					<?= Form::label("Anthropologue", "anthropologue_$i", array("id" => "form_anthropologue_label_$i")); ?>
 				</div>
 				<script>addAutocomplete("form_anthropologue_<?= $i ?>", "personne");</script>
@@ -156,7 +158,8 @@ Asset::js("form.js");
 		<div class="col-md-6">
 			<?php for ($i = 0; $i < count($paleos); $i++): ?>
 				<div class="form-floating">
-					<?= Form::input("paleapathologistes[]", $paleos[$i]->getPrenom(), generateAttr("form_paleopathologiste_$i")); ?>
+					<?php $fullName = empty($paleos[$i]->getNom()) ? "" : $paleos[$i]->getNom().' '.$paleos[$i]->getPrenom(); ?>
+					<?= Form::input("paleopathologistes[]", $fullName, generateAttr("form_paleopathologiste_$i")); ?>
 					<?= Form::label("Paleopathologiste", "paleopathologiste_$i", array("id" => "form_paleopathologiste_label_$i")); ?>
 				</div>
 				<script>addAutocomplete("form_paleopathologiste_<?= $i ?>", "personne");</script>

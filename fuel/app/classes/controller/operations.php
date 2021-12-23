@@ -12,6 +12,8 @@ use Model\Operation;
 use Model\Sujethandicape;
 
 class Controller_Operations extends Controller_Template {
+	private const DEBUG = false;
+
 	/**
 	 * Récupère toutes les opérations en fonction des options de filtre entrées.
 	 * 
@@ -1185,7 +1187,11 @@ class Controller_Operations extends Controller_Template {
 				// Les données sont valides : on met à jour la BDD
 				$operation->saveOnDB();
 
-				Response::redirect("/operations?success_modif");
+				if (Controller_Operations::DEBUG === true) {
+					Helper::varDump($operation);
+				} else {
+					Response::redirect("/operations?success_modif");
+				}
 			} else {
 				// Les données ne sont pas valides : on affiche les problèmes
 				$errors = $result;

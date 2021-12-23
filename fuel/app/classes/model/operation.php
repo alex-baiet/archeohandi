@@ -83,6 +83,7 @@ class Operation extends Model {
 		$this->paleopathologiste = Helper::arrayGetString("paleopathologiste", $data);
 		$this->bibliographie = Helper::arrayGetString("bibliographie", $data);
 		if (isset($data["anthropologues"])) $this->idAnthropologues = Personne::namesToIds($data["anthropologues"]);
+		if (isset($data["paleopathologistes"])) $this->idPaleopathologistes = Personne::namesToIds($data["paleopathologistes"]);
 	}
 
 	/**
@@ -307,6 +308,7 @@ class Operation extends Model {
 
 		// Maj des anthropologues
 		$this->savePeople($this->getAnthropologues(), "etre_anthropologue");
+		$this->savePeople($this->getPaleopathologistes(), "etre_paleopathologiste");
 
 		// Tout s'est bien passé.
 		return true;
@@ -315,7 +317,7 @@ class Operation extends Model {
 	/** Facilite la sauvegarde des anthropologues et paleopathologistes */
 	private function savePeople(array $people, string $table) {
 		// Suppression des anciennes valeurs stockées
-		DB::delete($table)->where("id_operation", "=", $this->idSite)->execute();
+		DB::delete($table)->where("id_operation", $this->idSite)->execute();
 
 		// Création des nouvelles valeurs
 		$values = array();
@@ -324,7 +326,7 @@ class Operation extends Model {
 		}
 
 		// Ajoute les nouvelles valeurs
-		if (count($values) > 0) DB::insert("etre_anthropologue")->values($values)->execute();
+		if (count($values) > 0) DB::insert($table)->values($values)->execute();
 	}
 
 	/** Ajoute les données de l'array donnée à l'objet. Pratique pour les POST et GET. */
@@ -360,6 +362,7 @@ class Operation extends Model {
 		if (array_key_exists("id_paleopathologiste[]", $data)) $this->paleopathologiste = $data["id_paleopathologiste[]"];
 		if (array_key_exists("bibliographie", $data)) $this->bibliographie = $data["bibliographie"];
 		if (isset($data["anthropologues"])) $this->idAnthropologues = Personne::namesToIds($data["anthropologues"]);
+		if (isset($data["paleopathologistes"])) $this->idPaleopathologistes = Personne::namesToIds($data["paleopathologistes"]);
 	}
 
 	/** Affiche une alert bootstrap seulement si des erreurs existent. */

@@ -81,6 +81,7 @@ class Personne extends Model {
 	 * @return false Si aucune personne ne correspond au paramètre donné.
 	 */
 	public static function nameToId(string $name) {
+		if (empty($name)) return false;
 		// Test du format (à compléter)
 		if (strpos($name, " ") === false) {
 			throw new FuelException("Le nom \"$name\" n'est pas au bon format.");
