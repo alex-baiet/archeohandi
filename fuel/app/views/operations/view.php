@@ -77,13 +77,26 @@ $sujets = $sujets;
 		<h4>Personnes</h4>
 		<div class="row">
 			<div class="col">
-				<div class="p-2">Responsable de l'opération : <?= $operation->getResponsableOp(); ?></div>
+				<div class="p-2">
+					Responsable de l'opération :<br>
+					- <?= $operation->getResponsableOp()->fullName(); ?>
+				</div>
 			</div>
 			<div class="col">
-				<div class="p-2">Anthropologue : <?= $operation->getAnthropologue(); ?></div>
+				<div class="p-2">
+					Anthropologues : 
+					<?php foreach ($operation->getAnthropologues() as $person): ?>
+						<br>- <?= $person->fullName(); ?>
+					<?php endforeach; ?>
+				</div>
 			</div>
 			<div class="col">
-				<div class="p-2">Paleopathologiste : <?= $operation->getPaleopathologiste(); ?></div>
+				<div class="p-2">
+					Paleopathologiste :
+					<?php foreach ($operation->getPaleopathologistes() as $person): ?>
+						<br>- <?= $person->fullName(); ?>
+					<?php endforeach; ?>
+				</div>
 			</div>
 		</div>
 	</div>

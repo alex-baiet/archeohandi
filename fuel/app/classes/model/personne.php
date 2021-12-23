@@ -113,4 +113,6 @@ class Personne extends Model {
 	public function getId() { return $this->id; }
 	public function getPrenom() { return $this->prenom; }
 	public function getNom() { return $this->nom; }
+
+	public function fullName() { return "{$this->nom} {$this->prenom}"; }
 }
