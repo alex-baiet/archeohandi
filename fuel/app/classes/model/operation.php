@@ -2,6 +2,7 @@
 
 namespace Model;
 
+use Fuel\Core\Database_Query_Builder_Delete;
 use Fuel\Core\DB;
 use Fuel\Core\Model;
 
@@ -81,6 +82,7 @@ class Operation extends Model {
 		$this->idPaleopathologistes = Helper::arrayGetArray("id_paleopathologiste[]", $data);
 		$this->paleopathologiste = Helper::arrayGetString("paleopathologiste", $data);
 		$this->bibliographie = Helper::arrayGetString("bibliographie", $data);
+		if (isset($data["anthropologues"])) $this->idAnthropologues = Personne::namesToIds($data["anthropologues"]);
 	}
 
 	/**
@@ -293,7 +295,7 @@ class Operation extends Model {
 
 		if (Operation::fetchSingle($this->idSite) === null) {
 			// L'opération n'existe pas : on la rajoute à la BDD
-			echo "Operation::saveOnDB ne permet pas encore de sauvergarder des nouvelles données.<br>";
+			echo "Operation::saveOnDB ne permet pas encore de sauvegarder des nouvelles données.<br>";
 		}
 		else {
 			// L'opération existe : on la met à jour
@@ -303,8 +305,26 @@ class Operation extends Model {
 			$res = DB::update("operations")->set($arr)->where("id_site", $this->idSite)->execute();
 		}
 
+		// Maj des anthropologues
+		$this->savePeople($this->getAnthropologues(), "etre_anthropologue");
+
 		// Tout s'est bien passé.
 		return true;
+	}
+
+	/** Facilite la sauvegarde des anthropologues et paleopathologistes */
+	private function savePeople(array $people, string $table) {
+		// Suppression des anciennes valeurs stockées
+		DB::delete($table)->where("id_operation", "=", $this->idSite)->execute();
+
+		// Création des nouvelles valeurs
+		$values = array();
+		foreach ($people as $person) {
+			$values[] = array($this->idSite, $person->getId());
+		}
+
+		// Ajoute les nouvelles valeurs
+		if (count($values) > 0) DB::insert("etre_anthropologue")->values($values)->execute();
 	}
 
 	/** Ajoute les données de l'array donnée à l'objet. Pratique pour les POST et GET. */
@@ -339,6 +359,7 @@ class Operation extends Model {
 		if (array_key_exists("id_anthropologue[]", $data)) $this->idAnthropologues = $data["id_anthropologues[]"];
 		if (array_key_exists("id_paleopathologiste[]", $data)) $this->paleopathologiste = $data["id_paleopathologiste[]"];
 		if (array_key_exists("bibliographie", $data)) $this->bibliographie = $data["bibliographie"];
+		if (isset($data["anthropologues"])) $this->idAnthropologues = Personne::namesToIds($data["anthropologues"]);
 	}
 
 	/** Affiche une alert bootstrap seulement si des erreurs existent. */

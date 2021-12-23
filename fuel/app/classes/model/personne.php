@@ -76,7 +76,7 @@ class Personne extends Model {
 	/**
 	 * Récupère l'id à partir du nom de la personne.
 	 * 
-	 * @param string Le nom de la personne, au format "Prénom NOM".
+	 * @param string Le nom de la personne, au format "NOM Prénom".
 	 * @return int id de la personne en cas de succès.
 	 * @return false Si aucune personne ne correspond au paramètre donné.
 	 */
@@ -88,9 +88,25 @@ class Personne extends Model {
 
 		$names = explode(" ", $name);
 
-		$res = Helper::querySelectSingle("SELECT id FROM personne WHERE prenom=\"{$names[0]}\" AND nom=\"$names[1]\"");
+		$res = Helper::querySelectSingle("SELECT id FROM personne WHERE nom=\"{$names[0]}\" AND prenom=\"$names[1]\"");
 		if ($res === null) return false;
 		return intval($res["id"]);
+	}
+
+	/**
+	 * Renvoie tous les id des personnes correspondant aux noms.
+	 * @return int[]
+	 */
+	public static function namesToIds(array $names): array {
+		$ids = array();
+
+		foreach ($names as $name) {
+			$res = Personne::nameToId($name);
+			if ($res !== false) {
+				$ids[] = $res;
+			}
+		}
+		return $ids;
 	}
 
 	public function getId() { return $this->id; }
