@@ -22,7 +22,6 @@ Asset::js("form.js");
 <?= Form::open(array('action' => 'operations/edit/' . $operation->getIdSite() . '', 'method' => 'POST')); ?>
 <?php $operation->alertBootstrap("danger"); ?>
 <!-- Affichage des champs -->
-<div class="container" style="background-color: #F5F5F5;">
 	<div class="row my-2 pt-1">
 		<div class="col-md-6">
 			<div class="form-floating">
@@ -170,21 +169,47 @@ Asset::js("form.js");
 		<div class="col-md-6">
 			<div class="d-grid gap-2 d-md-flex my-2">
 				<button type="button" class="btn btn-primary me-md-2" onclick="addPerson('form_paleopathologiste');"><i class="bi bi-plus"></i></button>
-				<button type="button" class="btn btn-danger" onclick="removePersonOld('form_paleopathologiste');"><i class="bi bi-x"></i></button>
+				<button type="button" class="btn btn-danger" onclick="removePerson('form_paleopathologiste');"><i class="bi bi-x"></i></button>
 			</div>
 		</div>
 	</div>
 
+	<!-- Bibliographie -->
 	<div class="col-md-12">
 		<?= Form::label('Bibliographie', 'bibliographie'); ?>
 		<?= Form::textarea("bibliographie", $operation->getBibliographie(), array("class" => "form-control")); ?>
 	</div>
-	<br />
+
+	<br/>
+
 	<div class="d-grid gap-2 d-md-block">
 		<a class="btn btn-secondary" href="/public/operations" role="button">Retour</a>
 	</div>
+
 	<div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-top: 10px;">
 		<?= Form::submit('submit', 'Modifier', array('class' => 'btn btn-success')); ?>
 	</div>
-</div>
+
+
+	<div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-top: 10px;">
+		<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Test</button>
+	</div>
+
+	<div class="modal" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticBackdropLabel">Voulez-vous continuer ?</h5>
+				</div>
+				<div class="modal-body">
+					<p>En continuant, vous allez ajouter des sujets à l'opération que vous venez de créer. En vous stopant, vous serrez redirigé vers la page des opérations.<br /><br /><i class="bi bi-info-circle-fill"></i> Pour ajouter des sujets plus tard, il vous suffit d'aller dans le détail d'une opération.</p>
+				</div>
+				<div class="modal-footer">
+					<?= Form::submit('confirm_operation', 'Continuer', array('class' => 'btn btn-success')); ?>
+					<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Nan.</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 <?= Form::close(); ?>

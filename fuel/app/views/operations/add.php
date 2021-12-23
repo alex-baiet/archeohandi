@@ -8,8 +8,17 @@ use Fuel\Core\Form;
 <!-- Contenu de la page partie opération -->
 <div class="" id="ajout_operation">
   <div class="container">
-    <h1 class="m-2">Ajout d'une opération <a class="btn btn-sm btn-secondary" href="/public/operations/add">Rafraichir la page <i class="bi bi-arrow-repeat"></i></a></h1>
-    <p class="text-muted">Ici vous pouvez ajouter une opération de façon simplifiée. Pour aller plus vite, vous pouvez utiliser la touche TAB <?= Asset::img('TAB.jpg', array('width' => '75px', 'height' => '35px')); ?> pour aller d'un champs texte à un autre.</p>
+    <h1 class="m-2">
+      Ajout d'une opération
+      <a class="btn btn-sm btn-secondary" href="/public/operations/add">Rafraichir la page <i class="bi bi-arrow-repeat"></i></a>
+    </h1>
+    <p class="text-muted">
+      Ici vous pouvez ajouter une opération de façon simplifiée.
+      Pour aller plus vite, vous pouvez utiliser la touche TAB
+      <?= Asset::img('TAB.jpg', array('width' => '75px', 'height' => '35px')); ?>
+      pour aller d'un champs texte à un autre.
+    </p>
+    
     <?= Form::open(array('action' => 'operations/add', 'method' => 'POST'));
 
     //Permet de vérifier si il y a c'est option et si oui cela permet de savoir quelle option est cochée pour l'afficher
@@ -243,6 +252,7 @@ use Fuel\Core\Form;
             </div>
           </div>
         </div>
+        
       </div>
     </div>
     <?= Form::close(); ?>

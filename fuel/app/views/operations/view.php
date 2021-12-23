@@ -79,7 +79,9 @@ $sujets = $sujets;
 			<div class="col">
 				<div class="p-2">
 					Responsable de l'opération :<br>
-					- <?= $operation->getResponsableOp()->fullName(); ?>
+					<?php if ($operation->getResponsableOp() !== null): ?>
+						- <?= $fullName; ?>
+					<?php endif; ?>
 				</div>
 			</div>
 			<div class="col">

@@ -10,7 +10,7 @@ use Model\Operation;
 use Model\Sujethandicape;
 
 class Controller_Operations extends Controller_Template {
-	private const DEBUG = false;
+	private const DEBUG = true;
 
 	/** Page d'affichages de toutes les opérations */
 	public function action_index() {
@@ -32,10 +32,10 @@ class Controller_Operations extends Controller_Template {
 		$all_nom_op[""] = "";
 		$all_annee[""] = "";
 
-		sort($all_site);
-		sort($all_user);
-		sort($all_nom_op);
-		sort($all_annee);
+		asort($all_site);
+		asort($all_user);
+		asort($all_nom_op);
+		asort($all_annee);
 
 		// Tri selon la recherche
 		if (Input::method() === "GET") {

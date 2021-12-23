@@ -106,8 +106,9 @@ function removePersonOld(name) {
 /**
  * Ajoute l'autocomplétion à l'input donné en utilisant la base de données.
  * 
- * @param {string} id 
- * @param {string} type 
+ * @param {string} id Identifiant de l'input
+ * @param {string} type Type de recherche.
+ * Peut être "commune" ou "personne".
  */
 function addAutocomplete(id, type) {
 	// Récupération du champ
