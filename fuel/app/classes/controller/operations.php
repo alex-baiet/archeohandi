@@ -131,6 +131,7 @@ class Controller_Operations extends Controller_Template {
 		// Ajout d'une opération
 		if (Input::method() === "POST") {
 			echo "Tentative de création d'une opération...<br>";
+			$operation = new Operation($_POST);
 
 			if (Controller_Operations::DEBUG === true) Helper::varDump($_POST);
 		}
@@ -1124,7 +1125,9 @@ class Controller_Operations extends Controller_Template {
 		// $this->template->content = View::forge('operations/add', $data);
 		#endregion
 		$this->template->title = 'Ajouter une opération';
-		$this->template->content = View::forge('operations/add', array());
+		$data = array();
+		if (isset($operation)) $data["operation"] = $operation;
+		$this->template->content = View::forge('operations/add', $data);
 	}
 
 	//L'action view sert pour la page view de opération qui affiche les détails d'une opération

@@ -63,7 +63,7 @@ class Commune extends Model {
 		$names = explode(", ", $name);
 		$res = Helper::querySelectSingle("SELECT id FROM commune WHERE nom=\"{$names[0]}\" AND departement=\"{$names[1]}\"");
 
-		if (count($res) === 0) return false;
+		if ($res === null || count($res) === 0) return false;
 		return $res["id"];
 	}
 
@@ -78,4 +78,6 @@ class Commune extends Model {
 	public function getPays() { return $this->pays; }
 	public function getSuperficie() { return $this->superficie; }
 	public function getPopulation() { return $this->population; }
+
+	public function fullName(): string { return "{$this->nom}, {$this->departement}"; }
 }
