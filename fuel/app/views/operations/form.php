@@ -7,8 +7,17 @@ use Model\Organisme;
 use Model\Personne;
 use Model\Typeoperation;
 
-/** @var Operation */
-$operation = $operation;
+/** @var string Page de destination lors de la validation du formulaire. */
+$action = $action;
+$showError = false;
+/** @var Operation Operation sur lequel construire le formulaire. */
+if (isset($operation)) {
+	$operation = $operation;
+	$showError = true;
+}
+else $operation = new Operation(array());
+/** @var string|unset Texte du popup de confirmation du formulaire. Si non défini, il n'y aura pas de popup. */
+if (isset($modalContent)) $modalContent = $modalContent;
 
 /** Array des attributs les plus communs. */
 $defaultAttr = array("type" => "text", "class" => "form-control", "placeholder" => "");
@@ -19,8 +28,8 @@ $defaultAttr = array("type" => "text", "class" => "form-control", "placeholder" 
 Asset::js("form.js");
 ?>
 
-<?= Form::open(array('action' => 'operations/edit/' . $operation->getIdSite() . '', 'method' => 'POST')); ?>
-<?php $operation->alertBootstrap("danger"); ?>
+<?= Form::open(array('action' => $action, 'method' => 'POST')); ?>
+<?php if ($showError) $operation->alertBootstrap("danger"); ?>
 <!-- Affichage des champs -->
 	<div class="row my-2 pt-1">
 		<div class="col-md-6">
@@ -182,34 +191,39 @@ Asset::js("form.js");
 
 	<br/>
 
-	<div class="d-grid gap-2 d-md-block">
-		<a class="btn btn-secondary" href="/public/operations" role="button">Retour</a>
+	<div class="row">
+		<div class="d-md-block col">
+			<a class="btn btn-secondary" href="/public/operations" role="button">Retour</a>
+		</div>
+		
+		<div class="d-md-flex justify-content-md-end col">
+			<?php if (isset($modalContent)): ?>
+				<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Confirmer</button>
+			<?php else: ?>
+				<?= Form::submit('submit', 'Modifier', array('class' => 'btn btn-success')); ?>
+			<?php endif; ?>
+		</div>
 	</div>
 
-	<div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-top: 10px;">
-		<?= Form::submit('submit', 'Modifier', array('class' => 'btn btn-success')); ?>
-	</div>
-
-
-	<div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-top: 10px;">
-		<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Test</button>
-	</div>
-
-	<div class="modal" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="staticBackdropLabel">Voulez-vous continuer ?</h5>
-				</div>
-				<div class="modal-body">
-					<p>En continuant, vous allez ajouter des sujets à l'opération que vous venez de créer. En vous stopant, vous serrez redirigé vers la page des opérations.<br /><br /><i class="bi bi-info-circle-fill"></i> Pour ajouter des sujets plus tard, il vous suffit d'aller dans le détail d'une opération.</p>
-				</div>
-				<div class="modal-footer">
-					<?= Form::submit('confirm_operation', 'Continuer', array('class' => 'btn btn-success')); ?>
-					<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Nan.</button>
+	<?php if (isset($modalContent)): ?>
+		<div class="modal" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="staticBackdropLabel">Voulez-vous continuer ?</h5>
+					</div>
+					<div class="modal-body">
+						<p>
+							<?= $modalContent; ?>
+						</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Retour</button>
+						<?= Form::submit('confirm_operation', 'Continuer', array('class' => 'btn btn-success')); ?>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	<?php endif; ?>
 
 <?= Form::close(); ?>

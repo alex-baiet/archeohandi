@@ -19,6 +19,6 @@ $errors = $errors;
 	</h1>
 	<p class="text-muted">Ici vous pouvez modifier une opération.</p>
 
-	<?= View::forge("operations/form", array("operation" => $operation)); ?>
+	<?= View::forge("operations/form", array("action" => "operations/edit/{$operation->getIdSite()}", "operation" => $operation)); ?>
 </div>
 

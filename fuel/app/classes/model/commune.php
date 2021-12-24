@@ -36,7 +36,7 @@ class Commune extends Model {
 	/**
 	 * Retourne la commune correspondant à l'id donné.
 	 * 
-	 * @param $id Identifiant de la commune.
+	 * @param int $id Identifiant de la commune.
 	 * @return Commune|null Le résultat est null si aucune commune ne correspond à l'id donné.
 	 */
 	public static function fetchSingle(int $id) {

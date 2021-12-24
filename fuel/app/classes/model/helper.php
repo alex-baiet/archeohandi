@@ -27,13 +27,21 @@ class Helper {
 		return $str;
 	}
 
-	/** Vérifie que la valeur représente un nombre entier. */
-	static function stringIsInt(string $value) {
+	/**
+	 * Vérifie que la valeur représente un nombre entier.
+	 * @param string Chaîne de caractère à vérifier.
+	 */
+	static function stringIsInt(string $value): bool {
 		return is_numeric($value) && strpos($value, '.') === false;
 	}
 
-	/** Renvoie la chaîne dans un format plus sécurisé en supprimant les tags HTML et les caractères inutiles. */
-	static function secureString(string $value): string {
+	/**
+	 * Renvoie la chaîne dans un format plus sécurisé en supprimant les tags HTML et les caractères inutiles.
+	 * @param string $value Chaîne de caractère a sécuriser.
+	 * @return string
+	 */
+	static function secureString(string $value) {
+		if ($value === null) return null;
 		return trim(strip_tags($value));
 	}
 

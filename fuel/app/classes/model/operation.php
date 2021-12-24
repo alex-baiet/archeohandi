@@ -2,30 +2,29 @@
 
 namespace Model;
 
-use Fuel\Core\Database_Query_Builder_Delete;
 use Fuel\Core\DB;
 use Fuel\Core\Model;
 
 /** Représentation d'une opération dans la base de données. */
 class Operation extends Model {
 	#region Values
-	private $idSite;
-	private $idUser;
-	private $aRevoir;
-	private $annee;
-	private $idCommune;
-	private $adresse;
-	private $x;
-	private $y;
-	private $idOrganisme;
-	private $idTypeOp;
-	private $EA;
-	private $OA;
-	private $patriarche;
-	private $numeroOperation;
-	private $arretePrescription;
-	private $idResponsableOp;
-	private $bibliographie;
+	private int $idSite = -1;
+	private string $idUser = "";
+	private string $aRevoir = "";
+	private int $annee = 0;
+	private int $idCommune = -1;
+	private string $adresse = "";
+	private float $x = 0.0;
+	private float $y = 0.0;
+	private int $idOrganisme = -1;
+	private int $idTypeOp = -1;
+	private string $EA = "";
+	private string $OA = "";
+	private string $patriarche = "";
+	private string $numeroOperation = "";
+	private string $arretePrescription = "";
+	private int $idResponsableOp = -1;
+	private string $bibliographie = "";
 
 	/** @var string[]|null */
 	private $idAnthropologues = null;
