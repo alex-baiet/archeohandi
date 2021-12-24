@@ -123,10 +123,10 @@ Asset::js("form.js");
 	<div class="col-md-6">
 		<div class="form-floating">
 			<?php $fullName = $operation->getResponsableOp() === null ? "" : $operation->getResponsableOp()->getNom().' '.$operation->getResponsableOp()->getPrenom(); ?>
-			<?= Form::input("id_reponsable_op", $fullName,
-				array("type" => "text", "class" => "form-control", "placeholder" => "")); ?>
-			<?= Form::label("Responsable de l'opération", "id_responsable_op"); ?>
-			<script>addAutocomplete("form_id_reponsable_op", "personne");</script>
+			<?= Form::input("responsable_op", $fullName,
+				array("type" => "text", "class" => "form-control", "placeholder" => "", "autocomplete" => "off")); ?>
+			<?= Form::label("Responsable de l'opération", "responsable_op"); ?>
+			<script>addAutocomplete("form_responsable_op", "personne");</script>
 		</div>
 	</div>
 </div>

@@ -93,7 +93,9 @@ class Operation extends Model {
 		if (isset($data["id_anthropologues[]"])) $this->idAnthropologues = $data["id_anthropologues[]"];
 		if (isset($data["id_paleopathologiste[]"])) $this->paleopathologiste = $data["id_paleopathologiste[]"];
 		if (isset($data["bibliographie"])) $this->bibliographie = $data["bibliographie"];
+
 		if (isset($data["commune"])) $this->idCommune = Commune::nameToId($data["commune"]);
+		if (isset($data["responsable_op"])) $this->idResponsableOp = Personne::nameToId($data["responsable_op"]);
 		if (isset($data["anthropologues"])) $this->idAnthropologues = Personne::namesToIds($data["anthropologues"]);
 		if (isset($data["paleopathologistes"])) $this->idPaleopathologistes = Personne::namesToIds($data["paleopathologistes"]);
 	}
