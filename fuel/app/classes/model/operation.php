@@ -314,6 +314,7 @@ class Operation extends Model {
 	/**
 	 * Ajoute / met à jour l'opération dans la base de données.
 	 * Actuellement ne fait que la mise à jour et non l'ajout.
+	 * 
 	 * @return bool Indique le succès de l'ajout.
 	 */
 	public function saveOnDB(): bool {
@@ -322,19 +323,30 @@ class Operation extends Model {
 		// Cas données non valide
 		if (!$this->validated) return false;
 
-		if (Operation::fetchSingle($this->idSite) === null) {
+		// Préparation des valeurs à envoyer à la BDD
+		$arr = $this->toArray();
+		unset($arr["id_anthropologue[]"]);
+		unset($arr["id_paleopathologiste[]"]);
+
+		if ($this->idSite === -1 || Operation::fetchSingle($this->idSite) === null) {
 			// L'opération n'existe pas : on la rajoute à la BDD
-			echo "Operation::saveOnDB ne permet pas encore de sauvegarder des nouvelles données.<br>";
+			$arr["id_site"] = null;
+			list($insertId, $rowAffected) = DB::insert("operations")
+				->set($arr)
+				->execute();
+			$this->idSite = $insertId;
+			if ($rowAffected < 1) return false;
 		}
 		else {
 			// L'opération existe : on la met à jour
-			$arr = $this->toArray();
-			unset($arr["id_anthropologue[]"]);
-			unset($arr["id_paleopathologiste[]"]);
-			$res = DB::update("operations")->set($arr)->where("id_site", $this->idSite)->execute();
+			$rowAffected = DB::update("operations")
+				->set($arr)
+				->where("id_site", $this->idSite)
+				->execute();
+				if ($rowAffected < 1) return false;
 		}
 
-		// Maj des anthropologues
+		// Maj des anthropologues et paleopathologistes
 		$this->savePeople($this->getAnthropologues(), "etre_anthropologue");
 		$this->savePeople($this->getPaleopathologistes(), "etre_paleopathologiste");
 

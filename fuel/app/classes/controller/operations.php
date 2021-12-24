@@ -10,7 +10,7 @@ use Model\Operation;
 use Model\Sujethandicape;
 
 class Controller_Operations extends Controller_Template {
-	private const DEBUG = true;
+	private const DEBUG = false;
 
 	/** Page d'affichages de toutes les opérations */
 	public function action_index() {
@@ -130,10 +130,18 @@ class Controller_Operations extends Controller_Template {
 
 		// Ajout d'une opération
 		if (Input::method() === "POST") {
-			echo "Tentative de création d'une opération...<br>";
 			$operation = new Operation($_POST);
-
-			if (Controller_Operations::DEBUG === true) Helper::varDump($_POST);
+			
+			if (Controller_Operations::DEBUG === true) {
+				// Débuggage
+				echo "Tentative de création d'une opération...<br>";
+				Helper::varDump($_POST);
+				Helper::varDump($operation);
+			}
+			else if ($operation->saveOnDB()) {
+				// Ajout de l'opération avec succès
+				Response::redirect("/operations?success_add");
+			}
 		}
 
 		#region Useless2

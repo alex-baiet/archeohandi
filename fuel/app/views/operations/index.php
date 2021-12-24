@@ -81,7 +81,7 @@ $all_annee = $all_annee;
 		array_key_exists('erreur_supp_op', $_GET) ? alertBootstrap('Le numéro de l\'opération n\'est pas correcte (nombres autorisés). La suppression ne peut pas s\'effectuer', 'danger') : null;
 		array_key_exists('erreur_supp_bdd', $_GET) ? alertBootstrap('Le numéro de l\'opération n\'existe pas. La suppression ne peut pas s\'effectuer', 'danger') : null;
 
-		array_key_exists('success_ajout', $_GET) ? alertBootstrap('Les ajouts ont été effectué', 'success') : null;
+		array_key_exists('success_add', $_GET) ? alertBootstrap("L'ajout a été effectué", 'success') : null;
 		array_key_exists('success_modif', $_GET) ? alertBootstrap('Modification effectuée', 'success') : null;
 		array_key_exists('success_supp_op', $_GET) ? alertBootstrap('Suppression effectuée', 'success') : null;
 	?>
