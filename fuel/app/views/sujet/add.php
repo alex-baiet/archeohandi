@@ -14,7 +14,7 @@ use Model\Chronologie;
 		<?= Form::open(array('action' => 'add/sujet/' . $id . '', 'method' => 'POST')); ?>
 		<div class="contenu" id="contenu">
 			<div class="col-auto">
-				<h2 class="text-center">Sujet</h2>
+				<h2 class="text-center">Groupe du sujet</h2>
 
 				<div class="row g-2">
 					<!-- NMI -->
@@ -31,18 +31,22 @@ use Model\Chronologie;
 					</div>
 				</div>
 
-				<h3 class="text-center my-2">Sujet handicapé #' . $noLigne . '</h3>
+				<h3 class="text-center my-2">Sujet handicapé #</h3>
 				<div class="row g-2">
 					<div class="row g-2">
+
+						<!-- Identifiant -->
 						<div class="col-md-6">
 							<div class="form-floating">
-								<input type="text" class="form-control" name="id_sujet[' . $noLigne . ']" placeholder="183" value="">
+								<input type="text" class="form-control" name="id_sujet" placeholder="" value="">
 								<label for="id_sujet">Identifiant du sujet</label>
 							</div>
 						</div>
+
+						<!-- Sexe -->
 						<div class="col-md-6">
 							<div class="form-floating">
-								<select class="form-select" name="sexe[' . $noLigne . ']" aria-label="select_sexe">
+								<select class="form-select" name="sexe" aria-label="select_sexe">
 									<option value="" selected>Sélectionner</option>
 									<option value="Femme">Femme</option>
 									<option value="Homme">Homme</option>
@@ -54,33 +58,40 @@ use Model\Chronologie;
 					</div>
 
 					<div class="row g-2">
+						<!-- Âge minimum estimé de décès -->
 						<div class="col-md-6">
 							<div class="form-floating">
-								<input type="number" class="form-control" min="0" max="130" name="age_min[' . $noLigne . ']" placeholder="183" value="">
-								<label for="age_min">Age minimum au décès</label>
+								<?= Form::input("age_min", null, array("type" => "number", "class" => "form-control", "min" => "0", "max" => "130", "placeholder" => "")); ?>
+								<?= Form::label("Âge minimum au décès", "age_min"); ?>
 							</div>
 						</div>
+
+						<!-- Âge maximum estimé de décès -->
 						<div class="col-md-6">
 							<div class="form-floating">
-								<input type="number" class="form-control" min="0" max="130" name="age_max[' . $noLigne . ']" placeholder="183" value="">
-								<label for="age_max">Age maximum au décès</label>
+								<?= Form::input("age_max", null, array("type" => "number", "class" => "form-control", "min" => "0", "max" => "130", "placeholder" => "")); ?>
+								<?= Form::label("Âge maximum au décès", "age_max"); ?>
 							</div>
 						</div>
 					</div>
 
 					<div class="row g-2">
+						<!-- Période minimum estimé -->
 						<div class="col-md-6">
 							<div class="form-floating">
-								<input type="number" class="form-control" name="datation_debut[' . $noLigne . ']" placeholder="183" value="">
-								<label for="datation_debut">Datation début</label>
+								<?= Form::input("datation_debut", null, array("type" => "number", "class" => "form-control", "placeholder" => "")); ?>
+								<?= Form::label("Datation début", "datation_debut"); ?>
 							</div>
 						</div>
+
+						<!-- Période maximum estimé -->
 						<div class="col-md-6">
 							<div class="form-floating">
-								<input type="number" class="form-control" name="datation_fin[' . $noLigne . ']" placeholder="183" value="">
-								<label for="datation_fin">Datation fin</label>
+								<?= Form::input("datation_fin", null, array("type" => "number", "class" => "form-control", "placeholder" => "")); ?>
+								<?= Form::label("Datation fin", "datation_fin"); ?>
 							</div>
 						</div>
+						
 					</div>
 				</div>
 
