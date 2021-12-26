@@ -108,8 +108,8 @@ use Model\Typesepulture;
 						<?= Typesepulture::generateSelect(); ?>
 					</div>
 
+					<!-- Contexte normatif -->
 					<div class="col-md-4">
-						
 						<div class="form-floating">
 							<?= Form::select(
 								"contexte_normatif",
@@ -118,24 +118,30 @@ use Model\Typesepulture;
 									"" => "Sélectionner",
 									"Standard" => "Standard",
 									"Atypique" => "Atypique"),
-								array("class" => "form-select")
-							); ?>
+								array("class" => "form-select"));
+							?>
 							<?= Form::label("Contexte normatif", "contexte_normatif") ?>
 						</div>
 					</div>
 				</div>
 
 				<div class="row g-2">
+					<!-- Milieu de vie -->
 					<div class="col-md-6">
 						<div class="form-floating">
-							<select class="form-select" name="milieu_vie[' . $noLigne . ']" aria-label="select_milieu_vie">
-								<option value="">Sélectionner</option>
-								<option value="Rural">Rural</option>
-								<option value="Urbain">Urbain</option>
-							</select>
-							<label for="milieu_vie">Milieu de vie</label>
+							<?= Form::select(
+								"milieu_vie",
+								"",
+								array(
+									"" => "Sélectionner",
+									"Rural" => "Rural",
+									"Urbain" => "Urbain"),
+								array("class" => "form-select"));
+							?>
+							<?= Form::label("Milieu de vie", "milieu_vie") ?>
 						</div>
 					</div>
+
 					<div class="col-md-6">
 						<div class="form-floating">
 							<select class="form-select" name="contexte[' . $noLigne . ']" aria-label="select_contexte">
