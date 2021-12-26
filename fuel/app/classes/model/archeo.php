@@ -35,7 +35,7 @@ class Archeo {
 			$field,
 			$idSelected,
 			$options,
-			array("class" => "form-select my-2")
+			array("class" => "form-select")
 		);
 		$html .= Form::label($label, $field);
 		$html .= '</div>';

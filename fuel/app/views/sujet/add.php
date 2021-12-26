@@ -97,7 +97,7 @@ use Model\Typesepulture;
 					</div>
 				</div>
 
-				<div class="row g-3">
+				<div class="row my-3">
 					<!-- Type de dépôt -->
 					<div class="col-md-4">
 						<?= Typedepot::generateSelect(); ?>
@@ -107,15 +107,20 @@ use Model\Typesepulture;
 					<div class="col-md-4">
 						<?= Typesepulture::generateSelect(); ?>
 					</div>
-					
+
 					<div class="col-md-4">
+						
 						<div class="form-floating">
-							<select class="form-select" name="contexte_normatif[' . $noLigne . ']" aria-label="select_contexte_normatif" style="margin-top: 2.5%;margin-bottom: 2.5%;">
-								<option value="" selected>Sélectionner</option>
-								<option value="Standard">Standard</option>
-								<option value="Atypique">Atypique</option>
-							</select>
-							<label for="contexte_normatif">Contexte normatif</label>
+							<?= Form::select(
+								"contexte_normatif",
+								"",
+								array( // Les options
+									"" => "Sélectionner",
+									"Standard" => "Standard",
+									"Atypique" => "Atypique"),
+								array("class" => "form-select")
+							); ?>
+							<?= Form::label("Contexte normatif", "contexte_normatif") ?>
 						</div>
 					</div>
 				</div>
