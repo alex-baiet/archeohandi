@@ -1,3 +1,9 @@
+<?php
+
+use Fuel\Core\Asset;
+use Fuel\Core\Form;
+
+?>
 <!-- Contenu de la page -->
 <div class="container">
   <h1 class="m-2">Ajouter des sujets handicapés <a class="btn btn-sm btn-secondary" href="/public/add/sujet/<?= $id; ?>">Rafraichir la page <i class="bi bi-arrow-repeat"></i></a></h1>
@@ -14,43 +20,27 @@
           array_key_exists('erreur_alpha_sujet_' . $i, $_GET) ? alertBootstrap('L\'identifiant du sujet ne correspond pas au pattern de validation (De A à Z, a à z, 0 à 9, l\'espace et les caractères suivant: ,-;()/ sont autorisés)', 'info') : null;
           array_key_exists('erreur_alpha_num_inventaire_' . $i, $_GET) ? alertBootstrap('Le numéro inventaire ne correspond pas au pattern de validation (De A à Z, a à z, 0 à 9, l\'espace et les caractères suivant: ,-;()/ sont autorisés)', 'info') : null;
           array_key_exists('erreur_alpha_adresse_depot_' . $i, $_GET) ? alertBootstrap('L\'adresse du dépôt ne correspond pas au pattern de validation (De A à Z, a à z, 0 à 9, l\'espace et les caractères suivant: àáâãäåçèéêëìíîïðòóôõöùúûüýÿ sont autorisés)', 'info') : null;
-
           array_key_exists('erreur_NMI_vide_' . $i, $_GET) ? alertBootstrap('Le NMI est vide', 'danger') : null;
           array_key_exists('erreur_NMI_' . $i, $_GET) ? alertBootstrap('Le NMI doit être un chiffre', 'danger') : null;
-
           array_key_exists('erreur_chrono_vide_' . $i, $_GET) ? alertBootstrap('La période chronologique n\'est pas sélectionnée', 'danger') : null;
           array_key_exists('erreur_chrono_' . $i, $_GET) ? alertBootstrap('La période chronologique n\'existe pas', 'danger') : null;
-
           array_key_exists('erreur_sujet_vide_' . $i, $_GET) ? alertBootstrap('L\'identifiant du sujet est vide', 'danger') : null;
-
           array_key_exists('erreur_sexe_vide_' . $i, $_GET) ? alertBootstrap('Veuillez sélectionner le sexe', 'danger') : null;
           array_key_exists('erreur_sexe_' . $i, $_GET) ? alertBootstrap('Le sexe ne correspond pas aux propositions', 'danger') : null;
-
           array_key_exists('erreur_age_min_' . $i, $_GET) ? alertBootstrap('L\'âge minimum doit être compris entre 0 et 130', 'danger') : null;
-
           array_key_exists('erreur_age_max_' . $i, $_GET) ? alertBootstrap('L\'âge maximum doit être compris entre 0 et 130 et doit être supérieur à l\'âge minimum', 'danger') : null;
-
           array_key_exists('erreur_datation_debut_' . $i, $_GET) ? alertBootstrap('La datation du début n\'est pas valide (nombre autorisé)', 'danger') : null;
-
           array_key_exists('erreur_datation_fin_' . $i, $_GET) ? alertBootstrap('La datation de fin n\'est pas valide (nombre autorisé et supérieur à la datation de début)', 'danger') : null;
-
           array_key_exists('erreur_depot_vide_' . $i, $_GET) ? alertBootstrap('Le type de dépôt est vide', 'danger') : null;
           array_key_exists('erreur_depot_' . $i, $_GET) ? alertBootstrap('Le type de dépôt ne correspond pas aux propositions', 'danger') : null;
-
           array_key_exists('erreur_sepulture_vide_' . $i, $_GET) ? alertBootstrap('Le type de sépulture est vide', 'danger') : null;
           array_key_exists('erreur_sepulture_' . $i, $_GET) ? alertBootstrap('Le type de sépulture ne correspond pas aux propositions', 'danger') : null;
-
           array_key_exists('erreur_contexte_normatif_' . $i, $_GET) ? alertBootstrap('Le contexte normatif ne correspond pas aux propositions', 'danger') : null;
-
           array_key_exists('erreur_milieu_vie_' . $i, $_GET) ? alertBootstrap('Le milieu de vie ne correspond pas aux propositions', 'danger') : null;
-
           array_key_exists('erreur_contexte_' . $i, $_GET) ? alertBootstrap('Le contexte de la tombe ne correspond pas aux propositions', 'danger') : null;
-
           array_key_exists('erreur_description_mobilier_vide_' . $i, $_GET) ? alertBootstrap('La description de l\'autre mobilier est vide alors que son option est cochée', 'info') : null;
-
           array_key_exists('erreur_pathologie_' . $i, $_GET) ? alertBootstrap('Vous avez activé la pathologie infectieuse sans indiquer laquelle. Veuillez selectionner au moins une pathologie', 'info') : null;
           array_key_exists('erreur_description_autre_atteinte_' . $i, $_GET) ? alertBootstrap('Vous avez activé une autre atteinte sans indiquer laquelle. Veuillez remplir le champs texte', 'info') : null;
-
           array_key_exists('erreur_commune_depot_' . $i, $_GET) ? alertBootstrap('La commune du dépôt n\'existe pas. Veuillez changer la commune', 'danger') : null;
 
           //Appel la fonction pour afficher tout les champs pour ajouter un sujet

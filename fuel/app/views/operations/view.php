@@ -15,7 +15,7 @@ $sujets = $sujets;
 ?>
 <div class="container">
 	<h1 class="m-2">Opération <?= $operation->getNomOp(); ?>
-		<a class="btn btn-primary btn-sm" href="/public/add/sujet/<?= $operation->getIdSite(); ?>">Ajouter des sujets
+		<a class="btn btn-primary btn-sm" href="/public/sujet/add/<?= $operation->getIdSite(); ?>">Ajouter des sujets
 			<i class="bi bi-plus-circle-fill"></i>
 		</a>
 	</h1>
