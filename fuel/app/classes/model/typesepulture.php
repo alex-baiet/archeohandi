@@ -32,6 +32,19 @@ class Typesepulture extends Model {
 		return $obj;
 	}
 
+	/**
+	 * Créer un <select> à partir de tous les types de sepulture.
+	 * 
+	 * @param string $field Valeur du "name" du select.
+	 * @param string $label Nom du label du select.
+	 * @param mixed $idSelected Identifiant de la valeur sélectionnée.
+	 */
+	public static function generateSelect(string $field = "type_sepulture", string $label = "Type de sepulture", $idSelected = ""): string {
+		$valueRecover = function (array $data) { return $data["id"]; };
+		$textRecover = function (array $data) { return $data["nom"]; };
+		return Archeo::generateSelect($field, $label, $idSelected, "type_sepulture", $valueRecover, $textRecover);
+	}
+
 	public function getId() { return $this->id; }
 	public function getNom() { return $this->nom; }
 }

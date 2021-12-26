@@ -4,10 +4,9 @@ namespace Model;
 
 use Closure;
 use Fuel\Core\Form;
-use Fuel\Core\Model;
 
-/** Représente un appareil compensatoire pour un sujet handicapé. */
-class Archeo extends Model {
+/** Contient des fonctions facilitant la gestion des modèles de la bases de données. */
+class Archeo {
 
 	/**
 	 * Créer un <select> à partir de toutes les données d'une table.
@@ -21,15 +20,12 @@ class Archeo extends Model {
 	 */
 	public static function generateSelect(string $field, string $label, $idSelected, string $table, Closure $valueRecover, Closure $textRecover): string {
 		// Récupération de tous les objects
-		/** @var Personne[] */
-		$objects = array();
 		$results = Helper::querySelect("SELECT * FROM $table;");
 
 		// Création des options
 		$options = array();
 		$options[""] = "Sélectionner";
 		foreach ($results as $result) {
-			$objects[] = new Personne($result);
 			$options[$valueRecover($result)] = $textRecover($result);
 		}
 		

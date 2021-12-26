@@ -4,6 +4,7 @@ use Fuel\Core\Asset;
 use Fuel\Core\Form;
 use Model\Chronologie;
 use Model\Typedepot;
+use Model\Typesepulture;
 
 ?>
 <!-- Contenu de la page -->
@@ -102,15 +103,11 @@ use Model\Typedepot;
 						<?= Typedepot::generateSelect(); ?>
 					</div>
 
+					<!-- Type de sepulture -->
 					<div class="col-md-4">
-						<div class="form-floating">
-							<select class="form-select" name="type_sepulture[' . $noLigne . ']" aria-label="select_sep" style="margin-top: 2.5%;margin-bottom: 2.5%;">
-								<option value="4">Sélectionner</option>
-								<option value="' . $key['id'] . '">$key['nom']</option>
-							</select>
-							<label for="type_sepulture">Type de sépulture</label>
-						</div>
+						<?= Typesepulture::generateSelect(); ?>
 					</div>
+					
 					<div class="col-md-4">
 						<div class="form-floating">
 							<select class="form-select" name="contexte_normatif[' . $noLigne . ']" aria-label="select_contexte_normatif" style="margin-top: 2.5%;margin-bottom: 2.5%;">

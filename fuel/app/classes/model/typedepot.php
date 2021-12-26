@@ -33,7 +33,7 @@ class Typedepot extends Model {
 	}
 
 	/**
-	 * Créer un <select> à partir de toutes les personnes.
+	 * Créer un <select> à partir de tous les types de dépôt.
 	 * 
 	 * @param string $field Valeur du "name" du select.
 	 * @param string $label Nom du label du select.
