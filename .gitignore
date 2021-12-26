@@ -34,3 +34,6 @@ archeohandi.code-workspace
 /fuel/app/logs/*/*/*
 /fuel/app/cache/*/*
 /fuel/app/config/crypt.php
+
+# test files
+fuel/app/classes/controller/test.php

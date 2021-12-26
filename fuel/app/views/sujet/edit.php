@@ -322,7 +322,7 @@ foreach ($modif_sujet as $key) : ?>
 				} ?>
 				<div id="block_description_autre_mobilier" class='<?= $d_none_descp_autre_mobilier; ?>'>
 					<label class="form-check-label" for="description_autre_mobilier">Description du autre</label>
-					<textarea class="form-control" name="description_autre_mobilier" rows="2"><?= $description_autre_mobilier; ?></textarea>
+					<textarea class="form-control" name="description_autre_mobilier" rows="2"><?= ""//$description_autre_mobilier; ?></textarea>
 				</div>
 			</div>
 			<div class="col-md-8">

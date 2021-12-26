@@ -731,7 +731,7 @@ class Controller_Sujet extends Controller_Template {
 			Response::redirect('/operations/view/' . $id_operation . '?&success_modif');
 		} elseif (!empty($erreurs)) {
 			//Redirection en cas d'erreur avec les informations des erreurs et des valeurs dans l'url
-			Response::redirect('/sujet/edit/' . $id . '?erreur=' . $erreurs . '' . $valeurs . '');
+			// Response::redirect('/sujet/edit/' . $id . '?erreur=' . $erreurs . '' . $valeurs . '');
 		} else {
 			Response::redirect('/operations');
 		}
