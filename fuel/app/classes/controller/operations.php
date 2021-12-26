@@ -59,19 +59,20 @@ class Controller_Operations extends Controller_Template {
 		// Permet de supprimer une opération quand le bouton de suppression est validée
 		// TODO: Supprimer POUR DE VRAI les données
 		if (Input::post('supp_op')) {
-			if (is_numeric(Input::post('supp_op'))) {
-				$query = DB::query('SELECT id_site FROM operations WHERE id_site='.Input::post('supp_op').' ');
-				$if_op_ex = $query->execute();
-				$if_op_ex= $if_op_ex->_results;
+			// if (is_numeric(Input::post('supp_op'))) {
+			// 	$query = DB::query('SELECT id_site FROM operations WHERE id_site='.Input::post('supp_op').' ');
+			// 	$if_op_ex = $query->execute();
+			// 	$if_op_ex= $if_op_ex->_results;
 
-				if (!empty($if_op_ex)) {
-					Response::redirect('/operations?&success_supp_op');
-				} else {
-					Response::redirect('/operations?&erreur_supp_bdd');
-				}
-			} else {
-				Response::redirect('/operations?&erreur_supp_op');
-			}
+			// 	if (!empty($if_op_ex)) {
+			// 		Response::redirect('/operations?&success_supp_op');
+			// 	} else {
+			// 		Response::redirect('/operations?&erreur_supp_bdd');
+			// 	}
+			// } else {
+			// 	Response::redirect('/operations?&erreur_supp_op');
+			// }
+			echo "La suppression n'est pas fonctionnelle pour le moment...";
 		}
 
 		// Ajout des valeurs à la view.

@@ -80,7 +80,7 @@ $sujets = $sujets;
 				<div class="p-2">
 					Responsable de l'opération :<br>
 					<?php if ($operation->getResponsableOp() !== null): ?>
-						- <?= $fullName; ?>
+						- <?= $operation->getResponsableOp()->fullName(); ?>
 					<?php endif; ?>
 				</div>
 			</div>
