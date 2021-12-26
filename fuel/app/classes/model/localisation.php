@@ -4,7 +4,8 @@ namespace Model;
 
 use Fuel\Core\Model;
 
-class Diagnostic extends Model {
+/** Représente une partie du corps. */
+class Localisation extends Model {
 	private int $id;
 	private string $nom;
 
@@ -14,28 +15,28 @@ class Diagnostic extends Model {
 	}
 
 	/**
-	 * Retourne le diagnostic correspondant à l'id donné.
-	 * @param int $id Identifiant du diagnostic.
-	 * @return Diagnostic|null Le résultat est null si aucun diagnostic ne correspond à l'id donné.
+	 * Retourne la localisation correspondant à l'id donné.
+	 * @param int $id Identifiant.
+	 * @return Localisation|null Le résultat est null si aucune localisation ne correspond à l'id donné.
 	 */
 	public static function fetchSingle(int $id) {
 		if (!is_numeric($id)) return null;
 
-		$res = Helper::querySelectSingle("SELECT * FROM diagnostic WHERE id=$id;");
+		$res = Helper::querySelectSingle("SELECT * FROM localisation_atteinte WHERE id=$id;");
 		if ($res === null) return null;
-		return new Diagnostic($res);
+		return new Localisation($res);
 	}
 
 	/**
-	 * Retourne tous les diagnostics.
-	 * @return Diagnostic[]
+	 * Retourne toutes les localisations.
+	 * @return Localisation[]
 	 */
 	public static function fetchAll() {
-		$results = Helper::querySelect("SELECT * FROM diagnostic;");
+		$results = Helper::querySelect("SELECT * FROM localisation_atteinte;");
 		$objects = array();
 
 		foreach ($results as $res) {
-			$objects[] = new Diagnostic($res);
+			$objects[] = new Localisation($res);
 		}
 		return $objects;
 	}
