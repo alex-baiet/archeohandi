@@ -3,6 +3,7 @@
 use Fuel\Core\Asset;
 use Fuel\Core\Form;
 use Model\Chronologie;
+use Model\Diagnostic;
 use Model\Mobilier;
 use Model\Typedepot;
 use Model\Typesepulture;
@@ -252,21 +253,21 @@ Asset::js("form.js");
 						</tr>
 					</thead>
 					<tbody>
-						<?php for ($i=0; $i < 5; $i++): ?>
+						<?php foreach (Diagnostic::fetchAll() as $diagnostic): ?>
 							<tr>
 								<td>
 									<div class="form-check form-switch">
-										<label class="form-check-label" for="' . $key['name'] . '[' . $noLigne . ']">$key['nom']</label>
-										<input class="form-check-input" type="checkbox">
+										<?= Form::label($diagnostic->getNom(), "diagnostic_{$diagnostic->getId()}", array("class" => "form-check-label")); ?>
+										<?= Form::checkbox("diagnostic_{$diagnostic->getId()}", null, null, array("class" => "form-check-input")); ?>
 									</div>
 								</td>
 								<?php for ($j=0; $j < 10; $j++): ?>
 									<td>
-										<input class="form-check-input" type="checkbox" name="test" value="TEST">
+										<?= Form::checkbox("test", null, null, array("class" => "form-check-input")); ?>
 									</td>
 								<?php endfor; ?>
 							</tr>
-						<?php endfor; ?>
+						<?php endforeach; ?>
 					</tbody>
 				</table>
 				<!-- Affichage des pathologies

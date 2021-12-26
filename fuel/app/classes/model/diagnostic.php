@@ -30,14 +30,8 @@ class Diagnostic extends Model {
 	 * Retourne tous les diagnostics.
 	 * @return Diagnostic[]
 	 */
-	public static function fetchAll() {
-		$results = Helper::querySelect("SELECT * FROM diagnostic;");
-		$objects = array();
-
-		foreach ($results as $res) {
-			$objects[] = new Diagnostic($res);
-		}
-		return $objects;
+	public static function fetchAll(): array {
+		return Archeo::fetchAll("diagnostic", function ($data) { return new Diagnostic($data); });
 	}
 
 	public function getId() { return $this->id; }

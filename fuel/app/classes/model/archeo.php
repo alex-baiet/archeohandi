@@ -42,4 +42,31 @@ class Archeo {
 		return $html;
 	}
 
+	/**
+	 * Récupère les données d'une table correspondant à l'id.
+	 * @param int $id L'identifiant des données.
+	 * @param string $table Table où rechercher.
+	 * @param Closure $dataFormater Transforme les données dans un autre format de votre choix.
+	 */
+	public static function fetchSingle(int $id, string $table, Closure $dataReformat) {
+		if (!is_numeric($id)) return null;
+		$res = Helper::querySelectSingle("SELECT * FROM $table WHERE id=$id;");
+		if ($res === null) return null;
+		return $dataReformat($res);
+	}
+
+	/**
+	 * Récupère toutes les données d'une table.
+	 * @param string $table Table où récupérer les données.
+	 * @param Closure $dataFormater Transforme chaque donnée dans un autre format de votre choix.
+	 */
+	public static function fetchAll(string $table, Closure $dataReformat): array {
+		$results = Helper::querySelect("SELECT * FROM $table");
+		$objects = array();
+		foreach ($results as $res) {
+			$objects[] = $dataReformat($res);
+		}
+		return $objects;
+	}
+
 }
