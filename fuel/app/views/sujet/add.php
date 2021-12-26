@@ -238,12 +238,13 @@ Asset::js("form.js");
 					<thead>
 						<tr>
 							<td style="width: 300px;"></td>
-							<td><img style="width: 50 px; height: 25px; margin-right: 10px;" src="https://archeohandi.huma-num.fr/public/assets/img/crane.png?1621418029" alt="Crâne"></td>
-							<td><img style="width: 50 px; height: 25px; margin-right: 10px;" src="https://archeohandi.huma-num.fr/public/assets/img/superieurdroit.png?1621418019" alt="Membre supérieur droit"></td>
-							<td><img style="width: 50 px; height: 25px; margin-right: 10px;" src="https://archeohandi.huma-num.fr/public/assets/img/superieurgauche.png?1621418019" alt="Membre supérieur gauche"></td>
-							<td><img style="width: 50 px; height: 25px; margin-right: 10px;" src="https://archeohandi.huma-num.fr/public/assets/img/bassin.png?1621418020" alt="Tronc bassin"></td>
-							<td><img style="width: 50 px; height: 25px; margin-right: 10px;" src="https://archeohandi.huma-num.fr/public/assets/img/inferieurdroit.png?1621418030" alt="Membre inférieur droit"></td>
-							<td style="width: 100px;"><img style="width: 50 px; height: 25px; margin-right: 10px;" src="https://archeohandi.huma-num.fr/public/assets/img/inferieurgauche.png?1621418016" alt="Membre inférieur gauche"></td>
+							<?php $imgStyle = "width: 50 px; height: 25px; margin-right: 10px;"; ?>
+							<td><?= Asset::img("body/head.png", array("style" => $imgStyle, "alt" => "tête")); ?></td>
+							<td><?= Asset::img("body/upper_right.png", array("style" => $imgStyle, "alt" => "Supérieur droit")); ?></td>
+							<td><?= Asset::img("body/upper_left.png", array("style" => $imgStyle, "alt" => "Supérieur gauche")); ?></td>
+							<td><?= Asset::img("body/pelvis.png", array("style" => $imgStyle, "alt" => "Bassin")); ?></td>
+							<td><?= Asset::img("body/lower_right.png", array("style" => $imgStyle, "alt" => "Inférieur droit")); ?></td>
+							<td><?= Asset::img("body/lower_left.png", array("style" => "$imgStyle, width: 50px;", "alt" => "Inférieur gauche")); ?></td>
 							<td><div class="th-title-rotate">Béquillage</div></td>
 							<td><div class="th-title-rotate">Orthèse</div></td>
 							<td><div class="th-title-rotate">Prothèse</div></td>

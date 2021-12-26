@@ -19,7 +19,6 @@ class Mobilier extends Model {
 
 	/**
 	 * Récupère le mobilier correspondant à l'id.
-	 * 
 	 * @param int $id Identifiant.
 	 * @return Mobilier|null
 	 */
