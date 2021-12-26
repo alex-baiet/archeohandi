@@ -22,9 +22,8 @@ $sujets = $sujets;
 	<p class="text-muted">Ici vous retrouvez toutes les informations de l'opération <strong><?= $operation->getNomOp(); ?></strong>.
 	</p>
 	<?php
-	array_key_exists('erreur_supp_sujet', $_GET) ? Helper::alertBootstrap('Le numéro du sujet n\'est pas correcte (nombres autorisés). La suppression ne peut pas s\'effectuer', 'danger') : null;
+	array_key_exists('erreur_supp_sujet', $_GET) ? Helper::alertBootstrap('Le numéro du sujet n\'est pas correcte. La suppression ne peut pas s\'effectuer', 'danger') : null;
 	array_key_exists('erreur_supp_bdd', $_GET) ? Helper::alertBootstrap('Le numéro du sujet n\'existe pas. La suppression ne peut pas s\'effectuer', 'danger') : null;
-
 	array_key_exists('success_ajout', $_GET) ? Helper::alertBootstrap('Ajout effectué', 'success') : null;
 	array_key_exists('success_modif', $_GET) ? Helper::alertBootstrap('Modification effectuée', 'success') : null;
 	array_key_exists('success_supp_sujet', $_GET) ? Helper::alertBootstrap('Suppression effectuée', 'success') : null;

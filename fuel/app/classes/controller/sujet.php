@@ -6,6 +6,7 @@ use Fuel\Core\Input;
 use Fuel\Core\Response;
 use Fuel\Core\View;
 use Model\Helper;
+use Model\Sujethandicape;
 
 class Controller_Sujet extends Controller_Template {
 	public function action_view($id) {
@@ -744,7 +745,9 @@ class Controller_Sujet extends Controller_Template {
 
 	//Pour l'ajout d'un sujet, nous reprennons le même principe que pour l'ajout d'une opération et de sujet sans l'aspect de l'opération
 	public function action_add($id) {
-
+		
+		
+		#region OldGarbage
 		$chronologie = DB::query('SELECT id_chronologie,nom_chronologie FROM chronologie_site ORDER BY nom_chronologie ASC')->execute();
 		$chronologie = $chronologie->_results;
 
@@ -1512,6 +1515,7 @@ class Controller_Sujet extends Controller_Template {
 				Response::redirect('/operations');
 			}
 		}
+		#endregion
 
 		$data = array(
 			'id' => $id, 'chronologie' => $chronologie, 'type_depot' => $type_depot, 'type_sepulture' => $type_sepulture, 'diagnostic' => $diagnostic, 'accessoire' => $accessoire, 'localisation_atteinte' => $localisation_atteinte, 'pathologie' => $pathologie,
