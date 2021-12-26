@@ -2,47 +2,32 @@
 
 use Fuel\Core\Asset;
 use Fuel\Core\Form;
+use Model\Chronologie;
 
 ?>
 <!-- Contenu de la page -->
 <div class="container">
 	<h1 class="m-2">Ajouter des sujets handicapés <a class="btn btn-sm btn-secondary" href="/public/add/sujet/<?= $id; ?>">Rafraichir la page <i class="bi bi-arrow-repeat"></i></a></h1>
 	<p class="text-muted">Ici vous pouvez ajouter des sujets handicapés.</p>
-	<div class="container" style="background-color: #F5F5F5;">
 
+	<div style="background-color: #F5F5F5; padding: 10px;">
 		<?= Form::open(array('action' => 'add/sujet/' . $id . '', 'method' => 'POST')); ?>
 		<div class="contenu" id="contenu">
-			<?php
-			//En cas d'erreur de saisie, vérifie le nombre de sujet qui à été saisie qui est sotocké dans l'url
-			// if (array_key_exists('nb', $_GET)) {
-			// 	//Permet de faire les différentes opérations pour chaque sujet
-			// 	for ($i = 1; $i <= $_GET['nb']; $i++) {
-			// 		//Permet de vérifier si dans l'url il y a les différentes options et si oui, cela appel une fonction qui permet d'afficher un message d'erreur ou d'information pour chaque sujet
-
-			// 		//Appel la fonction pour afficher tout les champs pour ajouter un sujet
-			// 		echo afficherLigne($i, $chronologie, $type_depot, $type_sepulture, $diagnostic, $accessoire, $localisation_atteinte, $appareil_compensatoire, $pathologie, 2);
-			// 	}
-			// } else {
-			// 	echo afficherLigne(1, $chronologie, $type_depot, $type_sepulture, $diagnostic, $accessoire, $localisation_atteinte, $appareil_compensatoire, $pathologie, 0);
-			// }
-			?>
 			<div class="col-auto">
-				<h2 class="text-center">Groupe de sujets</h2>
+				<h2 class="text-center">Sujet</h2>
+
 				<div class="row g-2">
+					<!-- NMI -->
 					<div class="col-md-6">
 						<div class="form-floating">
-							<input type="number" class="form-control" name="NMI[' . $noLigne . ']" placeholder="183" value="">
+							<input type="number" class="form-control" name="nmi" placeholder="" value="">
 							<label for="NMI">NMI</label>
 						</div>
 					</div>
+					
+					<!-- Chronologie -->
 					<div class="col-md-6">
-						<div class="form-floating">
-							<select class="form-select" name="nom_chronologie[' . $noLigne . ']" aria-label="select_nom_chronologie">
-								<option value="">Sélectionner</option>
-								<option value="' . $key['id_chronologie'] . '">$key['nom_chronologie']</option>
-							</select>
-							<label for="nom_chronologie">Période chronologique</label>
-						</div>
+						<?= Chronologie::generateSelect() ?>
 					</div>
 				</div>
 
@@ -206,70 +191,68 @@ use Fuel\Core\Form;
 				</div>
 				<br />
 
-				<div class="container">
-					<h3>Atteinte invalidante</h3>
-					<p class="text-muted">Vous pouvez activer ou désactiver les différents boutons avec la barre espace.</p>
-					<div class="row">
-						<div class="col-md-6">
-							<div class="form-check form-switch">
-								<label class="form-check-label" for="' . $key['name'] . '[' . $noLigne . ']">$key['nom']</label>
-								<input class="form-check-input" type="checkbox">
-							</div>
-							<div class="' . $d_none_pathologie . '" id="block_pathologies_infectieuses_' . $noLigne . '" style="width: 50%; background-color: white;">
-								<div class="form-check form-switch" style="padding-left: 75px;">
-									<?php for ($i = 0; $i < 5; $i++) : ?>
-										<label class="form-check-label" for="PI_' . $key2['name'] . '[' . $noLigne . ']">$key2['type_pathologie']</label>
-										<input class="form-check-input" type="checkbox" name="PI_' . $key2['name'] . '[' . $noLigne . ']" value="' . $key2['id_pathologie'] . '">
-									<?php endfor; ?>
-								</div>
-							</div>
-							<div id="block_description_autre_atteinte_' . $noLigne . '" class="' . $d_none_autre_atteinte . '">
-								<label for="description_autre_atteinte[' . $noLigne . ']">Description du autre</label>
-								<textarea class="form-control" name="description_autre_atteinte[' . $noLigne . ']" rows="2"></textarea>
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="row">
-								<div class="col-md-6">
-									<img style="width: 50 px; height: 25px; margin-right: 10px;" src="https://archeohandi.huma-num.fr/public/assets/img/crane.png?1621418029" alt="Crâne">
-									<img style="width: 50 px; height: 25px; margin-right: 10px;" src="https://archeohandi.huma-num.fr/public/assets/img/superieurdroit.png?1621418019" alt="Membre supérieur droit">
-									<img style="width: 50 px; height: 25px; margin-right: 10px;" src="https://archeohandi.huma-num.fr/public/assets/img/superieurgauche.png?1621418019" alt="Membre supérieur gauche">
-									<img style="width: 50 px; height: 25px; margin-right: 10px;" src="https://archeohandi.huma-num.fr/public/assets/img/bassin.png?1621418020" alt="Tronc bassin">
-									<img style="width: 50 px; height: 25px; margin-right: 10px;" src="https://archeohandi.huma-num.fr/public/assets/img/inferieurdroit.png?1621418030" alt="Membre inférieur droit">
-									<img style="width: 50 px; height: 25px; margin-right: 10px;" src="https://archeohandi.huma-num.fr/public/assets/img/inferieurgauche.png?1621418016" alt="Membre inférieur gauche">
-								</div>
-								<div class="col-md-6">
-									<div class="col-auto" style="padding: 0px; margin: 0px; width: 50px; height: 75px; margin-left: 95px; transform: rotate(90deg); transform-origin: left top 0;">
-										Béquillage<br />
-										Orthèse<br />
-										Prothèse<br />
-										Attèle<br />
+				<!-- Toutes les invalidations du sujets -->
+				<h3>Atteinte invalidante</h3>
+				<style>
+					.th-title-rotate {
+						padding: 0px;
+						margin: 0px;
+						width: 24px;
+						height: 80px;
+						transform: rotate(90deg);
+						transform-origin: 10px 12px;
+					}
+				</style>
+				<table>
+					<thead>
+						<tr>
+							<td style="width: 300px;"></td>
+							<td><img style="width: 50 px; height: 25px; margin-right: 10px;" src="https://archeohandi.huma-num.fr/public/assets/img/crane.png?1621418029" alt="Crâne"></td>
+							<td><img style="width: 50 px; height: 25px; margin-right: 10px;" src="https://archeohandi.huma-num.fr/public/assets/img/superieurdroit.png?1621418019" alt="Membre supérieur droit"></td>
+							<td><img style="width: 50 px; height: 25px; margin-right: 10px;" src="https://archeohandi.huma-num.fr/public/assets/img/superieurgauche.png?1621418019" alt="Membre supérieur gauche"></td>
+							<td><img style="width: 50 px; height: 25px; margin-right: 10px;" src="https://archeohandi.huma-num.fr/public/assets/img/bassin.png?1621418020" alt="Tronc bassin"></td>
+							<td><img style="width: 50 px; height: 25px; margin-right: 10px;" src="https://archeohandi.huma-num.fr/public/assets/img/inferieurdroit.png?1621418030" alt="Membre inférieur droit"></td>
+							<td style="width: 100px;"><img style="width: 50 px; height: 25px; margin-right: 10px;" src="https://archeohandi.huma-num.fr/public/assets/img/inferieurgauche.png?1621418016" alt="Membre inférieur gauche"></td>
+							<td><div class="th-title-rotate">Béquillage</div></td>
+							<td><div class="th-title-rotate">Orthèse</div></td>
+							<td><div class="th-title-rotate">Prothèse</div></td>
+							<td><div class="th-title-rotate">Attèle</div></td>
+						</tr>
+					</thead>
+					<tbody>
+						<?php for ($i=0; $i < 5; $i++): ?>
+							<tr>
+								<td>
+									<div class="form-check form-switch">
+										<label class="form-check-label" for="' . $key['name'] . '[' . $noLigne . ']">$key['nom']</label>
+										<input class="form-check-input" type="checkbox">
 									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-6">
-									<?php for ($i = 0; $i < 5; $i++) : ?>
-										<div class="form-check form-check-inline">
-											<input class="form-check-input" type="checkbox" name="' . $key2['name'] . '[' . $noLigne . '][' . $key['id'] . ']" value="' . $key2['id'] . '">
-										</div>
-									<?php endfor; ?>
-								</div>
-								<div class="col-md-6">
-									<?php for ($i = 0; $i < 4; $i++) : ?>
-										<div class="form-check form-check-inline">
-											<input class="form-check-input" type="checkbox" name="' . $key2['name'] . '[' . $noLigne . '][' . $key['id'] . ']" value="' . $key2['id_appareil_compensatoire'] . '">
-										</div>
-									<?php endfor; ?>
-								</div>
-							</div>
-						</div>
-						<label for="commentaire_appareil[' . $noLigne . ']">Commentaire sur l\'appareil de compensation</label>
-						<textarea class="form-control" name="commentaire_appareil[' . $noLigne . ']" rows="2">OSKUR</textarea>
-						<label for="commentaire_diagnostic[' . $noLigne . ']">Commentaire du diagnostic</label>
-						<textarea class="form-control" name="commentaire_diagnostic[' . $noLigne . ']" rows="2" placeholder="** INFO ** Les différentes atteintes cochées seront ajoutées à la description"></textarea>
+								</td>
+								<?php for ($j=0; $j < 10; $j++): ?>
+									<td>
+										<input class="form-check-input" type="checkbox" name="test" value="TEST">
+									</td>
+								<?php endfor; ?>
+							</tr>
+						<?php endfor; ?>
+					</tbody>
+				</table>
+				<!-- Affichage des pathologies
+				<div class="' . $d_none_pathologie . '" id="block_pathologies_infectieuses_' . $noLigne . '" style="width: 50%; background-color: white;">
+					<div class="form-check form-switch" style="padding-left: 75px;">
+						<label class="form-check-label" for="PI_' . $key2['name'] . '[' . $noLigne . ']">$key2['type_pathologie']</label>
+						<input class="form-check-input" type="checkbox" name="PI_' . $key2['name'] . '[' . $noLigne . ']" value="' . $key2['id_pathologie'] . '">
 					</div>
+				</div> -->
+
+
+				<div class="row">
+					<label for="commentaire_appareil[' . $noLigne . ']">Commentaire sur l\'appareil de compensation</label>
+					<textarea class="form-control" name="commentaire_appareil[' . $noLigne . ']" rows="2">OSKUR</textarea>
+					<label for="commentaire_diagnostic[' . $noLigne . ']">Commentaire du diagnostic</label>
+					<textarea class="form-control" name="commentaire_diagnostic[' . $noLigne . ']" rows="2" placeholder="** INFO ** Les différentes atteintes cochées seront ajoutées à la description"></textarea>
 				</div>
+
 				<br />
 				<div style="text-align:center">
 					<button type="button" class="btn btn-primary" id="btnAjouter' . $noLigne . '" onclick="ajouterLigne(' . ($noLigne + 1) . ');"><i class="bi bi-plus"></i></button>

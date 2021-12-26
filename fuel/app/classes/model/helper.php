@@ -56,7 +56,7 @@ class Helper {
 
 	/**
 	 * Renvoie une valeur de l'array, ou null si la valeur n'existe pas.
-	 * @return string La valeur est retourné si elle existe, sinon un string vide est retourné.
+	 * @return int La valeur est retourné si elle existe, sinon un int vide est retourné.
 	 */
 	static function arrayGetInt($key, array $array): int {
 		if (array_key_exists($key, $array)) return $array[$key] !== null ? intval($array[$key]) : 0;
