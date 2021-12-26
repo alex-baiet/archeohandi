@@ -73,8 +73,8 @@ class Controller_Add extends Controller_Template {
 			
 			foreach (Input::post('id_sujet') as $key => $val) :
 				if ($val != null) :
-					if (Helper::verif_alpha($val, 'alphanum') != false) :
-						$val = Helper::verif_alpha($val, 'alphanum');
+					if (Helper::verifAlpha($val, 'alphanum') != false) :
+						$val = Helper::verifAlpha($val, 'alphanum');
 						$valeurs .= '&id_sujet_' . $key . '=' . $val;
 						$array[$key] += array('id_sujet' => $val);
 					else : $erreurs .= "&erreur_alpha_sujet_" . $key;
@@ -236,8 +236,8 @@ class Controller_Add extends Controller_Template {
 			if (Input::post('num_inventaire') != NULL) :
 				foreach (Input::post('num_inventaire') as $key => $val) :
 					if (!empty($key)) :
-						if (Helper::verif_alpha($val, 'alphanum') != false) :
-							$val = Helper::verif_alpha($val, 'alphanum');
+						if (Helper::verifAlpha($val, 'alphanum') != false) :
+							$val = Helper::verifAlpha($val, 'alphanum');
 							$valeurs .= '&num_inventaire_' . $key . '=' . $val;
 							$array[$key] += array('num_inventaire' => $val);
 						else : $erreurs .= "&erreur_alpha_num_inventaire_" . $key;
@@ -269,8 +269,8 @@ class Controller_Add extends Controller_Template {
 			if (Input::post('adresse_depot') != NULL) :
 				foreach (Input::post('adresse_depot') as $key => $val) :
 					if (!empty($key)) :
-						if (Helper::verif_alpha($val, 'alphatout') != false) :
-							$val = Helper::verif_alpha($val, 'alphatout');
+						if (Helper::verifAlpha($val, 'alphatout') != false) :
+							$val = Helper::verifAlpha($val, 'alphatout');
 							$valeurs .= '&adresse_depot_' . $key . '=' . $val;
 							$array[$key] += array('adresse_depot' => $val);
 						else : $erreurs .= "&erreur_alpha_adresse_depot_" . $key;

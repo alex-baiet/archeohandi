@@ -14,7 +14,7 @@ class Helper {
 	 * @return string|false Renvoie false uniquement si le texte n'est pas conforme,
 	 * ou renvoie le texte corrigé (si il est corrigeable).
 	 */
-	static function verif_alpha($str, $type = "alphatout") {
+	static function verifAlpha($str, $type = "alphatout") {
 		if (empty($str)) return "";
 		//Enlève les espaces, tabulations, etc au début et fin de la chaine de caractère
 		trim($str);

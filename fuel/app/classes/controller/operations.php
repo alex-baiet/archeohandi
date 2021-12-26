@@ -154,8 +154,8 @@ class Controller_Operations extends Controller_Template {
 
 		// 	//Pour les différents select, nous vérifions que les différentes entités existent dans la BDD
 		// 	if (!empty(Input::post('adresse'))) :
-		// 		if (Helper::verif_alpha(Input::post('adresse'), 'alphatout') != false) :
-		// 			$adresse = Helper::verif_alpha(Input::post('adresse'), 'alphatout');
+		// 		if (Helper::verifAlpha(Input::post('adresse'), 'alphatout') != false) :
+		// 			$adresse = Helper::verifAlpha(Input::post('adresse'), 'alphatout');
 		// 			$valeurs .= '&adresse=' . $adresse;
 		// 		else : $erreurs .= "&erreur_alpha_adresse";
 		// 		endif;
@@ -227,32 +227,32 @@ class Controller_Operations extends Controller_Template {
 		// 	if (!empty(Input::post('a_revoir'))) : $a_revoir = trim(strip_tags(Input::post('a_revoir')));
 		// 		$valeurs .= '&a_revoir=' . $a_revoir;
 		// 	endif;
-		// 	if (!empty(Input::post('EA'))) : if (Helper::verif_alpha(Input::post('EA'), 'alphanum') != false) : $EA = Helper::verif_alpha(Input::post('EA'), 'alphanum');
+		// 	if (!empty(Input::post('EA'))) : if (Helper::verifAlpha(Input::post('EA'), 'alphanum') != false) : $EA = Helper::verifAlpha(Input::post('EA'), 'alphanum');
 		// 			$valeurs .= '&EA=' . $EA;
 		// 		else : $erreurs .= "&erreur_alpha_ea";
 		// 		endif;
 		// 	endif;
-		// 	if (!empty(Input::post('OA'))) : if (Helper::verif_alpha(Input::post('OA'), 'alphanum') != false) : $OA = Helper::verif_alpha(Input::post('OA'), 'alphanum');
+		// 	if (!empty(Input::post('OA'))) : if (Helper::verifAlpha(Input::post('OA'), 'alphanum') != false) : $OA = Helper::verifAlpha(Input::post('OA'), 'alphanum');
 		// 			$valeurs .= '&OA=' . $OA;
 		// 		else : $erreurs .= "&erreur_alpha_oa";
 		// 		endif;
 		// 	endif;
-		// 	if (!empty(Input::post('patriarche'))) : if (Helper::verif_alpha(Input::post('patriarche'), 'alphanum') != false) : $patriarche = Helper::verif_alpha(Input::post('patriarche'), 'alphanum');
+		// 	if (!empty(Input::post('patriarche'))) : if (Helper::verifAlpha(Input::post('patriarche'), 'alphanum') != false) : $patriarche = Helper::verifAlpha(Input::post('patriarche'), 'alphanum');
 		// 			$valeurs .= '&patriarche=' . $patriarche;
 		// 		else : $erreurs .= "&erreur_alpha_patriarche";
 		// 		endif;
 		// 	endif;
-		// 	if (!empty(Input::post('numero_operation'))) : if (Helper::verif_alpha(Input::post('numero_operation'), 'alphanum') != false) : $num_op = Helper::verif_alpha(Input::post('numero_operation'), 'alphanum');
+		// 	if (!empty(Input::post('numero_operation'))) : if (Helper::verifAlpha(Input::post('numero_operation'), 'alphanum') != false) : $num_op = Helper::verifAlpha(Input::post('numero_operation'), 'alphanum');
 		// 			$valeurs .= '&numero_op=' . $num_op;
 		// 		else : $erreurs .= "&erreur_alpha_numop";
 		// 		endif;
 		// 	endif;
-		// 	if (!empty(Input::post('arrete_prescription'))) : if (Helper::verif_alpha(Input::post('arrete_prescription'), 'alphanum') != false) : $prescription = Helper::verif_alpha(Input::post('arrete_prescription'), 'alphanum');
+		// 	if (!empty(Input::post('arrete_prescription'))) : if (Helper::verifAlpha(Input::post('arrete_prescription'), 'alphanum') != false) : $prescription = Helper::verifAlpha(Input::post('arrete_prescription'), 'alphanum');
 		// 			$valeurs .= '&arrete_prescription=' . $prescription;
 		// 		else : $erreurs .= "&erreur_alpha_prescription";
 		// 		endif;
 		// 	endif;
-		// 	if (!empty(Input::post('responsable_op'))) : if (Helper::verif_alpha(Input::post('responsable_op'), 'alpha') != false) : $RO = Helper::verif_alpha(Input::post('responsable_op'), 'alpha');
+		// 	if (!empty(Input::post('responsable_op'))) : if (Helper::verifAlpha(Input::post('responsable_op'), 'alpha') != false) : $RO = Helper::verifAlpha(Input::post('responsable_op'), 'alpha');
 		// 			$valeurs .= '&responsable_op=' . $RO;
 		// 		else : $erreurs .= "&erreur_alpha_ro";
 		// 		endif;
@@ -262,7 +262,7 @@ class Controller_Operations extends Controller_Template {
 		// 	if (!empty(Input::post('anthropologue'))) :
 		// 		foreach (Input::post('anthropologue') as $key => $val) :
 		// 			if (!empty($key)) :
-		// 				if (Helper::verif_alpha($val, 'alpha') != false) :
+		// 				if (Helper::verifAlpha($val, 'alpha') != false) :
 		// 					if (array_key_last(Input::post('anthropologue')) == $key) : $anthropologue .= $val;
 		// 					else : $anthropologue .= $val . ', ';
 		// 					endif;
@@ -276,7 +276,7 @@ class Controller_Operations extends Controller_Template {
 		// 	if (!empty(Input::post('paleopathologiste'))) :
 		// 		foreach (Input::post('paleopathologiste') as $key => $val) :
 		// 			if (!empty($key)) :
-		// 				if (Helper::verif_alpha($val, 'alpha') != false) :
+		// 				if (Helper::verifAlpha($val, 'alpha') != false) :
 		// 					if (array_key_last(Input::post('paleopathologiste')) == $key) : $paleopathologiste .= $val;
 		// 					else : $paleopathologiste .= $val . ', ';
 		// 					endif;
@@ -383,8 +383,8 @@ class Controller_Operations extends Controller_Template {
 
 		// 	foreach (Input::post('id_sujet') as $key => $val) :
 		// 		if ($val != null) :
-		// 			if (Helper::verif_alpha($val, 'alphanum') != false) :
-		// 				$val = Helper::verif_alpha($val, 'alphanum');
+		// 			if (Helper::verifAlpha($val, 'alphanum') != false) :
+		// 				$val = Helper::verifAlpha($val, 'alphanum');
 		// 				$valeurs .= '&id_sujet_' . $key . '=' . $val;
 		// 				$array[$key] += array('id_sujet' => $val);
 		// 			else : $erreurs .= "&erreur_alpha_sujet_" . $key;
@@ -546,8 +546,8 @@ class Controller_Operations extends Controller_Template {
 		// 	if (Input::post('num_inventaire') != NULL) :
 		// 		foreach (Input::post('num_inventaire') as $key => $val) :
 		// 			if (!empty($key)) :
-		// 				if (Helper::verif_alpha($val, 'alphanum') != false) :
-		// 					$val = Helper::verif_alpha($val, 'alphanum');
+		// 				if (Helper::verifAlpha($val, 'alphanum') != false) :
+		// 					$val = Helper::verifAlpha($val, 'alphanum');
 		// 					$valeurs .= '&num_inventaire_' . $key . '=' . $val;
 		// 					$array[$key] += array('num_inventaire' => $val);
 		// 				else : $erreurs .= "&erreur_alpha_num_inventaire_" . $key;
@@ -578,8 +578,8 @@ class Controller_Operations extends Controller_Template {
 		// 	if (Input::post('adresse_depot') != NULL) :
 		// 		foreach (Input::post('adresse_depot') as $key => $val) :
 		// 			if (!empty($key)) :
-		// 				if (Helper::verif_alpha($val, 'alphatout') != false) :
-		// 					$val = Helper::verif_alpha($val, 'alphatout');
+		// 				if (Helper::verifAlpha($val, 'alphatout') != false) :
+		// 					$val = Helper::verifAlpha($val, 'alphatout');
 		// 					$valeurs .= '&adresse_depot_' . $key . '=' . $val;
 		// 					$array[$key] += array('adresse_depot' => $val);
 		// 				else : $erreurs .= "&erreur_alpha_adresse_depot_" . $key;

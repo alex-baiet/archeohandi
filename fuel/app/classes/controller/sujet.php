@@ -5,6 +5,7 @@ use Fuel\Core\DB;
 use Fuel\Core\Input;
 use Fuel\Core\Response;
 use Fuel\Core\View;
+use Model\Helper;
 
 class Controller_Sujet extends Controller_Template {
 	public function action_view($id) {
@@ -40,8 +41,7 @@ class Controller_Sujet extends Controller_Template {
 		$this->template->content = View::forge('sujet/view', $data);
 	}
 
-	public function action_edit($id)
-	{
+	public function action_edit($id) {
 		//Permet de récupérer toutes les informations du sujet handicapé
 		$query = DB::query('SELECT * FROM sujet_handicape WHERE id=' . $id . '   ');
 		$modif_sujet = $query->execute();
@@ -136,7 +136,7 @@ class Controller_Sujet extends Controller_Template {
 			} else $erreurs .= "&erreur_chrono_vide";
 
 			if (Input::post('id_sujet') != NULL)
-				if (verif_alpha(Input::post('id_sujet'), 'alphanum') != false) {
+				if (Helper::verifAlpha(Input::post('id_sujet'), 'alphanum') != false) {
 					$valeurs .= '&id_sujet=' . Input::post('id_sujet');
 					$id_sujet = Input::post('id_sujet');
 				} else $erreurs .= "&erreur_alpha_sujet";
@@ -257,8 +257,8 @@ class Controller_Sujet extends Controller_Template {
 
 
 		if (Input::post('num_inventaire') != NULL) :
-			if (verif_alpha(Input::post('num_inventaire'), 'alphanum') != false) :
-				$num_inventaire = verif_alpha(Input::post('num_inventaire'), 'alphanum');
+			if (Helper::verifAlpha(Input::post('num_inventaire'), 'alphanum') != false) :
+				$num_inventaire = Helper::verifAlpha(Input::post('num_inventaire'), 'alphanum');
 				$valeurs .= '&num_inventaire=' . $num_inventaire;
 			else : $erreurs .= "&erreur_alpha_num_inventaire";
 			endif;
@@ -281,8 +281,8 @@ class Controller_Sujet extends Controller_Template {
 		endif;
 
 		if (Input::post('adresse_depot') != NULL) :
-			if (verif_alpha(Input::post('adresse_depot'), 'alphatout') != false) :
-				$adresse_depot = verif_alpha(Input::post('adresse_depot'), 'alphatout');
+			if (Helper::verifAlpha(Input::post('adresse_depot'), 'alphatout') != false) :
+				$adresse_depot = Helper::verifAlpha(Input::post('adresse_depot'), 'alphatout');
 				$valeurs .= '&adresse_depot=' . $adresse_depot;
 			else : $erreurs .= "&erreur_alpha_adresse_depot";
 			endif;
@@ -742,27 +742,4 @@ class Controller_Sujet extends Controller_Template {
 		$this->template->content = View::forge('sujet/edit', $data);
 	}
 
-	//Fonction qui permet de vérifier si ce qui est envoyé correspond à des caractères valides
-	function verif_alpha($str, $type)
-	{
-		//Enlève les espaces, tabulations, etc au début et fin de la chaine de caractère
-		trim($str);
-		//Enlève les espaces, tabulations, etc au début et fin de la chaine de caractère
-		strip_tags($str);
-
-		if ($type == "alpha") : preg_match('/([^A-Za-zàáâãäåçèéêëìíîïðòóôõöùúûüýÿ ])/', $str, $result);
-		endif;
-
-		if ($type == "alphatout") : preg_match('/([^A-Za-z0-9àáâãäåçèéêëìíîïðòóôõöùúûüýÿ ])/', $str, $result);
-		endif;
-
-		if ($type == "alphanum") : preg_match('/([^A-Za-z0-9,-;()\/ ])/', $str, $result);
-		endif;
-
-		if (!empty($result)) {
-			return false;
-		} else {
-			return $str;
-		}
-	}
 }
