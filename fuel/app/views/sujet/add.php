@@ -144,13 +144,17 @@ use Model\Typesepulture;
 
 					<div class="col-md-6">
 						<div class="form-floating">
-							<select class="form-select" name="contexte[' . $noLigne . ']" aria-label="select_contexte">
-								<option value="">Sélectionner</option>
-								<option value="Funeraire">Funéraire</option>
-								<option value="Domestique">Domestique</option>
-								<option value="Autre">Autre</option>
-							</select>
-							<label for="contexte">Contexte de la tombe</label>
+							<?= Form::select(
+								"contexte",
+								"",
+								array(
+									"" => "Sélectionner",
+									"Funeraire" => "Funéraire",
+									"Domestique" => "Domestique",
+									"Autre" => "Autre"),
+								array("class" => "form-select"));
+							?>
+							<?= Form::label("Contexte de la tombe", "contexte") ?>
 						</div>
 					</div>
 				</div>
