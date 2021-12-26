@@ -3,6 +3,7 @@
 use Fuel\Core\Asset;
 use Fuel\Core\Form;
 use Model\Chronologie;
+use Model\Mobilier;
 use Model\Typedepot;
 use Model\Typesepulture;
 
@@ -142,6 +143,7 @@ use Model\Typesepulture;
 						</div>
 					</div>
 
+					<!-- Contexte -->
 					<div class="col-md-6">
 						<div class="form-floating">
 							<?= Form::select(
@@ -159,51 +161,53 @@ use Model\Typesepulture;
 					</div>
 				</div>
 
+				<!-- Commentaire contexte -->
 				<div class="col-md-12">
 					<label for="commentaire_contexte">Commentaire</label>
 					<div class="input-group">
-						<textarea class="form-control" name="commentaire_contexte[' . $noLigne . ']" rows="2"></textarea>
+						<textarea class="form-control" name="commentaire_contexte" rows="2"></textarea>
 					</div>
 				</div>
 				<br />
 
-				<div class="container">
-					<div class="row">
-						<div class="col-md-4">
-							<h3>Accessoire</h3>
+				<div class="row">
+					<!-- Accessoires -->
+					<div class="col-md-4">
+						<h3>Accessoires</h3>
+						<?php foreach (Mobilier::fetchAll() as $mobilier): ?>
 							<div class="form-check form-switch">
-								<label class="form-check-label" for="' . $key['name'] . '[' . $noLigne . ']">$key['nom']</label>
-								<input class="form-check-input" type="checkbox" name="' . $key['name'] . '[' . $noLigne . ']" value="' . $key['id'] . '">
+								<?= Form::label($mobilier->getNom(), "mobilier_{$mobilier->getId()}"); ?>
+								<?= Form::input("mobilier_{$mobilier->getId()}", null, array("type" => "checkbox", "class" => "form-check-input")); ?>
 							</div>
-							<div id="block_description_autre_mobilier_' . $noLigne . '" class="' . $d_none_descp_autre_mobilier . '">
-								<label class="form-check-label" for="description_autre_mobilier[' . $noLigne . ']">Description du autre</label>
-								<textarea class="form-control" name="description_autre_mobilier[' . $noLigne . ']" rows="2">$description_autre_mobilier</textarea>
-							</div>
+						<?php endforeach; ?>
+						<div id="block_description_autre_mobilier_' . $noLigne . '" class="' . $d_none_descp_autre_mobilier . '">
+							<label class="form-check-label" for="description_autre_mobilier[' . $noLigne . ']">Description du autre</label>
+							<textarea class="form-control" name="description_autre_mobilier[' . $noLigne . ']" rows="2">$description_autre_mobilier</textarea>
 						</div>
+					</div>
 
-						<div class="col-md-8">
-							<h3>Dépot</h3>
-							<div class="row row-cols-2">
-								<div class="col">
-									<div class="form-floating">
-										<input type="text" class="form-control" name="num_inventaire[' . $noLigne . ']" placeholder="Numéro" value="">
-										<label for="num_inventaire[' . $noLigne . ']">Numéro du dépôt</label>
-									</div>
+					<div class="col-md-8">
+						<h3>Dépot</h3>
+						<div class="row row-cols-2">
+							<div class="col">
+								<div class="form-floating">
+									<input type="text" class="form-control" name="num_inventaire[' . $noLigne . ']" placeholder="Numéro" value="">
+									<label for="num_inventaire[' . $noLigne . ']">Numéro du dépôt</label>
 								</div>
-								<div class="col">
-									<div class="form-floating">
-										<input type="text" name="commune_depot[' . $noLigne . ']" id="commune_depot_' . $noLigne . '" class="form-control" placeholder="Rechercher une commune ..." autocomplete="off" onclick="recherche_commune_depot(' . $noLigne . ');" value="">
-										<label for="commune_depot[' . $noLigne . ']">Rechercher une commune</label>
-									</div>
-									<div class="col-md-auto">
-										<div class="list-group" id="show-list-depot_' . $noLigne . '"></div>
-									</div>
+							</div>
+							<div class="col">
+								<div class="form-floating">
+									<input type="text" name="commune_depot[' . $noLigne . ']" id="commune_depot_' . $noLigne . '" class="form-control" placeholder="Rechercher une commune ..." autocomplete="off" onclick="recherche_commune_depot(' . $noLigne . ');" value="">
+									<label for="commune_depot[' . $noLigne . ']">Rechercher une commune</label>
 								</div>
-								<div class="col my-2">
-									<div class="form-floating">
-										<input type="text" class="form-control" name="adresse_depot[' . $noLigne . ']" placeholder="Adresse" value="">
-										<label for="adresse_depot[' . $noLigne . ']">Adresse du dépôt</label>
-									</div>
+								<div class="col-md-auto">
+									<div class="list-group" id="show-list-depot_' . $noLigne . '"></div>
+								</div>
+							</div>
+							<div class="col my-2">
+								<div class="form-floating">
+									<input type="text" class="form-control" name="adresse_depot[' . $noLigne . ']" placeholder="Adresse" value="">
+									<label for="adresse_depot[' . $noLigne . ']">Adresse du dépôt</label>
 								</div>
 							</div>
 						</div>

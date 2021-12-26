@@ -6,8 +6,8 @@ use Fuel\Core\Model;
 
 /** Représentation d'un type de dépôt dans la base de données. */
 class Typedepot extends Model {
-	private $id;
-	private $nom;
+	private int $id;
+	private string $nom;
 
 	/**
 	 * Créer l'objet à partir des données en paramètre.
@@ -28,8 +28,7 @@ class Typedepot extends Model {
 		$res = Helper::querySelectSingle("SELECT * FROM type_depot WHERE id=$id;");
 		if ($res === null) return null;
 
-		$obj = new Typedepot($res);
-		return $obj;
+		return new Typedepot($res);
 	}
 
 	/**
