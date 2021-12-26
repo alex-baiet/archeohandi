@@ -3,6 +3,7 @@
 use Fuel\Core\Asset;
 use Fuel\Core\Form;
 use Model\Chronologie;
+use Model\Typedepot;
 
 ?>
 <!-- Contenu de la page -->
@@ -91,20 +92,16 @@ use Model\Chronologie;
 								<?= Form::label("Datation fin", "datation_fin"); ?>
 							</div>
 						</div>
-						
+
 					</div>
 				</div>
 
 				<div class="row g-3">
+					<!-- Type de dépôt -->
 					<div class="col-md-4">
-						<div class="form-floating">
-							<select class="form-select" name="type_depot[' . $noLigne . ']" aria-label="select_depot" style="margin-top: 2.5%;margin-bottom: 2.5%;">
-								<option value="4">Sélectionner</option>
-								<option value="' . $key['id'] . '">$key['nom']</option>
-							</select>
-							<label for="type_depot">Type de dépôt</label>
-						</div>
+						<?= Typedepot::generateSelect(); ?>
 					</div>
+
 					<div class="col-md-4">
 						<div class="form-floating">
 							<select class="form-select" name="type_sepulture[' . $noLigne . ']" aria-label="select_sep" style="margin-top: 2.5%;margin-bottom: 2.5%;">
