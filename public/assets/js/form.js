@@ -108,7 +108,7 @@ function removePersonOld(name) {
  * 
  * @param {string} id Identifiant de l'input
  * @param {string} type Type de recherche.
- * Peut être "commune" ou "personne".
+ * Type possible : commune, personne
  */
 function addAutocomplete(id, type) {
 	// Récupération du champ

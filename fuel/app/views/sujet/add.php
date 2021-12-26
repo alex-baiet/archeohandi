@@ -8,6 +8,10 @@ use Model\Typedepot;
 use Model\Typesepulture;
 
 ?>
+<?=
+Asset::js("form.js");
+?>
+
 <!-- Contenu de la page -->
 <div class="container">
 	<h1 class="m-2">Ajouter des sujets handicapés <a class="btn btn-sm btn-secondary" href="/public/add/sujet/<?= $id; ?>">Rafraichir la page <i class="bi bi-arrow-repeat"></i></a></h1>
@@ -181,33 +185,36 @@ use Model\Typesepulture;
 							</div>
 						<?php endforeach; ?>
 						<div id="block_description_autre_mobilier_' . $noLigne . '" class="' . $d_none_descp_autre_mobilier . '">
-							<label class="form-check-label" for="description_autre_mobilier[' . $noLigne . ']">Description du autre</label>
-							<textarea class="form-control" name="description_autre_mobilier[' . $noLigne . ']" rows="2">$description_autre_mobilier</textarea>
+							<label class="form-check-label" for="mobilier_description">Description du mobilier</label>
+							<textarea class="form-control" name="mobilier_description" rows="2"></textarea>
 						</div>
 					</div>
 
 					<div class="col-md-8">
 						<h3>Dépot</h3>
 						<div class="row row-cols-2">
+							<!-- Numéro de dépôt -->
 							<div class="col">
 								<div class="form-floating">
-									<input type="text" class="form-control" name="num_inventaire[' . $noLigne . ']" placeholder="Numéro" value="">
-									<label for="num_inventaire[' . $noLigne . ']">Numéro du dépôt</label>
+									<?= Form::input("num_inventaire", null, array("type" => "text", "class" => "form-control", "placeholder" => "")); ?>
+									<?= Form::label("Numéro de dépôt", "num_inventaire"); ?>
 								</div>
 							</div>
+
+							<!-- Commune du dépôt -->
 							<div class="col">
 								<div class="form-floating">
-									<input type="text" name="commune_depot[' . $noLigne . ']" id="commune_depot_' . $noLigne . '" class="form-control" placeholder="Rechercher une commune ..." autocomplete="off" onclick="recherche_commune_depot(' . $noLigne . ');" value="">
-									<label for="commune_depot[' . $noLigne . ']">Rechercher une commune</label>
+									<?= Form::input("commune_depot", null, array("type" => "text", "class" => "form-control", "placeholder" => "", "autocomplete" => "off")); ?>
+									<?= Form::label("Rechercher une commune", "commune_depot"); ?>
 								</div>
-								<div class="col-md-auto">
-									<div class="list-group" id="show-list-depot_' . $noLigne . '"></div>
-								</div>
+								<script>addAutocomplete("form_commune_depot", "commune");</script>
 							</div>
+
+							<!-- Adresse du dépôt -->
 							<div class="col my-2">
 								<div class="form-floating">
-									<input type="text" class="form-control" name="adresse_depot[' . $noLigne . ']" placeholder="Adresse" value="">
-									<label for="adresse_depot[' . $noLigne . ']">Adresse du dépôt</label>
+									<?= Form::input("adresse_depot", null, array("type" => "text", "class" => "form-control", "placeholder" => "")); ?>
+									<?= Form::label("Adresse du dépôt", "adresse_depot"); ?>
 								</div>
 							</div>
 						</div>
