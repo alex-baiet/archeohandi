@@ -244,7 +244,7 @@ Asset::js("form.js");
 							<td><?= Asset::img("body/upper_left.png", array("style" => $imgStyle, "alt" => "Supérieur gauche")); ?></td>
 							<td><?= Asset::img("body/pelvis.png", array("style" => $imgStyle, "alt" => "Bassin")); ?></td>
 							<td><?= Asset::img("body/lower_right.png", array("style" => $imgStyle, "alt" => "Inférieur droit")); ?></td>
-							<td><?= Asset::img("body/lower_left.png", array("style" => "$imgStyle, width: 50px;", "alt" => "Inférieur gauche")); ?></td>
+							<td style="width: 100px;"><?= Asset::img("body/lower_left.png", array("style" => "$imgStyle, width: 50px;", "alt" => "Inférieur gauche")); ?></td>
 							<td><div class="th-title-rotate">Béquillage</div></td>
 							<td><div class="th-title-rotate">Orthèse</div></td>
 							<td><div class="th-title-rotate">Prothèse</div></td>
