@@ -217,7 +217,7 @@ use Fuel\Core\Form;
 							</div>
 							<div class="' . $d_none_pathologie . '" id="block_pathologies_infectieuses_' . $noLigne . '" style="width: 50%; background-color: white;">
 								<div class="form-check form-switch" style="padding-left: 75px;">
-									<?php for ($i = 0; $i<5; $i++): ?>
+									<?php for ($i = 0; $i < 5; $i++) : ?>
 										<label class="form-check-label" for="PI_' . $key2['name'] . '[' . $noLigne . ']">$key2['type_pathologie']</label>
 										<input class="form-check-input" type="checkbox" name="PI_' . $key2['name'] . '[' . $noLigne . ']" value="' . $key2['id_pathologie'] . '">
 									<?php endfor; ?>
@@ -249,14 +249,14 @@ use Fuel\Core\Form;
 							</div>
 							<div class="row">
 								<div class="col-md-6">
-									<?php for ($i=0; $i < 5; $i++): ?>
+									<?php for ($i = 0; $i < 5; $i++) : ?>
 										<div class="form-check form-check-inline">
 											<input class="form-check-input" type="checkbox" name="' . $key2['name'] . '[' . $noLigne . '][' . $key['id'] . ']" value="' . $key2['id'] . '">
 										</div>
 									<?php endfor; ?>
 								</div>
 								<div class="col-md-6">
-									<?php for ($i=0; $i < 4; $i++): ?>
+									<?php for ($i = 0; $i < 4; $i++) : ?>
 										<div class="form-check form-check-inline">
 											<input class="form-check-input" type="checkbox" name="' . $key2['name'] . '[' . $noLigne . '][' . $key['id'] . ']" value="' . $key2['id_appareil_compensatoire'] . '">
 										</div>
@@ -285,18 +285,6 @@ use Fuel\Core\Form;
 
 	</div>
 </div>
-
-<?php
-//Fonction permettant d'afficher un message d'alert
-function alertBootstrap($text, $color)
-{
-	echo '
-	<div class="alert alert-' . $color . ' alert-dismissible text-center my-2 fade show" role="alert">
-	' . $text . '
-	<button type="button" class="btn-close" data-dismiss="alert" aria-label="Fermer">
-	</div>';
-}
-?>
 
 <?= Asset::js('script_recherche.js'); ?>
 
