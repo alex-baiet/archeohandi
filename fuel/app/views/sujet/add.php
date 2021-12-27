@@ -288,19 +288,18 @@ Asset::js("form.js");
 					</div>
 				</div> -->
 
-
-				<div class="row">
-					<label for="commentaire_appareil[' . $noLigne . ']">Commentaire sur l\'appareil de compensation</label>
+				<!-- <div class="row">
+					<label for="commentaire_appareil">Commentaire sur l\'appareil de compensation</label>
 					<textarea class="form-control" name="commentaire_appareil[' . $noLigne . ']" rows="2">OSKUR</textarea>
 					<label for="commentaire_diagnostic[' . $noLigne . ']">Commentaire du diagnostic</label>
 					<textarea class="form-control" name="commentaire_diagnostic[' . $noLigne . ']" rows="2" placeholder="** INFO ** Les différentes atteintes cochées seront ajoutées à la description"></textarea>
-				</div>
+				</div> -->
 
-				<br />
-				<div style="text-align:center">
+				<!-- <br />
+				<div style="text-align: center;">
 					<button type="button" class="btn btn-primary" id="btnAjouter' . $noLigne . '" onclick="ajouterLigne(' . ($noLigne + 1) . ');"><i class="bi bi-plus"></i></button>
 					<button type="button" class="btn btn-danger" id="btnSupp' . $noLigne . '" onclick="supprimerLigne(' . $noLigne . ');"><i class="bi bi-x"></i></button>
-				</div>
+				</div> -->
 			</div>
 
 		</div>
