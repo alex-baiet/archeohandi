@@ -12,8 +12,8 @@ class Sujethandicape extends Model {
 	private int $ageMin = 0;
 	private int $ageMax = 0;
 	private string $sexe = "Indéterminé";
-	private int $datation = 0;
-	private int $datationEcartType = 0;
+	private int $datingMin = 0;
+	private int $datingMax = 0;
 	private string $milieuVie = "";
 	private string $contexte = "";
 	private string $contexteNormatif = "";
@@ -42,8 +42,8 @@ class Sujethandicape extends Model {
 		Archeo::mergeValue($this->ageMin, $data, "age_min", "int");
 		Archeo::mergeValue($this->ageMax, $data, "age_max", "int");
 		Archeo::mergeValue($this->sexe, $data, "sexe");
-		Archeo::mergeValue($this->datation, $data, "datation", "int");
-		Archeo::mergeValue($this->datationEcartType, $data, "datation_ecart_type", "int");
+		Archeo::mergeValue($this->datingMin, $data, "dating_min", "int");
+		Archeo::mergeValue($this->datingMax, $data, "dating_max", "int");
 		Archeo::mergeValue($this->milieuVie, $data, "milieu_vie");
 		Archeo::mergeValue($this->contexte, $data, "contexte");
 		Archeo::mergeValue($this->contexteNormatif, $data, "contexte_normatif");
@@ -75,8 +75,8 @@ class Sujethandicape extends Model {
 	public function getAgeMin() { return $this->ageMin; }
 	public function getAgeMax() { return $this->ageMax; }
 	public function getSexe() { return $this->sexe; }
-	public function getDatation() { return $this->datation; }
-	public function getDatationEcartType() { return $this->datationEcartType; }
+	public function getDatingMin() { return $this->datingMin; }
+	public function getDatingMax() { return $this->datingMax; }
 	public function getMilieuVie() { return $this->milieuVie; }
 	public function getContexte() { return $this->contexte; }
 	public function getContexteNormatif() { return $this->contexteNormatif; }

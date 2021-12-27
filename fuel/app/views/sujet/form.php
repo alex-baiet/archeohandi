@@ -75,7 +75,7 @@ $subject = isset($subject) ? $subject : new Sujethandicape(array());
 					<!-- Âge minimum estimé de décès -->
 					<div class="col-md-6">
 						<div class="form-floating">
-							<?= Form::input("age_min", null, array("type" => "number", "class" => "form-control", "min" => "0", "max" => "130", "placeholder" => "")); ?>
+							<?= Form::input("age_min", $subject->getAgeMin(), array("type" => "number", "class" => "form-control", "min" => "0", "max" => "130", "placeholder" => "")); ?>
 							<?= Form::label("Âge minimum au décès", "age_min"); ?>
 						</div>
 					</div>
@@ -83,7 +83,7 @@ $subject = isset($subject) ? $subject : new Sujethandicape(array());
 					<!-- Âge maximum estimé de décès -->
 					<div class="col-md-6">
 						<div class="form-floating">
-							<?= Form::input("age_max", null, array("type" => "number", "class" => "form-control", "min" => "0", "max" => "130", "placeholder" => "")); ?>
+							<?= Form::input("age_max", $subject->getAgeMax(), array("type" => "number", "class" => "form-control", "min" => "0", "max" => "130", "placeholder" => "")); ?>
 							<?= Form::label("Âge maximum au décès", "age_max"); ?>
 						</div>
 					</div>
@@ -93,16 +93,16 @@ $subject = isset($subject) ? $subject : new Sujethandicape(array());
 					<!-- Période minimum estimé -->
 					<div class="col-md-6">
 						<div class="form-floating">
-							<?= Form::input("datation_debut", null, array("type" => "number", "class" => "form-control", "placeholder" => "")); ?>
-							<?= Form::label("Datation début", "datation_debut"); ?>
+							<?= Form::input("dating_min", $subject->getDatingMin(), array("type" => "number", "class" => "form-control", "placeholder" => "")); ?>
+							<?= Form::label("Datation début", "dating_min"); ?>
 						</div>
 					</div>
 
 					<!-- Période maximum estimé -->
 					<div class="col-md-6">
 						<div class="form-floating">
-							<?= Form::input("datation_fin", null, array("type" => "number", "class" => "form-control", "placeholder" => "")); ?>
-							<?= Form::label("Datation fin", "datation_fin"); ?>
+							<?= Form::input("dating_max", $subject->getDatingMax(), array("type" => "number", "class" => "form-control", "placeholder" => "")); ?>
+							<?= Form::label("Datation fin", "dating_max"); ?>
 						</div>
 					</div>
 
