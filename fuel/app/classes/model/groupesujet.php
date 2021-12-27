@@ -11,6 +11,9 @@ class Groupesujet extends Model {
 	private $idChronologie;
 	private $idOperation;
 	private $nmi;
+
+	/** @var Chronologie|null|unset */
+	private $chronology;
 	#endregion
 
 	/** Construit le GroupeSujet depuis la liste des données. */
@@ -34,4 +37,10 @@ class Groupesujet extends Model {
 	public function getIdChronologie() { return $this->idChronologie; }
 	public function getIdOperation() { return $this->idOperation; }
 	public function getNMI() { return $this->nmi; }
+
+	public function getChronology() {
+		if (!isset($this->chronology)) $this->chronology = Chronologie::fetchSingle($this->idChronologie);
+		return $this->chronology;
+	}
+
 }

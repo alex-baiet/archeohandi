@@ -24,8 +24,8 @@ class Sujethandicape extends Model {
 	private int $idDepot = -1;
 	private int $idGroupeSujet = -1;
 
-	/** @param Groupesujet|null|false False si la valeur n'a pas été cherchée dans la BDD. */
-	private $group = false;
+	/** @param Groupesujet|null|unset */
+	private $group;
 	#endregion
 
 	/** Construit le Sujethandicape depuis la liste des données. */
@@ -88,7 +88,7 @@ class Sujethandicape extends Model {
 	public function getIdGroupeSujet() { return $this->idGroupeSujet; }
 
 	public function getGroup() {
-		if ($this->group === false) $this->group = Groupesujet::fetchSingle($this->idGroupeSujet);
+		if (!isset($this->group)) $this->group = Groupesujet::fetchSingle($this->idGroupeSujet);
 		return $this->group;
 	}
 }

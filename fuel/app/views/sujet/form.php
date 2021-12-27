@@ -36,7 +36,7 @@ $subject = isset($subject) ? $subject : new Sujethandicape(array());
 
 				<!-- Chronologie -->
 				<div class="col-md-6">
-					<?= Chronologie::generateSelect() ?>
+					<?= Chronologie::generateSelect("chronologie", "Chronologie", $group === null ? "" : $group->getChronology()->getNom()) ?>
 				</div>
 			</div>
 
