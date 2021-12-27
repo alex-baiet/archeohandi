@@ -125,7 +125,7 @@ $subject = isset($subject) ? $subject : new Sujethandicape(array());
 					<div class="form-floating">
 						<?= Form::select(
 							"contexte_normatif",
-							"",
+							$subject->getContexteNormatif(),
 							array( // Les options
 								"" => "Sélectionner",
 								"Standard" => "Standard",
@@ -145,7 +145,7 @@ $subject = isset($subject) ? $subject : new Sujethandicape(array());
 					<div class="form-floating">
 						<?= Form::select(
 							"milieu_vie",
-							"",
+							$subject->getMilieuVie(),
 							array(
 								"" => "Sélectionner",
 								"Rural" => "Rural",
@@ -163,7 +163,7 @@ $subject = isset($subject) ? $subject : new Sujethandicape(array());
 					<div class="form-floating">
 						<?= Form::select(
 							"contexte",
-							"",
+							$subject->getContexte(),
 							array(
 								"" => "Sélectionner",
 								"Funeraire" => "Funéraire",
@@ -182,7 +182,7 @@ $subject = isset($subject) ? $subject : new Sujethandicape(array());
 			<div class="col-md-12">
 				<label for="commentaire_contexte">Commentaire</label>
 				<div class="input-group">
-					<textarea class="form-control" name="commentaire_contexte" rows="2"></textarea>
+					<textarea class="form-control" name="commentaire_contexte" rows="2"><?= $subject->getCommentaireContexte(); ?></textarea>
 				</div>
 			</div>
 			<br />
