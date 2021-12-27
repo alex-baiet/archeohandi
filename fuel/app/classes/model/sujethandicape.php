@@ -26,6 +26,10 @@ class Sujethandicape extends Model {
 
 	/** @param Groupesujet|null|unset */
 	private $group;
+	/** @param Typedepot|null|unset */
+	private $typeDepot;
+	/** @param Typesepulture|null|unset */
+	private $typeSepulture;
 	#endregion
 
 	/** Construit le Sujethandicape depuis la liste des données. */
@@ -83,7 +87,7 @@ class Sujethandicape extends Model {
 	public function getCommentaireContexte() { return $this->commentaireContexte; }
 	public function getUrlIllustration() { return $this->urlIllustration; }
 	public function getIdTypeDepot() { return $this->idTypeDepot; }
-	public function getIdSepulture() { return $this->idSepulture; }
+	public function getIdTypeSepulture() { return $this->idSepulture; }
 	public function getIdDepot() { return $this->idDepot; }
 	public function getIdGroupeSujet() { return $this->idGroupeSujet; }
 
@@ -91,4 +95,15 @@ class Sujethandicape extends Model {
 		if (!isset($this->group)) $this->group = Groupesujet::fetchSingle($this->idGroupeSujet);
 		return $this->group;
 	}
+	
+	public function getTypeDepot() {
+		if (!isset($this->typeDepot)) $this->typeDepot = Typedepot::fetchSingle($this->idTypeDepot);
+		return $this->typeDepot;
+	}
+	
+	public function getTypeSepulture() {
+		if (!isset($this->typeSepulture)) $this->typeSepulture = Typesepulture::fetchSingle($this->idSepulture);
+		return $this->typeSepulture;
+	}
+	
 }

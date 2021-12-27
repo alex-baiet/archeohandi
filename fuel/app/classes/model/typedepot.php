@@ -38,7 +38,7 @@ class Typedepot extends Model {
 	 * @param string $label Nom du label du select.
 	 * @param mixed $idSelected Identifiant de la valeur sélectionnée.
 	 */
-	public static function generateSelect(string $field = "type_depot", string $label = "Type de dépôt", $idSelected = ""): string {
+	public static function generateSelect(string $field = "id_type_depot", string $label = "Type de dépôt", int $idSelected = 4): string {
 		$valueRecover = function (array $data) { return $data["id"]; };
 		$textRecover = function (array $data) { return $data["nom"]; };
 		return Archeo::generateSelect($field, $label, $idSelected, "type_depot", $valueRecover, $textRecover);

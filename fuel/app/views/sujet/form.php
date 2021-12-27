@@ -112,12 +112,12 @@ $subject = isset($subject) ? $subject : new Sujethandicape(array());
 			<div class="row my-3">
 				<!-- Type de dépôt -->
 				<div class="col-md-4">
-					<?= Typedepot::generateSelect(); ?>
+					<?= Typedepot::generateSelect("id_type_depot", "Type de dépôt", $subject->getIdTypeDepot()); ?>
 				</div>
 
 				<!-- Type de sepulture -->
 				<div class="col-md-4">
-					<?= Typesepulture::generateSelect(); ?>
+					<?= Typesepulture::generateSelect("id_sepulture", "Type de sépulture", $subject->getIdTypeSepulture()); ?>
 				</div>
 
 				<!-- Contexte normatif -->

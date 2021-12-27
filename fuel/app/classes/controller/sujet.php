@@ -6,7 +6,6 @@ use Fuel\Core\Input;
 use Fuel\Core\Response;
 use Fuel\Core\View;
 use Model\Helper;
-use Model\Sujethandicape;
 
 class Controller_Sujet extends Controller_Template {
 	public function action_view($id) {
