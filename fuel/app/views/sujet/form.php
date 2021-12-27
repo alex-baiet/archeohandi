@@ -191,10 +191,17 @@ $subject = isset($subject) ? $subject : new Sujethandicape(array());
 				<!-- Accessoires -->
 				<div class="col-md-4">
 					<h3>Accessoires</h3>
+					<?php $subFurnituresId = $subject->getFurnituresId(); ?>
 					<?php foreach (Mobilier::fetchAll() as $mobilier) : ?>
 						<div class="form-check form-switch">
+							<?php
+							$attr = array("class" => "form-check-input");
+							if (in_array($mobilier->getId(), $subFurnituresId)) {
+								$attr["checked"] = 1;
+							}
+							?>
 							<?= Form::label($mobilier->getNom(), "mobilier_{$mobilier->getId()}"); ?>
-							<?= Form::input("mobilier_{$mobilier->getId()}", null, array("type" => "checkbox", "class" => "form-check-input")); ?>
+							<?= Form::checkbox("mobilier_{$mobilier->getId()}", null, $attr); ?>
 						</div>
 					<?php endforeach; ?>
 					<div id="block_description_autre_mobilier_' . $noLigne . '" class="' . $d_none_descp_autre_mobilier . '">

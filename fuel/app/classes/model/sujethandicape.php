@@ -30,6 +30,8 @@ class Sujethandicape extends Model {
 	private $typeDepot;
 	/** @param Typesepulture|null|unset */
 	private $typeSepulture;
+	/** @param Mobilier[]|unset */
+	private $furnitures;
 	#endregion
 
 	/** Construit le Sujethandicape depuis la liste des données. */
@@ -106,4 +108,28 @@ class Sujethandicape extends Model {
 		return $this->typeSepulture;
 	}
 	
+	/** @return Mobilier[] */
+	public function getFurnitures() {
+		if (!isset($this->furnitures)) {
+			$results = Helper::querySelect("SELECT mob.id, mob.nom 
+				FROM mobilier_archeologique AS mob 
+				JOIN accessoire_sujet AS acc ON mob.id=acc.id_mobilier
+				WHERE acc.id_sujet_handicape={$this->id};");
+			$this->furnitures = array();
+
+			foreach ($results as $res) {
+				$this->furnitures[] = new Mobilier($res);
+			}
+		}
+		return $this->furnitures;
+	}
+
+	public function getFurnituresId() {
+		$furnitures = $this->getFurnitures();
+		$ids = array();
+		foreach ($furnitures as $fur) {
+			$ids[] = $fur->getId();
+		}
+		return $ids;
+	}
 }
