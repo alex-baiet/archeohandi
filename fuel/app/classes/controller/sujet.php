@@ -1517,10 +1517,7 @@ class Controller_Sujet extends Controller_Template {
 		}
 		#endregion
 
-		$data = array(
-			'id' => $id, 'chronologie' => $chronologie, 'type_depot' => $type_depot, 'type_sepulture' => $type_sepulture, 'diagnostic' => $diagnostic, 'accessoire' => $accessoire, 'localisation_atteinte' => $localisation_atteinte, 'pathologie' => $pathologie,
-			'appareil_compensatoire' => $appareil_compensatoire
-		);
+		$data = array('idOperation' => $id);
 		$this->template->title = "Ajouter des sujets";
 		$this->template->content = View::forge('sujet/add', $data);
 	}
