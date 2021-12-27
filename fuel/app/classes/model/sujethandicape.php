@@ -7,42 +7,52 @@ use Fuel\Core\Model;
 /** Représentation d'une opération dans la base de données. */
 class Sujethandicape extends Model {
 	#region Values
-	private $id;
-	private $idSujetHandicape;
-	private $ageMin;
-	private $ageMax;
-	private $sexe;
-	private $datation;
-	private $datationEcartType;
-	private $milieuVie;
-	private $contexte;
-	private $contexteNormatif;
-	private $commentaireContexte;
-	private $urlIllustration;
-	private $idTypeDepot;
-	private $idSepulture;
-	private $idDepot;
-	private $idGroupeSujet;
+	private int $id = -1;
+	private string $idSujetHandicape = "";
+	private int $ageMin = 0;
+	private int $ageMax = 0;
+	private string $sexe = "";
+	private int $datation = 0;
+	private int $datationEcartType = 0;
+	private string $milieuVie = "";
+	private string $contexte = "";
+	private string $contexteNormatif = "";
+	private string $commentaireContexte = "";
+	private string $urlIllustration = "";
+	private int $idTypeDepot = -1;
+	private int $idSepulture = -1;
+	private int $idDepot = -1;
+	private int $idGroupeSujet = -1;
+
+	/** @param Groupesujet|null|false False si la valeur n'a pas été cherchée dans la BDD. */
+	private $group = false;
 	#endregion
 
 	/** Construit le Sujethandicape depuis la liste des données. */
 	public function __construct(array $data) {
-		$this->id = $data["id"];
-		$this->idSujetHandicape = $data["id_sujet_handicape"];
-		$this->ageMin = $data["age_min"];
-		$this->ageMax = $data["age_max"];
-		$this->sexe = $data["sexe"];
-		$this->datation = $data["datation"];
-		$this->datationEcartType = $data["datation_ecart_type"];
-		$this->milieuVie = $data["milieu_vie"];
-		$this->contexte = $data["contexte"];
-		$this->contexteNormatif = $data["contexte_normatif"];
-		$this->commentaireContexte = $data["commentaire_contexte"];
-		$this->urlIllustration = $data["url_illustration"];
-		$this->idTypeDepot = $data["id_type_depot"];
-		$this->idSepulture = $data["id_sepulture"];
-		$this->idDepot = $data["id_depot"];
-		$this->idGroupeSujet = $data["id_groupe_sujets"];
+		$this->mergeValues($data);
+	}
+
+	/**
+	 * Ajoute les données dans l'objet.
+	 */
+	public function mergeValues(array $data) {
+		Archeo::mergeValue($this->id, $data, "id", "int");
+		Archeo::mergeValue($this->idSujetHandicape, $data, "id_sujet_handicape");
+		Archeo::mergeValue($this->ageMin, $data, "age_min", "int");
+		Archeo::mergeValue($this->ageMax, $data, "age_max", "int");
+		Archeo::mergeValue($this->sexe, $data, "sexe");
+		Archeo::mergeValue($this->datation, $data, "datation", "int");
+		Archeo::mergeValue($this->datationEcartType, $data, "datation_ecart_type", "int");
+		Archeo::mergeValue($this->milieuVie, $data, "milieu_vie");
+		Archeo::mergeValue($this->contexte, $data, "contexte");
+		Archeo::mergeValue($this->contexteNormatif, $data, "contexte_normatif");
+		Archeo::mergeValue($this->commentaireContexte, $data, "commentaire_contexte");
+		Archeo::mergeValue($this->urlIllustration, $data, "url_illustration");
+		Archeo::mergeValue($this->idTypeDepot, $data, "id_type_depot", "int");
+		Archeo::mergeValue($this->idSepulture, $data, "id_sepulture", "int");
+		Archeo::mergeValue($this->idDepot, $data, "id_depot", "int");
+		Archeo::mergeValue($this->idGroupeSujet, $data, "id_groupe_sujets", "int");
 	}
 
 	/**
@@ -76,4 +86,9 @@ class Sujethandicape extends Model {
 	public function getIdSepulture() { return $this->idSepulture; }
 	public function getIdDepot() { return $this->idDepot; }
 	public function getIdGroupeSujet() { return $this->idGroupeSujet; }
+
+	public function getGroup() {
+		if ($this->group === false) $this->group = Groupesujet::fetchSingle($this->idGroupeSujet);
+		return $this->group;
+	}
 }

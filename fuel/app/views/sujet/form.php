@@ -7,8 +7,14 @@ use Model\Chronologie;
 use Model\Diagnostic;
 use Model\Localisation;
 use Model\Mobilier;
+use Model\Sujethandicape;
 use Model\Typedepot;
 use Model\Typesepulture;
+
+/** @var int */
+$idOperation = $idOperation;
+/** @var Sujethandicape Base pour définir les valeurs du formulaires. */
+$subject = isset($subject) ? $subject : new Sujethandicape(array());
 
 ?>
 
@@ -19,10 +25,11 @@ use Model\Typesepulture;
 			<h2 class="text-center">Groupe du sujet</h2>
 
 			<div class="row g-2">
+				<?php $group = $subject->getGroup(); ?>
 				<!-- NMI -->
 				<div class="col-md-6">
 					<div class="form-floating">
-						<input type="number" class="form-control" name="nmi" placeholder="" value="">
+						<input type="number" class="form-control" name="nmi" placeholder="" value="<?= $group !== null ? $group->getNMI() : "" ?>">
 						<label for="NMI">NMI</label>
 					</div>
 				</div>

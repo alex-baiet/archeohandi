@@ -4,6 +4,7 @@ namespace Model;
 
 use Closure;
 use Fuel\Core\Form;
+use Fuel\Core\FuelException;
 
 /** Contient des fonctions facilitant la gestion des modèles de la bases de données. */
 class Archeo {
@@ -47,6 +48,8 @@ class Archeo {
 	 * @param int $id L'identifiant des données.
 	 * @param string $table Table où rechercher.
 	 * @param Closure $dataFormater Transforme les données dans un autre format de votre choix.
+	 * @return mixed Revoie les données transformées.
+	 * @return null En cas d'échec.
 	 */
 	public static function fetchSingle(int $id, string $table, Closure $dataReformat) {
 		if (!is_numeric($id)) return null;
@@ -67,6 +70,28 @@ class Archeo {
 			$objects[] = $dataReformat($res);
 		}
 		return $objects;
+	}
+
+	/**
+	 * Réassigne $value avec une donnée dans data, si elle existe. 
+	 * @param mixed &$value Valeur à réassigner.
+	 * @param array $array Contient toutes les données.
+	 * @param mixed $key Nom de la valeur dans $data.
+	 */
+	public static function mergeValue(&$value, array &$data, $key, $type = "string") {
+		if (isset($data[$key])) {
+			switch ($type) {
+				case 'string':
+					$value = $data[$key];
+					break;
+				case 'int':
+					$value = intval($data[$key]);
+					break;				
+				default:
+					throw new FuelException("Le type \"$type\" n'est pas un type valide.");
+					break;
+			}
+		}
 	}
 
 }

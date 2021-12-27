@@ -15,7 +15,7 @@ class Groupesujet extends Model {
 
 	/** Construit le GroupeSujet depuis la liste des données. */
 	public function __construct(array $data) {
-		$this->id = $data["id_groupe_sujets"];
+		$this->id = $data["id"];
 		$this->idChronologie = $data["id_chronologie"];
 		$this->idOperation = $data["id_operation"];
 		$this->nmi = $data["NMI"];
@@ -23,17 +23,11 @@ class Groupesujet extends Model {
 
 	/**
 	 * Récupère le groupe correspondant à l'id.
-	 * 
 	 * @param int $id Identifiant du groupe.
 	 * @return Groupesujet|null
 	 */
 	public static function fetchSingle(int $id) {
-		if (!is_numeric($id)) return null;
-		$res = Helper::querySelectSingle("SELECT * FROM groupe_sujets WHERE id_groupe_sujets=$id;");
-		if ($res === null) return null;
-
-		$obj = new Groupesujet($res);
-		return $obj;
+		return Archeo::fetchSingle($id, "groupe_sujets", function ($data) { return new Groupesujet($data); });
 	}
 
 	public function getId() { return $this->id; }
