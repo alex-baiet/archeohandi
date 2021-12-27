@@ -2,8 +2,10 @@
 
 use Fuel\Core\Asset;
 use Fuel\Core\Form;
+use Model\Appareil;
 use Model\Chronologie;
 use Model\Diagnostic;
+use Model\Localisation;
 use Model\Mobilier;
 use Model\Typedepot;
 use Model\Typesepulture;
@@ -13,7 +15,6 @@ use Model\Typesepulture;
 Asset::js("form.js");
 ?>
 
-<!-- Contenu de la page -->
 <div class="container">
 	<h1 class="m-2">Ajouter des sujets handicapés <a class="btn btn-sm btn-secondary" href="/public/add/sujet/<?= $id; ?>">Rafraichir la page <i class="bi bi-arrow-repeat"></i></a></h1>
 	<p class="text-muted">Ici vous pouvez ajouter des sujets handicapés.</p>
@@ -236,36 +237,45 @@ Asset::js("form.js");
 					}
 				</style>
 				<table>
+					<!-- Tous les titres -->
+					<?php
+					$localisations = Localisation::fetchAll();
+					$appareils = Appareil::fetchAll();
+					?>
 					<thead>
 						<tr>
 							<td style="width: 300px;"></td>
-							<?php $imgStyle = "width: 50 px; height: 25px; margin-right: 10px;"; ?>
-							<td><?= Asset::img("body/head.png", array("style" => $imgStyle, "alt" => "tête")); ?></td>
-							<td><?= Asset::img("body/upper_right.png", array("style" => $imgStyle, "alt" => "Supérieur droit")); ?></td>
-							<td><?= Asset::img("body/upper_left.png", array("style" => $imgStyle, "alt" => "Supérieur gauche")); ?></td>
-							<td><?= Asset::img("body/pelvis.png", array("style" => $imgStyle, "alt" => "Bassin")); ?></td>
-							<td><?= Asset::img("body/lower_right.png", array("style" => $imgStyle, "alt" => "Inférieur droit")); ?></td>
-							<td style="width: 100px;"><?= Asset::img("body/lower_left.png", array("style" => "$imgStyle, width: 50px;", "alt" => "Inférieur gauche")); ?></td>
-							<td><div class="th-title-rotate">Béquillage</div></td>
-							<td><div class="th-title-rotate">Orthèse</div></td>
-							<td><div class="th-title-rotate">Prothèse</div></td>
-							<td><div class="th-title-rotate">Attèle</div></td>
+							<?php $i = 0; foreach ($localisations as $locali): ?>
+								<?php $margin = $i+1 === count($localisations) ? "100px" : "10px"; // Grosse margin appliqué pour le dernier élément des localisations ?>
+								<td><?= Asset::img($locali->getUrlImg(), array("style" => "width: 50 px; height: 25px; margin-right: $margin;", "alt" => $locali->getNom())); ?></td>
+							<?php $i++; endforeach; ?>
+							<?php foreach ($appareils as $appareil): ?>
+								<td><div class="th-title-rotate"><?= $appareil->getNom() ?></div></td>
+							<?php endforeach; ?>
 						</tr>
 					</thead>
 					<tbody>
 						<?php foreach (Diagnostic::fetchAll() as $diagnostic): ?>
 							<tr>
+								<!-- Titre des diagnostics -->
 								<td>
 									<div class="form-check form-switch">
 										<?= Form::label($diagnostic->getNom(), "diagnostic_{$diagnostic->getId()}", array("class" => "form-check-label")); ?>
 										<?= Form::checkbox("diagnostic_{$diagnostic->getId()}", null, null, array("class" => "form-check-input")); ?>
 									</div>
 								</td>
-								<?php for ($j=0; $j < 10; $j++): ?>
+								<!-- Checkbox des zones atteintes -->
+								<?php foreach ($localisations as $locali): ?>
 									<td>
-										<?= Form::checkbox("test", null, null, array("class" => "form-check-input")); ?>
+										<?= Form::checkbox("diagnostic_{$diagnostic->getId()}_localisation_{$locali->getId()}", null, null, array("class" => "form-check-input")); ?>
 									</td>
-								<?php endfor; ?>
+								<?php endforeach; ?>
+								<!-- Checkbox des appareils compensatoires -->
+								<?php foreach ($appareils as $appareil): ?>
+									<td>
+										<?= Form::checkbox("diagnostic_{$diagnostic->getId()}_appareil_{$appareil->getId()}", null, null, array("class" => "form-check-input")); ?>
+									</td>
+								<?php endforeach; ?>
 							</tr>
 						<?php endforeach; ?>
 					</tbody>

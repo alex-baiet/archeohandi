@@ -32,13 +32,7 @@ class Appareil extends Model {
 	 * @return Appareil[]
 	 */
 	public static function fetchAll() {
-		$results = Helper::querySelect("SELECT * FROM appareil_compensatoire;");
-		$objects = array();
-
-		foreach ($results as $res) {
-			$objects[] = new Appareil($res);
-		}
-		return $objects;
+		return Archeo::fetchAll("appareil_compensatoire", function ($data) { return new Appareil($data); });
 	}
 
 	public function getId() { return $this->id; }

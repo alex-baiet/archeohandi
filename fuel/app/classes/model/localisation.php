@@ -8,10 +8,12 @@ use Fuel\Core\Model;
 class Localisation extends Model {
 	private int $id;
 	private string $nom;
+	private string $urlImg;
 
 	public function __construct(array $values) {
 		$this->id = Helper::arrayGetInt("id", $values);
 		$this->nom = Helper::arrayGetString("nom", $values);
+		$this->urlImg = Helper::arrayGetString("url_img", $values);
 	}
 
 	/**
@@ -32,15 +34,10 @@ class Localisation extends Model {
 	 * @return Localisation[]
 	 */
 	public static function fetchAll() {
-		$results = Helper::querySelect("SELECT * FROM localisation_atteinte;");
-		$objects = array();
-
-		foreach ($results as $res) {
-			$objects[] = new Localisation($res);
-		}
-		return $objects;
+		return Archeo::fetchAll("localisation_atteinte", function ($data) { return new Localisation($data); });
 	}
 
 	public function getId() { return $this->id; }
 	public function getNom() { return $this->nom; }
+	public function getUrlImg() { return $this->urlImg; }
 }
