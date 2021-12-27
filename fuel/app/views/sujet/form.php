@@ -47,7 +47,7 @@ $subject = isset($subject) ? $subject : new Sujethandicape(array());
 					<!-- Identifiant -->
 					<div class="col-md-6">
 						<div class="form-floating">
-							<input type="text" class="form-control" name="id_sujet" placeholder="" value="">
+							<input type="text" class="form-control" name="id_sujet" placeholder="" value="<?= $subject->getIdSujetHandicape(); ?>">
 							<label for="id_sujet">Identifiant du sujet</label>
 						</div>
 					</div>
@@ -55,13 +55,18 @@ $subject = isset($subject) ? $subject : new Sujethandicape(array());
 					<!-- Sexe -->
 					<div class="col-md-6">
 						<div class="form-floating">
-							<select class="form-select" name="sexe" aria-label="select_sexe">
-								<option value="" selected>Sélectionner</option>
-								<option value="Femme">Femme</option>
-								<option value="Homme">Homme</option>
-								<option value="Indéterminé">Indéterminé</option>
-							</select>
-							<label for="sexe">Sexe</label>
+							<?=
+							Form::select(
+								"sexe",
+								$subject->getSexe(),
+								array(
+									"Femme" => "Femme",
+									"Homme" => "Homme",
+									"Indéterminé" => "Indéterminé"
+								),
+								array("class" => "form-select"));
+							?>
+							<?= Form::label("Sexe", "sexe") ?>
 						</div>
 					</div>
 				</div>

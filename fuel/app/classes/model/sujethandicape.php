@@ -11,7 +11,7 @@ class Sujethandicape extends Model {
 	private string $idSujetHandicape = "";
 	private int $ageMin = 0;
 	private int $ageMax = 0;
-	private string $sexe = "";
+	private string $sexe = "Indéterminé";
 	private int $datation = 0;
 	private int $datationEcartType = 0;
 	private string $milieuVie = "";
