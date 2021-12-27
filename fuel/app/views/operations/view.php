@@ -134,15 +134,15 @@ $sujets = $sujets;
 							foreach ($sujets as $sujet) :
 								$i++;
 								$typeDepot = Typedepot::fetchSingle($sujet->getIdTypeDepot());
-								$typeSepulture = Typesepulture::fetchSingle($sujet->getIdSepulture());
+								$typeSepulture = Typesepulture::fetchSingle($sujet->getIdTypeSepulture());
 							?>
 								<tr class="text-center">
-									<?= '<td>' . $sujet->getIdSujetHandicape() . ' (' . $i . ')</td>' ?>
-									<?= '<td>' . $sujet->getSexe() . '</td>' ?>
-									<?= '<td>' . $sujet->getDatation() . '</td>' ?>
-									<?= '<td>' . $sujet->getMilieuVie() . '</td>' ?>
-									<?= '<td>' . $typeDepot->getNom() . '</td>' ?>
-									<?= '<td>' . $typeSepulture->getNom() . '</td>' ?>
+									<td><?= $sujet->getIdSujetHandicape()?></td>
+									<td><?= $sujet->getSexe() ?></td>
+									<td><?= "{$sujet->getDatingMin()} - {$sujet->getDatingMax()}" ?></td>
+									<td><?= $sujet->getMilieuVie() ?></td>
+									<td><?= $typeDepot->getNom() ?></td>
+									<td><?= $typeSepulture->getNom() ?></td>
 									<td class="col-auto">
 										<a title="Consulter #<?= $sujet->getId(); ?>" href="/public/sujet/view/<?= $sujet->getId(); ?>">
 											<img class="icon see" width="30px" src="https://archeohandi.huma-num.fr/public/assets/img/reply.svg" alt="Consulter">

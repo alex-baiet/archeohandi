@@ -2,6 +2,7 @@
 
 use Fuel\Core\Asset;
 use Fuel\Core\Form;
+use Fuel\Core\FuelException;
 use Model\Appareil;
 use Model\Chronologie;
 use Model\Diagnostic;
@@ -11,10 +12,13 @@ use Model\Sujethandicape;
 use Model\Typedepot;
 use Model\Typesepulture;
 
-/** @var int */
-$idOperation = $idOperation;
+if (!isset($subject) && !isset($idOperation)) {
+	throw new FuelException("Pour générer le formulaire, il est nécessaire de connaître au moins soit l'id de l'opération parent, soit le sujet handicapé.");
+}
 /** @var Sujethandicape Base pour définir les valeurs du formulaires. */
 $subject = isset($subject) ? $subject : new Sujethandicape(array());
+/** @var int */
+$idOperation = isset($idOperation) ? $idOperation : $subject->getGroup()->getIdOperation();
 
 ?>
 
@@ -45,7 +49,7 @@ Form::open(array(
 			</div>
 		</div>
 
-		<h3 class="text-center my-2">Sujet handicapé #</h3>
+		<h3 class="text-center my-2">Sujet handicapé</h3>
 		<div class="row g-2">
 			<div class="row g-2">
 
@@ -231,7 +235,7 @@ Form::open(array(
 					<!-- Commune du dépôt -->
 					<div class="col">
 						<div class="form-floating">
-							<?= Form::input("commune_depot", $depot === null ? null : $depot->getCommune()->fullName(), array("type" => "text", "class" => "form-control", "placeholder" => "", "autocomplete" => "off")); ?>
+							<?= Form::input("commune_depot", null/*$depot === null ? null : $depot->getCommune()->fullName()*/, array("type" => "text", "class" => "form-control", "placeholder" => "", "autocomplete" => "off")); ?>
 							<?= Form::label("Rechercher une commune", "commune_depot"); ?>
 						</div>
 						<script>
