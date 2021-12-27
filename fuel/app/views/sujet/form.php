@@ -211,12 +211,13 @@ $subject = isset($subject) ? $subject : new Sujethandicape(array());
 				</div>
 
 				<div class="col-md-8">
-					<h3>Dépot</h3>
+					<h3>Dépôt</h3>
+					<?php $depot = $subject->getDepot(); ?>
 					<div class="row row-cols-2">
 						<!-- Numéro de dépôt -->
 						<div class="col">
 							<div class="form-floating">
-								<?= Form::input("num_inventaire", null, array("type" => "text", "class" => "form-control", "placeholder" => "")); ?>
+								<?= Form::input("num_inventaire", $depot === null ? null : $depot->getNumInventaire(), array("type" => "text", "class" => "form-control", "placeholder" => "")); ?>
 								<?= Form::label("Numéro de dépôt", "num_inventaire"); ?>
 							</div>
 						</div>
@@ -224,7 +225,7 @@ $subject = isset($subject) ? $subject : new Sujethandicape(array());
 						<!-- Commune du dépôt -->
 						<div class="col">
 							<div class="form-floating">
-								<?= Form::input("commune_depot", null, array("type" => "text", "class" => "form-control", "placeholder" => "", "autocomplete" => "off")); ?>
+								<?= Form::input("commune_depot", $depot === null ? null : $depot->getCommune()->fullName(), array("type" => "text", "class" => "form-control", "placeholder" => "", "autocomplete" => "off")); ?>
 								<?= Form::label("Rechercher une commune", "commune_depot"); ?>
 							</div>
 							<script>
@@ -235,7 +236,7 @@ $subject = isset($subject) ? $subject : new Sujethandicape(array());
 						<!-- Adresse du dépôt -->
 						<div class="col my-2">
 							<div class="form-floating">
-								<?= Form::input("adresse_depot", null, array("type" => "text", "class" => "form-control", "placeholder" => "")); ?>
+								<?= Form::input("adresse_depot", $depot === null ? null : $depot->getAdresse(), array("type" => "text", "class" => "form-control", "placeholder" => "")); ?>
 								<?= Form::label("Adresse du dépôt", "adresse_depot"); ?>
 							</div>
 						</div>

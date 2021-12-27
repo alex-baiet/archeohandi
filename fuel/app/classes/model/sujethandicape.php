@@ -32,6 +32,8 @@ class Sujethandicape extends Model {
 	private $typeSepulture;
 	/** @param Mobilier[]|unset */
 	private $furnitures;
+	/** @param Depot|null|unset */
+	private $depot;
 	#endregion
 
 	/** Construit le Sujethandicape depuis la liste des données. */
@@ -106,6 +108,11 @@ class Sujethandicape extends Model {
 	public function getTypeSepulture() {
 		if (!isset($this->typeSepulture)) $this->typeSepulture = Typesepulture::fetchSingle($this->idSepulture);
 		return $this->typeSepulture;
+	}
+	
+	public function getDepot() {
+		if (!isset($this->depot)) $this->depot = Depot::fetchSingle($this->idDepot);
+		return $this->depot;
 	}
 	
 	/** @return Mobilier[] */
