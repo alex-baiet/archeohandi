@@ -4,7 +4,9 @@ use Fuel\Core\Controller_Template;
 use Fuel\Core\DB;
 use Fuel\Core\Input;
 use Fuel\Core\View;
+use Model\Depot;
 use Model\Groupesujet;
+use Model\Helper;
 use Model\Mobilier;
 use Model\Sujethandicape;
 
@@ -59,9 +61,9 @@ class Controller_Sujet extends Controller_Template {
 			
 			// Recréation du groupe du sujet
 			$groupData = array(
-				"id_chronology" => Input::post("id_chronology"),
-				"id_operation" => Input::post("id_operation"),
-				"NMI" => Input::post("NMI")
+				"id_chronology" => $_POST["id_chronology"],
+				"id_operation" => $_POST["id_operation"],
+				"NMI" => $_POST["NMI"]
 			);
 			$group = new Groupesujet($groupData);
 			$subject->setGroup($group);
@@ -69,13 +71,22 @@ class Controller_Sujet extends Controller_Template {
 			// Récupération des mobiliers
 			foreach (Mobilier::fetchAll() as $furniture) {
 				if (isset($_POST["mobilier_{$furniture->getId()}"])) {
-					// Le mobilier est sélectionné
+					// Le mobilier est sélectionné dans le formulaire
 					$subject->addFurniture($furniture);
 				}
 			}
+
+			// Récupération des données du dépôt
+			$depotData = array(
+				"num_inventaire" => $_POST["num_inventaire"],
+				"commune" => $_POST["depot_commune"],
+				"adresse" => $_POST["depot_adresse"]
+			);
+			$depot = new Depot($depotData);
+			$subject->setDepot($depot);
 			
 			$data["subject"] = $subject;
-			// Helper::varDump($subject);
+			Helper::varDump($subject);
 		}
 
 		$this->template->title = "Ajouter des sujets";

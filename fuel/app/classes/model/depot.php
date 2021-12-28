@@ -7,7 +7,7 @@ use Fuel\Core\Model;
 /** Représentation d'une opération dans la base de données. */
 class Depot extends Model {
 	#region Values
-	private int $id = -1;
+	private ?int $id = null;
 	private ?string $numInventaire = null;
 	private int $idCommune = -1;
 	private string $adresse = "";
@@ -22,6 +22,7 @@ class Depot extends Model {
 		Archeo::mergeValue($this->numInventaire, $data, "num_inventaire");
 		Archeo::mergeValue($this->idCommune, $data, "id_commune");
 		Archeo::mergeValue($this->adresse, $data, "adresse");
+		if (isset($data["commune"])) $this->idCommune = Commune::nameToId($data["commune"]);
 	}
 
 	/**

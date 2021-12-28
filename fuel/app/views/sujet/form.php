@@ -236,19 +236,19 @@ Form::open(array(
 					<!-- Commune du dépôt -->
 					<div class="col">
 						<div class="form-floating">
-							<?= Form::input("commune_depot", null/*$depot === null ? null : $depot->getCommune()->fullName()*/, array("type" => "text", "class" => "form-control", "placeholder" => "", "autocomplete" => "off")); ?>
-							<?= Form::label("Rechercher une commune", "commune_depot"); ?>
+							<?= Form::input("depot_commune", $depot === null ? null : $depot->getCommune()->fullName(), array("type" => "text", "class" => "form-control", "placeholder" => "", "autocomplete" => "off")); ?>
+							<?= Form::label("Rechercher une commune", "depot_commune"); ?>
 						</div>
 						<script>
-							addAutocomplete("form_commune_depot", "commune");
+							addAutocomplete("form_depot_commune", "commune");
 						</script>
 					</div>
 
 					<!-- Adresse du dépôt -->
 					<div class="col my-2">
 						<div class="form-floating">
-							<?= Form::input("adresse_depot", $depot === null ? null : $depot->getAdresse(), array("type" => "text", "class" => "form-control", "placeholder" => "")); ?>
-							<?= Form::label("Adresse du dépôt", "adresse_depot"); ?>
+							<?= Form::input("depot_adresse", $depot === null ? null : $depot->getAdresse(), array("type" => "text", "class" => "form-control", "placeholder" => "")); ?>
+							<?= Form::label("Adresse du dépôt", "depot_adresse"); ?>
 						</div>
 					</div>
 				</div>

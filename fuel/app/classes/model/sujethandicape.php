@@ -21,7 +21,7 @@ class Sujethandicape extends Model {
 	private string $urlIllustration = "";
 	private int $idTypeDepot = -1;
 	private int $idSepulture = -1;
-	private int $idDepot = -1;
+	private ?int $idDepot = null;
 	private ?int $idGroupeSujet = null;
 
 	/** @param Groupesujet|null|unset */
@@ -114,7 +114,10 @@ class Sujethandicape extends Model {
 	}
 	
 	public function getDepot() {
-		if (!isset($this->depot)) $this->depot = Depot::fetchSingle($this->idDepot);
+		if (!isset($this->depot)) {
+			if ($this->idDepot === null) $this->depot = null;
+			else $this->depot = Depot::fetchSingle($this->idDepot);
+		}
 		return $this->depot;
 	}
 	
@@ -151,5 +154,10 @@ class Sujethandicape extends Model {
 	public function setGroup(Groupesujet $group) {
 		$this->group = $group;
 		$this->idGroupeSujet = $group->getId();
+	}
+
+	public function setDepot(Depot $depot) {
+		$this->depot = $depot;
+		$this->idDepot = $depot->getId();
 	}
 }
