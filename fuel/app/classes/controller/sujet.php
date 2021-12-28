@@ -10,6 +10,7 @@ use Model\Groupesujet;
 use Model\Helper;
 use Model\Localisation;
 use Model\Mobilier;
+use Model\Pathology;
 use Model\Subjectdiagnosis;
 use Model\Sujethandicape;
 
@@ -106,9 +107,18 @@ class Controller_Sujet extends Controller_Template {
 				}
 			}
 			$subject->setDiagnosis($subjectDiagnosis);
+
+			// Récupération des pathologies
+			$subjectPatho = array();
+			foreach (Pathology::fetchAll() as $pathology) {
+				if (isset($_POST["pathology_{$pathology->getId()}"])) {
+					$subjectPatho[$pathology->getId()] = $pathology;
+				}
+			}
+			$subject->setPathologies($subjectPatho);
 			
 			$data["subject"] = $subject;
-			Helper::varDump($subject);
+			// Helper::varDump($subject);
 		}
 
 		$this->template->title = "Ajouter des sujets";

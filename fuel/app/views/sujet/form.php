@@ -6,8 +6,10 @@ use Fuel\Core\FuelException;
 use Model\Appareil;
 use Model\Chronology;
 use Model\Diagnostic;
+use Model\Helper;
 use Model\Localisation;
 use Model\Mobilier;
+use Model\Pathology;
 use Model\Sujethandicape;
 use Model\Typedepot;
 use Model\Typesepulture;
@@ -256,73 +258,86 @@ Form::open(array(
 		</div>
 		<br />
 
-		<!-- Toutes les invalidations du sujets -->
-		<h3>Atteinte invalidante</h3>
-		<style>
-			.th-title-rotate {
-				padding: 0px;
-				margin: 0px;
-				width: 24px;
-				height: 80px;
-				transform: rotate(90deg);
-				transform-origin: 10px 12px;
-			}
-		</style>
-		<table>
-			<!-- Tous les titres -->
-			<?php
-			$localisations = Localisation::fetchAll();
-			$appareils = Appareil::fetchAll();
-			?>
-			<thead>
-				<tr>
-					<td style="width: 300px;"></td>
-					<?php $i = 0;
-					foreach ($localisations as $locali) : ?>
-						<td><?= Asset::img($locali->getUrlImg(), array("style" => "width: 50 px; height: 25px; margin-right: 10px;", "alt" => $locali->getNom())); ?></td>
-					<?php $i++; endforeach; ?>
-				</tr>
-			</thead>
-			<tbody>
-				<?php foreach (Diagnostic::fetchAll() as $diagnostic) : ?>
-					<tr>
-						<!-- Titre des diagnostics -->
-						<td>
-							<div class="form-check form-switch">
-								<?php
-								$attr = array("class" => "form-check-input");
-								$hasDiagnosis = $subject->hasDiagnosis($diagnostic->getId());
-								if ($hasDiagnosis) $attr["checked"] = 1;
-								?>
-								<?= Form::label($diagnostic->getNom(), "diagnostic_{$diagnostic->getId()}", array("class" => "form-check-label")); ?>
-								<?= Form::checkbox("diagnosis_{$diagnostic->getId()}", null, null, $attr); ?>
-							</div>
-						</td>
-						<!-- Checkbox des zones atteintes -->
-						<?php foreach ($localisations as $locali) : ?>
-							<td>
-								<?php
-								$attr = array("class" => "form-check-input");
-								if ($hasDiagnosis) {
-									// Test pour savoir si le diagnostic a été localisé à la localisation actuel
-									$subjectDia = $subject->getDiagnosis($diagnostic->getId());
-									if ($subjectDia->isLocatedFromId($locali->getId()))  $attr["checked"] = 1;
-								}
-								?>
-								<?= Form::checkbox("diagnosis_{$diagnostic->getId()}_spot_{$locali->getId()}", null, null, $attr); ?>
-							</td>
+		<!-- Diagnostics -->
+		<div class="row">
+			<div class="col-md-6">
+				<h3>Atteinte invalidante</h3>
+				<style>
+					.th-title-rotate {
+						padding: 0px;
+						margin: 0px;
+						width: 24px;
+						height: 80px;
+						transform: rotate(90deg);
+						transform-origin: 10px 12px;
+					}
+				</style>
+
+				<table>
+					<!-- Tous les titres -->
+					<?php
+					$localisations = Localisation::fetchAll();
+					$appareils = Appareil::fetchAll();
+					?>
+					<thead>
+						<tr>
+							<td style="width: 300px;"></td>
+							<?php $i = 0;
+							foreach ($localisations as $locali) : ?>
+								<td><?= Asset::img($locali->getUrlImg(), array("style" => "width: 50 px; height: 25px; margin-right: 10px;", "alt" => $locali->getNom())); ?></td>
+							<?php $i++; endforeach; ?>
+						</tr>
+					</thead>
+					<tbody>
+						<?php foreach (Diagnostic::fetchAll() as $diagnostic) : ?>
+							<tr>
+								<!-- Titre des diagnostics -->
+								<td>
+									<div class="form-check form-switch">
+										<?php
+										$attr = array("class" => "form-check-input");
+										$hasDiagnosis = $subject->hasDiagnosis($diagnostic->getId());
+										if ($hasDiagnosis) $attr["checked"] = 1;
+										?>
+										<?= Form::label($diagnostic->getNom(), "diagnostic_{$diagnostic->getId()}", array("class" => "form-check-label")); ?>
+										<?= Form::checkbox("diagnosis_{$diagnostic->getId()}", null, null, $attr); ?>
+									</div>
+								</td>
+								<!-- Checkbox des zones atteintes -->
+								<?php foreach ($localisations as $locali) : ?>
+									<td>
+										<?php
+										$attr = array("class" => "form-check-input");
+										if ($hasDiagnosis) {
+											// Test pour savoir si le diagnostic a été localisé à la localisation actuel
+											$subjectDia = $subject->getDiagnosis($diagnostic->getId());
+											if ($subjectDia->isLocatedFromId($locali->getId()))  $attr["checked"] = 1;
+										}
+										?>
+										<?= Form::checkbox("diagnosis_{$diagnostic->getId()}_spot_{$locali->getId()}", null, null, $attr); ?>
+									</td>
+								<?php endforeach; ?>
+							</tr>
 						<?php endforeach; ?>
-					</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<!-- Affichage des pathologies -->
+			<div class="col-md-6">
+				<h3>Pathologies</h3>
+				<?php foreach (Pathology::fetchAll() as $pathology): ?>
+					<div class="form-check form-switch">
+						<?php
+						$attr = array("class" => "form-check-input");
+						if ($subject->hasPathology($pathology->getId())) $attr["checked"] = 1;
+						?>
+						<?= Form::label($pathology->getName(), "pathology_{$pathology->getId()}", array("class" => "form-check-label")); ?>
+						<?= Form::checkbox("pathology_{$pathology->getId()}", null, null, $attr); ?>
+					</div>
 				<?php endforeach; ?>
-			</tbody>
-		</table>
-		<!-- Affichage des pathologies
-			<div class="' . $d_none_pathologie . '" id="block_pathologies_infectieuses_' . $noLigne . '" style="width: 50%; background-color: white;">
-				<div class="form-check form-switch" style="padding-left: 75px;">
-					<label class="form-check-label" for="PI_' . $key2['name'] . '[' . $noLigne . ']">$key2['type_pathologie']</label>
-					<input class="form-check-input" type="checkbox" name="PI_' . $key2['name'] . '[' . $noLigne . ']" value="' . $key2['id_pathologie'] . '">
-				</div>
-			</div> -->
+			</div>
+		</div>
 
 		<!-- <div class="row">
 				<label for="commentaire_appareil">Commentaire sur l\'appareil de compensation</label>

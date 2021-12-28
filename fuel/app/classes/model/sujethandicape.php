@@ -36,6 +36,8 @@ class Sujethandicape extends Model {
 	private $depot;
 	/** @var Subjectdiagnosis[]|unset Array au format id_diagnostic => SubjectDiagnosis */
 	private $diagnosis;
+	/** @var Pathology[]|unset Array au format id_pathology => SubjectDiagnosis */
+	private $pathologies;
 	#endregion
 
 	/** Construit le Sujethandicape depuis la liste des données. */
@@ -161,8 +163,30 @@ class Sujethandicape extends Model {
 		return $this->getAllDiagnosis()[$idDiagnosis];
 	}
 
+	/** A TESTER */
+	public function getPathologies() {
+		if (!isset($this->pathologies)) {
+			$this->pathologies = array();
+			$results = Helper::querySelect(
+				"SELECT pat.id, pat.nom
+				FROM pathologie AS pat
+				JOIN atteinte_pathologie AS att
+				ON pat.id = att.id_pathologie
+				WHERE att.id_sujet = {$this->id};"
+			);
+			foreach ($results as $res) {
+				$this->pathologies[] = new Pathology($res);
+			}
+		}
+		return $this->pathologies;
+	}
+
 	public function hasDiagnosis(int $idDiagnosis) {
 		return isset($this->diagnosis[$idDiagnosis]);
+	}
+
+	public function hasPathology(int $idPathology) {
+		return isset($this->pathologies[$idPathology]);
 	}
 	#endregion
 
@@ -184,5 +208,10 @@ class Sujethandicape extends Model {
 	/** @param Subjectdiagnosis[] $diagnosis */
 	public function setDiagnosis(array $diagnosis) {
 		$this->diagnosis = $diagnosis;
+	}
+
+	/** @param Pathology[] $pathologies */
+	public function setPathologies(array $pathologies) {
+		$this->pathologies = $pathologies;
 	}
 }
