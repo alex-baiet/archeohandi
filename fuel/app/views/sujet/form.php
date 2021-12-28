@@ -29,6 +29,7 @@ Form::open(array(
 	"style" => "background-color: #F5F5F5; padding: 10px;"
 ));
 ?>
+<input type="hidden" name="id_operation" value="<?= $idOperation ?>">
 <div class="contenu" id="contenu">
 	<div class="col-auto">
 		<h2 class="text-center">Groupe du sujet</h2>
@@ -56,7 +57,7 @@ Form::open(array(
 				<!-- Identifiant -->
 				<div class="col-md-6">
 					<div class="form-floating">
-						<input type="text" class="form-control" name="id_sujet" placeholder="" value="<?= $subject->getIdSujetHandicape(); ?>">
+						<input type="text" class="form-control" name="id_sujet_handicape" placeholder="" value="<?= $subject->getIdSujetHandicape(); ?>">
 						<label for="id_sujet">Identifiant du sujet</label>
 					</div>
 				</div>

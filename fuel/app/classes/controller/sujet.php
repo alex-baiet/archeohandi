@@ -2,7 +2,9 @@
 
 use Fuel\Core\Controller_Template;
 use Fuel\Core\DB;
+use Fuel\Core\Input;
 use Fuel\Core\View;
+use Model\Helper;
 use Model\Sujethandicape;
 
 class Controller_Sujet extends Controller_Template {
@@ -47,10 +49,15 @@ class Controller_Sujet extends Controller_Template {
 		$this->template->content = View::forge('sujet/edit', $data);
 	}
 
-	//Pour l'ajout d'un sujet, nous reprennons le même principe que pour l'ajout d'une opération et de sujet sans l'aspect de l'opération
 	public function action_add($id) {
-		
 		$data = array('idOperation' => $id);
+
+		if (Input::method() === "POST") {
+			$subject = new Sujethandicape($_POST);
+			$data["subject"] = $subject;
+			Helper::varDump($subject);
+		}
+
 		$this->template->title = "Ajouter des sujets";
 		$this->template->content = View::forge('sujet/add', $data);
 	}
