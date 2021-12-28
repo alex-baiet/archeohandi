@@ -2,11 +2,10 @@
 
 use Fuel\Core\Controller_Template;
 use Fuel\Core\DB;
-use Fuel\Core\FuelException;
 use Fuel\Core\Input;
 use Fuel\Core\View;
 use Model\Groupesujet;
-use Model\Helper;
+use Model\Mobilier;
 use Model\Sujethandicape;
 
 class Controller_Sujet extends Controller_Template {
@@ -66,6 +65,14 @@ class Controller_Sujet extends Controller_Template {
 			);
 			$group = new Groupesujet($groupData);
 			$subject->setGroup($group);
+
+			// Récupération des mobiliers
+			foreach (Mobilier::fetchAll() as $furniture) {
+				if (isset($_POST["mobilier_{$furniture->getId()}"])) {
+					// Le mobilier est sélectionné
+					$subject->addFurniture($furniture);
+				}
+			}
 			
 			$data["subject"] = $subject;
 			// Helper::varDump($subject);

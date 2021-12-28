@@ -2,7 +2,6 @@
 
 namespace Model;
 
-use Fuel\Core\FuelException;
 use Fuel\Core\Model;
 
 /** Représentation d'une opération dans la base de données. */

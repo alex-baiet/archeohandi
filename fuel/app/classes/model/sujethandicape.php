@@ -143,6 +143,11 @@ class Sujethandicape extends Model {
 		return $ids;
 	}
 
+	public function addFurniture(Mobilier $furniture) {
+		if (!isset($this->furnitures)) $this->furnitures = array();
+		$this->furnitures[] = $furniture;
+	}
+
 	public function setGroup(Groupesujet $group) {
 		$this->group = $group;
 		$this->idGroupeSujet = $group->getId();

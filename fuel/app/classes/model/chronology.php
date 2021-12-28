@@ -2,7 +2,6 @@
 
 namespace Model;
 
-use Fuel\Core\Form;
 use Fuel\Core\Model;
 
 /** Représentation d'une chronologie dans la base de données. */
