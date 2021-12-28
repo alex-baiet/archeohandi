@@ -5,9 +5,12 @@ use Fuel\Core\DB;
 use Fuel\Core\Input;
 use Fuel\Core\View;
 use Model\Depot;
+use Model\Diagnostic;
 use Model\Groupesujet;
 use Model\Helper;
+use Model\Localisation;
 use Model\Mobilier;
+use Model\Subjectdiagnosis;
 use Model\Sujethandicape;
 
 class Controller_Sujet extends Controller_Template {
@@ -84,6 +87,25 @@ class Controller_Sujet extends Controller_Template {
 			);
 			$depot = new Depot($depotData);
 			$subject->setDepot($depot);
+
+			// Récupération des diagnostic et des localisation
+			$allDiagnosis = Diagnostic::fetchAll();
+			$allSpots = Localisation::fetchAll();
+			$subjectDiagnosis = array();
+			foreach ($allDiagnosis as $diagnosis) {
+				if (isset($_POST["diagnosis_{$diagnosis->getId()}"])) {
+					$spotsChecked = array();
+					foreach ($allSpots as $spot) {
+						if (isset($_POST["diagnosis_{$diagnosis->getId()}_spot_{$spot->getId()}"])) {
+							$spotsChecked[] = $spot;
+						}
+					}
+					if (count($spotsChecked) !== 0) {
+						$subjectDiagnosis[$diagnosis->getId()] = new Subjectdiagnosis($diagnosis, $spotsChecked);
+					}
+				}
+			}
+			$subject->setDiagnosis($subjectDiagnosis);
 			
 			$data["subject"] = $subject;
 			Helper::varDump($subject);

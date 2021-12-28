@@ -150,11 +150,19 @@ class Sujethandicape extends Model {
 	}
 
 	/** @return Subjectdiagnosis[] */
-	public function getDiagnosis(): array {
+	public function getAllDiagnosis(): array {
 		if (!isset($this->diagnosis)) {
 			$this->diagnosis = Subjectdiagnosis::fetchAll($this->id);
 		}
 		return $this->diagnosis;
+	}
+
+	public function getDiagnosis(int $idDiagnosis): Subjectdiagnosis {
+		return $this->getAllDiagnosis()[$idDiagnosis];
+	}
+
+	public function hasDiagnosis(int $idDiagnosis) {
+		return isset($this->diagnosis[$idDiagnosis]);
 	}
 	#endregion
 
@@ -171,5 +179,10 @@ class Sujethandicape extends Model {
 	public function setDepot(Depot $depot) {
 		$this->depot = $depot;
 		$this->idDepot = $depot->getId();
+	}
+
+	/** @param Subjectdiagnosis[] $diagnosis */
+	public function setDiagnosis(array $diagnosis) {
+		$this->diagnosis = $diagnosis;
 	}
 }

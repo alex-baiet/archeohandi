@@ -279,16 +279,8 @@ Form::open(array(
 					<td style="width: 300px;"></td>
 					<?php $i = 0;
 					foreach ($localisations as $locali) : ?>
-						<?php $margin = $i + 1 === count($localisations) ? "100px" : "10px"; // Grosse margin appliqué pour le dernier élément des localisations 
-						?>
-						<td><?= Asset::img($locali->getUrlImg(), array("style" => "width: 50 px; height: 25px; margin-right: $margin;", "alt" => $locali->getNom())); ?></td>
-					<?php $i++;
-					endforeach; ?>
-					<?php foreach ($appareils as $appareil) : ?>
-						<td>
-							<div class="th-title-rotate"><?= $appareil->getNom() ?></div>
-						</td>
-					<?php endforeach; ?>
+						<td><?= Asset::img($locali->getUrlImg(), array("style" => "width: 50 px; height: 25px; margin-right: 10px;", "alt" => $locali->getNom())); ?></td>
+					<?php $i++; endforeach; ?>
 				</tr>
 			</thead>
 			<tbody>
@@ -297,20 +289,27 @@ Form::open(array(
 						<!-- Titre des diagnostics -->
 						<td>
 							<div class="form-check form-switch">
+								<?php
+								$attr = array("class" => "form-check-input");
+								$hasDiagnosis = $subject->hasDiagnosis($diagnostic->getId());
+								if ($hasDiagnosis) $attr["checked"] = 1;
+								?>
 								<?= Form::label($diagnostic->getNom(), "diagnostic_{$diagnostic->getId()}", array("class" => "form-check-label")); ?>
-								<?= Form::checkbox("diagnostic_{$diagnostic->getId()}", null, null, array("class" => "form-check-input")); ?>
+								<?= Form::checkbox("diagnosis_{$diagnostic->getId()}", null, null, $attr); ?>
 							</div>
 						</td>
 						<!-- Checkbox des zones atteintes -->
 						<?php foreach ($localisations as $locali) : ?>
 							<td>
-								<?= Form::checkbox("diagnostic_{$diagnostic->getId()}_spot_{$locali->getId()}", null, null, array("class" => "form-check-input")); ?>
-							</td>
-						<?php endforeach; ?>
-						<!-- Checkbox des appareils compensatoires -->
-						<?php foreach ($appareils as $appareil) : ?>
-							<td>
-								<?= Form::checkbox("diagnostic_{$diagnostic->getId()}_item_{$appareil->getId()}", null, null, array("class" => "form-check-input")); ?>
+								<?php
+								$attr = array("class" => "form-check-input");
+								if ($hasDiagnosis) {
+									// Test pour savoir si le diagnostic a été localisé à la localisation actuel
+									$subjectDia = $subject->getDiagnosis($diagnostic->getId());
+									if ($subjectDia->isLocatedFromId($locali->getId()))  $attr["checked"] = 1;
+								}
+								?>
+								<?= Form::checkbox("diagnosis_{$diagnostic->getId()}_spot_{$locali->getId()}", null, null, $attr); ?>
 							</td>
 						<?php endforeach; ?>
 					</tr>
