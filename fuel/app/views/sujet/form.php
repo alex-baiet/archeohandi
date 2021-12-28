@@ -202,7 +202,7 @@ Form::open(array(
 
 		<div class="row">
 			<!-- Accessoires -->
-			<div class="col-md-4">
+			<div class="col-md-6">
 				<h3>Accessoires</h3>
 				<?php $subFurnituresId = $subject->getFurnituresId(); ?>
 				<?php foreach (Mobilier::fetchAll() as $mobilier) : ?>
@@ -223,32 +223,26 @@ Form::open(array(
 				</div>
 			</div>
 
-			<div class="col-md-8">
+			<div class="col-md-6">
 				<h3>Dépôt</h3>
 				<?php $depot = $subject->getDepot(); ?>
-				<div class="row row-cols-2">
 					<!-- Numéro de dépôt -->
-					<div class="col">
-						<div class="form-floating">
+						<div class="form-floating my-2">
 							<?= Form::input("num_inventaire", $depot === null ? null : $depot->getNumInventaire(), array("type" => "text", "class" => "form-control", "placeholder" => "")); ?>
 							<?= Form::label("Numéro de dépôt", "num_inventaire"); ?>
 						</div>
-					</div>
 
 					<!-- Commune du dépôt -->
-					<div class="col">
-						<div class="form-floating">
+						<div class="form-floating my-2">
 							<?= Form::input("depot_commune", $depot === null ? null : $depot->getCommune()->fullName(), array("type" => "text", "class" => "form-control", "placeholder" => "", "autocomplete" => "off")); ?>
 							<?= Form::label("Rechercher une commune", "depot_commune"); ?>
 						</div>
 						<script>
 							addAutocomplete("form_depot_commune", "commune");
 						</script>
-					</div>
 
 					<!-- Adresse du dépôt -->
-					<div class="col my-2">
-						<div class="form-floating">
+						<div class="form-floating my-2">
 							<?= Form::input("depot_adresse", $depot === null ? null : $depot->getAdresse(), array("type" => "text", "class" => "form-control", "placeholder" => "")); ?>
 							<?= Form::label("Adresse du dépôt", "depot_adresse"); ?>
 						</div>
