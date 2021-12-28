@@ -128,7 +128,7 @@ class Controller_Sujet extends Controller_Template {
 			$subject->setItemsHelp($itemsHelp);
 			
 			$data["subject"] = $subject;
-			Helper::varDump($subject);
+			// Helper::varDump($subject);
 		}
 
 		$this->template->title = "Ajouter des sujets";

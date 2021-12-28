@@ -313,8 +313,6 @@ class Operation extends Model {
 
 	/**
 	 * Ajoute / met à jour l'opération dans la base de données.
-	 * Actuellement ne fait que la mise à jour et non l'ajout.
-	 * 
 	 * @return bool Indique le succès de l'ajout.
 	 */
 	public function saveOnDB(): bool {

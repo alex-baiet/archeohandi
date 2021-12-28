@@ -10,6 +10,7 @@ use Model\Helper;
 use Model\Localisation;
 use Model\Mobilier;
 use Model\Pathology;
+use Model\Sex;
 use Model\Sujethandicape;
 use Model\Typedepot;
 use Model\Typesepulture;
@@ -67,19 +68,7 @@ Form::open(array(
 				<!-- Sexe -->
 				<div class="col-md-6">
 					<div class="form-floating">
-						<?=
-						Form::select(
-							"sexe",
-							$subject->getSexe(),
-							array(
-								"Femme" => "Femme",
-								"Homme" => "Homme",
-								"Indéterminé" => "Indéterminé"
-							),
-							array("class" => "form-select")
-						);
-						?>
-						<?= Form::label("Sexe", "sexe") ?>
+						<?= Sex::generateSelect("sexe", $subject->getSexe()); ?>
 					</div>
 				</div>
 			</div>
