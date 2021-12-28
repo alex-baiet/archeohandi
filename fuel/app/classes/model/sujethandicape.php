@@ -17,8 +17,9 @@ class Sujethandicape extends Model {
 	private string $milieuVie = "";
 	private string $contexte = "";
 	private string $contexteNormatif = "";
-	private string $commentaireContexte = "";
-	private string $urlIllustration = "";
+	private string $commentContext = "";
+	private string $commentDiagnosis = "";
+	private ?string $urlImg = null;
 	private int $idTypeDepot = -1;
 	private int $idSepulture = -1;
 	private ?int $idDepot = null;
@@ -61,8 +62,9 @@ class Sujethandicape extends Model {
 		Archeo::mergeValue($this->milieuVie, $data, "milieu_vie");
 		Archeo::mergeValue($this->contexte, $data, "contexte");
 		Archeo::mergeValue($this->contexteNormatif, $data, "contexte_normatif");
-		Archeo::mergeValue($this->commentaireContexte, $data, "commentaire_contexte");
-		Archeo::mergeValue($this->urlIllustration, $data, "url_illustration");
+		Archeo::mergeValue($this->commentContext, $data, "commentaire_contexte");
+		Archeo::mergeValue($this->commentDiagnosis, $data, "commentaire_diagnostic");
+		Archeo::mergeValue($this->urlImg, $data, "url_illustration");
 		Archeo::mergeValue($this->idTypeDepot, $data, "id_type_depot", "int");
 		Archeo::mergeValue($this->idSepulture, $data, "id_sepulture", "int");
 		Archeo::mergeValue($this->idDepot, $data, "id_depot", "int");
@@ -95,7 +97,8 @@ class Sujethandicape extends Model {
 	public function getMilieuVie() { return $this->milieuVie; }
 	public function getContexte() { return $this->contexte; }
 	public function getContexteNormatif() { return $this->contexteNormatif; }
-	public function getCommentaireContexte() { return $this->commentaireContexte; }
+	public function getCommentContext() { return $this->commentContext; }
+	public function getCommentDiagnosis() { return $this->commentDiagnosis; }
 	public function getUrlIllustration() { return $this->urlIllustration; }
 	public function getIdTypeDepot() { return $this->idTypeDepot; }
 	public function getIdTypeSepulture() { return $this->idSepulture; }
