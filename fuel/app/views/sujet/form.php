@@ -4,7 +4,7 @@ use Fuel\Core\Asset;
 use Fuel\Core\Form;
 use Fuel\Core\FuelException;
 use Model\Appareil;
-use Model\Chronologie;
+use Model\Chronology;
 use Model\Diagnostic;
 use Model\Localisation;
 use Model\Mobilier;
@@ -39,14 +39,14 @@ Form::open(array(
 			<!-- NMI -->
 			<div class="col-md-6">
 				<div class="form-floating">
-					<input type="number" class="form-control" name="nmi" placeholder="" value="<?= $group !== null ? $group->getNMI() : "" ?>">
+					<input type="number" class="form-control" name="NMI" placeholder="" value="<?= $group !== null ? $group->getNMI() : "" ?>">
 					<label for="NMI">NMI</label>
 				</div>
 			</div>
 
-			<!-- Chronologie -->
+			<!-- Chronology -->
 			<div class="col-md-6">
-				<?= Chronologie::generateSelect("chronologie", "Chronologie", $group === null ? "" : $group->getChronology()->getNom()) ?>
+				<?= Chronology::generateSelect("id_chronology", "Chronologie", $group === null ? "" : $group->getChronology()->getId()); ?>
 			</div>
 		</div>
 

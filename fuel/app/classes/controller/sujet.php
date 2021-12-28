@@ -2,8 +2,10 @@
 
 use Fuel\Core\Controller_Template;
 use Fuel\Core\DB;
+use Fuel\Core\FuelException;
 use Fuel\Core\Input;
 use Fuel\Core\View;
+use Model\Groupesujet;
 use Model\Helper;
 use Model\Sujethandicape;
 
@@ -53,9 +55,20 @@ class Controller_Sujet extends Controller_Template {
 		$data = array('idOperation' => $id);
 
 		if (Input::method() === "POST") {
+			// Recréation du sujet à partir des valeurs entrées
 			$subject = new Sujethandicape($_POST);
+			
+			// Recréation du groupe du sujet
+			$groupData = array(
+				"id_chronology" => Input::post("id_chronology"),
+				"id_operation" => Input::post("id_operation"),
+				"NMI" => Input::post("NMI")
+			);
+			$group = new Groupesujet($groupData);
+			$subject->setGroup($group);
+			
 			$data["subject"] = $subject;
-			Helper::varDump($subject);
+			// Helper::varDump($subject);
 		}
 
 		$this->template->title = "Ajouter des sujets";

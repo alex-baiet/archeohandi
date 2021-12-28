@@ -75,23 +75,27 @@ class Archeo {
 	/**
 	 * Réassigne $value avec une donnée dans data, si elle existe. 
 	 * @param mixed &$value Valeur à réassigner.
-	 * @param array $array Contient toutes les données.
 	 * @param mixed $key Nom de la valeur dans $data.
+	 * @param array $key Liste des noms possible de la valeur dans $data.
+	 * @param array $data Contient toutes les données.
 	 */
 	public static function mergeValue(&$value, array &$data, $key, $type = "string") {
-		if (isset($data[$key])) {
-			switch ($type) {
-				case 'string':
-					$value = $data[$key];
-					break;
-				case 'int':
-					$value = intval($data[$key]);
-					break;				
-				default:
-					throw new FuelException("Le type \"$type\" n'est pas un type valide.");
-					break;
+		if (!is_array($key)) $key = array($key);
+		foreach ($key as $k) {
+			if (isset($data[$k])) {
+				switch ($type) {
+					case 'string':
+						$value = $data[$k];
+						break;
+					case 'int':
+						$value = intval($data[$k]);
+						break;				
+					default:
+						throw new FuelException("Le type \"$type\" n'est pas un type valide.");
+						break;
+				}
+				return;
 			}
 		}
 	}
-
 }

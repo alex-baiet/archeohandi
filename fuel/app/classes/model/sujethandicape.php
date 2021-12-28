@@ -22,7 +22,7 @@ class Sujethandicape extends Model {
 	private int $idTypeDepot = -1;
 	private int $idSepulture = -1;
 	private int $idDepot = -1;
-	private int $idGroupeSujet = -1;
+	private ?int $idGroupeSujet = null;
 
 	/** @param Groupesujet|null|unset */
 	private $group;
@@ -96,7 +96,10 @@ class Sujethandicape extends Model {
 	public function getIdGroupeSujet() { return $this->idGroupeSujet; }
 
 	public function getGroup() {
-		if (!isset($this->group)) $this->group = Groupesujet::fetchSingle($this->idGroupeSujet);
+		if (!isset($this->group)){
+			if ($this->idGroupeSujet === null) $this->group = null;
+			else $this->group = Groupesujet::fetchSingle($this->idGroupeSujet);
+		}
 		return $this->group;
 	}
 	
@@ -138,5 +141,10 @@ class Sujethandicape extends Model {
 			$ids[] = $fur->getId();
 		}
 		return $ids;
+	}
+
+	public function setGroup(Groupesujet $group) {
+		$this->group = $group;
+		$this->idGroupeSujet = $group->getId();
 	}
 }

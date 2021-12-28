@@ -27,7 +27,7 @@
       </div>
       <div class="form-check form-check-inline">
         <?= Form::radio('radio', 'chronologie', false); ?>
-        <?= Form::label('Chronologie', 'chronologie'); ?>
+        <?= Form::label('Chronology', 'chronologie'); ?>
         <select class="form-select custom-select my-1 mr-2" style="width:15em" id="id_select_chronologie" name="select_chronologie">
           <?php
           foreach ($all_chrono as $key) :
@@ -61,7 +61,7 @@
         <table class="table table-striped table-hover table-bordered sticky" data-toggle="table" data-search="true">
           <thead>
             <tr class="text-center">
-              <th scope="col">Chronologie</th>
+              <th scope="col">Chronology</th>
               <th scope="col">Date de début</th>
               <th scope="col">Date de fin</th>
               <th scope="col">Opération</th>
