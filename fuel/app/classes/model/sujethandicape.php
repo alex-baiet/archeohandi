@@ -36,8 +36,10 @@ class Sujethandicape extends Model {
 	private $depot;
 	/** @var Subjectdiagnosis[]|unset Array au format id_diagnostic => SubjectDiagnosis */
 	private $diagnosis;
-	/** @var Pathology[]|unset Array au format id_pathology => SubjectDiagnosis */
+	/** @var Pathology[]|unset Array au format id_pathology => Pathology */
 	private $pathologies;
+	/** @var Appareil[]|unset Array au format id_appareil => Appareil */
+	private $itemsHelp;
 	#endregion
 
 	/** Construit le Sujethandicape depuis la liste des données. */
@@ -125,6 +127,8 @@ class Sujethandicape extends Model {
 		}
 		return $this->depot;
 	}
+
+
 	
 	/** @return Mobilier[] */
 	public function getFurnitures() {
@@ -181,6 +185,28 @@ class Sujethandicape extends Model {
 		return $this->pathologies;
 	}
 
+	/** A TESTER */
+	public function getItemsHelp() {
+		if (!isset($this->itemsHelp)) {
+			$this->itemsHelp = array();
+			$results = Helper::querySelect(
+				"SELECT app.id, app.nom
+				FROM appareil_compensatoire AS app
+				JOIN appareil_sujet AS asu
+				ON app.id = asu.id_appareil
+				WHERE asu.id_sujet = {$this->id};"
+			);
+			foreach ($results as $res) {
+				$this->itemsHelp[] = new Appareil($res);
+			}
+		}
+		return $this->itemsHelp;
+	}
+
+	public function getItemHelp($idItem) {
+		return $this->getItemsHelp()[$idItem];
+	}
+
 	public function hasDiagnosis(int $idDiagnosis) {
 		return isset($this->diagnosis[$idDiagnosis]);
 	}
@@ -188,6 +214,11 @@ class Sujethandicape extends Model {
 	public function hasPathology(int $idPathology) {
 		return isset($this->pathologies[$idPathology]);
 	}
+
+	public function hasItemHelp(int $idItemHelp) {
+		return isset($this->itemsHelp[$idItemHelp]);
+	}
+
 	#endregion
 
 	public function addFurniture(Mobilier $furniture) {
@@ -213,5 +244,10 @@ class Sujethandicape extends Model {
 	/** @param Pathology[] $pathologies */
 	public function setPathologies(array $pathologies) {
 		$this->pathologies = $pathologies;
+	}
+
+	/** @param Appareil[] $items */
+	public function setItemsHelp(array $items) {
+		$this->itemsHelp = $items;
 	}
 }

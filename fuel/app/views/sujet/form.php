@@ -323,9 +323,22 @@ Form::open(array(
 				</table>
 			</div>
 
-			<!-- Affichage des pathologies -->
 			<div class="col-md-6">
-				<h3>Pathologies</h3>
+				<!-- Appareils de compensation -->
+				<h3>Appareils compensatoire</h3>
+				<?php foreach (Appareil::fetchAll() as $item): ?>
+					<div class="form-check form-switch">
+						<?php
+						$attr = array("class" => "form-check-input");
+						if ($subject->hasItemHelp($item->getId())) $attr["checked"] = 1;
+						?>
+						<?= Form::label($item->getName(), "item_{$item->getId()}", array("class" => "form-check-label")); ?>
+						<?= Form::checkbox("item_{$item->getId()}", null, null, $attr); ?>
+					</div>
+				<?php endforeach; ?>
+
+				<!-- Pathologies -->
+				<h3 style="margin-top: 70px;">Pathologies</h3>
 				<?php foreach (Pathology::fetchAll() as $pathology): ?>
 					<div class="form-check form-switch">
 						<?php
@@ -339,12 +352,11 @@ Form::open(array(
 			</div>
 		</div>
 
-		<!-- <div class="row">
-				<label for="commentaire_appareil">Commentaire sur l\'appareil de compensation</label>
-				<textarea class="form-control" name="commentaire_appareil[' . $noLigne . ']" rows="2">OSKUR</textarea>
-				<label for="commentaire_diagnostic[' . $noLigne . ']">Commentaire du diagnostic</label>
-				<textarea class="form-control" name="commentaire_diagnostic[' . $noLigne . ']" rows="2" placeholder="** INFO ** Les différentes atteintes cochées seront ajoutées à la description"></textarea>
-			</div> -->
+		<!-- Commentaire du diagnostic -->
+		<label for="commentaire_diagnostic">Commentaire du diagnostic</label>
+		<div class="input-group">
+			<textarea class="form-control" name="commentaire_diagnostic" rows="2"></textarea>
+		</div>
 
 		<!-- <br />
 			<div style="text-align: center;">

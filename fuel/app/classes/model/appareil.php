@@ -7,11 +7,11 @@ use Fuel\Core\Model;
 /** Représente un appareil compensatoire pour un sujet handicapé. */
 class Appareil extends Model {
 	private int $id;
-	private string $nom;
+	private string $name;
 
 	public function __construct(array $values) {
-		$this->id = Helper::arrayGetInt("id_appareil_compensatoire", $values);
-		$this->nom = Helper::arrayGetString("type_appareil", $values);
+		$this->id = Helper::arrayGetInt("id", $values);
+		$this->name = Helper::arrayGetString("nom", $values);
 	}
 
 	/**
@@ -20,11 +20,7 @@ class Appareil extends Model {
 	 * @return Appareil|null Le résultat est null si aucun appareil ne correspond à l'id donné.
 	 */
 	public static function fetchSingle(int $id) {
-		if (!is_numeric($id)) return null;
-
-		$res = Helper::querySelectSingle("SELECT * FROM appareil_compensatoire WHERE id_appareil_compensatoire=$id;");
-		if ($res === null) return null;
-		return new Appareil($res);
+		return Archeo::fetchSingle($id, "appareil_compensatoire", function ($data) { return new Appareil($data); });
 	}
 
 	/**
@@ -36,5 +32,5 @@ class Appareil extends Model {
 	}
 
 	public function getId() { return $this->id; }
-	public function getNom() { return $this->nom; }
+	public function getName() { return $this->name; }
 }

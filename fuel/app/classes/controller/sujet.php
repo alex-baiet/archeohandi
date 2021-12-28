@@ -4,6 +4,7 @@ use Fuel\Core\Controller_Template;
 use Fuel\Core\DB;
 use Fuel\Core\Input;
 use Fuel\Core\View;
+use Model\Appareil;
 use Model\Depot;
 use Model\Diagnostic;
 use Model\Groupesujet;
@@ -116,9 +117,18 @@ class Controller_Sujet extends Controller_Template {
 				}
 			}
 			$subject->setPathologies($subjectPatho);
+
+			// Récupération des appareils de compensation
+			$itemsHelp = array();
+			foreach (Appareil::fetchAll() as $item) {
+				if (isset($_POST["item_{$item->getId()}"])) {
+					$itemsHelp[$item->getId()] = $item;
+				}
+			}
+			$subject->setItemsHelp($itemsHelp);
 			
 			$data["subject"] = $subject;
-			// Helper::varDump($subject);
+			Helper::varDump($subject);
 		}
 
 		$this->template->title = "Ajouter des sujets";
