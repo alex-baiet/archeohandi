@@ -304,13 +304,13 @@ Form::open(array(
 						<!-- Checkbox des zones atteintes -->
 						<?php foreach ($localisations as $locali) : ?>
 							<td>
-								<?= Form::checkbox("diagnostic_{$diagnostic->getId()}_localisation_{$locali->getId()}", null, null, array("class" => "form-check-input")); ?>
+								<?= Form::checkbox("diagnostic_{$diagnostic->getId()}_spot_{$locali->getId()}", null, null, array("class" => "form-check-input")); ?>
 							</td>
 						<?php endforeach; ?>
 						<!-- Checkbox des appareils compensatoires -->
 						<?php foreach ($appareils as $appareil) : ?>
 							<td>
-								<?= Form::checkbox("diagnostic_{$diagnostic->getId()}_appareil_{$appareil->getId()}", null, null, array("class" => "form-check-input")); ?>
+								<?= Form::checkbox("diagnostic_{$diagnostic->getId()}_item_{$appareil->getId()}", null, null, array("class" => "form-check-input")); ?>
 							</td>
 						<?php endforeach; ?>
 					</tr>

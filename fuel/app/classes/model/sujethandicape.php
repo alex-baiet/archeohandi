@@ -24,16 +24,18 @@ class Sujethandicape extends Model {
 	private ?int $idDepot = null;
 	private ?int $idGroupeSujet = null;
 
-	/** @param Groupesujet|null|unset */
+	/** @var Groupesujet|null|unset */
 	private $group;
-	/** @param Typedepot|null|unset */
+	/** @var Typedepot|null|unset */
 	private $typeDepot;
-	/** @param Typesepulture|null|unset */
+	/** @var Typesepulture|null|unset */
 	private $typeSepulture;
-	/** @param Mobilier[]|unset */
+	/** @var Mobilier[]|unset */
 	private $furnitures;
-	/** @param Depot|null|unset */
+	/** @var Depot|null|unset */
 	private $depot;
+	/** @var Subjectdiagnosis[]|unset Array au format id_diagnostic => SubjectDiagnosis */
+	private $diagnosis;
 	#endregion
 
 	/** Construit le Sujethandicape depuis la liste des données. */
@@ -78,6 +80,7 @@ class Sujethandicape extends Model {
 		return $obj;
 	}
 
+	#region Getters
 	public function getId() { return $this->id; }
 	public function getIdSujetHandicape() { return $this->idSujetHandicape; }
 	public function getAgeMin() { return $this->ageMin; }
@@ -145,6 +148,15 @@ class Sujethandicape extends Model {
 		}
 		return $ids;
 	}
+
+	/** @return Subjectdiagnosis[] */
+	public function getDiagnosis(): array {
+		if (!isset($this->diagnosis)) {
+			$this->diagnosis = Subjectdiagnosis::fetchAll($this->id);
+		}
+		return $this->diagnosis;
+	}
+	#endregion
 
 	public function addFurniture(Mobilier $furniture) {
 		if (!isset($this->furnitures)) $this->furnitures = array();

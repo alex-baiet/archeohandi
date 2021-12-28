@@ -6,6 +6,8 @@ use Fuel\Core\Model;
 
 /** Représente une partie du corps. */
 class Localisation extends Model {
+	private static $allSpots;
+
 	private int $id;
 	private string $nom;
 	private string $urlImg;
@@ -34,7 +36,10 @@ class Localisation extends Model {
 	 * @return Localisation[]
 	 */
 	public static function fetchAll() {
-		return Archeo::fetchAll("localisation_atteinte", function ($data) { return new Localisation($data); });
+		if (!isset(Localisation::$allSpots)) {
+			Localisation::$allSpots = Archeo::fetchAll("localisation_atteinte", function ($data) { return new Localisation($data); });
+		}
+		return Localisation::$allSpots;
 	}
 
 	public function getId() { return $this->id; }
