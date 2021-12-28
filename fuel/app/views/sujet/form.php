@@ -6,7 +6,6 @@ use Fuel\Core\FuelException;
 use Model\Appareil;
 use Model\Chronology;
 use Model\Diagnostic;
-use Model\Helper;
 use Model\Localisation;
 use Model\Mobilier;
 use Model\Pathology;
@@ -25,6 +24,7 @@ $idOperation = isset($idOperation) ? $idOperation : $subject->getGroup()->getIdO
 
 ?>
 
+<?= $subject->echoErrors(); ?>
 <?=
 Form::open(array(
 	"action" => "sujet/add/$idOperation",

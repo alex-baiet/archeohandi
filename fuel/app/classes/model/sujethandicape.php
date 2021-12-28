@@ -265,10 +265,19 @@ class Sujethandicape extends Model {
 	public function validate(): bool {
 		if (isset($this->validated)) return $this->validated;
 
-		// Vérification âge
 		if ($this->ageMin > $this->ageMax) $this->invalidate("L'âge minimum doit être inférieur à l'âge maximum.");
+		if ($this->datingMin > $this->datingMax) $this->invalidate("La datation minimum doit être inférieur à la datation maximum.");
+		if ($this->milieuVie === "") $this->invalidate("Choisissez une valeur pour le milieu de vie.");
+		if ($this->contexte === "") $this->invalidate("Choisissez une valeur pour le contexte de la tombe.");
+		if ($this->contexteNormatif === "") $this->invalidate("Choisissez une valeur pour le contexte normatif.");
+		if (Typedepot::fetchSingle($this->idTypeDepot) === null) $this->invalidate("Choisissez une valeur pour le type de dépôt.");
+		if (Typesepulture::fetchSingle($this->idSepulture) === null) $this->invalidate("Choisissez une valeur pour le type de sepulture.");
 
-		// Vérification sexe
+		// Renvoie la valeur défini entre temps
+		if (isset($this->validated)) return $this->validated;
+		// Tout s'est bien passé ^.^
+		$this->validated = true;
+		return true;
 	}
 
 	/**
