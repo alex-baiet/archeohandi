@@ -137,7 +137,7 @@ $sujets = $sujets;
 								$typeSepulture = Typesepulture::fetchSingle($sujet->getIdTypeSepulture());
 							?>
 								<tr class="text-center">
-									<td><?= $sujet->getIdSujetHandicape()?></td>
+									<td><?= $sujet->getId()?></td>
 									<td><?= $sujet->getSexe() ?></td>
 									<td><?= "{$sujet->getDatingMin()} - {$sujet->getDatingMax()}" ?></td>
 									<td><?= $sujet->getMilieuVie() ?></td>
@@ -165,11 +165,11 @@ $sujets = $sujets;
 			</div>
 		</div>
 	</div>
-<?php else : echo '
-				<div class="container">
-					<h2>Aucun sujets handicapés</h2>
-				</div>';
-endif; ?>
+<?php else : ?>
+	<div class="container">
+		<h2>Aucun sujets handicapés</h2>
+	</div>
+<?php endif; ?>
 
 <!-- Permet d'afficher un message d'alert avant la confirmation d'une suppression -->
 <script type="text/javascript">
