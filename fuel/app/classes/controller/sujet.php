@@ -64,15 +64,6 @@ class Controller_Sujet extends Controller_Template {
 			// Recréation du sujet à partir des valeurs entrées
 			$subject = new Sujethandicape($_POST, true);
 
-			// Récupération des données du dépôt
-			$depotData = array(
-				"num_inventaire" => $_POST["num_inventaire"],
-				"commune" => $_POST["depot_commune"],
-				"adresse" => $_POST["depot_adresse"]
-			);
-			$depot = new Depot($depotData);
-			$subject->setDepot($depot);
-
 			// Récupération des diagnostic et des localisation
 			$allDiagnosis = Diagnostic::fetchAll();
 			$allSpots = Localisation::fetchAll();

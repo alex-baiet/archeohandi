@@ -93,6 +93,13 @@ class Sujethandicape extends Model {
 		}
 		else if ($setWithEmpty) $this->furnitures = array();
 
+		// Récupération des données du dépôt
+		$depotData = array();
+		if (isset($data["num_inventaire"])) $depotData["num_inventaire"] = $data["num_inventaire"];
+		if (isset($data["depot_commune"])) $depotData["commune"] = $data["depot_commune"];
+		if (isset($data["depot_adresse"])) $depotData["adresse"] = $data["depot_adresse"];
+		if (count($groupData) > 0 || $setWithEmpty) $this->depot = new Depot($depotData);
+
 	}
 
 	/**
