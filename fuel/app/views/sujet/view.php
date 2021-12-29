@@ -73,20 +73,16 @@ $subject = $subject;
 				<div class="p-2">NMI : <?= $group->getNMI(); ?></div>
 			</div>
 			<div class="col-md-3">
-				<div class="p-2">Opération : <?= "" //$nom_op; 
-																			?></div>
+				<div class="p-2">Opération : <?= $group->getOperation()->getNomOp(); ?></div>
 			</div>
 			<div class="col-md-3">
-				<div class="p-2">Période : <?= "" //$info_chrono['nom_chronologie']; 
-																		?></div>
+				<div class="p-2">Période : <?= $group->getChronology()->getName(); ?></div>
 			</div>
 			<div class="col-md-2">
-				<div class="p-2">Date de début : <?= "" //$info_chrono['date_debut']; 
-																					?></div>
+				<div class="p-2">Date de début : <?= $group->getChronology()->getStart(); ?></div>
 			</div>
 			<div class="col-md-2">
-				<div class="p-2">Date de fin : <?= "" //$info_chrono['date_fin']; 
-																				?></div>
+				<div class="p-2">Date de fin : <?= $group->getChronology()->getEnd(); ?></div>
 			</div>
 		</div>
 	</div>
@@ -98,14 +94,14 @@ $subject = $subject;
 		<?php $depot = $subject->getDepot(); ?>
 		<div class="row">
 			<div class="col">
-				<div class="p-2">Numéro d'inventaire : <?= ""//$depot->getNumInventaire(); ?>
+				<div class="p-2">Numéro d'inventaire : <?= $depot->getNumInventaire(); ?>
 				</div>
 			</div>
 			<div class="col">
-				<div class="p-2">Commune : <?= ""//$depot->getCommune()->fullName() ?></div>
+				<div class="p-2">Commune : <?= $depot->getCommune()->fullName() ?></div>
 			</div>
 			<div class="col">
-				<div class="p-2">Adresse : <?= ""//$depot->getAdresse(); ?></div>
+				<div class="p-2">Adresse : <?= $depot->getAdresse(); ?></div>
 			</div>
 		</div>
 	</div>
@@ -129,89 +125,46 @@ $subject = $subject;
 	<!-- Diagnostics -->
 	<div class="container" style="background-color: #F5F5F5;">
 		<h4>Atteinte invalidante</h4>
-		<?php if (true) : ?>
-			<div class="table-responsive">
-				<table class="table table-striped table-hover">
-					<thead>
-						<tr>
-							<th scope="col">Diagnostic</th>
-							<th scope="col" class="text-center">Pathologie</th>
-							<th scope="col" class="text-center">Localisation</th>
-							<th scope="col" class="text-center">Appareil de compensation</th>
-							<th scope="col" class="text-center">Description du Autre</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>Pâtes</td>
-							<td class="text-center">Obesité</td>
-							<td class="text-center">Bide</td>
-							<td class="text-center">De l'eau</td>
-							<td class="text-center">C'est bon les pâtes</td>
-						</tr>
-						<?php //foreach ($sujet_atteinte as $key) :
-						// 	$query = DB::query('SELECT nom FROM diagnostic WHERE id=' . $key['id_diagnostic'] . ' ');
-						// 	$nom_diagnostic = $query->execute();
-						// 	$nom_diagnostic = $nom_diagnostic->_results[0]['nom'];
-						// 	$nom_patho = $description_autre = "";
-
-						// 	if ($key['id_diagnostic'] == 9) :
-						// 		$query = DB::query('SELECT type_pathologie FROM pathologie WHERE id_pathologie=' . $key['id_pathologie'] . ' ');
-						// 		$nom_patho = $query->execute();
-						// 		$nom_patho = $nom_patho->_results[0]['type_pathologie'];
-						// 	endif;
-
-						// 	if ($key['id_diagnostic'] == 13) : $description_autre = $key['description_autre'];
-						// 	endif;
-
-						// 	echo '<tr>';
-						// 	echo '<td>' . $nom_diagnostic . '</td>';
-						// 	echo '<td class="text-center">' . $nom_patho . '</td>';
-						// 	echo '<td class="text-center">';
-
-						// 	$query = DB::query('SELECT id_localisation_atteinte FROM localisation_sujet WHERE id_sujet_handicape=' . $key['id_sujet_handicape'] . ' AND id_diagnostic=' . $key['id_diagnostic'] . ' ');
-						// 	$id_localisation_atteinte = $query->execute();
-						// 	$id_localisation_atteinte = $id_localisation_atteinte->_results;
-
-						// 	foreach ($id_localisation_atteinte as $key2 => $val) {
-						// 		$query = DB::query('SELECT nom FROM localisation_atteinte WHERE id=' . $val['id_localisation_atteinte'] . ' ');
-						// 		$nom_localisation_atteinte = $query->execute();
-						// 		$nom_localisation_atteinte = $nom_localisation_atteinte->_results[0]['nom'];
-
-						// 		echo $nom_localisation_atteinte . '<br/>';
-						// 	}
-						// 	echo '</td>';
-						// 	echo '<td class="text-center">';
-
-						// 	$query = DB::query('SELECT id_appareil_compensatoire FROM appareil_sujet WHERE id_sujet_handicape=' . $key['id_sujet_handicape'] . ' AND id_diagnostic=' . $key['id_diagnostic'] . ' ');
-						// 	$id_appareil_compensatoire = $query->execute();
-						// 	$id_appareil_compensatoire = $id_appareil_compensatoire->_results;
-
-						// 	foreach ($id_appareil_compensatoire as $key2 => $val) {
-						// 		$query = DB::query('SELECT type_appareil FROM appareil_compensatoire WHERE id_appareil_compensatoire=' . $val['id_appareil_compensatoire'] . ' ');
-						// 		$nom_appareil = $query->execute();
-						// 		$nom_appareil = $nom_appareil->_results[0]['type_appareil'];
-						// 		echo $nom_appareil . '<br/>';
-						// 	}
-						// 	echo '</td>
-						// <td class="text-center">';
-						// 	echo $description_autre;
-						// 	echo '</td>';
-						// endforeach; ?>
-					</tbody>
-				</table>
-			</div>
-			<div class="row">
-				<div class="col">
-					<div class="p-2">Commentaire du diagnostic : <?= $subject->getCommentDiagnosis(); ?></div>
-				</div>
-			</div>
-		<?php else : ?>
+		<div class="row">
+			<!-- Diagnostic -->
 			<div class="col">
-				<div class="p-2">Aucune atteinte</div>
+				<h5>Diagnostics</h5>
+				<ul>
+					<?php foreach ($subject->getAllDiagnosis() as $diagnosis) : ?>
+						<li>
+							<?= $diagnosis->getDiagnosis()->getNom(); ?> : 
+							<?php
+							$spots = $diagnosis->getSpots();
+							$i = 0;
+							foreach ($spots as $spot) :
+							?>
+								<?= $spot->getNom(); ?><?= $i !== count($spots)-1 ? "," : null; ?>
+							<?php
+							$i++;
+							endforeach;
+							?>
+						</li>
+					<?php endforeach; ?>
+				</ul>
 			</div>
-		<?php endif; ?>
+			<!-- Pathologies -->
+			<div class="col">
+				<h5>Pathologies</h5>
+				
+			</div>
+			<!-- Appareils compensatoires -->
+			<div class="col">
+				<h5>Appareils compensatoires</h5>
+				
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<div class="p-2">Commentaire du diagnostic : <?= $subject->getCommentDiagnosis(); ?></div>
+			</div>
+		</div>
 	</div>
+
 	<div class="d-grid gap-2 d-md-block p-1">
 		<a class="btn btn-secondary" href="/public/operations/view/<?= $subject->getGroup()->getIdOperation(); ?>" role="button">Retour</a>
 	</div>

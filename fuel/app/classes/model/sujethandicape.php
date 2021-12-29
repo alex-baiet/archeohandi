@@ -50,10 +50,12 @@ class Sujethandicape extends Model {
 	private bool $validated;
 	/** @var string|unset */
 	private string $invalidReason;
+	private Validation $validation;
 	#endregion
 
 	/** Construit le Sujethandicape depuis la liste des données. */
 	public function __construct(array $data) {
+		$this->validation = new Validation();
 		$this->mergeValues($data);
 	}
 
@@ -297,69 +299,65 @@ class Sujethandicape extends Model {
 
 	#region Setters
 	public function setFurnitures(array $furnitures) {
-		$this->resetValidation();
+		$this->validation->resetValidation();
 		$this->furnitures = $furnitures;
 	}
 
 	public function addFurniture(Mobilier $furniture) {
-		$this->resetValidation();
+		$this->validation->resetValidation();
 		if (!isset($this->furnitures)) $this->furnitures = array();
 		$this->furnitures[] = $furniture;
 	}
 
 	public function setGroup(Groupesujet $group) {
-		$this->resetValidation();
+		$this->validation->resetValidation();
 		$this->group = $group;
 		$this->idGroupeSujet = $group->getId();
 	}
 
 	public function setDepot(Depot $depot) {
-		$this->resetValidation();
+		$this->validation->resetValidation();
 		$this->depot = $depot;
 		$this->idDepot = $depot->getId();
 	}
 
 	/** @param Subjectdiagnosis[] $diagnosis */
 	public function setDiagnosis(array $diagnosis) {
-		$this->resetValidation();
+		$this->validation->resetValidation();
 		$this->diagnosis = $diagnosis;
 	}
 
 	/** @param Pathology[] $pathologies */
 	public function setPathologies(array $pathologies) {
-		$this->resetValidation();
+		$this->validation->resetValidation();
 		$this->pathologies = $pathologies;
 	}
 
 	/** @param Appareil[] $items */
 	public function setItemsHelp(array $items) {
-		$this->resetValidation();
+		$this->validation->resetValidation();
 		$this->itemsHelp = $items;
 	}
 	#endregion
 
 	#region ValidateAndSave
 	public function validate(): bool {
-		if (isset($this->validated)) return $this->validated;
 		if ($this->empty) return false;
 
-		if ($this->group === null || $this->group->getChronology() === null) $this->invalidate("Choisissez une valeur pour la chronologie.");
-		if ($this->ageMin > $this->ageMax) $this->invalidate("L'âge minimum doit être inférieur à l'âge maximum.");
-		if ($this->datingMin > $this->datingMax) $this->invalidate("La datation minimum doit être inférieur à la datation maximum.");
-		if ($this->milieuVie === "") $this->invalidate("Choisissez une valeur pour le milieu de vie.");
-		if ($this->contexte === "") $this->invalidate("Choisissez une valeur pour le contexte de la tombe.");
-		if ($this->contexteNormatif === "") $this->invalidate("Choisissez une valeur pour le contexte normatif.");
-		if (Typedepot::fetchSingle($this->idTypeDepot) === null) $this->invalidate("Choisissez une valeur pour le type de dépôt.");
-		if (Typesepulture::fetchSingle($this->idSepulture) === null) $this->invalidate("Choisissez une valeur pour le type de sepulture.");
-		if ($this->depot === null || $this->depot->getCommune() === null) $this->invalidate("Choisissez une valeur pour la commune du dépôt.");
+		return $this->validation->validate(function () {
+			$validation = $this->validation;
+			if ($this->group === null || $this->group->getChronology() === null) $validation->invalidate("Choisissez une valeur pour la chronologie.");
+			if ($this->ageMin > $this->ageMax) $validation->invalidate("L'âge minimum doit être inférieur à l'âge maximum.");
+			if ($this->datingMin > $this->datingMax) $validation->invalidate("La datation minimum doit être inférieur à la datation maximum.");
+			if ($this->milieuVie === "") $validation->invalidate("Choisissez une valeur pour le milieu de vie.");
+			if ($this->contexte === "") $validation->invalidate("Choisissez une valeur pour le contexte de la tombe.");
+			if ($this->contexteNormatif === "") $validation->invalidate("Choisissez une valeur pour le contexte normatif.");
+			if (Typedepot::fetchSingle($this->idTypeDepot) === null) $validation->invalidate("Choisissez une valeur pour le type de dépôt.");
+			if (Typesepulture::fetchSingle($this->idSepulture) === null) $validation->invalidate("Choisissez une valeur pour le type de sepulture.");
+			if ($this->depot === null || $this->depot->getCommune() === null) $validation->invalidate("Choisissez une valeur pour la commune du dépôt.");
 
-		if (!$this->group->validate()) $this->invalidate();
-
-		// Renvoie la valeur défini entre temps
-		if (isset($this->validated)) return $this->validated;
-		// Tout s'est bien passé ^.^
-		$this->validated = true;
-		return true;
+			if (!$this->group->validate()) $validation->invalidate();
+		});
 	}
 
 	/**
@@ -367,16 +365,21 @@ class Sujethandicape extends Model {
 	 * @return bool Indique le succès de l'ajout.
 	 */
 	public function saveOnDB(): bool {
-		// Validation des données
-		if (!isset($this->validated)) $this->validate();
-		// Cas données non valide
-		if (!$this->validated) return false;
+		if (!$this->validate()) return false;
 
+		// Maj group
 		if (!$this->getGroup()->saveOnDB()) {
-			$this->invalidate();
+			$this->validation->invalidate();
 			return false;
 		}
 		$this->idGroupeSujet = $this->getGroup()->getId();
+
+		// Maj du depot
+		if (!$this->getDepot()->saveOnDB()) {
+			$this->validation->invalidate();
+			return false;
+		}
+		$this->idDepot = $this->getDepot()->getId();
 
 		// Préparation des valeurs à envoyer à la BDD
 		$arr = $this->toArray();
@@ -388,7 +391,7 @@ class Sujethandicape extends Model {
 				->execute();
 			$this->id = $insertId;
 			if ($rowAffected < 1) {
-				$this->invalidate("Une erreur inconnu est survenu lors de l'ajout des données du sujet.");
+				$this->validation->invalidate("Une erreur inconnu est survenu lors de l'ajout des données du sujet.");
 				return false;
 			}
 		}
@@ -400,13 +403,6 @@ class Sujethandicape extends Model {
 		// 		->execute();
 		// 		if ($rowAffected < 1) return false;
 		}
-
-		// Maj du depot
-		if (!$this->getDepot()->saveOnDB()) {
-			$this->invalidate();
-			return false;
-		}
-		$this->idDepot = $this->getDepot()->getId();
 
 		// Maj des accessoires/mobiliers
 		$this->updateOnDB(
@@ -481,14 +477,8 @@ class Sujethandicape extends Model {
 
 	/** Affiche une alert bootstrap seulement si des erreurs existent. */
 	public function echoErrors() {
-		if (!$this->empty && $this->validate() !== true) {
-			echo '
-				<div class="alert alert-danger alert-dismissible text-center my-2 fade show" role="alert">
-					' . $this->invalidReason . '
-					<button type="button" class="btn-close" data-dismiss="alert" aria-label="Fermer">
-				</div>';
-			$this->group->echoErrors();
-		}
+		$this->validation->echoErrors();
+		if ($this->group !== null) $this->group->echoErrors();
 	}
 
 	/** Renvoie l'array des données représentant l'objet. */
@@ -514,20 +504,6 @@ class Sujethandicape extends Model {
 		);
 	}
 
-	/** Annule la validation de l'objet. */
-	private function resetValidation() {
-		unset($this->validated);
-		unset($this->invalidReason);
-	}
-
-	/** Invalide les données, rendant impossible l'export des données en ligne. */
-	private function invalidate(?string $reason = null) {
-		if (!isset($this->validated) || $this->validated !== false) {
-			$this->validated = false;
-			$this->invalidReason = "Les données sont invalides pour les raisons suivantes :<br>\n";
-		}
-		if ($reason !== null) $this->invalidReason .= "- $reason<br>\n";
-	}
 	#endregion
 
 }

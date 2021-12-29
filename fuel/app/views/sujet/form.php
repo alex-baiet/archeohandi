@@ -49,7 +49,7 @@ Form::open(array(
 
 			<!-- Chronology -->
 			<div class="col-md-6">
-				<?= Chronology::generateSelect("id_chronology", "Chronologie", $group !== null && $group->getChronology() !== null ? $group->getChronology()->getId() : ""); ?>
+				<?= Chronology::generateSelect("id_chronologie", "Chronologie", $group !== null && $group->getChronology() !== null ? $group->getChronology()->getId() : ""); ?>
 			</div>
 		</div>
 

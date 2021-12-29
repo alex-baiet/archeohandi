@@ -14,7 +14,9 @@ class Groupesujet extends Model {
 	private int $nmi = 0;
 
 	/** @var Chronology|null|unset */
-	private $chronology;
+	private ?Chronology $chronology;
+	/** @var Operation|null|unset */
+	private ?Operation $operation;
 
 	private Validation $validation;
 	#endregion
@@ -24,7 +26,7 @@ class Groupesujet extends Model {
 		$this->validation = new Validation();
 
 		Archeo::mergeValue($this->id, $data, "id", "int");
-		Archeo::mergeValue($this->idChronology, $data, "id_chronology", "int");
+		Archeo::mergeValue($this->idChronology, $data, "id_chronologie", "int");
 		Archeo::mergeValue($this->idOperation, $data, "id_operation", "int");
 		Archeo::mergeValue($this->nmi, $data, "NMI", "int");
 
@@ -39,6 +41,7 @@ class Groupesujet extends Model {
 		return Archeo::fetchSingle($id, "groupe_sujets", function ($data) { return new Groupesujet($data); });
 	}
 
+	#region Getters
 	public function getId() { return $this->id; }
 	public function getIdChronology() { return $this->idChronology; }
 	public function getIdOperation() { return $this->idOperation; }
@@ -49,6 +52,11 @@ class Groupesujet extends Model {
 		return $this->chronology;
 	}
 
+	public function getOperation(): ?Operation {
+		if (!isset($this->operation)) $this->operation = Operation::fetchSingle($this->idOperation);
+		return $this->operation;
+	}
+
 	public function toArray(): array {
 		return array(
 			"id" => $this->id,
@@ -57,6 +65,7 @@ class Groupesujet extends Model {
 			"NMI" => $this->nmi,
 		);
 	}
+	#endregion
 
 	public function saveOnDB(): bool {
 		if (!$this->validate()) return false;
