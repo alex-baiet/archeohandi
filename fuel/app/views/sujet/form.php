@@ -277,13 +277,14 @@ Form::open(array(
 								<!-- Titre des diagnostics -->
 								<td>
 									<div class="form-check form-switch">
+										<!-- Actuellement inutile... -->
 										<?php
 										$attr = array("class" => "form-check-input");
 										$hasDiagnosis = $subject->hasDiagnosis($diagnostic->getId());
 										if ($hasDiagnosis) $attr["checked"] = 1;
 										?>
 										<?= Form::label($diagnostic->getNom(), "diagnostic_{$diagnostic->getId()}", array("class" => "form-check-label")); ?>
-										<?= Form::checkbox("diagnosis_{$diagnostic->getId()}", null, null, $attr); ?>
+										<?= Form::checkbox("diagnostic_{$diagnostic->getId()}", null, null, $attr); ?>
 									</div>
 								</td>
 								<!-- Checkbox des zones atteintes -->
@@ -297,7 +298,7 @@ Form::open(array(
 											if ($subjectDia->isLocatedFromId($locali->getId()))  $attr["checked"] = 1;
 										}
 										?>
-										<?= Form::checkbox("diagnosis_{$diagnostic->getId()}_spot_{$locali->getId()}", null, null, $attr); ?>
+										<?= Form::checkbox("diagnostics[{$diagnostic->getId()}][]", $locali->getId(), null, $attr); ?>
 									</td>
 								<?php endforeach; ?>
 							</tr>

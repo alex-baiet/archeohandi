@@ -64,25 +64,6 @@ class Controller_Sujet extends Controller_Template {
 			// Recréation du sujet à partir des valeurs entrées
 			$subject = new Sujethandicape($_POST, true);
 
-			// Récupération des diagnostic et des localisation
-			$allDiagnosis = Diagnostic::fetchAll();
-			$allSpots = Localisation::fetchAll();
-			$subjectDiagnosis = array();
-			foreach ($allDiagnosis as $diagnosis) {
-				if (isset($_POST["diagnosis_{$diagnosis->getId()}"])) {
-					$spotsChecked = array();
-					foreach ($allSpots as $spot) {
-						if (isset($_POST["diagnosis_{$diagnosis->getId()}_spot_{$spot->getId()}"])) {
-							$spotsChecked[] = $spot;
-						}
-					}
-					if (count($spotsChecked) !== 0) {
-						$subjectDiagnosis[$diagnosis->getId()] = new Subjectdiagnosis($diagnosis, $spotsChecked);
-					}
-				}
-			}
-			$subject->setDiagnosis($subjectDiagnosis);
-
 			// Récupération des pathologies
 			$subjectPatho = array();
 			foreach (Pathology::fetchAll() as $pathology) {

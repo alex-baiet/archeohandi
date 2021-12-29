@@ -100,6 +100,19 @@ class Sujethandicape extends Model {
 		if (isset($data["depot_adresse"])) $depotData["adresse"] = $data["depot_adresse"];
 		if (count($groupData) > 0 || $setWithEmpty) $this->depot = new Depot($depotData);
 
+		// Récupération des diagnostic et des localisation
+		if (isset($data["diagnostics"])) {
+			$this->diagnosis = array();
+			foreach ($data["diagnostics"] as $idDiagnosis => $dataSpots) {
+				$spots = array();
+				foreach ($dataSpots as $idSpot) {
+					$spots[$idSpot] = Localisation::fetchSingle($idSpot);
+				}
+				$this->diagnosis[$idDiagnosis] = new Subjectdiagnosis(Diagnostic::fetchSingle($idDiagnosis), $spots);
+			}
+		}
+		else if ($setWithEmpty) $this->diagnosis = array();
+
 	}
 
 	/**
