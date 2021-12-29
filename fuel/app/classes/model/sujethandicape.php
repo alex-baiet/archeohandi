@@ -113,6 +113,15 @@ class Sujethandicape extends Model {
 		}
 		else if ($setWithEmpty) $this->diagnosis = array();
 
+		// Récupération des pathologies
+		if (isset($data["pathologies"])) {
+			$this->pathologies = array();
+			foreach ($data["pathologies"] as $idPathology) {
+				$this->pathologies[$idPathology] = Pathology::fetchSingle($idPathology);
+			}
+		}
+		else if ($setWithEmpty) $this->pathologies = array();
+
 	}
 
 	/**

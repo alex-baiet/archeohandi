@@ -64,15 +64,6 @@ class Controller_Sujet extends Controller_Template {
 			// Recréation du sujet à partir des valeurs entrées
 			$subject = new Sujethandicape($_POST, true);
 
-			// Récupération des pathologies
-			$subjectPatho = array();
-			foreach (Pathology::fetchAll() as $pathology) {
-				if (isset($_POST["pathology_{$pathology->getId()}"])) {
-					$subjectPatho[$pathology->getId()] = $pathology;
-				}
-			}
-			$subject->setPathologies($subjectPatho);
-
 			// Récupération des appareils de compensation
 			$itemsHelp = array();
 			foreach (Appareil::fetchAll() as $item) {

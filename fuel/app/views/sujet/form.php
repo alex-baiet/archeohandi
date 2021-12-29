@@ -329,8 +329,8 @@ Form::open(array(
 						$attr = array("class" => "form-check-input");
 						if ($subject->hasPathology($pathology->getId())) $attr["checked"] = 1;
 						?>
-						<?= Form::label($pathology->getName(), "pathology_{$pathology->getId()}", array("class" => "form-check-label")); ?>
-						<?= Form::checkbox("pathology_{$pathology->getId()}", null, null, $attr); ?>
+						<?= Form::label($pathology->getName(), null, array("class" => "form-check-label")); ?>
+						<?= Form::checkbox("pathologies[]", $pathology->getId(), null, $attr); ?>
 					</div>
 				<?php endforeach; ?>
 			</div>
