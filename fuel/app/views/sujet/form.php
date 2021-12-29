@@ -316,8 +316,8 @@ Form::open(array(
 						$attr = array("class" => "form-check-input");
 						if ($subject->hasItemHelp($item->getId())) $attr["checked"] = 1;
 						?>
-						<?= Form::label($item->getName(), "item_{$item->getId()}", array("class" => "form-check-label")); ?>
-						<?= Form::checkbox("item_{$item->getId()}", null, null, $attr); ?>
+						<?= Form::label($item->getName(), null, array("class" => "form-check-label")); ?>
+						<?= Form::checkbox("appareils[]", $item->getId(), null, $attr); ?>
 					</div>
 				<?php endforeach; ?>
 

@@ -64,15 +64,6 @@ class Controller_Sujet extends Controller_Template {
 			// Recréation du sujet à partir des valeurs entrées
 			$subject = new Sujethandicape($_POST, true);
 
-			// Récupération des appareils de compensation
-			$itemsHelp = array();
-			foreach (Appareil::fetchAll() as $item) {
-				if (isset($_POST["item_{$item->getId()}"])) {
-					$itemsHelp[$item->getId()] = $item;
-				}
-			}
-			$subject->setItemsHelp($itemsHelp);
-			
 			$data["subject"] = $subject;
 			Helper::varDump($subject);
 		}

@@ -122,6 +122,14 @@ class Sujethandicape extends Model {
 		}
 		else if ($setWithEmpty) $this->pathologies = array();
 
+		// Récupération des pathologies
+		if (isset($data["appareils"])) {
+			$this->itemsHelp = array();
+			foreach ($data["appareils"] as $idItem) {
+				$this->itemsHelp[$idItem] = Appareil::fetchSingle($idItem);
+			}
+		}
+		else if ($setWithEmpty) $this->itemsHelp = array();
 	}
 
 	/**
