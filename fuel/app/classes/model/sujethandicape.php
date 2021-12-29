@@ -256,7 +256,8 @@ class Sujethandicape extends Model {
 				WHERE att.id_sujet = {$this->id};"
 			);
 			foreach ($results as $res) {
-				$this->pathologies[] = new Pathology($res);
+				$pathology = new Pathology($res);
+				$this->pathologies[$pathology->getId()] = $pathology;
 			}
 		}
 		return $this->pathologies;
@@ -274,7 +275,8 @@ class Sujethandicape extends Model {
 				WHERE asu.id_sujet = {$this->id};"
 			);
 			foreach ($results as $res) {
-				$this->itemsHelp[] = new Appareil($res);
+				$item = new Appareil($res);
+				$this->itemsHelp[$item->getId()] = $item;
 			}
 		}
 		return $this->itemsHelp;
@@ -285,15 +287,15 @@ class Sujethandicape extends Model {
 	}
 
 	public function hasDiagnosis(int $idDiagnosis) {
-		return isset($this->diagnosis[$idDiagnosis]);
+		return isset($this->getAllDiagnosis()[$idDiagnosis]);
 	}
 
 	public function hasPathology(int $idPathology) {
-		return isset($this->pathologies[$idPathology]);
+		return isset($this->getPathologies()[$idPathology]);
 	}
 
 	public function hasItemHelp(int $idItemHelp) {
-		return isset($this->itemsHelp[$idItemHelp]);
+		return isset($this->getItemsHelp()[$idItemHelp]);
 	}
 	#endregion
 

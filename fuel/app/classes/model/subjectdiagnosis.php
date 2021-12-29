@@ -49,7 +49,7 @@ class Subjectdiagnosis extends Model {
 					$spots[] = Localisation::fetchSingle($idSpot);
 				}
 
-				$diagnosis[] = new Subjectdiagnosis($dia, $spots);
+				$diagnosis[$dia->getId()] = new Subjectdiagnosis($dia, $spots);
 			}
 		}
 		return $diagnosis;

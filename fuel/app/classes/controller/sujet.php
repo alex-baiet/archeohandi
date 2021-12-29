@@ -22,7 +22,9 @@ class Controller_Sujet extends Controller_Template {
 	}
 
 	public function action_edit($id) {
-		$subject = Sujethandicape::fetchSingle($id);		
+		$subject = Sujethandicape::fetchSingle($id);
+		if (Controller_Sujet::DEBUG === true) Helper::varDump($subject);
+
 		$data = array("subject" => $subject);
 
 		$this->template->title = 'Modification du sujet';
