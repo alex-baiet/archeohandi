@@ -62,7 +62,7 @@ class Controller_Sujet extends Controller_Template {
 
 		if (Input::method() === "POST") {
 			// Recréation du sujet à partir des valeurs entrées
-			$subject = new Sujethandicape($_POST);
+			$subject = new Sujethandicape($_POST, true);
 			
 			// Recréation du groupe du sujet
 			$groupData = array(
@@ -74,10 +74,11 @@ class Controller_Sujet extends Controller_Template {
 			$subject->setGroup($group);
 
 			// Récupération des mobiliers
-			foreach (Mobilier::fetchAll() as $furniture) {
-				if (isset($_POST["mobilier_{$furniture->getId()}"])) {
+			if (!isset($_POST["id_mobiliers"])) $subject->setFurnitures(array());
+			else {
+				foreach ($_POST["id_mobiliers"] as $furnitureId) {
 					// Le mobilier est sélectionné dans le formulaire
-					$subject->addFurniture($furniture);
+					$subject->addFurniture(Mobilier::fetchSingle($furnitureId));
 				}
 			}
 
@@ -128,7 +129,7 @@ class Controller_Sujet extends Controller_Template {
 			$subject->setItemsHelp($itemsHelp);
 			
 			$data["subject"] = $subject;
-			// Helper::varDump($subject);
+			Helper::varDump($subject);
 		}
 
 		$this->template->title = "Ajouter des sujets";

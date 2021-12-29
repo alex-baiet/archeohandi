@@ -49,7 +49,7 @@ Form::open(array(
 
 			<!-- Chronology -->
 			<div class="col-md-6">
-				<?= Chronology::generateSelect("id_chronology", "Chronologie", $group === null ? "" : $group->getChronology()->getId()); ?>
+				<?= Chronology::generateSelect("id_chronology", "Chronologie", $group !== null && $group->getChronology() !== null ? $group->getChronology()->getId() : ""); ?>
 			</div>
 		</div>
 
@@ -202,8 +202,8 @@ Form::open(array(
 							$attr["checked"] = 1;
 						}
 						?>
-						<?= Form::label($mobilier->getNom(), "mobilier_{$mobilier->getId()}"); ?>
-						<?= Form::checkbox("mobilier_{$mobilier->getId()}", null, $attr); ?>
+						<?= Form::label($mobilier->getNom(), null); ?>
+						<?= Form::checkbox("id_mobiliers[]", $mobilier->getId(), $attr); ?>
 					</div>
 				<?php endforeach; ?>
 				<div id="block_description_autre_mobilier_' . $noLigne . '" class="' . $d_none_descp_autre_mobilier . '">
@@ -223,7 +223,7 @@ Form::open(array(
 
 					<!-- Commune du dépôt -->
 						<div class="form-floating my-2">
-							<?= Form::input("depot_commune", $depot === null ? null : $depot->getCommune()->fullName(), array("type" => "text", "class" => "form-control", "placeholder" => "", "autocomplete" => "off")); ?>
+							<?= Form::input("depot_commune", $depot !== null && $depot->getCommune() !== null ? $depot->getCommune()->fullName() : null, array("type" => "text", "class" => "form-control", "placeholder" => "", "autocomplete" => "off")); ?>
 							<?= Form::label("Rechercher une commune", "depot_commune"); ?>
 						</div>
 						<script>

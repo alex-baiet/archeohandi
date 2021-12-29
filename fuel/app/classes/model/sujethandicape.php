@@ -55,8 +55,10 @@ class Sujethandicape extends Model {
 
 	/**
 	 * Ajoute les données dans l'objet.
+	 * @param array $data Liste des données à exploiter.
+	 * @param bool $setWithEmpty Si true, remplis les champs non définis avec des variables vides.
 	 */
-	public function mergeValues(array $data) {
+	public function mergeValues(array $data, bool $setWithEmpty = false) {
 		Archeo::mergeValue($this->id, $data, "id", "int");
 		Archeo::mergeValue($this->idSujetHandicape, $data, "id_sujet_handicape");
 		Archeo::mergeValue($this->ageMin, $data, "age_min", "int");
@@ -74,6 +76,14 @@ class Sujethandicape extends Model {
 		Archeo::mergeValue($this->idSepulture, $data, "id_sepulture", "int");
 		Archeo::mergeValue($this->idDepot, $data, "id_depot", "int");
 		Archeo::mergeValue($this->idGroupeSujet, $data, "id_groupe_sujets", "int");
+
+		// Recréation du groupe du sujet
+		$groupData = array();
+		if (isset($data["id_chronology"])) $groupData["id_chronology"] = $data["id_chronology"];
+		if (isset($data["id_operation"])) $groupData["id_operation"] = $data["id_operation"];
+		if (isset($data["NMI"])) $groupData["NMI"] = $data["NMI"];
+		if (count($groupData) > 0 || $setWithEmpty) $this->group = new Groupesujet($groupData);
+
 	}
 
 	/**
@@ -226,37 +236,47 @@ class Sujethandicape extends Model {
 	public function hasItemHelp(int $idItemHelp) {
 		return isset($this->itemsHelp[$idItemHelp]);
 	}
-
 	#endregion
 
 	#region Setters
+	public function setFurnitures(array $furnitures) {
+		$this->resetValidation();
+		$this->furnitures = $furnitures;
+	}
+
 	public function addFurniture(Mobilier $furniture) {
+		$this->resetValidation();
 		if (!isset($this->furnitures)) $this->furnitures = array();
 		$this->furnitures[] = $furniture;
 	}
 
 	public function setGroup(Groupesujet $group) {
+		$this->resetValidation();
 		$this->group = $group;
 		$this->idGroupeSujet = $group->getId();
 	}
 
 	public function setDepot(Depot $depot) {
+		$this->resetValidation();
 		$this->depot = $depot;
 		$this->idDepot = $depot->getId();
 	}
 
 	/** @param Subjectdiagnosis[] $diagnosis */
 	public function setDiagnosis(array $diagnosis) {
+		$this->resetValidation();
 		$this->diagnosis = $diagnosis;
 	}
 
 	/** @param Pathology[] $pathologies */
 	public function setPathologies(array $pathologies) {
+		$this->resetValidation();
 		$this->pathologies = $pathologies;
 	}
 
 	/** @param Appareil[] $items */
 	public function setItemsHelp(array $items) {
+		$this->resetValidation();
 		$this->itemsHelp = $items;
 	}
 	#endregion
@@ -265,6 +285,7 @@ class Sujethandicape extends Model {
 	public function validate(): bool {
 		if (isset($this->validated)) return $this->validated;
 
+		if ($this->group === null || $this->group->getChronology() === null) $this->invalidate("Choisissez une valeur pour la chronologie.");
 		if ($this->ageMin > $this->ageMax) $this->invalidate("L'âge minimum doit être inférieur à l'âge maximum.");
 		if ($this->datingMin > $this->datingMax) $this->invalidate("La datation minimum doit être inférieur à la datation maximum.");
 		if ($this->milieuVie === "") $this->invalidate("Choisissez une valeur pour le milieu de vie.");
@@ -272,6 +293,7 @@ class Sujethandicape extends Model {
 		if ($this->contexteNormatif === "") $this->invalidate("Choisissez une valeur pour le contexte normatif.");
 		if (Typedepot::fetchSingle($this->idTypeDepot) === null) $this->invalidate("Choisissez une valeur pour le type de dépôt.");
 		if (Typesepulture::fetchSingle($this->idSepulture) === null) $this->invalidate("Choisissez une valeur pour le type de sepulture.");
+		if ($this->depot === null || $this->depot->getCommune() === null) $this->invalidate("Choisissez une valeur pour la commune du dépôt.");
 
 		// Renvoie la valeur défini entre temps
 		if (isset($this->validated)) return $this->validated;
