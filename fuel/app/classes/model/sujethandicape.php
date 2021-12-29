@@ -244,8 +244,8 @@ class Sujethandicape extends Model {
 		return $this->getAllDiagnosis()[$idDiagnosis];
 	}
 
-	/** A TESTER */
-	public function getPathologies() {
+	/** @return Pathology[] */
+	public function getPathologies(): array {
 		if (!isset($this->pathologies)) {
 			$this->pathologies = array();
 			$results = Helper::querySelect(
@@ -262,7 +262,7 @@ class Sujethandicape extends Model {
 		return $this->pathologies;
 	}
 
-	/** A TESTER */
+	/** @return Appareil[] */
 	public function getItemsHelp() {
 		if (!isset($this->itemsHelp)) {
 			$this->itemsHelp = array();

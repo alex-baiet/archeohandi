@@ -150,12 +150,20 @@ $subject = $subject;
 			<!-- Pathologies -->
 			<div class="col">
 				<h5>Pathologies</h5>
-				
+				<ul>
+					<?php foreach ($subject->getPathologies() as $pathology) : ?>
+						<li><?= $pathology->getName(); ?></li>
+					<?php endforeach; ?>
+				</ul>
 			</div>
 			<!-- Appareils compensatoires -->
 			<div class="col">
 				<h5>Appareils compensatoires</h5>
-				
+				<ul>
+					<?php foreach ($subject->getItemsHelp() as $item) : ?>
+						<li><?= $item->getName(); ?></li>
+					<?php endforeach; ?>
+				</ul>				
 			</div>
 		</div>
 		<div class="row">
