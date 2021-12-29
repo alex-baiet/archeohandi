@@ -84,6 +84,15 @@ class Sujethandicape extends Model {
 		if (isset($data["NMI"])) $groupData["NMI"] = $data["NMI"];
 		if (count($groupData) > 0 || $setWithEmpty) $this->group = new Groupesujet($groupData);
 
+		// Récupération des mobiliers
+		if (isset($_POST["id_mobiliers"])) {
+			$this->furnitures = array();
+			foreach ($_POST["id_mobiliers"] as $furnitureId) {
+				$this->furnitures[] = Mobilier::fetchSingle($furnitureId);
+			}
+		}
+		else if ($setWithEmpty) $this->furnitures = array();
+
 	}
 
 	/**

@@ -63,24 +63,6 @@ class Controller_Sujet extends Controller_Template {
 		if (Input::method() === "POST") {
 			// Recréation du sujet à partir des valeurs entrées
 			$subject = new Sujethandicape($_POST, true);
-			
-			// Recréation du groupe du sujet
-			$groupData = array(
-				"id_chronology" => $_POST["id_chronology"],
-				"id_operation" => $_POST["id_operation"],
-				"NMI" => $_POST["NMI"]
-			);
-			$group = new Groupesujet($groupData);
-			$subject->setGroup($group);
-
-			// Récupération des mobiliers
-			if (!isset($_POST["id_mobiliers"])) $subject->setFurnitures(array());
-			else {
-				foreach ($_POST["id_mobiliers"] as $furnitureId) {
-					// Le mobilier est sélectionné dans le formulaire
-					$subject->addFurniture(Mobilier::fetchSingle($furnitureId));
-				}
-			}
 
 			// Récupération des données du dépôt
 			$depotData = array(
