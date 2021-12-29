@@ -42,6 +42,7 @@ class Sujethandicape extends Model {
 	/** @var Appareil[]|unset Array au format id_appareil => Appareil */
 	private $itemsHelp;
 
+	private bool $empty = false;
 	/** @var bool|unset */
 	private bool $validated;
 	/** @var string|unset */
@@ -59,6 +60,11 @@ class Sujethandicape extends Model {
 	 * @param bool $setWithEmpty Si true, remplis les champs non définis avec des variables vides.
 	 */
 	public function mergeValues(array $data, bool $setWithEmpty = false) {
+		if (count($data) === 0) {
+			$this->empty = true;
+			return;
+		}
+
 		Archeo::mergeValue($this->id, $data, "id", "int");
 		Archeo::mergeValue($this->idSujetHandicape, $data, "id_sujet_handicape");
 		Archeo::mergeValue($this->ageMin, $data, "age_min", "int");
@@ -330,6 +336,7 @@ class Sujethandicape extends Model {
 	#region ValidateAndSave
 	public function validate(): bool {
 		if (isset($this->validated)) return $this->validated;
+		if ($this->empty) return false;
 
 		if ($this->group === null || $this->group->getChronology() === null) $this->invalidate("Choisissez une valeur pour la chronologie.");
 		if ($this->ageMin > $this->ageMax) $this->invalidate("L'âge minimum doit être inférieur à l'âge maximum.");
@@ -387,7 +394,7 @@ class Sujethandicape extends Model {
 
 	/** Affiche une alert bootstrap seulement si des erreurs existent. */
 	public function echoErrors() {
-		if ($this->validate() !== true) {
+		if (!$this->empty && $this->validate() !== true) {
 			echo '
 				<div class="alert alert-danger alert-dismissible text-center my-2 fade show" role="alert">
 					' . $this->invalidReason . '
