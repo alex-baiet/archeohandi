@@ -2,6 +2,7 @@
 
 namespace Model;
 
+use Closure;
 use Fuel\Core\DB;
 use Fuel\Core\FuelException;
 use Fuel\Core\Model;
@@ -371,11 +372,11 @@ class Sujethandicape extends Model {
 		// Cas données non valide
 		if (!$this->validated) return false;
 
-		if (!$this->group->saveOnDB()) {
+		if (!$this->getGroup()->saveOnDB()) {
 			$this->invalidate();
 			return false;
 		}
-		$this->idGroupeSujet = $this->group->getId();
+		$this->idGroupeSujet = $this->getGroup()->getId();
 
 		// Préparation des valeurs à envoyer à la BDD
 		$arr = $this->toArray();
@@ -400,8 +401,82 @@ class Sujethandicape extends Model {
 		// 		if ($rowAffected < 1) return false;
 		}
 
+		// Maj du depot
+		if (!$this->getDepot()->saveOnDB()) {
+			$this->invalidate();
+			return false;
+		}
+		$this->idDepot = $this->getDepot()->getId();
+
+		// Maj des accessoires/mobiliers
+		$this->updateOnDB(
+			"accessoire_sujet",
+			"id_sujet",
+			$this->furnitures,
+			function (Mobilier $furniture) { return array(
+				"id_sujet" => $this->id,
+				"id_mobilier" => $furniture->getId()
+			); }
+		);
+
+		// Maj des appareils compensatoires
+		$this->updateOnDB(
+			"appareil_sujet",
+			"id_sujet",
+			$this->itemsHelp,
+			function (Appareil $item) { return array(
+				"id_sujet" => $this->id,
+				"id_appareil" => $item->getId()
+			); }
+		);
+
+		// Maj des pathologies
+		$this->updateOnDB(
+			"atteinte_pathologie",
+			"id_sujet",
+			$this->pathologies,
+			function (Pathology $pathology) { return array(
+				"id_sujet" => $this->id,
+				"id_pathologie" => $pathology->getId()
+			); }
+		);
+
+		// Maj des diagnostic
+		$values = array();
+		// Définition de toutes les paires diagnostic-localisation
+		foreach ($this->getAllDiagnosis() as $diagnosis) {
+			foreach ($diagnosis->getSpots() as $spot) {
+				$values[] = array("diagnosis" => $diagnosis->getDiagnosis()->getId(), "spot" => $spot->getId());
+			}
+		}
+		$this->updateOnDB(
+			"localisation_sujet",
+			"id_sujet",
+			$values,
+			function (array $value) { return array(
+				"id_sujet" => $this->id,
+				"id_diagnostic" => $value["diagnosis"],
+				"id_localisation" => $value["spot"]
+			); }
+		);
+
 		// Tout s'est bien passé.
 		return true;
+	}
+
+	/** @param Closure $valueTransform Permet de transformer chaque valeur de $toInsert en un array pour permettre l'insertion. */
+	private function updateOnDB(string $table, string $idSujetName, array $toInsert, Closure $valueTransform) {
+		// Deletion des anciennes valeurs de la BDD
+		DB::delete($table)
+			->where($idSujetName, "=", $this->getId())
+			->execute();
+		$values = array();
+		// Ajout des nouvelles valeurs dans la BDD
+		foreach ($toInsert as $obj) {
+			DB::insert($table)
+				->set($valueTransform($obj))
+				->execute();
+		}
 	}
 
 	/** Affiche une alert bootstrap seulement si des erreurs existent. */

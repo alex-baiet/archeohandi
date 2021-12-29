@@ -55,6 +55,11 @@ class Subjectdiagnosis extends Model {
 		return $diagnosis;
 	}
 
+	public function getDiagnosis(): Diagnostic { return $this->diagnosis; }
+
+	/** @return Localisation[] */
+	public function getSpots(): array { return $this->spots; }
+
 	/**
 	 * Test que le diagnostic est bien situé à la position donné.
 	 * @param int $idSpot Identifiant de la Localisation.
