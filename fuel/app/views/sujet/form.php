@@ -182,9 +182,9 @@ Form::open(array(
 
 		<!-- Commentaire contexte -->
 		<div class="col-md-12">
-			<label for="commentaire_contexte">Commentaire</label>
+			<label for="comment_contexte">Commentaire</label>
 			<div class="input-group">
-				<textarea class="form-control" name="commentaire_contexte" rows="2"><?= $subject->getCommentContext(); ?></textarea>
+				<textarea class="form-control" name="comment_contexte" rows="2"><?= $subject->getCommentContext(); ?></textarea>
 			</div>
 		</div>
 		<br />
@@ -337,9 +337,9 @@ Form::open(array(
 		</div>
 
 		<!-- Commentaire du diagnostic -->
-		<label for="commentaire_diagnostic">Commentaire du diagnostic</label>
+		<label for="comment_diagnostic">Commentaire du diagnostic</label>
 		<div class="input-group">
-			<textarea class="form-control" name="commentaire_diagnostic" rows="2"><?= $subject->getCommentDiagnosis(); ?></textarea>
+			<textarea class="form-control" name="comment_diagnostic" rows="2"><?= $subject->getCommentDiagnosis(); ?></textarea>
 		</div>
 
 		<!-- <br />

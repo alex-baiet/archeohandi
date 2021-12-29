@@ -2,6 +2,7 @@
 
 use Fuel\Core\Asset;
 use Fuel\Core\View;
+use Model\Operation;
 use Model\Sujethandicape;
 
 /** @var int */
@@ -16,7 +17,8 @@ Asset::js("form.js");
 
 <div class="container">
 	<h1 class="m-2">Ajouter des sujets handicapés <a class="btn btn-sm btn-secondary" href="/public/add/sujet/<?= $idOperation; ?>">Rafraichir la page <i class="bi bi-arrow-repeat"></i></a></h1>
-	<p class="text-muted">Ici vous pouvez ajouter des sujets handicapés.</p>
+	<?php $op = Operation::fetchSingle($idOperation); ?>
+	<p class="text-muted">Opération "<?= $op->getNomOp(); ?>"</p>
 
 	<?php
 	$data = array("idOperation" => $idOperation);

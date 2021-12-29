@@ -3,6 +3,7 @@
 use Fuel\Core\Controller_Template;
 use Fuel\Core\DB;
 use Fuel\Core\Input;
+use Fuel\Core\Response;
 use Fuel\Core\View;
 use Model\Appareil;
 use Model\Depot;
@@ -16,6 +17,8 @@ use Model\Subjectdiagnosis;
 use Model\Sujethandicape;
 
 class Controller_Sujet extends Controller_Template {
+	private const DEBUG = true;
+
 	public function action_view($id) {
 		//Permet de récupérer toutes les informations du sujet handicapé
 		$query = DB::query('SELECT * FROM sujet_handicape WHERE id=' . $id . ' ');
@@ -63,9 +66,13 @@ class Controller_Sujet extends Controller_Template {
 		if (Input::method() === "POST") {
 			// Recréation du sujet à partir des valeurs entrées
 			$subject = new Sujethandicape($_POST, true);
+			if ($subject->saveOnDB() && Controller_Sujet::DEBUG === false) {
+				Response::redirect("/operation/view/$id");
+			} else {
+				$data["subject"] = $subject;
+				if (Controller_Sujet::DEBUG === true) Helper::varDump($subject);
+			}
 
-			$data["subject"] = $subject;
-			Helper::varDump($subject);
 		}
 
 		$this->template->title = "Ajouter des sujets";

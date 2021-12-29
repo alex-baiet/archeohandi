@@ -2,12 +2,14 @@
 
 namespace Model;
 
+use Fuel\Core\DB;
+use Fuel\Core\FuelException;
 use Fuel\Core\Model;
 
 /** Représentation d'une opération dans la base de données. */
 class Sujethandicape extends Model {
 	#region Values
-	private int $id = -1;
+	private ?int $id = null;
 	private string $idSujetHandicape = "";
 	private int $ageMin = 0;
 	private int $ageMax = 0;
@@ -66,6 +68,7 @@ class Sujethandicape extends Model {
 		}
 
 		Archeo::mergeValue($this->id, $data, "id", "int");
+		if ($this->id === null) $setWithEmpty = true;
 		Archeo::mergeValue($this->idSujetHandicape, $data, "id_sujet_handicape");
 		Archeo::mergeValue($this->ageMin, $data, "age_min", "int");
 		Archeo::mergeValue($this->ageMax, $data, "age_max", "int");
@@ -75,8 +78,8 @@ class Sujethandicape extends Model {
 		Archeo::mergeValue($this->milieuVie, $data, "milieu_vie");
 		Archeo::mergeValue($this->contexte, $data, "contexte");
 		Archeo::mergeValue($this->contexteNormatif, $data, "contexte_normatif");
-		Archeo::mergeValue($this->commentContext, $data, "commentaire_contexte");
-		Archeo::mergeValue($this->commentDiagnosis, $data, "commentaire_diagnostic");
+		Archeo::mergeValue($this->commentContext, $data, "comment_contexte");
+		Archeo::mergeValue($this->commentDiagnosis, $data, "comment_diagnostic");
 		Archeo::mergeValue($this->urlImg, $data, "url_illustration");
 		Archeo::mergeValue($this->idTypeDepot, $data, "id_type_depot", "int");
 		Archeo::mergeValue($this->idSepulture, $data, "id_sepulture", "int");
@@ -197,20 +200,21 @@ class Sujethandicape extends Model {
 		}
 		return $this->depot;
 	}
-
-
 	
 	/** @return Mobilier[] */
 	public function getFurnitures() {
 		if (!isset($this->furnitures)) {
-			$results = Helper::querySelect("SELECT mob.id, mob.nom 
-				FROM mobilier_archeologique AS mob 
-				JOIN accessoire_sujet AS acc ON mob.id=acc.id_mobilier
-				WHERE acc.id_sujet_handicape={$this->id};");
 			$this->furnitures = array();
-
-			foreach ($results as $res) {
-				$this->furnitures[] = new Mobilier($res);
+			if ($this->id !== null) {
+				$results = Helper::querySelect("SELECT mob.id, mob.nom 
+					FROM mobilier_archeologique AS mob 
+					JOIN accessoire_sujet AS acc ON mob.id=acc.id_mobilier
+					WHERE acc.id_sujet={$this->id};");
+				$this->furnitures = array();
+				
+				foreach ($results as $res) {
+					$this->furnitures[] = new Mobilier($res);
+				}
 			}
 		}
 		return $this->furnitures;
@@ -348,6 +352,8 @@ class Sujethandicape extends Model {
 		if (Typesepulture::fetchSingle($this->idSepulture) === null) $this->invalidate("Choisissez une valeur pour le type de sepulture.");
 		if ($this->depot === null || $this->depot->getCommune() === null) $this->invalidate("Choisissez une valeur pour la commune du dépôt.");
 
+		if (!$this->group->validate()) $this->invalidate();
+
 		// Renvoie la valeur défini entre temps
 		if (isset($this->validated)) return $this->validated;
 		// Tout s'est bien passé ^.^
@@ -356,7 +362,7 @@ class Sujethandicape extends Model {
 	}
 
 	/**
-	 * Ajoute / met à jour le sujet handicapé dans la base de données.
+	 * Ajoute/met à jour le sujet handicapé dans la base de données.
 	 * @return bool Indique le succès de l'ajout.
 	 */
 	public function saveOnDB(): bool {
@@ -365,28 +371,34 @@ class Sujethandicape extends Model {
 		// Cas données non valide
 		if (!$this->validated) return false;
 
-		// Préparation des valeurs à envoyer à la BDD
-		// $arr = $this->toArray();
-		// unset($arr["id_anthropologue[]"]);
-		// unset($arr["id_paleopathologiste[]"]);
+		if (!$this->group->saveOnDB()) {
+			$this->invalidate();
+			return false;
+		}
+		$this->idGroupeSujet = $this->group->getId();
 
-		// if ($this->idSite === -1 || Operation::fetchSingle($this->idSite) === null) {
-		// 	// L'opération n'existe pas : on la rajoute à la BDD
-		// 	$arr["id_site"] = null;
-		// 	list($insertId, $rowAffected) = DB::insert("operations")
-		// 		->set($arr)
-		// 		->execute();
-		// 	$this->idSite = $insertId;
-		// 	if ($rowAffected < 1) return false;
-		// }
-		// else {
+		// Préparation des valeurs à envoyer à la BDD
+		$arr = $this->toArray();
+
+		if ($this->id === null || Sujethandicape::fetchSingle($this->id) === null) {
+			// Le sujet n'existe pas : on la rajoute à la BDD
+			list($insertId, $rowAffected) = DB::insert("sujet_handicape")
+				->set($arr)
+				->execute();
+			$this->id = $insertId;
+			if ($rowAffected < 1) {
+				$this->invalidate("Une erreur inconnu est survenu lors de l'ajout des données du sujet.");
+				return false;
+			}
+		}
+		else {
 		// 	// L'opération existe : on la met à jour
 		// 	$rowAffected = DB::update("operations")
 		// 		->set($arr)
 		// 		->where("id_site", $this->idSite)
 		// 		->execute();
 		// 		if ($rowAffected < 1) return false;
-		// }
+		}
 
 		// Tout s'est bien passé.
 		return true;
@@ -400,12 +412,32 @@ class Sujethandicape extends Model {
 					' . $this->invalidReason . '
 					<button type="button" class="btn-close" data-dismiss="alert" aria-label="Fermer">
 				</div>';
+			$this->group->echoErrors();
 		}
 	}
 
 	/** Renvoie l'array des données représentant l'objet. */
-	// public function toArray(): array {
-	// }
+	public function toArray(): array {
+		return array(
+			"id" => $this->id,
+			"id_sujet_handicape" => $this->idSujetHandicape,
+			"age_min" => $this->ageMin,
+			"age_max" => $this->ageMax,
+			"sexe" => $this->sexe,
+			"dating_min" => $this->datingMin,
+			"dating_max" => $this->datingMax,
+			"milieu_vie" => $this->milieuVie,
+			"contexte" => $this->contexte,
+			"contexte_normatif" => $this->contexteNormatif,
+			"comment_contexte" => $this->commentContext,
+			"comment_diagnostic" => $this->commentDiagnosis,
+			"url_img" => $this->urlImg,
+			"id_type_depot" => $this->idTypeDepot,
+			"id_sepulture" => $this->idSepulture,
+			"id_depot" => $this->idDepot,
+			"id_groupe_sujets" => $this->idGroupeSujet,
+		);
+	}
 
 	/** Annule la validation de l'objet. */
 	private function resetValidation() {
@@ -414,12 +446,12 @@ class Sujethandicape extends Model {
 	}
 
 	/** Invalide les données, rendant impossible l'export des données en ligne. */
-	private function invalidate(string $reason) {
+	private function invalidate(?string $reason = null) {
 		if (!isset($this->validated) || $this->validated !== false) {
 			$this->validated = false;
 			$this->invalidReason = "Les données sont invalides pour les raisons suivantes :<br>\n";
 		}
-		$this->invalidReason .= "- $reason<br>\n";
+		if ($reason !== null) $this->invalidReason .= "- $reason<br>\n";
 	}
 	#endregion
 
