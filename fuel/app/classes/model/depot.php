@@ -84,12 +84,11 @@ class Depot extends Model {
 				->set($arr)
 				->where("id", "=", $this->id)
 				->execute();
-			if ($rowAffected < 1) {
-				$this->validation->invalidate("Une erreur inconnu est survenu lors de la mise à jour des données du dépôt.");
-				return false;
-			}
 		}
 
 		return true;
 	}
+
+	public function echoErrors() { $this->validation->echoErrors(); }
+
 }

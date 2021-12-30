@@ -90,10 +90,19 @@ class Sujethandicape extends Model {
 
 		// Recréation du groupe du sujet
 		$groupData = array();
+		if (isset($data["id_group"])) $groupData["id"] = $data["id_group"];
 		if (isset($data["id_chronologie"])) $groupData["id_chronologie"] = $data["id_chronologie"];
 		if (isset($data["id_operation"])) $groupData["id_operation"] = $data["id_operation"];
 		if (isset($data["NMI"])) $groupData["NMI"] = $data["NMI"];
 		if (count($groupData) > 0 || $setWithEmpty) $this->group = new Groupesujet($groupData);
+
+		// Récupération des données du dépôt
+		$depotData = array();
+		if (isset($data["id_depot"])) $depotData["id"] = $data["id_depot"];
+		if (isset($data["num_inventaire"])) $depotData["num_inventaire"] = $data["num_inventaire"];
+		if (isset($data["depot_commune"])) $depotData["commune"] = $data["depot_commune"];
+		if (isset($data["depot_adresse"])) $depotData["adresse"] = $data["depot_adresse"];
+		if (count($groupData) > 0 || $setWithEmpty) $this->depot = new Depot($depotData);
 
 		// Récupération des mobiliers
 		if (isset($_POST["id_mobiliers"])) {
@@ -103,13 +112,6 @@ class Sujethandicape extends Model {
 			}
 		}
 		else if ($setWithEmpty) $this->furnitures = array();
-
-		// Récupération des données du dépôt
-		$depotData = array();
-		if (isset($data["num_inventaire"])) $depotData["num_inventaire"] = $data["num_inventaire"];
-		if (isset($data["depot_commune"])) $depotData["commune"] = $data["depot_commune"];
-		if (isset($data["depot_adresse"])) $depotData["adresse"] = $data["depot_adresse"];
-		if (count($groupData) > 0 || $setWithEmpty) $this->depot = new Depot($depotData);
 
 		// Récupération des diagnostic et des localisation
 		if (isset($data["diagnostics"])) {
@@ -411,10 +413,6 @@ class Sujethandicape extends Model {
 				->set($arr)
 				->where("id", "=", $this->id)
 				->execute();
-			if ($rowAffected < 1) {
-				$this->validation->invalidate("Une erreur inconnu est survenu lors de la mise à jour des données du sujet.");
-				return false;
-			}
 		}
 
 		// Maj des accessoires/mobiliers
@@ -492,6 +490,7 @@ class Sujethandicape extends Model {
 	public function echoErrors() {
 		$this->validation->echoErrors();
 		if ($this->group !== null) $this->group->echoErrors();
+		if ($this->depot !== null) $this->depot->echoErrors();
 	}
 
 	/** Renvoie l'array des données représentant l'objet. */
