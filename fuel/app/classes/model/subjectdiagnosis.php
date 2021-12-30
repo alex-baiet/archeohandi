@@ -2,6 +2,7 @@
 
 namespace Model;
 
+use Fuel\Core\FuelException;
 use Fuel\Core\Model;
 
 /** Représente un diagnostic pour un Sujethandicape spécifique. */
@@ -30,7 +31,7 @@ class Subjectdiagnosis extends Model {
 			WHERE id_sujet = {$idSubject}
 			;"
 		);
-		
+
 		foreach ($idDiagnosis as $idDia) {
 			// Récupération des localisations de chaque diagnostic
 			$idSpots = Helper::querySelectList(

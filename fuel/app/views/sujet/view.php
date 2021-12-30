@@ -45,7 +45,7 @@ $subject = $subject;
 			</div>
 			<div class="col">
 				<!-- Ce n'est pas vraiment l'écart type qui est calculé mais bon... -->
-				<div class="p-2">Écart type de la datation : <?= $subject->getDatingMax() - $subject->getDatingMin(); ?></div>
+				<div class="p-2">Écart type de la datation : <?= $subject->getDatingMax() - $subject->getDatingMin(); ?> années</div>
 			</div>
 			<div class="col">
 				<div class="p-2">Milieu de vie : <?= $subject->getMilieuVie(); ?></div>
