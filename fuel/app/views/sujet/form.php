@@ -279,7 +279,6 @@ Form::open(array(
 								<!-- Titre des diagnostics -->
 								<td>
 									<div class="form-check form-switch">
-										<!-- Actuellement inutile... -->
 										<?php
 										$attr = array("class" => "form-check-input");
 										$hasDiagnosis = $subject->hasDiagnosis($diagnostic->getId());
@@ -294,15 +293,29 @@ Form::open(array(
 									<td>
 										<?php
 										$attr = array("class" => "form-check-input");
+										// Ajout des classes pour que la fonction js sache quoi faire sur le checkbox
+										if ($diagnostic->isSpotMandatory($locali->getId())) $attr["class"] .= " always-disabled auto-check";
+										if (!$diagnostic->isLocated($locali->getId())) {
+											$attr["class"] .= " always-disabled";
+											$attr["hidden"] = "hidden";
+										}
+
+										// Maj affichage du checkbox de la localisation si le diagnostic est coché par défaut
 										if ($hasDiagnosis) {
-											// Test pour savoir si le diagnostic a été localisé à la localisation actuel
 											$subjectDia = $subject->getDiagnosis($diagnostic->getId());
-											if ($subjectDia->isLocatedFromId($locali->getId()))  $attr["checked"] = 1;
+											if ($subjectDia->isLocatedFromId($locali->getId())) $attr["checked"] = 1;
+											if (!$diagnostic->isLocated($locali->getId())
+												|| $diagnostic->isSpotMandatory($locali->getId())) {
+												$attr["disabled"] = "disabled";
+											}
+										} else {
+											$attr["disabled"] = "disabled";
 										}
 										?>
 										<?= Form::checkbox("diagnostics[{$diagnostic->getId()}][]", $locali->getId(), null, $attr); ?>
 									</td>
 								<?php endforeach; ?>
+								<script>updateCheckboxOnSwitch(<?= $diagnostic->getId(); ?>);</script>
 							</tr>
 						<?php endforeach; ?>
 					</tbody>

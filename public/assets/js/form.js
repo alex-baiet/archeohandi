@@ -104,6 +104,33 @@ function removePersonOld(name) {
 }
 
 /**
+ * Active les checkbox de localisation lors du clic sur le switch du diagnostic concerné.
+ * 
+ * @param {int} idDiagnosis Id du diagnostic.
+ */
+function updateCheckboxOnSwitch(idDiagnosis) {
+	let switchElem = document.getElementById(`form_diagnostic_${idDiagnosis}`);
+	let checkboxs = document.getElementsByName(`diagnostics[${idDiagnosis}][]`);
+
+	switchElem.onclick = function () {
+		if (switchElem.checked) {
+			// Sélection du diagnostic, activation des checkbox
+			for (const checkbox of checkboxs) {
+				if (!checkbox.classList.contains("always-disabled")) checkbox.disabled = false;
+				if (checkbox.classList.contains("auto-check")) checkbox.checked = true;
+			}
+		}
+		else {
+			// Déselection du diagnostic, délection des checkbox
+			for (const checkbox of checkboxs) {
+				checkbox.disabled = true;
+				checkbox.checked = false;
+			}
+		}
+	};
+}
+
+/**
  * Ajoute l'autocomplétion à l'input donné en utilisant la base de données.
  * 
  * @param {string} id Identifiant de l'input
@@ -174,25 +201,3 @@ $(document).ready(function () {
 	$(document).on("select", function () { emptyAutocompletes(); });
 });
 
-// function recherche_commune_depot(id){
-  
-//     $("#commune_depot_"+id).keyup(function () {
-//     var query = $(this).val();
-//     if (query != "") {
-//       $.ajax({
-//         url: "https://archeohandi.huma-num.fr/public/fonction/action.php",
-//         method: "POST",
-//         data: {query:query},
-//         success: function (data) { $("#show-list-depot_"+id).html(data); }
-//       });
-//     } else {
-//       $("#show-list-depot_"+id).html("");
-//     }
-//   });
-
-
-//   $(document).on("click", "a", function () {
-//     $("#commune_depot_"+id).val($(this).text());
-//     $("#show-list-depot_"+id).html("");
-//   });
-// }

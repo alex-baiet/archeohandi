@@ -48,21 +48,21 @@ class Diagnostic extends Model {
 				FROM diagnostic_zone
 				WHERE id_diagnostic = {$this->id};");
 			
-			$spots = array();
+			$this->spots = array();
 			foreach ($results as $res) {
-				$spots[intval($res["id_localisation"])] = $res["obligatoire"];
+				$this->spots[intval($res["id_localisation"])] = intval($res["obligatoire"]);
 			}
 		}
 		return $this->spots;
 	}
 
 	public function isLocated(int $idSpot): bool {
-		return isset($spots[$idSpot]);
+		return isset($this->getSpots()[$idSpot]);
 	}
 
 	public function isSpotMandatory(int $idSpot): bool {
 		if (!$this->isLocated($idSpot)) return false;
-		return $this->spots[$idSpot] === 1;
+		return $this->getSpots()[$idSpot] === 1;
 	}
 
 }
