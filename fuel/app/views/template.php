@@ -1,6 +1,10 @@
+<?php
+
+use Fuel\Core\Asset;
+?>
 <!DOCTYPE html>
 <html lang="fr">
-<header>
+<head>
   <title><?= $title; ?></title>
   <meta charset="utf-8">
   <meta name="author" content="Virgile Louin">
@@ -16,7 +20,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <?= Asset::js('button.js'); ?>
   <?= Asset::css('button.css'); ?>
-</header>
+</head>
 
 <body>
   <div class="cRetour"></div>

@@ -1,5 +1,6 @@
 <?php
 
+use Fuel\Core\Controller;
 use Fuel\Core\Controller_Template;
 use Fuel\Core\DB;
 use Fuel\Core\Input;
@@ -9,7 +10,7 @@ use Model\Helper;
 use Model\Sujethandicape;
 
 class Controller_Sujet extends Controller_Template {
-	private const DEBUG = true;
+	private const DEBUG = false;
 
 	public function action_view($id) {
 		//Permet de récupérer toutes les informations du sujet handicapé
@@ -22,8 +23,18 @@ class Controller_Sujet extends Controller_Template {
 	}
 
 	public function action_edit($id) {
-		$subject = Sujethandicape::fetchSingle($id);
-		if (Controller_Sujet::DEBUG === true) Helper::varDump($subject);
+		if (Input::method() === "POST") {
+			// Maj du sujet
+			$subject = new Sujethandicape($_POST);
+			if ($subject->saveOnDB() && Controller_Sujet::DEBUG === false) {
+				Response::redirect("operations/view/".$subject->getGroup()->getIdOperation());
+			}
+
+		} else {
+			// Récupération des infos depuis la BDD
+			$subject = Sujethandicape::fetchSingle($id);
+			if (Controller_Sujet::DEBUG === true) Helper::varDump($subject);
+		}
 
 		$data = array("subject" => $subject);
 

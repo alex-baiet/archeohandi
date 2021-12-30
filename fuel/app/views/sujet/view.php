@@ -7,13 +7,20 @@ use Model\Sujethandicape;
 $subject = $subject;
 
 ?>
+
+<style>
+	section {
+		background-color: #F5F5F5;
+	}
+</style>
+
 <!-- Entête de la page -->
 <div class="container">
 	<h1 class="m-2">Sujet <?= $subject->getIdSujetHandicape(); ?></h1>
 	<p class="text-muted">Ici vous retrouvez toutes les informations du sujet <strong><?= $subject->getIdSujetHandicape(); ?></strong>.</p>
 
 	<!-- Contenu de la page -->
-	<div class="container" style="background-color: #F5F5F5;">
+	<section>
 		<h4>Informations générales</h4>
 		<div class="row">
 			<div class="col">
@@ -63,9 +70,10 @@ $subject = $subject;
 				<div class="p-2">Type de sépulture : <?= $subject->getTypeSepulture()->getNom(); ?></div>
 			</div>
 		</div>
-	</div>
+	</section>
 	<br />
-	<div class="container" style="background-color: #F5F5F5;">
+
+	<section>
 		<h4>Groupe du sujet</h4>
 		<?php $group = $subject->getGroup(); ?>
 		<div class="row">
@@ -85,11 +93,11 @@ $subject = $subject;
 				<div class="p-2">Date de fin : <?= $group->getChronology()->getEnd(); ?></div>
 			</div>
 		</div>
-	</div>
+	</section>
 	<br />
 
 	<!-- Dépôt -->
-	<div class="container" style="background-color: #F5F5F5;">
+	<section>
 		<h4>Dépôt</h4>
 		<?php $depot = $subject->getDepot(); ?>
 		<div class="row">
@@ -104,11 +112,11 @@ $subject = $subject;
 				<div class="p-2">Adresse : <?= $depot->getAdresse(); ?></div>
 			</div>
 		</div>
-	</div>
+	</section>
 	<br />
 
 	<!-- Mobiliers / Accessoires -->
-	<div class="container" style="background-color: #F5F5F5;">
+	<section>
 		<h4>Accessoire</h4>
 		<div class="row">
 			<div class="col">
@@ -119,11 +127,11 @@ $subject = $subject;
 				</div>
 			</div>
 		</div>
-	</div>
+	</section>
 	<br />
 
 	<!-- Diagnostics -->
-	<div class="container" style="background-color: #F5F5F5;">
+	<section>
 		<h4>Atteinte invalidante</h4>
 		<div class="row">
 			<!-- Diagnostic -->
@@ -171,28 +179,19 @@ $subject = $subject;
 				<div class="p-2">Commentaire du diagnostic : <?= $subject->getCommentDiagnosis(); ?></div>
 			</div>
 		</div>
-	</div>
+	</section>
 
 	<div class="d-grid gap-2 d-md-block p-1">
 		<a class="btn btn-secondary" href="/public/operations/view/<?= $subject->getGroup()->getIdOperation(); ?>" role="button">Retour</a>
 	</div>
 </div>
 
-	<!--  Permet d'afficher un message d'alert avant la confirmation d'une suppression -->
-	<script type="text/javascript">
-		$("[name=btn_supp_sujet]").click(function() {
-			var x = $(this).val();
-			if (window.confirm("Vous êtes sur le point de supprimer un sujet. Êtes-vous sûr de supprimer le sujet " + x + " ?")) {
-				$("#form_suppr_" + x).submit();
-			}
-		});
-	</script>
-	<?php
-	//Fonction permettant d'afficher un message d'alert
-	function alertBootstrap($text, $color)
-	{
-		echo '<div class="alert alert-' . $color . ' alert-dismissible text-center my-2 fade show" role="alert">
-		' . $text . '
-		<button type="button" class="btn-close" data-dismiss="alert" aria-label="Fermer">
-		</div>';
-	} ?>
+<script type="text/javascript">
+	// Permet d'afficher un message d'alert avant la confirmation d'une suppression -->
+	$("[name=btn_supp_sujet]").click(function() {
+		var x = $(this).val();
+		if (window.confirm("Vous êtes sur le point de supprimer un sujet. Êtes-vous sûr de supprimer le sujet " + x + " ?")) {
+			$("#form_suppr_" + x).submit();
+		}
+	});
+</script>
