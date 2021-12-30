@@ -48,7 +48,10 @@ class Groupesujet extends Model {
 	public function getNMI() { return $this->nmi; }
 
 	public function getChronology() {
-		if (!isset($this->chronology)) $this->chronology = Chronology::fetchSingle($this->idChronology);
+		if (!isset($this->chronology)) {
+			if ($this->idChronology === null) $this->chronology = null;
+			else $this->chronology = Chronology::fetchSingle($this->idChronology);
+		}
 		return $this->chronology;
 	}
 
@@ -74,13 +77,24 @@ class Groupesujet extends Model {
 		$arr = $this->toArray();
 
 		if ($this->id === null || Groupesujet::fetchSingle($this->id) === null) {
-			// Le sujet n'existe pas : on la rajoute à la BDD
+			// Le groupe n'existe pas : on la rajoute à la BDD
 			list($insertId, $rowAffected) = DB::insert("groupe_sujets")
 				->set($arr)
 				->execute();
-			$this->id = $insertId;
 			if ($rowAffected < 1) {
-				$this->validation->invalidate("Une erreur inconnu est survenu lors du groupe du sujet.");
+				$this->validation->invalidate("Une erreur inconnu est survenu lors de l'ajout du groupe du sujet.");
+				return false;
+			}
+			$this->id = $insertId;
+		}
+		else {
+			// Le groupe existe : on met à jour
+			$rowAffected = DB::update("groupe_sujets")
+				->set($arr)
+				->where("id", "=", $this->id)
+				->execute();
+			if ($rowAffected < 1) {
+				$this->validation->invalidate("Une erreur inconnu est survenu lors de la mise à jour des données du groupe.");
 				return false;
 			}
 		}

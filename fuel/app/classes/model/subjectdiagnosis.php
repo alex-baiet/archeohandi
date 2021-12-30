@@ -2,7 +2,6 @@
 
 namespace Model;
 
-use Fuel\Core\FuelException;
 use Fuel\Core\Model;
 
 /** Représente un diagnostic pour un Sujethandicape spécifique. */

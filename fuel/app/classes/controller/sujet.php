@@ -1,8 +1,6 @@
 <?php
 
-use Fuel\Core\Controller;
 use Fuel\Core\Controller_Template;
-use Fuel\Core\DB;
 use Fuel\Core\Input;
 use Fuel\Core\Response;
 use Fuel\Core\View;
@@ -10,7 +8,7 @@ use Model\Helper;
 use Model\Sujethandicape;
 
 class Controller_Sujet extends Controller_Template {
-	private const DEBUG = false;
+	private const DEBUG = true;
 
 	public function action_view($id) {
 		//Permet de récupérer toutes les informations du sujet handicapé

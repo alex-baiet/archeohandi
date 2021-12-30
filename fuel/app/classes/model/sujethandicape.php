@@ -4,7 +4,6 @@ namespace Model;
 
 use Closure;
 use Fuel\Core\DB;
-use Fuel\Core\FuelException;
 use Fuel\Core\Model;
 
 /** Représentation d'une opération dans la base de données. */
@@ -91,7 +90,7 @@ class Sujethandicape extends Model {
 
 		// Recréation du groupe du sujet
 		$groupData = array();
-		if (isset($data["id_chronology"])) $groupData["id_chronology"] = $data["id_chronology"];
+		if (isset($data["id_chronologie"])) $groupData["id_chronologie"] = $data["id_chronologie"];
 		if (isset($data["id_operation"])) $groupData["id_operation"] = $data["id_operation"];
 		if (isset($data["NMI"])) $groupData["NMI"] = $data["NMI"];
 		if (count($groupData) > 0 || $setWithEmpty) $this->group = new Groupesujet($groupData);
@@ -235,7 +234,8 @@ class Sujethandicape extends Model {
 	/** @return Subjectdiagnosis[] */
 	public function getAllDiagnosis(): array {
 		if (!isset($this->diagnosis)) {
-			$this->diagnosis = Subjectdiagnosis::fetchAll($this->id);
+			if ($this->id === null) $this->diagnosis = array();
+			else $this->diagnosis = Subjectdiagnosis::fetchAll($this->id);
 		}
 		return $this->diagnosis;
 	}
@@ -247,17 +247,20 @@ class Sujethandicape extends Model {
 	/** @return Pathology[] */
 	public function getPathologies(): array {
 		if (!isset($this->pathologies)) {
-			$this->pathologies = array();
-			$results = Helper::querySelect(
-				"SELECT pat.id, pat.nom
-				FROM pathologie AS pat
-				JOIN atteinte_pathologie AS att
-				ON pat.id = att.id_pathologie
-				WHERE att.id_sujet = {$this->id};"
-			);
-			foreach ($results as $res) {
-				$pathology = new Pathology($res);
-				$this->pathologies[$pathology->getId()] = $pathology;
+			if ($this->id === null) $this->pathologies = array();
+			else {
+				$this->pathologies = array();
+				$results = Helper::querySelect(
+					"SELECT pat.id, pat.nom
+					FROM pathologie AS pat
+					JOIN atteinte_pathologie AS att
+					ON pat.id = att.id_pathologie
+					WHERE att.id_sujet = {$this->id};"
+				);
+				foreach ($results as $res) {
+					$pathology = new Pathology($res);
+					$this->pathologies[$pathology->getId()] = $pathology;
+				}
 			}
 		}
 		return $this->pathologies;
@@ -266,17 +269,20 @@ class Sujethandicape extends Model {
 	/** @return Appareil[] */
 	public function getItemsHelp() {
 		if (!isset($this->itemsHelp)) {
-			$this->itemsHelp = array();
-			$results = Helper::querySelect(
-				"SELECT app.id, app.nom
-				FROM appareil_compensatoire AS app
-				JOIN appareil_sujet AS asu
-				ON app.id = asu.id_appareil
-				WHERE asu.id_sujet = {$this->id};"
-			);
-			foreach ($results as $res) {
-				$item = new Appareil($res);
-				$this->itemsHelp[$item->getId()] = $item;
+			if ($this->id === null) $this->itemsHelp = array();
+			else {
+				$this->itemsHelp = array();
+				$results = Helper::querySelect(
+					"SELECT app.id, app.nom
+					FROM appareil_compensatoire AS app
+					JOIN appareil_sujet AS asu
+					ON app.id = asu.id_appareil
+					WHERE asu.id_sujet = {$this->id};"
+				);
+				foreach ($results as $res) {
+					$item = new Appareil($res);
+					$this->itemsHelp[$item->getId()] = $item;
+				}
 			}
 		}
 		return $this->itemsHelp;
@@ -369,6 +375,8 @@ class Sujethandicape extends Model {
 	public function saveOnDB(): bool {
 		if (!$this->validate()) return false;
 
+		echo "Tentative de sauvegarde<br>";
+
 		// Maj group
 		if (!$this->getGroup()->saveOnDB()) {
 			$this->validation->invalidate();
@@ -398,12 +406,15 @@ class Sujethandicape extends Model {
 			}
 		}
 		else {
-		// 	// L'opération existe : on la met à jour
-		// 	$rowAffected = DB::update("operations")
-		// 		->set($arr)
-		// 		->where("id_site", $this->idSite)
-		// 		->execute();
-		// 		if ($rowAffected < 1) return false;
+			// Le sujet existe : on la met à jour
+			$rowAffected = DB::update("sujet_handicape")
+				->set($arr)
+				->where("id", "=", $this->id)
+				->execute();
+			if ($rowAffected < 1) {
+				$this->validation->invalidate("Une erreur inconnu est survenu lors de la mise à jour des données du sujet.");
+				return false;
+			}
 		}
 
 		// Maj des accessoires/mobiliers

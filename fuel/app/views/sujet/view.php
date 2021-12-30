@@ -1,6 +1,5 @@
 <?php
 
-use Fuel\Core\DB;
 use Model\Sujethandicape;
 
 /** @var Sujethandicape */

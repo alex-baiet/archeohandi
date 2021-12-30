@@ -67,14 +67,28 @@ class Depot extends Model {
 		if (!$this->validate()) return false;
 		$arr = $this->toArray();
 
-		list($insertId, $rowAffected) = DB::insert("depot")
-		->set($arr)
-		->execute();
-		if ($rowAffected == 0) {
-			$this->validation->invalidate("Une erreur inconnu est survenu lors de l'ajout du dépôt.");
-			return false;
+		if ($this->id === null || Depot::fetchSingle($this->id) === null) {
+			// Ajout du dépôt
+			list($insertId, $rowAffected) = DB::insert("depot")
+			->set($arr)
+			->execute();
+			if ($rowAffected == 0) {
+				$this->validation->invalidate("Une erreur inconnu est survenu lors de l'ajout du dépôt.");
+				return false;
+			}
+			$this->id = $insertId;
 		}
-		$this->id = $insertId;
+		else {
+			// Maj du dépôt
+			$rowAffected = DB::update("depot")
+				->set($arr)
+				->where("id", "=", $this->id)
+				->execute();
+			if ($rowAffected < 1) {
+				$this->validation->invalidate("Une erreur inconnu est survenu lors de la mise à jour des données du dépôt.");
+				return false;
+			}
+		}
 
 		return true;
 	}

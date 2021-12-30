@@ -21,13 +21,11 @@ if (!isset($subject) && !isset($idOperation)) {
 $subject = isset($subject) ? $subject : new Sujethandicape(array());
 /** @var int */
 $idOperation = isset($idOperation) ? $idOperation : $subject->getGroup()->getIdOperation();
-
 ?>
 
 <?= $subject->echoErrors(); ?>
 <?=
 Form::open(array(
-	"action" => "sujet/add/$idOperation",
 	"method" => "POST",
 	"style" => "background-color: #F5F5F5; padding: 10px;"
 ));
@@ -351,6 +349,6 @@ Form::open(array(
 
 </div>
 <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-top: 10px;">
-	<?= Form::submit('confirm_sujet_handicape', 'Ajouter', array('class' => 'btn btn-success')); ?>
+	<?= Form::submit('confirm_sujet_handicape', 'Confirmer', array('class' => 'btn btn-success')); ?>
 </div>
 <?= Form::close(); ?>
