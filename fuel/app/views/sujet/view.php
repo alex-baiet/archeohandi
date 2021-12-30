@@ -11,6 +11,7 @@ $subject = $subject;
 <style>
 	section {
 		background-color: #F5F5F5;
+		padding: 10px;
 	}
 </style>
 
