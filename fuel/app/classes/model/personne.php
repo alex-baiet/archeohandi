@@ -78,10 +78,10 @@ class Personne extends Model {
 	 * 
 	 * @param string Le nom de la personne, au format "NOM Prénom".
 	 * @return int id de la personne en cas de succès.
-	 * @return false Si aucune personne ne correspond au paramètre donné.
+	 * @return null Si aucune personne ne correspond au paramètre donné.
 	 */
-	public static function nameToId(string $name) {
-		if (empty($name)) return false;
+	public static function nameToId(string $name): ?int {
+		if (empty($name)) return null;
 		// Test du format (à compléter)
 		if (strpos($name, " ") === false) {
 			throw new FuelException("Le nom \"$name\" n'est pas au bon format.");
@@ -90,7 +90,7 @@ class Personne extends Model {
 		$names = explode(" ", $name);
 
 		$res = Helper::querySelectSingle("SELECT id FROM personne WHERE nom=\"{$names[0]}\" AND prenom=\"$names[1]\"");
-		if ($res === null) return false;
+		if ($res === null) return null;
 		return intval($res["id"]);
 	}
 
@@ -103,7 +103,7 @@ class Personne extends Model {
 
 		foreach ($names as $name) {
 			$res = Personne::nameToId($name);
-			if ($res !== false) {
+			if ($res !== null) {
 				$ids[] = $res;
 			}
 		}

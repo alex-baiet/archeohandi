@@ -51,18 +51,18 @@ class Commune extends Model {
 	 * 
 	 * @param string $name Nom de la commune au format "Nom-de-la-Commune, Département"
 	 * @return int Identifiant de la commune
-	 * @return false En cas d'échec.
+	 * @return null En cas d'échec.
 	 */
-	public static function nameToId(string $name) {
+	public static function nameToId(string $name): ?int {
 		// Vérification du format du nom
-		if (empty($name) || $name === ", ") return false;
+		if (empty($name) || $name === ", ") return null;
 		if (strpos($name, ", ") === false) throw new InvalidArgumentException("$name n'est pas au bon format.");
 
 		// Récupération de l'id
 		$names = explode(", ", $name);
 		$res = Helper::querySelectSingle("SELECT id FROM commune WHERE nom=\"{$names[0]}\" AND departement=\"{$names[1]}\"");
 
-		if ($res === null || count($res) === 0) return false;
+		if ($res === null || count($res) === 0) return null;
 		return $res["id"];
 	}
 

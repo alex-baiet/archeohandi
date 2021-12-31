@@ -44,11 +44,12 @@ $sujets = $sujets;
 			</div>
 		</div>
 		<div class="row">
+			<?php $commune = $operation->getCommune(); ?>
 			<div class="col">
-				<div class="p-2">Département : <?= $operation->getCommune()->getDepartement(); ?></div>
+				<div class="p-2">Département : <?php if ($commune !== null) echo $commune->getDepartement(); ?></div>
 			</div>
 			<div class="col">
-				<div class="p-2">Commune : <?= $operation->getCommune()->getNom(); ?></div>
+				<div class="p-2">Commune : <?php if ($commune !== null) echo $commune->getNom(); ?></div>
 			</div>
 			<div class="col">
 				<div class="p-2">Adresse : <?= $operation->getAdresse(); ?></div>

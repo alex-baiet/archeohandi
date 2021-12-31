@@ -12,7 +12,7 @@ class Operation extends Model {
 	private string $idUser = "";
 	private string $aRevoir = "";
 	private int $annee = 0;
-	private int $idCommune = -1;
+	private ?int $idCommune = null;
 	private string $adresse = "";
 	private float $x = 0.0;
 	private float $y = 0.0;
@@ -23,7 +23,7 @@ class Operation extends Model {
 	private string $patriarche = "";
 	private string $numeroOperation = "";
 	private string $arretePrescription = "";
-	private int $idResponsableOp = -1;
+	private ?int $idResponsableOp = null;
 	private string $bibliographie = "";
 
 	/** @var string[]|null */
@@ -149,35 +149,33 @@ class Operation extends Model {
 	#endregion
 
 	/** Créer un nom pour l'opération */
-	public function getNomOp(): string { return "{$this->getCommune()->getNom()}, {$this->adresse}, {$this->annee}"; }
-	/**
-	 * @return Commune|null
-	 */
-	public function getCommune() {
+	public function getNomOp(): string {
+		return ($this->getCommune() !== null ? $this->getCommune()->getNom() : "")
+			.", {$this->adresse}, {$this->annee}";
+	}
+
+	public function getCommune(): ?Commune {
+		if ($this->idCommune === null) return null;
 		if ($this->commune === null) $this->commune = Commune::fetchSingle($this->idCommune);
 		return $this->commune;
 	}
-	/**
-	 * @return Typeoperation|null
-	 */
-	public function getTypeOperation() {
+
+	public function getTypeOperation(): ?Typeoperation {
 		if ($this->typeOp === null) $this->typeOp = Typeoperation::fetchSingle($this->idTypeOp);
 		return $this->typeOp;
 	}
-	/**
-	 * @return Organisme|null
-	 */
-	public function getOrganisme() {
+
+	public function getOrganisme(): ?Organisme {
 		if ($this->organisme === null) $this->organisme = Organisme::fetchSingle($this->idOrganisme);
 		return $this->organisme;
 	}
-	/**
-	 * @return Personne|null
-	 */
-	public function getResponsableOp() {
+
+	public function getResponsableOp(): ?Personne {
+		if ($this->idResponsableOp === null) return null;
 		if ($this->responsableOp === null) $this->responsableOp = Personne::fetchSingle($this->idResponsableOp);
 		return $this->responsableOp;
 	}
+
 	/**
 	 * Renvoie une liste de personne en fonction des différents paramètres données.
 	 * @param array|null &$ids Liste des identifiant définis.
@@ -239,54 +237,35 @@ class Operation extends Model {
 		if ($res === false) $this->invalidate("L'adresse contient des caractères interdit.");
 		$this->adresse = Helper::secureString($this->adresse);
 
-		// Test année
 		if (!Helper::stringIsInt($this->annee)) $this->invalidate("L'année indiquée doit être un nombre.");
-		
-		// Test position X
 		if (!is_numeric($this->x)) $this->invalidate("La position sur x (longitude) indiquée doit être un nombre.");
-		
-		// Test position Y
 		if (!is_numeric($this->y)) $this->invalidate("La position sur y (latitude) indiquée doit être un nombre.");
-
-		// Test commune
-		if ($this->getCommune() === null) $this->invalidate("La commune n'existe pas.");
-
-		// Test organisme
+		if ($this->getCommune() === null && $this->idCommune !== null) $this->invalidate("La commune n'existe pas.");
 		if ($this->getOrganisme() === null) $this->invalidate("L'organisation n'existe pas.");
-
-		// Test type operation
 		if ($this->getTypeOperation() === null) $this->invalidate("Le type d'opération n'existe pas.");
-
-		// Correction aRevoir
 		$this->aRevoir = Helper::secureString($this->aRevoir);
 
-		// Test EA
 		$res = Helper::verifAlpha($this->EA, 'alphanum');
 		if ($res === false) $this->invalidate("La valeur \"EA\" contient des caractères interdit.");
 		else $this->EA = $res;
 
-		// Test OA
 		$res = Helper::verifAlpha($this->OA, 'alphanum');
 		if ($res === false) $this->invalidate("La valeur \"OA\" contient des caractères interdit.");
 		else $this->OA = $res;
 
-		// Test patriarche
 		$res = Helper::verifAlpha($this->patriarche, 'alphanum');
 		if ($res === false) $this->invalidate("Le patriarche contient des caractères interdit.");
 		else $this->patriarche = $res;
 
-		// Test numero operation
 		$res = Helper::verifAlpha($this->numeroOperation, 'alphanum');
 		if ($res === false) $this->invalidate("Le numéro d'opération contient des caractères interdit.");
 		else $this->numeroOperation = $res;
 
-		// Test arrete prescription
 		$res = Helper::verifAlpha($this->arretePrescription, 'alphanum');
 		if ($res === false) $this->invalidate("L'arrete de prescription contient des caractères interdit.");
 		else $this->arretePrescription = $res;
 
-		// Test responsable
-		if ($this->getResponsableOp() === null) $this->invalidate("Le responsable n'existe pas.");
+		if ($this->getResponsableOp() === null && $this->idResponsableOp !== null) $this->invalidate("Le responsable n'existe pas.");
 
 		// Test anthropologues
 		// $res = Helper::verifAlpha($this->anthropologue, 'alpha');
