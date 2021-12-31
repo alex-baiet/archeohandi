@@ -8,7 +8,7 @@ use Model\Helper;
 use Model\Sujethandicape;
 
 class Controller_Sujet extends Controller_Template {
-	private const DEBUG = false;
+	private const DEBUG = true;
 
 	public function action_view($id) {
 		//Permet de récupérer toutes les informations du sujet handicapé
@@ -26,12 +26,16 @@ class Controller_Sujet extends Controller_Template {
 			$subject = new Sujethandicape($_POST);
 			if ($subject->saveOnDB() && Controller_Sujet::DEBUG === false) {
 				Response::redirect("operations/view/".$subject->getGroup()->getIdOperation());
+			} else {
+				Helper::varDump($_POST);
 			}
 
 		} else {
 			// Récupération des infos depuis la BDD
 			$subject = Sujethandicape::fetchSingle($id);
-			if (Controller_Sujet::DEBUG === true) Helper::varDump($subject);
+			if (Controller_Sujet::DEBUG === true) {
+				// Helper::varDump($subject);
+			}
 		}
 
 		$data = array("subject" => $subject);

@@ -131,6 +131,16 @@ function updateCheckboxOnSwitch(idDiagnosis) {
 }
 
 /**
+ * Réactive tous les champs disabled pour permettre l'envoie des données via POST ou GET.
+ */
+function prepareFormSend() {
+	let allDisabled = document.getElementsByClassName("always-disabled");
+	for (const disabled of allDisabled) {
+		disabled.disabled = false;
+	}
+}
+
+/**
  * Ajoute l'autocomplétion à l'input donné en utilisant la base de données.
  * 
  * @param {string} id Identifiant de l'input

@@ -27,7 +27,8 @@ $idOperation = isset($idOperation) ? $idOperation : $subject->getGroup()->getIdO
 <?=
 Form::open(array(
 	"method" => "POST",
-	"style" => "background-color: #F5F5F5; padding: 10px;"
+	"style" => "background-color: #F5F5F5; padding: 10px;",
+	"onsubmit" => "prepareFormSend()"
 ));
 ?>
 <input type="hidden" name="id_operation" value="<?= $idOperation ?>">
