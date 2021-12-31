@@ -8,7 +8,7 @@ use Model\Helper;
 use Model\Sujethandicape;
 
 class Controller_Sujet extends Controller_Template {
-	private const DEBUG = true;
+	private const DEBUG = false;
 
 	public function action_view($id) {
 		//Permet de récupérer toutes les informations du sujet handicapé

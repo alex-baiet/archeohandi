@@ -27,7 +27,7 @@ use Fuel\Core\Asset;
 			<ul>
 				<li>Maitre de stage : Jean-Baptiste Barreau</li>
 				<li>
-					Stagiaire :
+					Stagiaires :
 					<ul>
 						<li>Virgile LOUIN (2021)</li>
 						<li>Alex BAIET (2021-2022)</li>

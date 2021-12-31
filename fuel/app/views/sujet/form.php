@@ -39,7 +39,7 @@ Form::open(array(
 
 		<div class="row g-2">
 			<?php $group = $subject->getGroup(); ?>
-			<?php if ($group->getId() !== null) echo Form::hidden("id_group", $group->getId()); ?>
+			<?php if ($group !== null && $group->getId() !== null) echo Form::hidden("id_group", $group->getId()); ?>
 
 			<!-- NMI -->
 			<div class="col-md-6">
@@ -217,7 +217,7 @@ Form::open(array(
 			<div class="col-md-6">
 				<h3>Dépôt</h3>
 				<?php $depot = $subject->getDepot(); ?>
-				<?php if ($depot->getId() !== null) echo Form::hidden("id_depot", $depot->getId()); ?>
+				<?php if ($depot !== null && $depot->getId() !== null) echo Form::hidden("id_depot", $depot->getId()); ?>
 					<!-- Numéro de dépôt -->
 						<div class="form-floating my-2">
 							<?= Form::input("num_inventaire", $depot === null ? null : $depot->getNumInventaire(), array("type" => "text", "class" => "form-control", "placeholder" => "")); ?>
