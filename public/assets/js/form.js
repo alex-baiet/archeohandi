@@ -9,6 +9,35 @@ var lastPersonNum = new Map();
 var autocompleteField = [];
 
 /**
+ * Ajoute dans la BDD une personne ayant
+ * comme valeurs les champs des inputs indiqués.
+ * 
+ * @param {string} idFirstNameInput 
+ * @param {string} idLastNameInput 
+ */
+function addPersonDB(idFirstNameInput, idLastNameInput) {
+	const firstNameInput = document.getElementById(idFirstNameInput);
+	const lastNameInput = document.getElementById(idLastNameInput);
+	/** @type {string} */
+	let firstName = firstNameInput.value;
+	/** @type {string} */
+	let lastName = lastNameInput.value;
+
+	$.ajax({
+		url: "https://archeohandi.huma-num.fr/public/fonction/add_person.php",
+		method: "POST",
+		data: {
+			first_name: firstName,
+			last_name: lastName
+		},
+		success: function (data) {
+			if (data == true) console.log("Personne ajouté !");
+			else console.warn("Echec d'ajout de la personne...");
+		}
+	});
+}
+
+/**
  * Ajoute un champ texte pour une liste d'input.
  * 
  * @param {string} id nom de l'attribut "name".
@@ -61,46 +90,6 @@ function removePerson(id) {
 
 	// Suppression de l'élément
 	toRemove.remove();
-}
-
-/**
- * Ajoute un champ texte pour une liste d'input.
- * 
- * @param {string} name nom de l'attribut "name".
- * @param {string} nom Juste pour avoir un beau label.
- */
-function addPersonOld(name, nom) {
-	var newDiv = document.createElement('div');
-	newDiv.classList.add('col-md-12');
-
-	var newDivfloat = document.createElement('div');
-	newDivfloat.classList.add('form-floating');
-
-	var newInput = document.createElement('input');
-	newInput.type = 'text';
-	newInput.classList.add('form-control');
-	newInput.classList.add('my-2');
-	newInput.name = name + '[]';
-	newInput.placeholder = nom + ' (Nom Prénom)';
-
-	var newLabel = document.createElement('label');
-	newLabel.textContent = nom + " (Nom Prénom)";
-
-	newDivfloat.appendChild(newInput);
-	newDivfloat.appendChild(newLabel);
-	newDiv.appendChild(newDivfloat);
-
-	var monCnt = document.getElementById('block_' + name);
-	monCnt.appendChild(newDiv);
-}
-
-/**
- * Supprime un champ d'une liste d'input.
- * 
- * @param {string} name 
- */
-function removePersonOld(name) {
-	$('#block_' + name).children().last().remove();
 }
 
 /**

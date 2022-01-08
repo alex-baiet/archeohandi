@@ -2,23 +2,30 @@
 
 namespace Model;
 
-use Fuel\Core\Form;
+use Fuel\Core\DB;
 use Fuel\Core\FuelException;
 use Fuel\Core\Model;
 
 /** Représentation d'une personne dans la base de données. */
 class Personne extends Model {
-	private $id;
-	private $nom;
-	private $prenom;
+	private ?int $id = null;
+	private string $nom = "";
+	private string $prenom = "";
 
 	/**
 	 * Créer l'objet à partir des données en paramètre.
 	 */
 	public function __construct(array $data) {
-		$this->id = Helper::arrayGetInt("id", $data);
-		$this->nom = Helper::arrayGetString("nom", $data);
-		$this->prenom = Helper::arrayGetString("prenom", $data);
+		Archeo::mergeValue($this->id, $data, "id", "int");
+		Archeo::mergeValue($this->nom, $data, "nom");
+		$this->nom = strtoupper($this->nom);
+		Archeo::mergeValue($this->prenom, $data, "prenom");
+		if (!empty($this->prenom)) $this->prenom[0] = strtoupper($this->prenom[0]);
+	}
+
+	/** Créer une nouvelle Personne à partie d'une nom et d'un prénom. */
+	public static function create(string $firstName, string $lastName) {
+		return new Personne(array("prenom" => trim($firstName), "nom" => trim($lastName)));
 	}
 
 	/**
@@ -35,6 +42,41 @@ class Personne extends Model {
 		$obj = new Personne($res);
 		return $obj;
 	}
+
+	/**
+	 * Ajoute une personne dans la base de données.
+	 * @return bool Indique le succès de l'ajout.
+	 */
+	public function saveOnDB(): bool {
+		// Vérification que le format des valeurs est conforme
+		if ($this->id !== null) return false;
+		if (empty($this->prenom)) return false;
+		if (empty($this->prenom)) return false;
+
+		// Vérification que la personne n'existe pas déjà
+    /** @var array */
+    $results = DB::select()
+      ->from("personne")
+      ->where("prenom", "=", $this->prenom)
+      ->where("nom", "=", $this->nom)
+      ->execute()
+      ->as_array();
+    
+		if (count($results) > 0) {
+      return false;
+    }
+
+		// Préparation des valeurs à envoyer à la BDD
+		$arr = $this->toArray();
+
+    // Insertion
+    list($insertId, $rowAffected) = DB::insert("personne")
+      ->set($arr)
+      ->execute();
+		
+    return $rowAffected === 1;
+	}
+
 
 	/**
 	 * Récupère l'id à partir du nom de la personne.
@@ -78,4 +120,13 @@ class Personne extends Model {
 	public function getNom() { return $this->nom; }
 
 	public function fullName() { return "{$this->nom} {$this->prenom}"; }
+
+	public function toArray(): array {
+		return array(
+			"id" => $this->id,
+			"prenom" => $this->prenom,
+			"nom" => $this->nom
+		);
+	}
+	
 }

@@ -1,6 +1,7 @@
 <?php
 
 use Fuel\Core\Controller;
+use Fuel\Core\DB;
 use Fuel\Core\Input;
 use Fuel\Core\Response;
 use Fuel\Core\View;
@@ -49,5 +50,46 @@ class Controller_Fonction extends Controller {
       "people" => $people,
       "maxResultCount" => $maxResultCount
     )));
+  }
+
+  /** Ajoute une personne dans la BDD selon les données passé en POST. */
+  public function action_add_person() {
+    if (!isset($_POST["first_name"]) || !isset($_POST["last_name"])) {
+      Response::redirect("/accueil");
+    }
+
+    $person = Personne::create($_POST["first_name"], $_POST["last_name"]);
+    $success = $person->saveOnDB();
+    if ($success) echo "1";
+    else echo "0";
+
+    // // Vérification que la personne n'existe pas déjà
+    // /** @var array */
+    // $results = DB::select()
+    //   ->from("personne")
+    //   ->where("prenom", "=", $_POST["first_name"])
+    //   ->where("nom", "=", $_POST["last_name"])
+    //   ->execute()
+    //   ->as_array();
+    // if (count($results) > 0) {
+    //   echo "0";
+    //   return;
+    // }
+
+    // // Préparation de l'insertion
+    // $values = array(
+    //   "id" => null,
+    //   "prenom" => $_POST["first_name"],
+    //   "nom" => $_POST["last_name"]
+    // );
+    // list($insertId, $rowAffected) = DB::insert("personne")
+    //   ->set($values)
+    //   ->execute();
+    // if ($rowAffected === 1) {
+    //   echo "1";
+    // } else {
+    //   echo "0";
+    // }
+
   }
 }

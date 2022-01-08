@@ -225,17 +225,17 @@ if (count($paleos) === 0) $paleos[] = new Personne(array());
 			</div>
 			<div class="modal-body">
 				<div class="form-floating my-2">
-					<?= Form::input("lastName", null, $defaultAttr); ?>
-					<?= Form::label("NOM", "lastName"); ?>
+					<?= Form::input("first_name", null, $defaultAttr); ?>
+					<?= Form::label("Prénom", "first_name"); ?>
 				</div>
 				<div class="form-floating my-2">
-					<?= Form::input("firstName", null, $defaultAttr); ?>
-					<?= Form::label("Prénom", "firstName"); ?>
+					<?= Form::input("last_name", null, $defaultAttr); ?>
+					<?= Form::label("NOM", "last_name"); ?>
 				</div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addPersonPopup">Retour</button>
-				<button type="button" class="btn btn-success" onclick="console.log(`Ajout non implémenté`);">Ajouter</button>
+				<button type="button" class="btn btn-success" onclick="addPersonDB(`form_first_name`, `form_last_name`);">Ajouter</button>
 			</div>
 		</div>
 	</div>

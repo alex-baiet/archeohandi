@@ -1,3 +1,5 @@
+// Ancient code inutilisé
+
 $(document).ready(function (id) {
 
   $("#commune").keyup(function () {
