@@ -13,9 +13,11 @@ var autocompleteField = [];
  * comme valeurs les champs des inputs indiqués.
  * 
  * @param {string} idFirstNameInput 
- * @param {string} idLastNameInput 
+ * @param {string} idLastNameInput
+ * @param {() => void} onSuccess Action à effectuer en cas de succès.
+ * @param {() => void} onFail Action à effectuer en cas d'échec.
  */
-function addPersonDB(idFirstNameInput, idLastNameInput) {
+function addPersonDB(idFirstNameInput, idLastNameInput, onSuccess, onFail) {
 	const firstNameInput = document.getElementById(idFirstNameInput);
 	const lastNameInput = document.getElementById(idLastNameInput);
 	/** @type {string} */
@@ -31,8 +33,8 @@ function addPersonDB(idFirstNameInput, idLastNameInput) {
 			last_name: lastName
 		},
 		success: function (data) {
-			if (data == true) console.log("Personne ajouté !");
-			else console.warn("Echec d'ajout de la personne...");
+			if (data == true) onSuccess();
+			else onFail();
 		}
 	});
 }

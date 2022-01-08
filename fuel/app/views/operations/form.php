@@ -232,10 +232,37 @@ if (count($paleos) === 0) $paleos[] = new Personne(array());
 					<?= Form::input("last_name", null, $defaultAttr); ?>
 					<?= Form::label("NOM", "last_name"); ?>
 				</div>
+				<div class="alert alert-danger text-center my-2" id="alert_add_person" style="visibility: hidden;"></div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addPersonPopup">Retour</button>
-				<button type="button" class="btn btn-success" onclick="addPersonDB(`form_first_name`, `form_last_name`);">Ajouter</button>
+				<script>
+					/** Ajoute une personne à la BDD. */
+					function addPersonDBAction() {
+						let alertElem = document.getElementById("alert_add_person");
+						addPersonDB(
+							`form_first_name`,
+							`form_last_name`,
+							() => 
+								document.getElementById("btn_add_person_back").click(),
+							() => {
+								alertElem.style.visibility = "visible";
+								alertElem.innerHTML = "Un problème est survenu lors de l'ajout de la personne.";
+							}
+						);
+					}
+
+					/** Vide les champs du popup d'ajout de personne. */
+					function resetPopup() {
+						document.getElementById(`alert_add_person`).style.visibility = `hidden`;
+						document.getElementById("form_first_name").value = "";
+						document.getElementById("form_last_name").value = "";
+					}
+				</script>
+				<button type="button" id="btn_add_person_back" class="btn btn-secondary"
+					data-bs-toggle="modal" data-bs-target="#addPersonPopup" onclick="resetPopup()">
+					Retour
+				</button>
+				<button type="button" class="btn btn-success" onclick="addPersonDBAction();">Ajouter</button>
 			</div>
 		</div>
 	</div>

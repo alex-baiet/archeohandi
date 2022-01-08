@@ -63,33 +63,5 @@ class Controller_Fonction extends Controller {
     if ($success) echo "1";
     else echo "0";
 
-    // // Vérification que la personne n'existe pas déjà
-    // /** @var array */
-    // $results = DB::select()
-    //   ->from("personne")
-    //   ->where("prenom", "=", $_POST["first_name"])
-    //   ->where("nom", "=", $_POST["last_name"])
-    //   ->execute()
-    //   ->as_array();
-    // if (count($results) > 0) {
-    //   echo "0";
-    //   return;
-    // }
-
-    // // Préparation de l'insertion
-    // $values = array(
-    //   "id" => null,
-    //   "prenom" => $_POST["first_name"],
-    //   "nom" => $_POST["last_name"]
-    // );
-    // list($insertId, $rowAffected) = DB::insert("personne")
-    //   ->set($values)
-    //   ->execute();
-    // if ($rowAffected === 1) {
-    //   echo "1";
-    // } else {
-    //   echo "0";
-    // }
-
   }
 }
