@@ -37,43 +37,6 @@ class Personne extends Model {
 	}
 
 	/**
-	 * Créer un <select> à partir de toutes les personnes.
-	 * @deprecated Une methode javascript existe pour faire une autocomplétion meilleure.
-	 * 
-	 * @param string $field Valeur du "name" du select.
-	 * @param string $label Nom du label du select.
-	 * @param mixed $idSelected Identifiant de la valeur sélectionnée.
-	 */
-	public static function generateSelect(string $field = "personne", string $label = "Personne", $idSelected = ""): string {
-		// Récupération de tous les objects
-		/** @var Personne[] */
-		$objects = array();
-		$results = Helper::querySelect("SELECT * FROM personne;");
-		foreach ($results as $result) {
-			$objects[] = new Personne($result);
-		}
-		
-		// Création des options
-		$options = array();
-		$options[""] = "Sélectionner";
-		foreach ($objects as $obj) {
-			$options[$obj->getId()] = "{$obj->getPrenom()} {$obj->getNom()}";
-		}
-		
-		// Création du code HTML
-		$html = '<div class="form-floating">';
-		$html .= Form::select(
-			$field,
-			$idSelected,
-			$options,
-			array("class" => "form-select my-2")
-		);
-		$html .= Form::label($label, $field);
-		$html .= '</div>';
-		return $html;
-	}
-
-	/**
 	 * Récupère l'id à partir du nom de la personne.
 	 * 
 	 * @param string Le nom de la personne, au format "NOM Prénom".

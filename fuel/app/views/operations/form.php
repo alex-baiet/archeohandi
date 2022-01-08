@@ -119,6 +119,12 @@ Asset::js("form.js");
 	</div>
 </div>
 
+<!-- Bouton d'ajout de personne -->
+<a href="" data-bs-toggle="modal" data-bs-target="#addPersonPopup">
+	Ajouter une personne
+</a>
+
+<!-- Responsable d'opération -->
 <div class="row my-2">
 	<div class="col-md-6">
 		<div class="form-floating">
@@ -203,19 +209,45 @@ if (count($paleos) === 0) $paleos[] = new Personne(array());
 	
 	<div class="d-md-flex justify-content-md-end col">
 		<?php if (isset($modalBodyMain)): ?>
-			<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Confirmer</button>
+			<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#validationPopup">Confirmer</button>
 		<?php else: ?>
 			<?= Form::submit('submit', 'Modifier', array('class' => 'btn btn-success')); ?>
 		<?php endif; ?>
 	</div>
 </div>
 
+<!-- Popup d'ajout d'une personne -->
+<div class="modal" id="addPersonPopup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addPersonPopupLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="addPersonPopupLabel">Ajouter une personne</h5>
+			</div>
+			<div class="modal-body">
+				<div class="form-floating my-2">
+					<?= Form::input("lastName", null, $defaultAttr); ?>
+					<?= Form::label("NOM", "lastName"); ?>
+				</div>
+				<div class="form-floating my-2">
+					<?= Form::input("firstName", null, $defaultAttr); ?>
+					<?= Form::label("Prénom", "firstName"); ?>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addPersonPopup">Retour</button>
+				<button type="button" class="btn btn-success" onclick="console.log(`Ajout non implémenté`);">Ajouter</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 <?php if (isset($modalBodyMain)): ?>
-	<div class="modal" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	<!-- Popup de confirmation -->
+	<div class="modal" id="validationPopup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="validationPopupLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="staticBackdropLabel">Voulez-vous continuer ?</h5>
+					<h5 class="modal-title" id="validationPopupLabel">Voulez-vous continuer ?</h5>
 				</div>
 				<div class="modal-body">
 					<p>
@@ -224,7 +256,7 @@ if (count($paleos) === 0) $paleos[] = new Personne(array());
 					</p>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Retour</button>
+					<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#validationPopup">Retour</button>
 					<?= Form::submit('confirm_operation', 'Continuer', array('class' => 'btn btn-success')); ?>
 				</div>
 			</div>
