@@ -35,7 +35,7 @@ $all_annee = $all_annee;
 		
 		<!-- Système de recherche (filtre) -->
 		<?php
-			/** @var array Tous les attributs communs des <select>. */
+			/** @var array Tous les attributs communs des select. */
 			$selectAttr = array(
 				"class" => "form-select custom-select my-1 mr-2",
 				"style" => "width:15em"
@@ -77,7 +77,8 @@ $all_annee = $all_annee;
 	</div>
 
 	<?php
-		//Permet de vérifier si dans l'url il y a les différentes options et si oui, cela appel une fonction qui permet d'afficher un message  
+		//Permet de vérifier si dans l'url il y a les différentes options et si oui, cela appel une fonction qui permet d'afficher un message
+		// TODO: Passez ça en POST
 		array_key_exists('erreur_supp_op', $_GET) ? alertBootstrap('Le numéro de l\'opération n\'est pas correcte (nombres autorisés). La suppression ne peut pas s\'effectuer', 'danger') : null;
 		array_key_exists('erreur_supp_bdd', $_GET) ? alertBootstrap('Le numéro de l\'opération n\'existe pas. La suppression ne peut pas s\'effectuer', 'danger') : null;
 

@@ -19,7 +19,7 @@ class Archeo {
 	 * @param Closure $valueRecover Lambda permettant de récupérer la "value" pour les options à partir d'une donnée.
 	 * @param Closure $valueRecover Lambda permettant de récupérer le texte à afficher pour les options à partir d'une donnée.
 	 */
-	public static function generateSelect(string $field, string $label, $idSelected, string $table, Closure $valueRecover, Closure $textRecover): string {
+	public static function generateSelect(string $field, string $label, $idSelected, string $table, Closure $valueRecover, Closure $textRecover, bool $formFloating = true): string {
 		// Récupération de tous les objects
 		$results = Helper::querySelect("SELECT * FROM $table;");
 
@@ -29,17 +29,26 @@ class Archeo {
 		foreach ($results as $result) {
 			$options[$valueRecover($result)] = $textRecover($result);
 		}
+		asort($options);
 		
 		// Création du code HTML
-		$html = '<div class="form-floating">';
-		$html .= Form::select(
-			$field,
-			$idSelected,
-			$options,
-			array("class" => "form-select")
-		);
-		$html .= Form::label($label, $field);
-		$html .= '</div>';
+		if ($formFloating) {
+			$html = '<div class="form-floating">';
+			$html .= Form::select(
+				$field,
+				$idSelected,
+				$options,
+				array("class" => "form-select")
+			);
+			$html .= Form::label($label, $field);
+			$html .= '</div>';
+		} else {
+			$html = "<div class='form-check form-check-inline'>";
+			$html .= Form::label($label, $field);
+			$html .= Form::select($field, $idSelected, $options, array("class" => "form-select custom-select my-1 mr-2", "style" => "width:15em"));
+			$html .= "</div>";
+		}
+
 		return $html;
 	}
 

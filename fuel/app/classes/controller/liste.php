@@ -4,6 +4,7 @@ use Fuel\Core\Controller_Template;
 use Fuel\Core\DB;
 use Fuel\Core\Input;
 use Fuel\Core\View;
+use Model\Chronology;
 use Model\Groupesujet;
 
 class Controller_Liste extends Controller_Template {
@@ -59,8 +60,26 @@ class Controller_Liste extends Controller_Template {
 		// }
 
 		$groups = Groupesujet::fetchAll();
+		
+		// Préparation des valeurs de recherches
+		$allOpName = array();
+		foreach ($groups as $group) {
+			if (!isset($allOpName[$group->getIdOperation()])) {
+				$allOpName[$group->getIdOperation()] = $group->getOperation()->getNomOp();
+			}
+		}
 
-		$data = array("groups" => $groups);
+		$allNMI = array();
+		foreach ($groups as $group) { $allNMI[$group->getNMI()] = $group->getNMI(); }
+
+		$allOpName[""] = "";
+		$allNMI[""] = "";
+
+		asort($allOpName);
+		asort($allNMI);
+
+		// Préparation de la view
+		$data = array("groups" => $groups, "allOpName" => $allOpName, "allNMI" => $allNMI);
 		// $data = array('groupe_sujets' => $groupe_sujets , 'groupe_op'=>$groupe_op, 'all_chrono'=>$all_chrono, 'groupe_NMI'=>$groupe_NMI);
 		$this->template->title = 'Liste des groupes';
 		$this->template->content = View::forge('liste/groupes', $data);

@@ -128,6 +128,15 @@ class Operation extends Model {
 		return $operations;
 	}
 
+	public static function generateSelect(string $field = "id_operation", string $label = "Opération", $idSelected = "", bool $formFloating = true) {
+		$valueRecover = function ($data) { return $data["id_site"]; };
+		$textRecover = function ($data) {
+			$value = new Operation($data);
+			return $value->getNomOp();
+		};
+		return Archeo::generateSelect($field, $label, $idSelected, "operations", $valueRecover, $textRecover, $formFloating);
+	}
+
 	#region Getters
 	public function getIdSite() { return $this->idSite; }
 	public function getIdUser() { return $this->idUser; }
