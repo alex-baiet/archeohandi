@@ -1,3 +1,15 @@
+<?php
+
+use Fuel\Core\Asset;
+use Fuel\Core\DB;
+use Fuel\Core\Form;
+use Model\Groupesujet;
+use Model\Helper;
+
+/** @var Groupesujet[] */
+$groups = $groups;
+
+?>
 <!-- Entête de la page -->
 <div class="container col-auto">
   <h1 class="m-2">Liste des groupes</h1>
@@ -6,7 +18,9 @@
   <a class="btn btn-secondary" href="/public/liste/groupes">Rafraichir la page
     <i class="bi bi-arrow-repeat"></i>
   </a>
+  
   <!-- Système de recherche (filtre) -->
+  <?php /*
   <div name="filtres_recherche" id="filtres_recherche" class="d-none mt-3">
     <?= Form::open('/liste/groupes'); ?>
     <div class="form-group ml-3">
@@ -49,8 +63,9 @@
       </div>
       <?= Form::submit('recherche', 'Rechercher', array('class' => 'btn btn-success btn-sm')); ?>
     </div>
+    <?= Form::close(); ?>
   </div>
-  <?= Form::close(); ?>
+  */ ?>
 </div>
 <br />
 <!-- Contenu principal de la page -->
@@ -69,28 +84,13 @@
             </tr>
           </thead>
           <tbody>
-            <?php foreach ($groupe_sujets as $key) :
-
-              $query = DB::query('SELECT nom_chronologie,date_debut,date_fin FROM chronologie_site WHERE id_chronologie="' . $key['id_chronologie'] . '" ');
-              $chronologie = $query->execute();
-              $chronologie = $chronologie->_results[0];
-
-              $query = DB::query('SELECT nom_op FROM operations WHERE id_site="' . $key['id_operation'] . '" ');
-              $operation = $query->execute();
-              $operation = $operation->_results[0];
-
-            ?>
+            <?php foreach ($groups as $group) : ?>
               <tr class="text-center">
-                <?= '
-              <td>' . $chronologie['nom_chronologie'] . '</td>'; ?>
-                <?= '
-              <td>' . $chronologie['date_debut'] . '</td>'; ?>
-                <?= '
-              <td>' . $chronologie['date_fin'] . '</td>'; ?>
-                <?= '
-              <td>' . $operation['nom_op'] . '</td>'; ?>
-                <?= '
-              <td>' . $key['NMI'] . '</td>'; ?>
+                <td><?= $group->getChronology()->getName(); ?></td>
+                <td><?= $group->getChronology()->getStart(); ?></td>
+                <td><?= $group->getChronology()->getEnd(); ?></td>
+                <td><?= $group->getOperation()->getNomOp(); ?></td>
+                <td><?= $group->getNMI(); ?></td>
               </tr>
             <?php endforeach; ?>
           </tbody>
@@ -101,7 +101,7 @@
 </div>
 <?= Asset::css('scrollbar.css'); ?>
 <!-- Script permet d'afficher ou non les options du filtre -->
-<script>
+<!-- <script>
   $("#id_bouton_filtre").click(function() {
     if ($("#filtres_recherche").hasClass("d-none")) {
       $("#id_bouton_filtre").text("Masquer les filtres de recherche");
@@ -111,4 +111,4 @@
       $("#filtres_recherche").addClass("d-none");
     }
   });
-</script>
+</script> -->

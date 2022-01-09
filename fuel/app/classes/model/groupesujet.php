@@ -41,13 +41,18 @@ class Groupesujet extends Model {
 		return Archeo::fetchSingle($id, "groupe_sujets", function ($data) { return new Groupesujet($data); });
 	}
 
+	/** @return Groupesujet[] */
+	public static function fetchAll(): array {
+		return Archeo::fetchAll("groupe_sujets", function ($data) { return new Groupesujet($data); });
+	}
+
 	#region Getters
 	public function getId() { return $this->id; }
 	public function getIdChronology() { return $this->idChronology; }
 	public function getIdOperation() { return $this->idOperation; }
 	public function getNMI() { return $this->nmi; }
 
-	public function getChronology() {
+	public function getChronology(): ?Chronology {
 		if (!isset($this->chronology)) {
 			if ($this->idChronology === null) $this->chronology = null;
 			else $this->chronology = Chronology::fetchSingle($this->idChronology);
