@@ -14,6 +14,21 @@ class Controller_Operations extends Controller_Template {
 
 	/** Page d'affichages de toutes les opérations */
 	public function action_index() {
+		$data = array();
+
+		// Suppression d'une opération
+		if (isset($_POST['delete_op'])) {
+			echo "deletion d'une operation";
+
+			$result = Operation::deleteOnDB($_POST["delete_op"]);
+			if ($result === null) {
+				$data["msgType"] = "success_delete";
+			} else {
+				$data["msgType"] = "error_delete";
+				$data["msg"] = $result;
+			}
+		}
+
 		// Récupération des opérations
 		$operations = Operation::fetchAll();
 
@@ -56,33 +71,12 @@ class Controller_Operations extends Controller_Template {
 			}
 		}
 
-		// Permet de supprimer une opération quand le bouton de suppression est validée
-		// TODO: Supprimer POUR DE VRAI les données
-		if (Input::post('supp_op')) {
-			// if (is_numeric(Input::post('supp_op'))) {
-			// 	$query = DB::query('SELECT id_site FROM operations WHERE id_site='.Input::post('supp_op').' ');
-			// 	$if_op_ex = $query->execute();
-			// 	$if_op_ex= $if_op_ex->_results;
-
-			// 	if (!empty($if_op_ex)) {
-			// 		Response::redirect('/operations?&success_supp_op');
-			// 	} else {
-			// 		Response::redirect('/operations?&erreur_supp_bdd');
-			// 	}
-			// } else {
-			// 	Response::redirect('/operations?&erreur_supp_op');
-			// }
-			echo "La suppression n'est pas fonctionnelle pour le moment...";
-		}
-
 		// Ajout des valeurs à la view.
-		$data = array(
-			'operations' => $operations,
-			'all_site' => $all_site,
-			'all_user' => $all_user,
-			'all_nom_op' => $all_nom_op,
-			'all_annee' => $all_annee
-		);
+		$data['operations'] = $operations;
+		$data['all_site'] = $all_site;
+		$data['all_user'] = $all_user;
+		$data['all_nom_op'] = $all_nom_op;
+		$data['all_annee'] = $all_annee;
 		$this->template->title = 'Opérations';
 		$this->template->content = View::forge('operations/index', $data, false);
 	}

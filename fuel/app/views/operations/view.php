@@ -2,6 +2,7 @@
 
 use Fuel\Core\Asset;
 use Fuel\Core\Form;
+use Fuel\Core\View;
 use Model\Helper;
 use Model\Operation;
 use Model\Sujethandicape;
@@ -19,7 +20,6 @@ $msg = isset($msg) ? $msg : null;
 
 ?>
 
-<!-- Permet d'afficher un message d'alert avant la confirmation d'une suppression -->
 <script type="text/javascript">
 	function deleteSubject(idSubject) {
 		let btnElem = document.getElementById("form_delete_sujet");
@@ -195,7 +195,13 @@ $msg = isset($msg) ? $msg : null;
 	</div>
 
 	<!-- Popup de confirmation de suppression -->
-	<div class="modal" id="validationPopup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="validationPopupLabel" aria-hidden="true">
+	<?= View::forge("fonction/popup_confirm", array(
+		"title" => "Voulez-vous continuer ?",
+		"bodyText" => "Êtes-vous sûr de vouloir supprimer le sujet ?",
+		"infoText" => "La suppression est irréversible.",
+		"btnName" => "delete_sujet"
+	)); ?>
+	<!-- <div class="modal" id="validationPopup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="validationPopupLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -215,7 +221,7 @@ $msg = isset($msg) ? $msg : null;
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 
 <?php else : ?>
 	<div class="container">

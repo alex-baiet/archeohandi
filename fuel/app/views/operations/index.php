@@ -2,6 +2,8 @@
 
 use Fuel\Core\Asset;
 use Fuel\Core\Form;
+use Fuel\Core\View;
+use Model\Helper;
 use Model\Operation;
 
 /** @var Operation[] */
@@ -14,7 +16,20 @@ $all_user = $all_user;
 $all_nom_op = $all_nom_op;
 /** @var array */
 $all_annee = $all_annee;
+
+/** @var string|null  */
+$msg = isset($msg) ? $msg : null;
+/** @var string|null */
+$msgType = isset($msgType) ? $msgType : null;
+
 ?>
+
+<script type="text/javascript">
+	function deleteOperation(idSubject) {
+		let btnElem = document.getElementById("form_delete_op");
+		btnElem.value = idSubject;
+	}
+</script>
 
 <!-- Entête de la page -->
 <div class="container">
@@ -77,14 +92,13 @@ $all_annee = $all_annee;
 	</div>
 
 	<?php
-		//Permet de vérifier si dans l'url il y a les différentes options et si oui, cela appel une fonction qui permet d'afficher un message
-		// TODO: Passez ça en POST
-		array_key_exists('erreur_supp_op', $_GET) ? alertBootstrap('Le numéro de l\'opération n\'est pas correcte (nombres autorisés). La suppression ne peut pas s\'effectuer', 'danger') : null;
-		array_key_exists('erreur_supp_bdd', $_GET) ? alertBootstrap('Le numéro de l\'opération n\'existe pas. La suppression ne peut pas s\'effectuer', 'danger') : null;
-
-		array_key_exists('success_add', $_GET) ? alertBootstrap("L'ajout a été effectué", 'success') : null;
-		array_key_exists('success_modif', $_GET) ? alertBootstrap('Modification effectuée', 'success') : null;
-		array_key_exists('success_supp_op', $_GET) ? alertBootstrap('Suppression effectuée', 'success') : null;
+		// Affichage message d'erreur / de succès
+		switch ($msgType) {
+			case "error_delete": Helper::alertBootstrap("Une erreur est survenue lors de la suppression de l'opération : $msg", 'danger'); break;
+			case "success_delete": Helper::alertBootstrap("Suppression effectuée", 'success'); break;
+			case "success_add": Helper::alertBootstrap("L'ajout a été effectué", 'success'); break;
+			case "success_update": Helper::alertBootstrap("Modification effectuée", 'success'); break;
+		}
 	?>
 </div>
 <br />
@@ -116,18 +130,26 @@ $all_annee = $all_annee;
 								<td><?= $op->getX() ?></td>
 								<td><?= $op->getY() ?></td>
 								<td class="col-auto">
+
 									<a title="Consulter #<?= $op->getIdSite(); ?>" href="/public/operations/view/<?= $op->getIdSite(); ?>">
 										<?= Asset::img("reply.svg", array("class"=>"icon see", "width" => "30px", "alt" => "Consulter")) ?>
 									</a>
+
 									<a class="" title="Editer #<?= $op->getIdSite(); ?>" href="/public/operations/edit/<?= $op->getIdSite(); ?>">
 										<?= Asset::img("pen.svg", array("class"=>"icon edit", "width" => "24px", "alt" => "Éditer")) ?>
 									</a>
+
 									<form action="" method="post" id="form_suppr_<?= $op->getIdSite(); ?>">
-										<button type="button" class="btn" name="btn_supp_op" value="<?= $op->getIdSite(); ?>">
+										<button
+												type="button"
+												class="btn"
+												data-bs-toggle="modal"
+												data-bs-target="#validationPopup"
+												onclick="deleteOperation(<?= $op->getIdSite(); ?>)">
 											<?= Asset::img("trash.svg", array("class"=>"icon del", "width" => "25px", "alt" => "Supprimer")) ?>
-											<input type="hidden" name="supp_op" value="<?= $op->getIdSite(); ?>">
 										</button>
 									</form>
+
 								</td>
 							</tr>
 						<?php endforeach; ?>
@@ -138,16 +160,14 @@ $all_annee = $all_annee;
 	</div>
 </div>
 
-
+<?= View::forge("fonction/popup_confirm", array(
+	"title" => "Voulez-vous continuer ?",
+	"bodyText" => "Êtes-vous sûr de vouloir supprimer l'opération ?",
+	"infoText" => "La suppression est irréversible.",
+	"btnName" => "delete_op"
+)); ?>
 
 <script>
-	//Permet d'afficher un message d'alert avant la confirmation d'une suppression
-	$("[name=btn_supp_op]").click(function() {
-		var x = $(this).val();
-		if (window.confirm("Vous êtes sur le point de supprimer une opération. La suppression d'une opération comprend aussi la suppression de tous sujets et groupes liés à cette opération. Êtes-vous sûr de supprimer l'opération " + x + " ?")) {
-			$("#form_suppr_" + x).submit();
-		}
-	});
 	//Script permet d'afficher ou non les options du filtre
 	$("#id_bouton_filtre").click(function() {
 		if ($("#filtres_recherche").hasClass("d-none")) {

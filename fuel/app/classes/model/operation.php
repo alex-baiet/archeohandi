@@ -130,6 +130,13 @@ class Operation extends Model {
 		return $operations;
 	}
 
+	public static function deleteOnDB(int $id): ?string {
+		$op = Operation::fetchSingle($id);
+		if ($op === null) return "L'opération à supprimer n'existe pas";
+
+		return "Une erreur juste pour tester mais tout fonctionne";
+	}
+
 	public static function generateSelect(string $field = "id_operation", string $label = "Opération", $idSelected = "", bool $formFloating = true) {
 		$valueRecover = function ($data) { return $data["id_site"]; };
 		$textRecover = function ($data) {
