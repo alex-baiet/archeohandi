@@ -5,18 +5,17 @@ use Fuel\Core\Form;
 use Fuel\Core\View;
 use Model\Helper;
 use Model\Operation;
-use Model\Sujethandicape;
 use Model\Typedepot;
 use Model\Typesepulture;
 
 /** @var Operation Operation actuelle. */
 $operation = $operation;
-/** @var Sujethandicape[] Liste des sujets handicapés concernés par l'opérations. */
-$sujets = $sujets;
 /** @var string Contient le type d'erreur/succès à afficher */
 $msgType = isset($msgType) ? $msgType : null;
 /** @var string Message a afficher. */
 $msg = isset($msg) ? $msg : null;
+
+$sujets = $operation->getSubjects();
 
 ?>
 

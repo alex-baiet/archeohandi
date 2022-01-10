@@ -43,6 +43,8 @@ class Operation extends Model {
 	private $anthropologues = null;
 	/** @var Personne[]|null */
 	private $paleopathologistes = null;
+	/** @var Sujethandicape[]|unset */
+	private array $subjects;
 
 	/**
 	 * Indique que l'objet est valide pour la base de données.
@@ -134,7 +136,16 @@ class Operation extends Model {
 		$op = Operation::fetchSingle($id);
 		if ($op === null) return "L'opération à supprimer n'existe pas";
 
-		return "Une erreur juste pour tester mais tout fonctionne";
+		// Deletion
+
+		DB::delete("etre_anthropologue")->where("id_operation", "=", $id)->execute();
+		DB::delete("etre_paleopathologiste")->where("id_operation", "=", $id)->execute();
+
+		$result = DB::delete("operations")->where("id_site", "=", $id)->execute();
+		if ($result < 1) return "Le sujet n'a pas pû être supprimé";
+
+		// Tous s'est bien passé
+		return null;
 	}
 
 	public static function generateSelect(string $field = "id_operation", string $label = "Opération", $idSelected = "", bool $formFloating = true) {
@@ -164,7 +175,6 @@ class Operation extends Model {
 	public function getArretePrescription() { return $this->arretePrescription; }
 	public function getIdResponsableOp() { return $this->idResponsableOp; }
 	public function getBibliographie() { return $this->bibliographie; }
-	#endregion
 
 	/** Créer un nom pour l'opération */
 	public function getNomOp(): string {
@@ -237,6 +247,25 @@ class Operation extends Model {
 	public function getPaleopathologistes() {
 		return $this->getPersonnes($this->idPaleopathologistes, $this->paleopathologistes, "etre_paleopathologiste");
 	}
+
+	/** @return Sujethandicape[] Liste de tous les sujets de l'opération. */
+	public function getSubjects(): array {
+		if (isset($this->subjects)) return $this->subjects;
+		
+		// Récupération des groupe_sujets
+		$idGroups = Helper::querySelectList('SELECT id FROM groupe_sujets WHERE id_operation=' . $this->getIdSite());
+
+		// Récupération de tous les sujets handicapé des différents groupes
+		$this->subjects = array();
+		foreach ($idGroups as $idGroup) {
+			$result = Helper::querySelectSingle('SELECT * FROM sujet_handicape WHERE id_groupe_sujets=' . $idGroup);
+			$subject = new Sujethandicape($result);
+			if ($subject !== null) $this->subjects[$subject->getId()] = $subject;
+		}
+
+		return $this->subjects;
+	}
+	#endregion
 
 	/**
 	 * Vérifie que toutes les valeurs sont correctes.
