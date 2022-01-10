@@ -37,6 +37,18 @@ class Depot extends Model {
 		return Archeo::fetchSingle($id, "depot", function ($data) { return new Depot($data); });
 	}
 
+	/**
+	 * Supprime le dépôt indiqué de la BDD.
+	 * @return string Message d'erreur en cas de problème.
+	 * @return null Si tout s'est bien passé.
+	 */
+	public static function deleteOnDB(int $id): ?string {
+		$result = DB::delete("depot")->where("id", "=", $id)->execute();
+		if ($result < 1) return "Le dépôt à supprimer n'existe pas";
+
+		return null;
+	}
+
 	public function getId() { return $this->id; }
 	public function getNumInventaire() { return $this->numInventaire; }
 	public function getIdCommune() { return $this->idCommune; }

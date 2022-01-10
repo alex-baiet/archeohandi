@@ -46,6 +46,18 @@ class Groupesujet extends Model {
 		return Archeo::fetchAll("groupe_sujets", function ($data) { return new Groupesujet($data); });
 	}
 
+	/**
+	 * Supprime le groupe indiqué de la BDD.
+	 * @return string Message d'erreur en cas de problème.
+	 * @return null Si tout s'est bien passé.
+	 */
+	public static function deleteOnDB(int $id): ?string {
+		$result = DB::delete("groupe_sujets")->where("id", "=", $id)->execute();
+		if ($result < 1) return "Le groupe de sujet à supprimer n'existe pas";
+
+		return null;
+	}
+
 	#region Getters
 	public function getId() { return $this->id; }
 	public function getIdChronology() { return $this->idChronology; }

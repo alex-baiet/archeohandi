@@ -160,6 +160,38 @@ class Sujethandicape extends Model {
 		return $obj;
 	}
 
+	/**
+	 * Supprime le sujet correspondant à l'id donnée, ainsi que les données des autres tables attachées au sujet.
+	 * @param int Identifiant du sujet.
+	 * @return string Renvoie un message décrivant l'erreur.
+	 * @return null si tout se passe bien.
+	 */
+	public static function deleteOnDB(int $id): ?string {
+		// Vérification que le sujet existe
+		$subject = Sujethandicape::fetchSingle($id);
+		if ($subject === null) {
+			return "Le sujet à supprimer n'existe pas.";
+		}
+
+		// Deletions
+		$result = Depot::deleteOnDB($subject->getIdDepot());
+		if ($result !== null) return $result;
+
+		$result = Groupesujet::deleteOnDB($subject->getIdGroupeSujet());
+		if ($result !== null) return $result;
+
+		DB::delete("accessoire_sujet")->where("id_sujet", "=", $id)->execute();
+		DB::delete("appareil_sujet")->where("id_sujet", "=", $id)->execute();
+		DB::delete("localisation_sujet")->where("id_sujet", "=", $id)->execute();
+		DB::delete("atteinte_pathologie")->where("id_sujet", "=", $id)->execute();
+
+		$result = DB::delete("sujet_handicape")->where("id", "=", $id)->execute();
+		if ($result < 1) return "Le sujet n'a pas pû être supprimé";
+
+		// Tout s'est bien passé.
+		return null;
+	}
+
 	#region Getters
 	public function getId() { return $this->id; }
 	public function getIdSujetHandicape() { return $this->idSujetHandicape; }

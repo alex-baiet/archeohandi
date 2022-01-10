@@ -11,22 +11,30 @@ use Model\Typesepulture;
 $operation = $operation;
 /** @var Sujethandicape[] Liste des sujets handicapés concernés par l'opérations. */
 $sujets = $sujets;
+/** @var string Contient le type d'erreur/succès à afficher */
+$msgType = isset($msgType) ? $msgType : null;
+/** @var string Message a afficher. */
+$msg = isset($msg) ? $msg : null;
 
 ?>
 <div class="container">
 	<h1 class="m-2">Opération <?= $operation->getNomOp(); ?>
-		<a class="btn btn-primary btn-sm" href="/public/sujet/add/<?= $operation->getIdSite(); ?>">Ajouter des sujets
-			<i class="bi bi-plus-circle-fill"></i>
+		<a class="btn btn-primary btn-sm" href="/public/sujet/add/<?= $operation->getIdSite(); ?>">
+			Ajouter des sujets<i class="bi bi-plus-circle-fill"></i>
 		</a>
 	</h1>
 	<p class="text-muted">Ici vous retrouvez toutes les informations de l'opération <strong><?= $operation->getNomOp(); ?></strong>.
 	</p>
 	<?php
-	array_key_exists('erreur_supp_sujet', $_GET) ? Helper::alertBootstrap('Le numéro du sujet n\'est pas correcte. La suppression ne peut pas s\'effectuer', 'danger') : null;
-	array_key_exists('erreur_supp_bdd', $_GET) ? Helper::alertBootstrap('Le numéro du sujet n\'existe pas. La suppression ne peut pas s\'effectuer', 'danger') : null;
-	array_key_exists('success_ajout', $_GET) ? Helper::alertBootstrap('Ajout effectué', 'success') : null;
-	array_key_exists('success_modif', $_GET) ? Helper::alertBootstrap('Modification effectuée', 'success') : null;
-	array_key_exists('success_supp_sujet', $_GET) ? Helper::alertBootstrap('Suppression effectuée', 'success') : null;
+
+	switch ($msgType) {
+		case 'error_delete': Helper::alertBootstrap("Une erreur est survenu lors de la suppression du sujet : $msg", 'danger'); break;
+		case 'success_add': Helper::alertBootstrap('Ajout effectué.', 'success'); break;
+		case 'success_update': Helper::alertBootstrap('Modification effectuée.', 'success'); break;
+		case 'success_delete': Helper::alertBootstrap('Suppression effectuée.', 'success'); break;
+		default: break;
+	}
+
 	?>
 
 	<!-- Contenu de la page. Affichage des informations de l'opération -->
@@ -152,9 +160,9 @@ $sujets = $sujets;
 											<img class="icon edit" width="24px" src="https://archeohandi.huma-num.fr/public/assets/img/pen.svg" alt="Éditer">
 										</a>
 										<form method="post" id="form_suppr_<?= $sujet->getId(); ?>">
-											<button type="button" class="btn" name="btn_supp_sujet" value="<?= $sujet->getId(); ?>">
+											<button type="submit" class="btn" name="delete_sujet" value="<?= $sujet->getId(); ?>">
 												<img class="icon del" width="25px" src="https://archeohandi.huma-num.fr/public/assets/img/trash.svg" alt="Supprimer">
-												<input type="hidden" name="supp_sujet" value="<?= $sujet->getId(); ?>">
+												<?php /* <input type="hidden" name="supp_sujet" value="<?= $sujet->getId(); ?>"> */ ?>
 											</button>
 										</form>
 									</td>

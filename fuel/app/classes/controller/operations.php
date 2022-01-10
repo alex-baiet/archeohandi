@@ -112,6 +112,8 @@ class Controller_Operations extends Controller_Template {
 
 	//L'action view sert pour la page view de opération qui affiche les détails d'une opération
 	public function action_view($id) {
+		$data = array();
+		
 		// Récupération des informations de l'opération
 		$operation = Operation::fetchSingle($id);
 		if ($operation === null) Response::redirect("/operations");
@@ -132,20 +134,19 @@ class Controller_Operations extends Controller_Template {
 
 		//Permet de supprimer un sujet quand l'alert de suppression est validée
 		// TODO: Supprimer POUR DE VRAI les données
-		if (Input::post('supp_sujet')){
-			if (is_numeric(Input::post('supp_sujet'))) {
-				$query = DB::query('SELECT id_sujet_handicape FROM sujet_handicape WHERE id_sujet_handicape='.Input::post('supp_sujet').' ');
-				$if_op_ex = $query->execute();
-				$if_op_ex= $if_op_ex->_results;
-
-				if (!empty($if_op_ex)) Response::redirect('/operations/view/'.$id.'?&success_supp_sujet');
-				else Response::redirect('/operations/view/'.$id.'?&erreur_supp_bdd');
+		if (isset($_POST['delete_sujet'])) {
+			$result = Sujethandicape::deleteOnDB($_POST["delete_sujet"]);
+			if ($result === null) {
+				$data["msgType"] = "success_delete";
+			} else {
+				$data["msgType"] = "error_delete";
+				$data["msg"] = $result;
 			}
-			else Response::redirect('/operations/view/'.$id.'?&erreur_supp_sujet');
 		}
 
 		// Ajout des données à la view
-		$data = array('operation' => $operation, 'sujets' => $sujets);
+		$data["operation"] = $operation;
+		$data["sujets"] = $sujets;
 		$this->template->title = 'Consultation de l\'opération '.$operation->getNomOp();
 		$this->template->content=View::forge('operations/view', $data);
 	}
