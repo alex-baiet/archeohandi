@@ -4,82 +4,32 @@ use Fuel\Core\Controller_Template;
 use Fuel\Core\DB;
 use Fuel\Core\Input;
 use Fuel\Core\View;
-use Model\Chronology;
 use Model\Groupesujet;
 
 class Controller_Liste extends Controller_Template {
 	//L'action groupes sert pour la page groupe qui affiche les différents groupe de sujet
 	public function action_groupes() {
-		// //Permet de récupérer toutes les informations pour le système de filtre
-		// $query = DB::query('SELECT DISTINCT id_operation FROM groupe_sujets ORDER BY id_operation ASC ');
-		// $groupe_op = $query->execute();
-		// $groupe_op= $groupe_op->_results;
-
-		// //Permet de récupérer toutes les informations pour le système de filtre
-		// $query = DB::query('SELECT DISTINCT id_chronologie, nom_chronologie FROM chronologie_site ORDER BY nom_chronologie ASC ');
-		// $all_chrono = $query->execute();
-		// $all_chrono= $all_chrono->_results;
-
-		// //Permet de récupérer toutes les informations pour le système de filtre
-		// $query = DB::query('SELECT DISTINCT NMI FROM groupe_sujets ORDER BY NMI ASC ');
-		// $groupe_NMI = $query->execute();
-		// $groupe_NMI= $groupe_NMI->_results;
-
-		// //Récupère toutes les informations des groupes de sujet
-		// $query = DB::query('SELECT * FROM groupe_sujets ORDER BY id_groupe_sujets ASC ');
-		// $groupe_sujets = $query->execute();
-		// $groupe_sujets= $groupe_sujets->_results;
-
-		//Permet de faire la recherche du filtre
-		// if (Input::post('recherche')) {
-		// 	if (isset($_POST['radio'])) {
-		// 		//Initialisation de qu'est ce qui est recherché et quelle l'information voulu
-		// 		switch ($_POST['radio']) {
-		// 			case 'operation':
-		// 				$what='id_operation';
-		// 				$condition=Input::post('select_operation');
-		// 				break;
-		// 			case 'chronologie':
-		// 				$what='id_chronologie';
-		// 				$condition=Input::post('select_chronologie');
-		// 				break;
-		// 			case 'NMI':
-		// 				$what='NMI';
-		// 				$condition=Input::post('select_NMI');
-		// 				break;
-		// 			default:
-		// 				$what="";
-		// 				$condition="";
-		// 				break;
-		// 		}
-		// 		//Récupère les données de ce qui recherché
-		// 		$query = DB::query('SELECT * FROM groupe_sujets WHERE '.$what.'= "'.$condition.'" ');
-		// 		$groupe_sujets = $query->execute();
-		// 		$groupe_sujets= $groupe_sujets->_results;
-		// 	}
-		// }
-
 		$groups = Groupesujet::fetchAll();
+		$filteredGroups = array();
 		
-		// Préparation des valeurs de recherches
-		$allOpName = array();
-		foreach ($groups as $group) {
-			if (!isset($allOpName[$group->getIdOperation()])) {
-				$allOpName[$group->getIdOperation()] = $group->getOperation()->getNomOp();
+		// Application des filtres
+		if (isset($_GET["search"])) {
+			$filterOp = $_GET["id_operation"];
+			$filterChrono = $_GET["id_chronology"];
+			$filterNMI = $_GET["nmi"];
+
+			// Application des filtres
+			foreach ($groups as $group) {
+				$toAdd = true;
+				if (!empty($filterOp) && $group->getIdOperation() != $filterOp) $toAdd = false;
+				if (!empty($filterChrono) && $group->getIdChronology() != $filterChrono) $toAdd = false;
+				if (!empty($filterNMI) && $group->getNMI() != $filterNMI) $toAdd = false;
+				if ($toAdd) $filteredGroups[] = $group;
 			}
 		}
 
-		$allNMI = array();
-		foreach ($groups as $group) { $allNMI[$group->getNMI()] = $group->getNMI(); }
-
-		$allOpName[""] = "";
-		$allNMI[""] = "";
-
-		asort($allOpName);
-		asort($allNMI);
-
 		// Préparation de la view
-		$data = array("groups" => $groups, "allOpName" => $allOpName, "allNMI" => $allNMI);
+		$data = array("groups" => $filteredGroups);
 		// $data = array('groupe_sujets' => $groupe_sujets , 'groupe_op'=>$groupe_op, 'all_chrono'=>$all_chrono, 'groupe_NMI'=>$groupe_NMI);
 		$this->template->title = 'Liste des groupes';
 		$this->template->content = View::forge('liste/groupes', $data);

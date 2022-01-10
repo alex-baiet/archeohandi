@@ -1,7 +1,6 @@
 <?php
 
 use Fuel\Core\Asset;
-use Fuel\Core\DB;
 use Fuel\Core\Form;
 use Model\Archeo;
 use Model\Chronology;
@@ -10,10 +9,6 @@ use Model\Operation;
 
 /** @var Groupesujet[] */
 $groups = $groups;
-/** @var array */
-$allOpName = $allOpName;
-/** @var array */
-$allNMI = $allNMI;
 
 ?>
 <!-- Entête de la page -->
@@ -33,21 +28,28 @@ $allNMI = $allNMI;
 	);
 	?>
 	<div name="filtres_recherche" id="filtres_recherche" class="d-none mt-3">
-		<?= Form::open('/liste/groupes'); ?>
+		<?=
+		Form::open(array(
+			"action" => "/liste/groupes",
+			"method" => "GET",
+			
+		));
+		?>
 		<div class="form-group ml-3">
+
 			<!-- Champ opération -->
-			<?= Operation::generateSelect("id_operation", "Operation", "", false); ?>
+			<?= Operation::generateSelect("id_operation", "Operation", !empty($_GET["id_operation"]) ? intval($_GET["id_operation"]) : "", false); ?>
 
 			<!-- Champ nom de chronologie -->
-			<?= Chronology::generateSelect("id_chronology", "Chronologie", "", false); ?>
+			<?= Chronology::generateSelect("id_chronology", "Chronologie", !empty($_GET["id_chronology"]) ? intval($_GET["id_chronology"]) : "", false); ?>
 
 			<!-- Champ NMI -->
 			<?php
 			$valueTrans = function ($data) { return $data["NMI"]; };
-			echo Archeo::generateSelect("nmi", "NMI", "", "groupe_sujets", $valueTrans, $valueTrans, false);
+			echo Archeo::generateSelect("nmi", "NMI", !empty($_GET["nmi"]) ? intval($_GET["nmi"]) : "", "groupe_sujets", $valueTrans, $valueTrans, false);
 			?>
-			
-			<?= Form::submit('recherche', 'Rechercher', array('class' => 'btn btn-success btn-sm')); ?>
+
+			<?= Form::submit('search', 'Rechercher', array('class' => 'btn btn-success btn-sm')); ?>
 		</div>
 		<?= Form::close(); ?>
 	</div>
