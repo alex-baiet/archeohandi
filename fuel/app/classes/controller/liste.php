@@ -18,7 +18,6 @@ class Controller_Liste extends Controller_Template {
 			$filterChrono = $_GET["id_chronology"];
 			$filterNMI = $_GET["nmi"];
 
-			// Application des filtres
 			foreach ($groups as $group) {
 				$toAdd = true;
 				if (!empty($filterOp) && $group->getIdOperation() != $filterOp) $toAdd = false;

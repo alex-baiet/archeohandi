@@ -74,25 +74,27 @@ class Operation extends Model {
 		$this->anthropologues = null;
 
 		// Fusion des valeurs
-		if (isset($data["id_site"])) $this->idSite = $data["id_site"];
-		if (isset($data["id_user"])) $this->idUser = $data["id_user"];
-		if (isset($data["a_revoir"])) $this->aRevoir = $data["a_revoir"];
-		if (isset($data["annee"])) $this->annee = $data["annee"];
-		if (isset($data["id_commune"])) $this->idCommune = intval($data["id_commune"]);
-		if (isset($data["adresse"])) $this->adresse = $data["adresse"];
-		if (isset($data["X"])) $this->x = $data["X"];
-		if (isset($data["Y"])) $this->y = $data["Y"];
-		if (isset($data["id_organisme"])) $this->idOrganisme = intval($data["id_organisme"]);
-		if (isset($data["id_type_op"])) $this->idTypeOp = intval($data["id_type_op"]);
-		if (isset($data["EA"])) $this->EA = $data["EA"];
-		if (isset($data["OA"])) $this->OA = $data["OA"];
-		if (isset($data["patriarche"])) $this->patriarche = $data["patriarche"];
-		if (isset($data["numero_operation"])) $this->numeroOperation = $data["numero_operation"];
-		if (isset($data["arrete_prescription"])) $this->arretePrescription = $data["arrete_prescription"];
-		if (isset($data["id_responsable_op"])) $this->idResponsableOp = intval($data["id_responsable_op"]);
-		if (isset($data["id_anthropologues[]"])) $this->idAnthropologues = $data["id_anthropologues[]"];
-		if (isset($data["id_paleopathologiste[]"])) $this->paleopathologiste = $data["id_paleopathologiste[]"];
-		if (isset($data["bibliographie"])) $this->bibliographie = $data["bibliographie"];
+		Archeo::mergeValue($this->idSite, $data, "id_site");
+
+		Archeo::mergeValue($this->idSite, $data, "id_site");
+		Archeo::mergeValue($this->idUser, $data, "id_user");
+		Archeo::mergeValue($this->aRevoir, $data, "a_revoir");
+		Archeo::mergeValue($this->annee, $data, "annee", "int");
+		Archeo::mergeValue($this->idCommune, $data, "id_commune", "int");
+		Archeo::mergeValue($this->adresse, $data, "adresse");
+		Archeo::mergeValue($this->x, $data, "X");
+		Archeo::mergeValue($this->y, $data, "Y");
+		Archeo::mergeValue($this->idOrganisme, $data, "id_organisme", "int");
+		Archeo::mergeValue($this->idTypeOp, $data, "id_type_op", "int");
+		Archeo::mergeValue($this->EA, $data, "EA");
+		Archeo::mergeValue($this->OA, $data, "OA");
+		Archeo::mergeValue($this->patriarche, $data, "patriarche");
+		Archeo::mergeValue($this->numeroOperation, $data, "numero_operation");
+		Archeo::mergeValue($this->arretePrescription, $data, "arrete_prescription");
+		Archeo::mergeValue($this->idResponsableOp, $data, "id_responsable_op", "int");
+		Archeo::mergeValue($this->idAnthropologues, $data, "id_anthropologues[]");
+		Archeo::mergeValue($this->paleopathologiste, $data, "id_paleopathologiste[]");
+		Archeo::mergeValue($this->bibliographie, $data, "bibliographie");
 
 		if (isset($data["commune"])) $this->idCommune = Commune::nameToId($data["commune"]);
 		if (isset($data["responsable_op"])) $this->idResponsableOp = Personne::nameToId($data["responsable_op"]);
