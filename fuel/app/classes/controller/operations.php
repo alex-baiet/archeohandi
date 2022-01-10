@@ -114,6 +114,17 @@ class Controller_Operations extends Controller_Template {
 	public function action_view($id) {
 		$data = array();
 		
+		// Suppression d'un sujet (si l'utilisateur le demande)
+		if (isset($_POST['delete_sujet'])) {
+			$result = Sujethandicape::deleteOnDB($_POST["delete_sujet"]);
+			if ($result === null) {
+				$data["msgType"] = "success_delete";
+			} else {
+				$data["msgType"] = "error_delete";
+				$data["msg"] = $result;
+			}
+		}
+
 		// Récupération des informations de l'opération
 		$operation = Operation::fetchSingle($id);
 		if ($operation === null) Response::redirect("/operations");
@@ -129,18 +140,6 @@ class Controller_Operations extends Controller_Template {
 			foreach ($results as $res) {
 				// Ajout d'un sujet à la liste.
 				array_push($sujets, new Sujethandicape($res));
-			}
-		}
-
-		//Permet de supprimer un sujet quand l'alert de suppression est validée
-		// TODO: Supprimer POUR DE VRAI les données
-		if (isset($_POST['delete_sujet'])) {
-			$result = Sujethandicape::deleteOnDB($_POST["delete_sujet"]);
-			if ($result === null) {
-				$data["msgType"] = "success_delete";
-			} else {
-				$data["msgType"] = "error_delete";
-				$data["msg"] = $result;
 			}
 		}
 

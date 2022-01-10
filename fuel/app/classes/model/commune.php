@@ -32,18 +32,9 @@ class Commune extends Model {
 		$this->population = Helper::arrayGetString("population", $values);
 	}
 
-	/**
-	 * Retourne la commune correspondant à l'id donné.
-	 * 
-	 * @param int $id Identifiant de la commune.
-	 * @return Commune|null Le résultat est null si aucune commune ne correspond à l'id donné.
-	 */
-	public static function fetchSingle(int $id) {
-		if (!is_numeric($id)) return null;
-
-		$res = Helper::querySelectSingle("SELECT * FROM commune WHERE id=$id;");
-		if ($res === null) return null;
-		return new Commune($res);
+	/** Retourne la commune correspondant à l'id donné. */
+	public static function fetchSingle(?int $id): ?Commune {
+		return Archeo::fetchSingle($id, "commune", function ($data) { return new Commune($data); });
 	}
 
 	/**

@@ -174,11 +174,15 @@ class Sujethandicape extends Model {
 		}
 
 		// Deletions
-		$result = Depot::deleteOnDB($subject->getIdDepot());
-		if ($result !== null) return $result;
-
-		$result = Groupesujet::deleteOnDB($subject->getIdGroupeSujet());
-		if ($result !== null) return $result;
+		if ($subject->getIdDepot() !== null) {
+			$result = Depot::deleteOnDB($subject->getIdDepot());
+			if ($result !== null) return $result;
+		}
+		
+		if ($subject->getIdGroupeSujet() !== null) {
+			$result = Groupesujet::deleteOnDB($subject->getIdGroupeSujet());
+			if ($result !== null) return $result;
+		}
 
 		DB::delete("accessoire_sujet")->where("id_sujet", "=", $id)->execute();
 		DB::delete("appareil_sujet")->where("id_sujet", "=", $id)->execute();

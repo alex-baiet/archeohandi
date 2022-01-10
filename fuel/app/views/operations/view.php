@@ -1,6 +1,7 @@
 <?php
 
 use Fuel\Core\Asset;
+use Fuel\Core\Form;
 use Model\Helper;
 use Model\Operation;
 use Model\Sujethandicape;
@@ -17,6 +18,15 @@ $msgType = isset($msgType) ? $msgType : null;
 $msg = isset($msg) ? $msg : null;
 
 ?>
+
+<!-- Permet d'afficher un message d'alert avant la confirmation d'une suppression -->
+<script type="text/javascript">
+	function deleteSubject(idSubject) {
+		let btnElem = document.getElementById("form_delete_sujet");
+		btnElem.value = idSubject;
+	}
+</script>
+
 <div class="container">
 	<h1 class="m-2">Opération <?= $operation->getNomOp(); ?>
 		<a class="btn btn-primary btn-sm" href="/public/sujet/add/<?= $operation->getIdSite(); ?>">
@@ -27,6 +37,7 @@ $msg = isset($msg) ? $msg : null;
 	</p>
 	<?php
 
+	// Affichage message d'erreur / succès
 	switch ($msgType) {
 		case 'error_delete': Helper::alertBootstrap("Une erreur est survenu lors de la suppression du sujet : $msg", 'danger'); break;
 		case 'success_add': Helper::alertBootstrap('Ajout effectué.', 'success'); break;
@@ -153,18 +164,26 @@ $msg = isset($msg) ? $msg : null;
 									<td><?= $typeDepot->getNom() ?></td>
 									<td><?= $typeSepulture->getNom() ?></td>
 									<td class="col-auto">
+
 										<a title="Consulter #<?= $sujet->getId(); ?>" href="/public/sujet/view/<?= $sujet->getId(); ?>">
 											<img class="icon see" width="30px" src="https://archeohandi.huma-num.fr/public/assets/img/reply.svg" alt="Consulter">
 										</a>
+										
 										<a title="Editer #<?= $sujet->getId(); ?>" href="/public/sujet/edit/<?= $sujet->getId(); ?>">
 											<img class="icon edit" width="24px" src="https://archeohandi.huma-num.fr/public/assets/img/pen.svg" alt="Éditer">
 										</a>
-										<form method="post" id="form_suppr_<?= $sujet->getId(); ?>">
-											<button type="submit" class="btn" name="delete_sujet" value="<?= $sujet->getId(); ?>">
+										
+										<?= Form::open(array("method" => "POST")); ?>
+											<button
+												type="button"
+												class="btn"
+												data-bs-toggle="modal"
+												data-bs-target="#validationPopup"
+												onclick="deleteSubject(<?= $sujet->getId(); ?>)">
 												<img class="icon del" width="25px" src="https://archeohandi.huma-num.fr/public/assets/img/trash.svg" alt="Supprimer">
-												<?php /* <input type="hidden" name="supp_sujet" value="<?= $sujet->getId(); ?>"> */ ?>
 											</button>
-										</form>
+										<?= Form::close(); ?>
+										
 									</td>
 								</tr>
 							<?php endforeach; ?>
@@ -174,19 +193,34 @@ $msg = isset($msg) ? $msg : null;
 			</div>
 		</div>
 	</div>
+
+	<!-- Popup de confirmation de suppression -->
+	<div class="modal" id="validationPopup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="validationPopupLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="validationPopupLabel">Voulez-vous continuer ?</h5>
+				</div>
+				<div class="modal-body">
+					<p>
+						Êtes-vous sûr de vouloir supprimer le sujet ?<br><br>
+						<i class='bi bi-info-circle-fill'></i> La suppression est irréversible.
+					</p>
+				</div>
+				<div class="modal-footer">
+					<form method="POST">
+						<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#validationPopup">Retour</button>
+						<button type="submit" name="delete_sujet" id="form_delete_sujet" value="" class="btn btn-success">Continuer</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
 <?php else : ?>
 	<div class="container">
 		<h2>Aucun sujets handicapés</h2>
 	</div>
 <?php endif; ?>
 
-<!-- Permet d'afficher un message d'alert avant la confirmation d'une suppression -->
-<script type="text/javascript">
-	$("[name=btn_supp_sujet]").click(function() {
-		var x = $(this).val();
-		if (window.confirm("Vous êtes sur le point de supprimer un sujet. Êtes-vous sûr de supprimer le sujet " + x + " ?")) {
-			$("#form_suppr_" + x).submit();
-		}
-	});
-</script>
 <?= Asset::css('scrollbar.css'); ?>

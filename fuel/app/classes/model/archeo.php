@@ -60,8 +60,8 @@ class Archeo {
 	 * @return mixed Revoie les données transformées.
 	 * @return null En cas d'échec.
 	 */
-	public static function fetchSingle(int $id, string $table, Closure $dataReformat) {
-		if (!is_numeric($id)) return null;
+	public static function fetchSingle(?int $id, string $table, Closure $dataReformat) {
+		if ($id === null) return null;
 		$res = Helper::querySelectSingle("SELECT * FROM $table WHERE id=$id;");
 		if ($res === null) return null;
 		return $dataReformat($res);
