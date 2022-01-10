@@ -200,27 +200,6 @@ $sujets = $operation->getSubjects();
 		"infoText" => "La suppression est irréversible.",
 		"btnName" => "delete_sujet"
 	)); ?>
-	<!-- <div class="modal" id="validationPopup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="validationPopupLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="validationPopupLabel">Voulez-vous continuer ?</h5>
-				</div>
-				<div class="modal-body">
-					<p>
-						Êtes-vous sûr de vouloir supprimer le sujet ?<br><br>
-						<i class='bi bi-info-circle-fill'></i> La suppression est irréversible.
-					</p>
-				</div>
-				<div class="modal-footer">
-					<form method="POST">
-						<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#validationPopup">Retour</button>
-						<button type="submit" name="delete_sujet" id="form_delete_sujet" value="" class="btn btn-success">Continuer</button>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div> -->
 
 <?php else : ?>
 	<div class="container">

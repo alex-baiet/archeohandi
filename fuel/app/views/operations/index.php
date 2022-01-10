@@ -38,7 +38,7 @@ $msgType = isset($msgType) ? $msgType : null;
 	<h1 class="m-2">Opérations (<?= count($operations); ?>)</h1>
 
 	<!-- Bouton "Ajout d'un opération -->
-	<a class="btn btn-primary btn-sm" href="/public/operations/add">Ajouter une opération<i class="bi bi-plus-circle-fill"></i></a>
+	<a class="btn btn-primary btn-sm" href="/public/operations/add">Ajouter une opération <i class="bi bi-plus-circle-fill"></i></a>
 	
 	<p class="text-muted">Ici vous retrouvez toutes les informations sur les opérations.</p>
 

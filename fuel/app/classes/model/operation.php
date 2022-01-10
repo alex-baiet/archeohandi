@@ -137,12 +137,16 @@ class Operation extends Model {
 		if ($op === null) return "L'opération à supprimer n'existe pas";
 
 		// Deletion
+		foreach ($op->getSubjects() as $subject) {
+			$result = Sujethandicape::deleteOnDB($subject->getId());
+			if ($result !== null) return "$result (sujet n°{$subject->getId()})";
+		}
 
 		DB::delete("etre_anthropologue")->where("id_operation", "=", $id)->execute();
 		DB::delete("etre_paleopathologiste")->where("id_operation", "=", $id)->execute();
 
 		$result = DB::delete("operations")->where("id_site", "=", $id)->execute();
-		if ($result < 1) return "Le sujet n'a pas pû être supprimé";
+		if ($result < 1) return "L'opération n'a pas pû être supprimé";
 
 		// Tous s'est bien passé
 		return null;
@@ -259,8 +263,10 @@ class Operation extends Model {
 		$this->subjects = array();
 		foreach ($idGroups as $idGroup) {
 			$result = Helper::querySelectSingle('SELECT * FROM sujet_handicape WHERE id_groupe_sujets=' . $idGroup);
-			$subject = new Sujethandicape($result);
-			if ($subject !== null) $this->subjects[$subject->getId()] = $subject;
+			if ($result !== null) {
+				$subject = new Sujethandicape($result);
+				$this->subjects[$subject->getId()] = $subject;
+			}
 		}
 
 		return $this->subjects;
