@@ -16,7 +16,7 @@ Asset::js("form.js");
 ?>
 
 <div class="container">
-	<h1 class="m-2">Ajouter des sujets handicapés <a class="btn btn-sm btn-secondary" href="/public/add/sujet/<?= $idOperation; ?>">Rafraichir la page <i class="bi bi-arrow-repeat"></i></a></h1>
+	<h1 class="m-2">Ajouter des sujets handicapés</h1>
 	<?php $op = Operation::fetchSingle($idOperation); ?>
 	<p class="text-muted">Opération "<?= $op->getNomOp(); ?>"</p>
 

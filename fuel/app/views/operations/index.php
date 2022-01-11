@@ -44,10 +44,7 @@ $msgType = isset($msgType) ? $msgType : null;
 
 	<div class="ml-3">
 		<button type="button" id="id_bouton_filtre" class="btn btn-danger">Afficher les filtres de recherche</button>
-		<a class="btn btn-secondary" href="/public/operations">Rafraichir la page
-			<i class="bi bi-arrow-repeat"></i>
-		</a>
-		
+
 		<!-- Système de recherche (filtre) -->
 		<?php
 			/** @var array Tous les attributs communs des select. */

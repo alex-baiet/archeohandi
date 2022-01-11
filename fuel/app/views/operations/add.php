@@ -13,7 +13,6 @@ $operation;
 	<div class="container">
 		<h1 class="m-2">
 			Ajout d'une opération
-			<a class="btn btn-sm btn-secondary" href="/public/operations/add">Rafraichir la page <i class="bi bi-arrow-repeat"></i></a>
 		</h1>
 		<p class="text-muted">
 			Ici vous pouvez ajouter une opération de façon simplifiée.

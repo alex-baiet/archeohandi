@@ -5,6 +5,7 @@ use Fuel\Core\Input;
 use Fuel\Core\Response;
 use Fuel\Core\View;
 use Model\Helper;
+use Model\Operation;
 use Model\Sujethandicape;
 
 class Controller_Sujet extends Controller_Template {
@@ -21,6 +22,9 @@ class Controller_Sujet extends Controller_Template {
 	}
 
 	public function action_edit($id) {
+		$subject = Sujethandicape::fetchSingle($id);
+		if ($subject === null) Response::redirect("accueil");
+
 		if (Input::method() === "POST") {
 			// Maj du sujet
 			$subject = new Sujethandicape($_POST);
@@ -28,13 +32,6 @@ class Controller_Sujet extends Controller_Template {
 				Response::redirect("operations/view/".$subject->getGroup()->getIdOperation());
 			} else {
 				Helper::varDump($_POST);
-			}
-
-		} else {
-			// Récupération des infos depuis la BDD
-			$subject = Sujethandicape::fetchSingle($id);
-			if (Controller_Sujet::DEBUG === true) {
-				// Helper::varDump($subject);
 			}
 		}
 
@@ -46,6 +43,8 @@ class Controller_Sujet extends Controller_Template {
 
 	public function action_add($id) {
 		$data = array('idOperation' => $id);
+
+		if (Operation::fetchSingle($id) === null) Response::redirect("accueil");
 
 		if (Input::method() === "POST") {
 			// Recréation du sujet à partir des valeurs entrées

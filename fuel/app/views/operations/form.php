@@ -66,10 +66,10 @@ Form::open(array(
 		</div>
 	</div>
 </div>
-<div class="col-md-12">
+<?php /*<div class="col-md-12">
 	<?= Form::label('À revoir', 'a_revoir'); ?>
 	<?= Form::textarea("a_revoir", $operation->getARevoir(), array("class" => "form-control")); ?>
-</div>
+</div>*/ ?>
 
 <div class="row my-4">
 	<div class="col-md-4">
