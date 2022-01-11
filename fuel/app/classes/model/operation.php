@@ -4,6 +4,7 @@ namespace Model;
 
 use Fuel\Core\DB;
 use Fuel\Core\Model;
+use InvalidArgumentException;
 
 /** Représentation d'une opération dans la base de données. */
 class Operation extends Model {
@@ -106,7 +107,11 @@ class Operation extends Model {
 			}
 		}
 
-		if (isset($data["commune"])) $this->idCommune = Commune::nameToId($data["commune"]);
+		try {
+			if (isset($data["commune"])) $this->idCommune = Commune::nameToId($data["commune"]);
+		} catch (InvalidArgumentException $e) {
+			$this->idCommune = null;
+		}
 	}
 
 	/**
