@@ -34,7 +34,7 @@ class Sujethandicape extends Model {
 	/** @var Typesepulture|null|unset */
 	private $typeSepulture;
 	/** @var Mobilier[]|unset */
-	private $furnitures;
+	private array $furnitures;
 	/** @var Depot|null|unset */
 	private $depot;
 	/** @var Subjectdiagnosis[]|unset Array au format id_diagnostic => SubjectDiagnosis */
@@ -384,6 +384,16 @@ class Sujethandicape extends Model {
 		$this->validation->resetValidation();
 		$this->itemsHelp = $items;
 	}
+
+	public function setIdSujetHandicape(string $value) {
+		$this->validation->resetValidation();
+		$this->idSujetHandicape = $value;
+	}
+
+	/** Réinitialise l'id pour permettre de dupliquer les données dans la BDD. */
+	public function resetId() {
+		$this->id = null;
+	}
 	#endregion
 
 	#region ValidateAndSave
@@ -454,7 +464,7 @@ class Sujethandicape extends Model {
 		$this->updateOnDB(
 			"accessoire_sujet",
 			"id_sujet",
-			$this->furnitures,
+			$this->getFurnitures(),
 			function (Mobilier $furniture) { return array(
 				"id_sujet" => $this->id,
 				"id_mobilier" => $furniture->getId()
@@ -465,7 +475,7 @@ class Sujethandicape extends Model {
 		$this->updateOnDB(
 			"appareil_sujet",
 			"id_sujet",
-			$this->itemsHelp,
+			$this->getItemsHelp(),
 			function (Appareil $item) { return array(
 				"id_sujet" => $this->id,
 				"id_appareil" => $item->getId()
@@ -476,7 +486,7 @@ class Sujethandicape extends Model {
 		$this->updateOnDB(
 			"atteinte_pathologie",
 			"id_sujet",
-			$this->pathologies,
+			$this->getPathologies(),
 			function (Pathology $pathology) { return array(
 				"id_sujet" => $this->id,
 				"id_pathologie" => $pathology->getId()

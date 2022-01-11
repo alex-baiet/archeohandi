@@ -23,6 +23,8 @@ Asset::js("form.js");
 	<?php
 	$data = array("idOperation" => $idOperation, "btnStay" => true);
 	if (isset($subject)) $data["subject"] = $subject;
+	if (isset($msg)) $data["msg"] = $msg;
+	if (isset($msgType)) $data["msgType"] = $msgType;
 	?>
 	<?= View::forge("sujet/form", $data); ?>
 </div>

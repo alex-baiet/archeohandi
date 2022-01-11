@@ -106,7 +106,8 @@ $subject = $subject;
 				</div>
 			</div>
 			<div class="col">
-				<div class="p-2">Commune : <?= $depot->getCommune()->fullName() ?></div>
+				<?php $commune = $depot->getCommune(); ?>
+				<div class="p-2">Commune : <?= $commune !== null ? $commune()->fullName() : "aucun" ?></div>
 			</div>
 			<div class="col">
 				<div class="p-2">Adresse : <?= $depot->getAdresse(); ?></div>

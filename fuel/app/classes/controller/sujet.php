@@ -49,14 +49,19 @@ class Controller_Sujet extends Controller_Template {
 
 		if (Input::method() === "POST") {
 			// Recréation du sujet à partir des valeurs entrées
-			$subject = new Sujethandicape($_POST, true);
-			$data["subject"] = $subject;
-			if ($subject->saveOnDB() && Controller_Sujet::DEBUG === false) {
+			$subject = new Sujethandicape($_POST);
+			if ($subject->saveOnDB()) {
 				if (!$_POST["stayOnPage"]) Response::redirect("/operations/view/$id");
-			} else {
-				if (Controller_Sujet::DEBUG === true) Helper::varDump($subject);
-			}
+				$data["msgType"] = "success";
+				$data["msg"] = "Le sujet à bien été ajouté.";
 
+				$copy = new Sujethandicape($_POST);
+				$copy->setIdSujetHandicape("");
+				$data["subject"] = $copy;
+			} else {
+				// Problème lors de l'ajout
+				$data["subject"] = $subject;
+			}
 		}
 
 		$this->template->title = "Ajouter des sujets";
