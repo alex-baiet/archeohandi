@@ -387,7 +387,7 @@ Form::open(array(
 
 		<?php if ($btnStay) : ?>
 			<button type="submit" name="stayOnPage" value="1" class="btn btn-success" style="margin-left: 10px">
-				Confirmer et continuer
+				Confirmer et dupliquer la fiche
 			</button>
 		<?php endif; ?>
 	</div>

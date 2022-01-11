@@ -392,6 +392,8 @@ class Sujethandicape extends Model {
 
 		return $this->validation->validate(function () {
 			$validation = $this->validation;
+			$this->idSujetHandicape = Helper::secureString($this->idSujetHandicape);
+			if (strlen($this->idSujetHandicape) === 0) $validation->invalidate("Indiquez un identifiant pour le sujet.");
 			if ($this->group === null || $this->group->getChronology() === null) $validation->invalidate("Choisissez une valeur pour la chronologie.");
 			if ($this->ageMin > $this->ageMax) $validation->invalidate("L'âge minimum doit être inférieur à l'âge maximum.");
 			if ($this->datingMin > $this->datingMax) $validation->invalidate("La datation minimum doit être inférieur à la datation maximum.");
