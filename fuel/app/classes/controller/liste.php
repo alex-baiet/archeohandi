@@ -9,6 +9,7 @@ use Model\Groupesujet;
 class Controller_Liste extends Controller_Template {
 	//L'action groupes sert pour la page groupe qui affiche les différents groupe de sujet
 	public function action_groupes() {
+		$data = array();
 		$groups = Groupesujet::fetchAll();
 		$filteredGroups = array();
 		
@@ -25,10 +26,11 @@ class Controller_Liste extends Controller_Template {
 				if (!empty($filterNMI) && $group->getNMI() != $filterNMI) $toAdd = false;
 				if ($toAdd) $filteredGroups[] = $group;
 			}
+			$data["groups"] = $filteredGroups;
+		} else {
+			$data["groups"] = $groups;
 		}
 
-		// Préparation de la view
-		$data = array("groups" => $filteredGroups);
 		// $data = array('groupe_sujets' => $groupe_sujets , 'groupe_op'=>$groupe_op, 'all_chrono'=>$all_chrono, 'groupe_NMI'=>$groupe_NMI);
 		$this->template->title = 'Liste des groupes';
 		$this->template->content = View::forge('liste/groupes', $data);
