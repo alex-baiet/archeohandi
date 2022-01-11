@@ -270,7 +270,7 @@ class Operation extends Model {
 		if (!Helper::stringIsInt($this->annee)) $this->invalidate("L'année indiquée doit être un nombre.");
 		if (!is_numeric($this->x)) $this->invalidate("La position sur x (longitude) indiquée doit être un nombre.");
 		if (!is_numeric($this->y)) $this->invalidate("La position sur y (latitude) indiquée doit être un nombre.");
-		if ($this->getCommune() === null && $this->idCommune !== null) $this->invalidate("La commune n'existe pas.");
+		if ($this->getCommune() === null) $this->invalidate("La commune n'existe pas.");
 		if ($this->getOrganisme() === null) $this->invalidate("L'organisation n'existe pas.");
 		if ($this->getTypeOperation() === null) $this->invalidate("Le type d'opération n'existe pas.");
 		$this->aRevoir = Helper::secureString($this->aRevoir);
