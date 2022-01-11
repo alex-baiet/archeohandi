@@ -107,11 +107,8 @@ class Operation extends Model {
 			}
 		}
 
-		try {
-			if (isset($data["commune"])) $this->idCommune = Commune::nameToId($data["commune"]);
-		} catch (InvalidArgumentException $e) {
-			$this->idCommune = null;
-		}
+		if (isset($data["commune"])) $this->idCommune = Commune::nameToId($data["commune"]);
+
 	}
 
 	/**

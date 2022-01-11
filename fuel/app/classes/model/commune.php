@@ -47,7 +47,7 @@ class Commune extends Model {
 	public static function nameToId(string $name): ?int {
 		// Vérification du format du nom
 		if (empty($name) || $name === ", ") return null;
-		if (strpos($name, ", ") === false) throw new InvalidArgumentException("$name n'est pas au bon format.");
+		if (strpos($name, ", ") === false) return null;
 
 		// Récupération de l'id
 		$names = explode(", ", $name);
