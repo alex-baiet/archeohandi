@@ -4,7 +4,6 @@ use Fuel\Core\Asset;
 use Fuel\Core\Form;
 use Model\Operation;
 use Model\Organisme;
-use Model\Personne;
 use Model\Typeoperation;
 
 /** @var string Page de destination lors de la validation du formulaire. */
@@ -30,7 +29,13 @@ $defaultAttr = array("type" => "text", "class" => "form-control", "placeholder" 
 Asset::js("form.js");
 ?>
 
-<?= Form::open(array('action' => $action, 'method' => 'POST')); ?>
+<?=
+Form::open(array(
+	'action' => $action,
+	'method' => 'POST',
+	"style" => "background-color: #F5F5F5; padding: 10px;"
+));
+?>
 <?php if ($showError) $operation->alertBootstrap("danger"); ?>
 <!-- Affichage des champs -->
 <div class="row my-2 pt-1">

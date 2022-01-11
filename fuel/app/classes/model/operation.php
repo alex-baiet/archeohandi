@@ -265,9 +265,6 @@ class Operation extends Model {
 		}
 
 		// Tests de validation des données
-		// Correction adresse
-		$res = Helper::verifAlpha($this->adresse, 'alphatout');
-		if ($res === false) $this->invalidate("L'adresse contient des caractères interdit.");
 		$this->adresse = Helper::secureString($this->adresse);
 
 		if (!Helper::stringIsInt($this->annee)) $this->invalidate("L'année indiquée doit être un nombre.");
