@@ -16,14 +16,14 @@ class Sujethandicape extends Model {
 	private string $sexe = "Indéterminé";
 	private int $datingMin = 0;
 	private int $datingMax = 0;
-	private string $milieuVie = "";
-	private string $contexte = "";
-	private string $contexteNormatif = "";
+	private ?string $milieuVie = null;
+	private ?string $contexte = null;
+	private ?string $contexteNormatif = null;
 	private string $commentContext = "";
 	private string $commentDiagnosis = "";
 	private ?string $urlImg = null;
-	private int $idTypeDepot = -1;
-	private int $idSepulture = -1;
+	private int $idTypeDepot = 4;
+	private int $idSepulture = 4;
 	private ?int $idDepot = null;
 	private ?int $idGroupeSujet = null;
 
@@ -395,12 +395,11 @@ class Sujethandicape extends Model {
 			if ($this->group === null || $this->group->getChronology() === null) $validation->invalidate("Choisissez une valeur pour la chronologie.");
 			if ($this->ageMin > $this->ageMax) $validation->invalidate("L'âge minimum doit être inférieur à l'âge maximum.");
 			if ($this->datingMin > $this->datingMax) $validation->invalidate("La datation minimum doit être inférieur à la datation maximum.");
-			if ($this->milieuVie === "") $validation->invalidate("Choisissez une valeur pour le milieu de vie.");
-			if ($this->contexte === "") $validation->invalidate("Choisissez une valeur pour le contexte de la tombe.");
-			if ($this->contexteNormatif === "") $validation->invalidate("Choisissez une valeur pour le contexte normatif.");
+			if ($this->milieuVie === "") $this->milieuVie = null;
+			if ($this->contexte === "") $this->contexte = null;
+			if ($this->contexteNormatif === "") $this->contexteNormatif = null;
 			if (Typedepot::fetchSingle($this->idTypeDepot) === null) $validation->invalidate("Choisissez une valeur pour le type de dépôt.");
 			if (Typesepulture::fetchSingle($this->idSepulture) === null) $validation->invalidate("Choisissez une valeur pour le type de sepulture.");
-			if ($this->depot === null || $this->depot->getCommune() === null) $validation->invalidate("Choisissez une valeur pour la commune du dépôt.");
 
 			if (!$this->group->validate()) $validation->invalidate();
 		});
@@ -412,8 +411,6 @@ class Sujethandicape extends Model {
 	 */
 	public function saveOnDB(): bool {
 		if (!$this->validate()) return false;
-
-		echo "Tentative de sauvegarde<br>";
 
 		// Maj group
 		if (!$this->getGroup()->saveOnDB()) {

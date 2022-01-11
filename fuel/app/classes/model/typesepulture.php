@@ -42,7 +42,7 @@ class Typesepulture extends Model {
 	public static function generateSelect(string $field = "id_type_sepulture", string $label = "Type de sepulture", int $idSelected = 4): string {
 		$valueRecover = function (array $data) { return $data["id"]; };
 		$textRecover = function (array $data) { return $data["nom"]; };
-		return Archeo::generateSelect($field, $label, $idSelected, "type_sepulture", $valueRecover, $textRecover);
+		return Archeo::generateSelect($field, $label, $idSelected, "type_sepulture", $valueRecover, $textRecover, true, false);
 	}
 
 	public function getId() { return $this->id; }

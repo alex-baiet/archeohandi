@@ -70,8 +70,8 @@ class Depot extends Model {
 
 	public function validate(): bool {
 		return $this->validation->validate(function () {
-			$validation = $this->validation;
-			if (Commune::fetchSingle($this->idCommune) === null) $validation->invalidate("La commune n'est pas valide.");
+			// $validation = $this->validation;
+			// if (Commune::fetchSingle($this->idCommune) === null) $validation->invalidate("La commune n'est pas valide.");
 		});
 	}
 
