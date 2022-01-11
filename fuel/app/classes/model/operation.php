@@ -211,7 +211,11 @@ class Operation extends Model {
 	/** @return string[] */
 	public function getAnthropologues(): array {
 		if (!isset($this->anthroArray)) {
-			$this->anthroArray = explode(',', $this->anthropologues);
+			if (empty($this->anthropologues)) {
+				$this->anthroArray = array();
+			} else {
+				$this->anthroArray = explode(',', $this->anthropologues);
+			}
 		}
 		return $this->anthroArray;
 	}
@@ -219,7 +223,11 @@ class Operation extends Model {
 	/** @return string[] */
 	public function getPaleopathologistes(): array {
 		if (!isset($this->paleoArray)) {
-			$this->paleoArray = explode(',', $this->paleopathologistes);
+			if (empty($this->paleopathologistes)) {
+				$this->paleoArray = array();
+			} else {
+				$this->paleoArray = explode(',', $this->paleopathologistes);
+			}
 		}
 		return $this->paleoArray;
 	}
