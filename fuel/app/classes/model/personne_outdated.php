@@ -6,7 +6,10 @@ use Fuel\Core\DB;
 use Fuel\Core\FuelException;
 use Fuel\Core\Model;
 
-/** Représentation d'une personne dans la base de données. */
+/**
+ * Représentation d'une personne dans la base de données.
+ * Les personnes n'étant plus utilisés dans la BDD, ce model est donc obsolète.
+ */
 class Personne extends Model {
 	private ?int $id = null;
 	private string $nom = "";

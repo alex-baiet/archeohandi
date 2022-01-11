@@ -8,7 +8,7 @@ use Fuel\Core\Model;
 /** Représentation d'une opération dans la base de données. */
 class Operation extends Model {
 	#region Values
-	private int $idSite = -1;
+	private int $id = -1;
 	private string $idUser = "";
 	private string $aRevoir = "";
 	private int $annee = 0;
@@ -23,13 +23,10 @@ class Operation extends Model {
 	private string $patriarche = "";
 	private string $numeroOperation = "";
 	private string $arretePrescription = "";
-	private ?int $idResponsableOp = null;
+	private string $responsable = "";
+	private string $anthropologues = "";
+	private string $paleopathologistes = "";
 	private string $bibliographie = "";
-
-	/** @var string[]|null */
-	private $idAnthropologues = null;
-	/** @var string[]|null */
-	private $idPaleopathologistes = null;
 
 	/** @var Commune|null */
 	private $commune = null;
@@ -37,12 +34,10 @@ class Operation extends Model {
 	private $typeOp = null;
 	/** @var Organisme|null */
 	private $organisme = null;
-	/** @var Personne|null */
-	private $responsableOp = null;
-	/** @var Personne[]|null */
-	private $anthropologues = null;
-	/** @var Personne[]|null */
-	private $paleopathologistes = null;
+	/** @var string[]|unset */
+	private array $anthroArray;
+	/** @var string[]|unset */
+	private array $paleoArray;
 	/** @var Sujethandicape[]|unset */
 	private array $subjects;
 
@@ -72,13 +67,11 @@ class Operation extends Model {
 		$this->commune = null;
 		$this->typeOp = null;
 		$this->organisme = null;
-		$this->responsableOp = null;
-		$this->anthropologues = null;
+		unset($this->anthroArray);
+		unset($this->paleoArray);
 
 		// Fusion des valeurs
-		Archeo::mergeValue($this->idSite, $data, "id_site");
-
-		Archeo::mergeValue($this->idSite, $data, "id_site");
+		Archeo::mergeValue($this->id, $data, "id");
 		Archeo::mergeValue($this->idUser, $data, "id_user");
 		Archeo::mergeValue($this->aRevoir, $data, "a_revoir");
 		Archeo::mergeValue($this->annee, $data, "annee", "int");
@@ -93,15 +86,27 @@ class Operation extends Model {
 		Archeo::mergeValue($this->patriarche, $data, "patriarche");
 		Archeo::mergeValue($this->numeroOperation, $data, "numero_operation");
 		Archeo::mergeValue($this->arretePrescription, $data, "arrete_prescription");
-		Archeo::mergeValue($this->idResponsableOp, $data, "id_responsable_op", "int");
-		Archeo::mergeValue($this->idAnthropologues, $data, "id_anthropologues[]");
-		Archeo::mergeValue($this->paleopathologiste, $data, "id_paleopathologiste[]");
+		Archeo::mergeValue($this->responsable, $data, "responsable");
 		Archeo::mergeValue($this->bibliographie, $data, "bibliographie");
 
+		if (isset($data["anthropologues"])) {
+			if (is_array($data["anthropologues"])) {
+				$this->anthroArray = $data["anthropologues"];
+				$this->anthropologues = implode(',', $this->anthroArray);
+			} else {
+				$this->anthropologues = $data["anthropologues"];
+			}
+		}
+		if (isset($data["paleopathologistes"])) {
+			if (is_array($data["paleopathologistes"])) {
+				$this->paleoArray = $data["paleopathologistes"];
+				$this->paleopathologistes = implode(',', $this->paleoArray);
+			} else {
+				$this->paleopathologistes = $data["paleopathologistes"];
+			}
+		}
+
 		if (isset($data["commune"])) $this->idCommune = Commune::nameToId($data["commune"]);
-		if (isset($data["responsable_op"])) $this->idResponsableOp = Personne::nameToId($data["responsable_op"]);
-		if (isset($data["anthropologues"])) $this->idAnthropologues = Personne::namesToIds($data["anthropologues"]);
-		if (isset($data["paleopathologistes"])) $this->idPaleopathologistes = Personne::namesToIds($data["paleopathologistes"]);
 	}
 
 	/**
@@ -112,7 +117,7 @@ class Operation extends Model {
 	 */
 	public static function fetchSingle(int $id) {
 		if (!is_numeric($id)) return null;
-		$res = Helper::querySelectSingle("SELECT * FROM operations WHERE id_site=$id");
+		$res = Helper::querySelectSingle("SELECT * FROM operations WHERE id=$id");
 		if ($res === null) return null;
 
 		$obj = new Operation($res);
@@ -142,10 +147,7 @@ class Operation extends Model {
 			if ($result !== null) return "$result (sujet n°{$subject->getId()})";
 		}
 
-		DB::delete("etre_anthropologue")->where("id_operation", "=", $id)->execute();
-		DB::delete("etre_paleopathologiste")->where("id_operation", "=", $id)->execute();
-
-		$result = DB::delete("operations")->where("id_site", "=", $id)->execute();
+		$result = DB::delete("operations")->where("id", "=", $id)->execute();
 		if ($result < 1) return "L'opération n'a pas pû être supprimé";
 
 		// Tous s'est bien passé
@@ -153,7 +155,7 @@ class Operation extends Model {
 	}
 
 	public static function generateSelect(string $field = "id_operation", string $label = "Opération", $idSelected = "", bool $formFloating = true) {
-		$valueRecover = function ($data) { return $data["id_site"]; };
+		$valueRecover = function ($data) { return $data["id"]; };
 		$textRecover = function ($data) {
 			$value = new Operation($data);
 			return $value->getNomOp();
@@ -162,7 +164,7 @@ class Operation extends Model {
 	}
 
 	#region Getters
-	public function getIdSite() { return $this->idSite; }
+	public function getId() { return $this->id; }
 	public function getIdUser() { return $this->idUser; }
 	public function getARevoir() { return $this->aRevoir; }
 	public function getAnnee() { return $this->annee; }
@@ -202,54 +204,24 @@ class Operation extends Model {
 		return $this->organisme;
 	}
 
-	public function getResponsableOp(): ?Personne {
-		if ($this->idResponsableOp === null) return null;
-		if ($this->responsableOp === null) $this->responsableOp = Personne::fetchSingle($this->idResponsableOp);
-		return $this->responsableOp;
+	public function getResponsable(): string {
+		return $this->responsable;
 	}
 
-	/**
-	 * Renvoie une liste de personne en fonction des différents paramètres données.
-	 * @param array|null &$ids Liste des identifiant définis.
-	 * @param array|null &$people Liste des personnes déjà récupérées.
-	 * @param array &$tableName Nom de la table où recherché en cas d'informations manquantes.
-	 * @return Personne[]
-	 */
-	private function getPersonnes(&$ids, &$people, string $tableName) {
-		// personnes déjà définis : on renvoie directement le résultat
-		if ($people !== null) return $people;
-
-		$people = array();
-
-		// Récupération des personnes selon les id définis dans l'objet
-		if ($ids !== null) {
-			foreach ($ids as $id) {
-				$person = Personne::fetchSingle($id);
-				if ($person !== null) $people[] = $person;
-			}
+	/** @return string[] */
+	public function getAnthropologues(): array {
+		if (!isset($this->anthroArray)) {
+			$this->anthroArray = explode(',', $this->anthropologues);
 		}
+		return $this->anthroArray;
+	}
 
-		// Récupération des personnes déjà défini sur la BDD si aucun n'est donnée
-		else {
-			$ids = array();
-			$results = Helper::querySelect("SELECT * FROM $tableName WHERE id_operation={$this->idSite};");
-			foreach ($results as $res) {
-				$person = Personne::fetchSingle($res["id_personne"]);
-				if ($person !== null) {
-					$ids[] = $person->getId();
-					$people[] = $person;
-				}
-			}
+	/** @return string[] */
+	public function getPaleopathologistes(): array {
+		if (!isset($this->paleoArray)) {
+			$this->paleoArray = explode(',', $this->paleopathologistes);
 		}
-		return $people;
-	}
-	/** @return Personne[] */
-	public function getAnthropologues() {
-		return $this->getPersonnes($this->idAnthropologues, $this->anthropologues, "etre_anthropologue");
-	}
-	/** @return Personne[] */
-	public function getPaleopathologistes() {
-		return $this->getPersonnes($this->idPaleopathologistes, $this->paleopathologistes, "etre_paleopathologiste");
+		return $this->paleoArray;
 	}
 
 	/** @return Sujethandicape[] Liste de tous les sujets de l'opération. */
@@ -257,7 +229,7 @@ class Operation extends Model {
 		if (isset($this->subjects)) return $this->subjects;
 		
 		// Récupération des groupe_sujets
-		$idGroups = Helper::querySelectList('SELECT id FROM groupe_sujets WHERE id_operation=' . $this->getIdSite());
+		$idGroups = Helper::querySelectList('SELECT id FROM groupe_sujets WHERE id_operation=' . $this->getId());
 
 		// Récupération de tous les sujets handicapé des différents groupes
 		$this->subjects = array();
@@ -318,18 +290,6 @@ class Operation extends Model {
 		if ($res === false) $this->invalidate("L'arrete de prescription contient des caractères interdit.");
 		else $this->arretePrescription = $res;
 
-		if ($this->getResponsableOp() === null && $this->idResponsableOp !== null) $this->invalidate("Le responsable n'existe pas.");
-
-		// Test anthropologues
-		// $res = Helper::verifAlpha($this->anthropologue, 'alpha');
-		// if ($res === false) $this->invalidate("Le nom de l'anthropologue contient des caractères interdit.");
-		// else $this->anthropologue = $res;
-
-		// Test paleopathologistes
-		// $res = Helper::verifAlpha($this->paleopathologiste, 'alpha');
-		// if ($res === false) $this->invalidate("Le nom du paléopathologiste contient des caractères interdit.");
-		// else $this->paleopathologiste = $res;
-
 		// Correction bibliographie
 		$this->bibliographie = Helper::secureString($this->bibliographie);
 
@@ -355,48 +315,27 @@ class Operation extends Model {
 
 		// Préparation des valeurs à envoyer à la BDD
 		$arr = $this->toArray();
-		unset($arr["id_anthropologue[]"]);
-		unset($arr["id_paleopathologiste[]"]);
 
-		if ($this->idSite === -1 || Operation::fetchSingle($this->idSite) === null) {
+		if ($this->id === -1 || Operation::fetchSingle($this->id) === null) {
 			// L'opération n'existe pas : on la rajoute à la BDD
-			$arr["id_site"] = null;
+			$arr["id"] = null;
 			list($insertId, $rowAffected) = DB::insert("operations")
 				->set($arr)
 				->execute();
-			$this->idSite = $insertId;
+			$this->id = $insertId;
 			if ($rowAffected < 1) return false;
 		}
 		else {
 			// L'opération existe : on la met à jour
 			$rowAffected = DB::update("operations")
 				->set($arr)
-				->where("id_site", $this->idSite)
+				->where("id", $this->id)
 				->execute();
 				if ($rowAffected < 1) return false;
 		}
 
-		// Maj des anthropologues et paleopathologistes
-		$this->savePeople($this->getAnthropologues(), "etre_anthropologue");
-		$this->savePeople($this->getPaleopathologistes(), "etre_paleopathologiste");
-
 		// Tout s'est bien passé.
 		return true;
-	}
-
-	/** Facilite la sauvegarde des anthropologues et paleopathologistes */
-	private function savePeople(array $people, string $table) {
-		// Suppression des anciennes valeurs stockées
-		DB::delete($table)->where("id_operation", $this->idSite)->execute();
-
-		// Création des nouvelles valeurs
-		$values = array();
-		foreach ($people as $person) {
-			$values[] = array($this->idSite, $person->getId());
-		}
-
-		// Ajoute les nouvelles valeurs
-		if (count($values) > 0) DB::insert($table)->values($values)->execute();
 	}
 
 	/** Affiche une alert bootstrap seulement si des erreurs existent. */
@@ -413,7 +352,7 @@ class Operation extends Model {
 	/** Renvoie l'array des données représentant l'objet. */
 	public function toArray(): array {
 		return array(
-			"id_site" => $this->idSite,
+			"id" => $this->id,
 			"id_user" => $this->idUser,
 			"a_revoir" => $this->aRevoir,
 			"annee" => $this->annee,
@@ -428,9 +367,9 @@ class Operation extends Model {
 			"patriarche" => $this->patriarche,
 			"numero_operation" => $this->numeroOperation,
 			"arrete_prescription" => $this->arretePrescription,
-			"id_responsable_op" => $this->idResponsableOp,
-			"id_anthropologue[]" => $this->idAnthropologues,
-			"id_paleopathologiste[]" => $this->idPaleopathologistes,
+			"responsable" => $this->responsable,
+			"anthropologues" => $this->anthropologues,
+			"paleopathologistes" => $this->paleopathologistes,
 			"bibliographie" => $this->bibliographie,
 		);
 	}

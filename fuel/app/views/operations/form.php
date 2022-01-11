@@ -119,22 +119,15 @@ Asset::js("form.js");
 	</div>
 </div>
 
-<!-- Bouton d'ajout de personne -->
-<a href="" data-bs-toggle="modal" data-bs-target="#addPersonPopup">
-	Ajouter une personne
-</a>
-
 <!-- Responsable d'opération -->
 <div class="row my-2">
 	<div class="col-md-6">
 		<div class="form-floating">
-			<?php $fullName = $operation->getResponsableOp() === null ? "" : $operation->getResponsableOp()->getNom().' '.$operation->getResponsableOp()->getPrenom(); ?>
 			<?=
-				Form::input("responsable_op", $fullName,
+				Form::input("responsable", $operation->getResponsable(),
 					array("type" => "text", "class" => "form-control", "placeholder" => "", "autocomplete" => "off"));
 			?>
-			<?= Form::label("Responsable de l'opération", "responsable_op"); ?>
-			<script>addAutocomplete("form_responsable_op", "personne");</script>
+			<?= Form::label("Responsable de l'opération", "responsable"); ?>
 		</div>
 	</div>
 </div>
@@ -147,17 +140,15 @@ function generateAttr(string $id) {
 }
 
 $anthropologues = $operation->getAnthropologues();
-if (count($anthropologues) === 0) $anthropologues[] = new Personne(array());
+if (count($anthropologues) === 0) $anthropologues[] = "";
 ?>
 <div class="row my-2">
 	<div class="col-md-6">
-		<?php for ($i = 0; $i < count($anthropologues); $i++): ?>
+		<?php for ($i = 0; $i < count($anthropologues); $i++): $anthro = $anthropologues[$i]; ?>
 			<div class="form-floating">
-				<?php $fullName = empty($anthropologues[$i]->getNom()) ? "" : $anthropologues[$i]->getNom().' '.$anthropologues[$i]->getPrenom(); ?>
-				<?= Form::input("anthropologues[]", $fullName, generateAttr("form_anthropologue_$i")); ?>
+				<?= Form::input("anthropologues[]", $anthro, generateAttr("form_anthropologue_$i")); ?>
 				<?= Form::label("Anthropologue", "anthropologue_$i", array("id" => "form_anthropologue_label_$i")); ?>
 			</div>
-			<script>addAutocomplete("form_anthropologue_<?= $i ?>", "personne");</script>
 		<?php endfor; ?>
 	</div>
 
@@ -172,17 +163,15 @@ if (count($anthropologues) === 0) $anthropologues[] = new Personne(array());
 <!-- Paleopathologistes -->
 <?php
 $paleos = $operation->getPaleopathologistes();
-if (count($paleos) === 0) $paleos[] = new Personne(array());
+if (count($paleos) === 0) $paleos[] = "";
 ?>
 <div class="row my-2">
 	<div class="col-md-6">
-		<?php for ($i = 0; $i < count($paleos); $i++): ?>
+		<?php for ($i = 0; $i < count($paleos); $i++): $paleo = $paleos[$i]; ?>
 			<div class="form-floating">
-				<?php $fullName = empty($paleos[$i]->getNom()) ? "" : $paleos[$i]->getNom().' '.$paleos[$i]->getPrenom(); ?>
-				<?= Form::input("paleopathologistes[]", $fullName, generateAttr("form_paleopathologiste_$i")); ?>
+				<?= Form::input("paleopathologistes[]", $paleo, generateAttr("form_paleopathologiste_$i")); ?>
 				<?= Form::label("Paleopathologiste", "paleopathologiste_$i", array("id" => "form_paleopathologiste_label_$i")); ?>
 			</div>
-			<script>addAutocomplete("form_paleopathologiste_<?= $i ?>", "personne");</script>
 		<?php endfor; ?>
 	</div>
 
@@ -213,58 +202,6 @@ if (count($paleos) === 0) $paleos[] = new Personne(array());
 		<?php else: ?>
 			<?= Form::submit('submit', 'Modifier', array('class' => 'btn btn-success')); ?>
 		<?php endif; ?>
-	</div>
-</div>
-
-<!-- Popup d'ajout d'une personne -->
-<div class="modal" id="addPersonPopup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addPersonPopupLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="addPersonPopupLabel">Ajouter une personne</h5>
-			</div>
-			<div class="modal-body">
-				<div class="form-floating my-2">
-					<?= Form::input("first_name", null, $defaultAttr); ?>
-					<?= Form::label("Prénom", "first_name"); ?>
-				</div>
-				<div class="form-floating my-2">
-					<?= Form::input("last_name", null, $defaultAttr); ?>
-					<?= Form::label("NOM", "last_name"); ?>
-				</div>
-				<div class="alert alert-danger text-center my-2" id="alert_add_person" style="visibility: hidden;"></div>
-			</div>
-			<div class="modal-footer">
-				<script>
-					/** Ajoute une personne à la BDD. */
-					function addPersonDBAction() {
-						let alertElem = document.getElementById("alert_add_person");
-						addPersonDB(
-							`form_first_name`,
-							`form_last_name`,
-							() => 
-								document.getElementById("btn_add_person_back").click(),
-							() => {
-								alertElem.style.visibility = "visible";
-								alertElem.innerHTML = "Un problème est survenu lors de l'ajout de la personne.";
-							}
-						);
-					}
-
-					/** Vide les champs du popup d'ajout de personne. */
-					function resetPopup() {
-						document.getElementById(`alert_add_person`).style.visibility = `hidden`;
-						document.getElementById("form_first_name").value = "";
-						document.getElementById("form_last_name").value = "";
-					}
-				</script>
-				<button type="button" id="btn_add_person_back" class="btn btn-secondary"
-					data-bs-toggle="modal" data-bs-target="#addPersonPopup" onclick="resetPopup()">
-					Retour
-				</button>
-				<button type="button" class="btn btn-success" onclick="addPersonDBAction();">Ajouter</button>
-			</div>
-		</div>
 	</div>
 </div>
 

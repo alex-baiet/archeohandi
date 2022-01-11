@@ -123,7 +123,7 @@ $msgType = isset($msgType) ? $msgType : null;
 					<tbody>
 						<?php foreach ($operations as $op) :  ?>
 							<tr class="text-center">
-								<td><?= $op->getIdSite() ?></td>
+								<td><?= $op->getId() ?></td>
 								<td><?= $op->getIdUser() ?></td>
 								<td><?= $op->getNomOp() ?></td>
 								<td><?= $op->getAnnee() ?></td>
@@ -131,21 +131,21 @@ $msgType = isset($msgType) ? $msgType : null;
 								<td><?= $op->getY() ?></td>
 								<td class="col-auto">
 
-									<a title="Consulter #<?= $op->getIdSite(); ?>" href="/public/operations/view/<?= $op->getIdSite(); ?>">
+									<a title="Consulter #<?= $op->getId(); ?>" href="/public/operations/view/<?= $op->getId(); ?>">
 										<?= Asset::img("reply.svg", array("class"=>"icon see", "width" => "30px", "alt" => "Consulter")) ?>
 									</a>
 
-									<a class="" title="Editer #<?= $op->getIdSite(); ?>" href="/public/operations/edit/<?= $op->getIdSite(); ?>">
+									<a class="" title="Editer #<?= $op->getId(); ?>" href="/public/operations/edit/<?= $op->getId(); ?>">
 										<?= Asset::img("pen.svg", array("class"=>"icon edit", "width" => "24px", "alt" => "Éditer")) ?>
 									</a>
 
-									<form action="" method="post" id="form_suppr_<?= $op->getIdSite(); ?>">
+									<form action="" method="post" id="form_suppr_<?= $op->getId(); ?>">
 										<button
 												type="button"
 												class="btn"
 												data-bs-toggle="modal"
 												data-bs-target="#validationPopup"
-												onclick="deleteOperation(<?= $op->getIdSite(); ?>)">
+												onclick="deleteOperation(<?= $op->getId(); ?>)">
 											<?= Asset::img("trash.svg", array("class"=>"icon del", "width" => "25px", "alt" => "Supprimer")) ?>
 										</button>
 									</form>

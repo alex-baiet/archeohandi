@@ -70,7 +70,7 @@ function addPerson(id) {
 	
 	// Ajout de la copie
 	original.parentNode.appendChild(copy);
-	addAutocomplete(`${id}_${num}`, "personne");
+	// addAutocomplete(`${id}_${num}`, "personne");
 }
 
 /**

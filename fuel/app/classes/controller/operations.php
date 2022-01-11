@@ -1,7 +1,6 @@
 <?php
 
 use Fuel\Core\Controller_Template;
-use Fuel\Core\DB;
 use Fuel\Core\Input;
 use Fuel\Core\Response;
 use Fuel\Core\View;
@@ -18,8 +17,6 @@ class Controller_Operations extends Controller_Template {
 
 		// Suppression d'une opération
 		if (isset($_POST['delete_op'])) {
-			echo "deletion d'une operation";
-
 			$result = Operation::deleteOnDB($_POST["delete_op"]);
 			if ($result === null) {
 				$data["msgType"] = "success_delete";
@@ -34,7 +31,7 @@ class Controller_Operations extends Controller_Template {
 
 		// Préparation des valeurs de recherches
 		$all_site = array();
-		foreach ($operations as $op) { $all_site[$op->getIdSite()] = $op->getIdSite(); }
+		foreach ($operations as $op) { $all_site[$op->getId()] = $op->getId(); }
 		$all_user = array();
 		foreach ($operations as $op) { $all_user[$op->getIdUser()] = $op->getIdUser(); }
 		$all_nom_op = array();
@@ -63,7 +60,7 @@ class Controller_Operations extends Controller_Template {
 			for ($i=count($operations) -1; $i >= 0; $i--) { 
 				$op = $operations[$i];
 				$toRemove = false;
-				if (!empty($filterId) && $op->getIdSite() != $filterId) $toRemove = true;
+				if (!empty($filterId) && $op->getId() != $filterId) $toRemove = true;
 				if (!empty($filterUser) && $op->getIdUser() != $filterUser) $toRemove = true;
 				if (!empty($filterOp) && $op->getNomOp() != $filterOp) $toRemove = true;
 				if ((!empty($filterYear) || $filterYear === "0") && $op->getAnnee() != $filterYear) $toRemove = true;
@@ -94,7 +91,7 @@ class Controller_Operations extends Controller_Template {
 			}
 			else if ($operation->saveOnDB()) {
 				// Ajout de l'opération avec succès
-				Response::redirect("/sujet/add/{$operation->getIdSite()}");
+				Response::redirect("/sujet/add/{$operation->getId()}");
 			}
 		}
 

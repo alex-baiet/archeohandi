@@ -28,7 +28,7 @@ $sujets = $operation->getSubjects();
 
 <div class="container">
 	<h1 class="m-2">Opération <?= $operation->getNomOp(); ?>
-		<a class="btn btn-primary btn-sm" href="/public/sujet/add/<?= $operation->getIdSite(); ?>">
+		<a class="btn btn-primary btn-sm" href="/public/sujet/add/<?= $operation->getId(); ?>">
 			Ajouter des sujets<i class="bi bi-plus-circle-fill"></i>
 		</a>
 	</h1>
@@ -96,17 +96,14 @@ $sujets = $operation->getSubjects();
 		<div class="row">
 			<div class="col">
 				<div class="p-2">
-					Responsable de l'opération :<br>
-					<?php if ($operation->getResponsableOp() !== null): ?>
-						- <?= $operation->getResponsableOp()->fullName(); ?>
-					<?php endif; ?>
+					Responsable de l'opération :<?= $operation->getResponsable(); ?>
 				</div>
 			</div>
 			<div class="col">
 				<div class="p-2">
-					Anthropologues : 
+					Anthropologues :
 					<?php foreach ($operation->getAnthropologues() as $person): ?>
-						<br>- <?= $person->fullName(); ?>
+						<br>- <?= $person; ?>
 					<?php endforeach; ?>
 				</div>
 			</div>
@@ -114,7 +111,7 @@ $sujets = $operation->getSubjects();
 				<div class="p-2">
 					Paleopathologiste :
 					<?php foreach ($operation->getPaleopathologistes() as $person): ?>
-						<br>- <?= $person->fullName(); ?>
+						<br>- <?= $person; ?>
 					<?php endforeach; ?>
 				</div>
 			</div>
