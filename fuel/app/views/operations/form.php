@@ -284,7 +284,7 @@ if (count($paleos) === 0) $paleos[] = new Personne(array());
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#validationPopup">Retour</button>
-					<?= Form::submit('confirm_operation', 'Continuer', array('class' => 'btn btn-success')); ?>
+					<button type="submit" class="btn btn-success" name="confirm_operation" id="form_confirm_operation" value="">Continuer</button>
 				</div>
 			</div>
 		</div>

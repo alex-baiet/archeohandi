@@ -94,7 +94,7 @@ class Controller_Operations extends Controller_Template {
 			}
 			else if ($operation->saveOnDB()) {
 				// Ajout de l'opération avec succès
-				Response::redirect("/operations?success_add");
+				Response::redirect("/sujet/add/{$operation->getIdSite()}");
 			}
 		}
 
