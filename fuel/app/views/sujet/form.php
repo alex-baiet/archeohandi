@@ -6,6 +6,7 @@ use Fuel\Core\FuelException;
 use Model\Appareil;
 use Model\Chronology;
 use Model\Diagnostic;
+use Model\Helper;
 use Model\Localisation;
 use Model\Mobilier;
 use Model\Pathology;
@@ -21,6 +22,17 @@ if (!isset($subject) && !isset($idOperation)) {
 $subject = isset($subject) ? $subject : new Sujethandicape(array());
 /** @var int */
 $idOperation = isset($idOperation) ? $idOperation : $subject->getGroup()->getIdOperation();
+/** @var bool Ajoute un bouton pour rester sur la page. */
+$btnStay = isset($btnStay) ? $btnStay : false;
+/** @var string */
+$msgType = isset($msgType) ? $msgType : "success";
+/** @var string */
+$msg = isset($msg) ? $msg : null;
+
+if (!empty($msg)) {
+	Helper::alertBootstrap($msg, $msgType);
+}
+
 ?>
 
 <?= $subject->echoErrors(); ?>
@@ -50,7 +62,7 @@ Form::open(array(
 
 		<!-- Chronology -->
 		<div class="col-md-6">
-			<?= Chronology::generateSelect("id_chronologie", "Chronologie", $group !== null && $group->getChronology() !== null ? $group->getChronology()->getId() : ""); ?>
+			<?= Chronology::generateSelect("id_chronologie", "Chronologie", $group !== null && $group->getChronology() !== null ? $group->getChronology()->getId() : 18); ?>
 		</div>
 	</div>
 
@@ -362,14 +374,24 @@ Form::open(array(
 
 </div>
 
+<!-- Bouton de confirmation/retour -->
 <div class="row" style="margin-top: 10px;">
 	<div class="d-md-block col">
 		<a class="btn btn-secondary" href="/public/operations/view/<?= $idOperation; ?>" role="button">Retour</a>
 	</div>
 
 	<div class="d-md-flex justify-content-md-end col">
-		<?= Form::submit('confirm_sujet_handicape', 'Confirmer', array('class' => 'btn btn-success')); ?>
+		<button type="submit" name="stayOnPage" value="0" class="btn btn-success">
+			Confirmer<?php if ($btnStay) : ?> et sortir<?php endif; ?>
+		</button>
+
+		<?php if ($btnStay) : ?>
+			<button type="submit" name="stayOnPage" value="1" class="btn btn-success" style="margin-left: 10px">
+				Confirmer et continuer
+			</button>
+		<?php endif; ?>
 	</div>
+
 </div>
 
 <?= Form::close(); ?>

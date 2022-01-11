@@ -36,7 +36,7 @@ class Chronology extends Model {
 	public static function generateSelect(string $field = "id_chronology", string $label = "Chronologie", $idSelected = 18, $formFloating = true): string {
 		$valueRecover = function ($data) { return $data["id"]; };
 		$textRecover = function ($data) { return $data["name"]; };
-		return Archeo::generateSelect($field, $label, $idSelected, "chronology", $valueRecover, $textRecover, $formFloating);
+		return Archeo::generateSelect($field, $label, $idSelected, "chronology", $valueRecover, $textRecover, $formFloating, false);
 	}
 
 	/**

@@ -21,7 +21,7 @@ Asset::js("form.js");
 	<p class="text-muted">Opération "<?= $op->getNomOp(); ?>"</p>
 
 	<?php
-	$data = array("idOperation" => $idOperation);
+	$data = array("idOperation" => $idOperation, "btnStay" => true);
 	if (isset($subject)) $data["subject"] = $subject;
 	?>
 	<?= View::forge("sujet/form", $data); ?>

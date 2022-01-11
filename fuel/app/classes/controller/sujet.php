@@ -51,7 +51,7 @@ class Controller_Sujet extends Controller_Template {
 			// Recréation du sujet à partir des valeurs entrées
 			$subject = new Sujethandicape($_POST, true);
 			if ($subject->saveOnDB() && Controller_Sujet::DEBUG === false) {
-				Response::redirect("/operations/view/$id");
+				if (!$_POST["stayOnPage"]) Response::redirect("/operations/view/$id");
 			} else {
 				$data["subject"] = $subject;
 				if (Controller_Sujet::DEBUG === true) Helper::varDump($subject);

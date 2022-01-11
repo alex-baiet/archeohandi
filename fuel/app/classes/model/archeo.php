@@ -19,13 +19,13 @@ class Archeo {
 	 * @param Closure $valueRecover Lambda permettant de récupérer la "value" pour les options à partir d'une donnée.
 	 * @param Closure $valueRecover Lambda permettant de récupérer le texte à afficher pour les options à partir d'une donnée.
 	 */
-	public static function generateSelect(string $field, string $label, $idSelected, string $table, Closure $valueRecover, Closure $textRecover, bool $formFloating = true): string {
+	public static function generateSelect(string $field, string $label, $idSelected, string $table, Closure $valueRecover, Closure $textRecover, bool $formFloating = true, bool $addEmptyValue = true): string {
 		// Récupération de tous les objects
 		$results = Helper::querySelect("SELECT * FROM $table;");
 
 		// Création des options
 		$options = array();
-		$options[""] = "Sélectionner";
+		if ($addEmptyValue) $options[""] = "Sélectionner";
 		foreach ($results as $result) {
 			$options[$valueRecover($result)] = $textRecover($result);
 		}
