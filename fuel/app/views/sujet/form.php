@@ -65,29 +65,66 @@ Form::open(array(
 	<h3 class="text-center my-2">Sujet handicapé</h3>
 	<div class="row g-2">
 		<!-- URL Image -->
-		<script>
-			function changeImgSrc(id, value) {
-				document.getElementById(id).src = value;
-			}
-		</script>
 
+		<?php /*
+		<!-- Anthropologues -->
 		<?php
-		$urls = $subject->getUrlsImg();
-		if (empty($urls)) $urls[] = "";
+		function generateAttr(string $id)
+		{
+			return array("type" => "text", "class" => "form-control", "placeholder" => "", "id" => $id, "autocomplete" => "off");
+		}
 
-		for ($i = 0; $i < count($urls); $i++) :
-			$url = $urls[$i];
+		$anthropologues = $operation->getAnthropologues();
+		if (count($anthropologues) === 0) $anthropologues[] = "";
 		?>
-			<div class="col-md">
-				<div class="form-floating">
-					<input type="text" class="form-control" name="urls_img[]" placeholder="" value="<?= $url ?>" onkeyup="changeImgSrc(`img_preview_<?= $i; ?>`, this.value);">
-					<label for="url_img">Lien de l'image</label>
+		<div class="row my-2">
+			<div class="col-md-6">
+				<?php for ($i = 0; $i < count($anthropologues); $i++) : $anthro = $anthropologues[$i]; ?>
+					<div class="form-floating">
+						<?= Form::input("anthropologues[]", $anthro, generateAttr("form_anthropologue_$i")); ?>
+						<?= Form::label("Anthropologue", "anthropologue_$i", array("id" => "form_anthropologue_label_$i")); ?>
+					</div>
+				<?php endfor; ?>
+			</div>
+
+			<div class="col-md-6">
+				<div class="d-grid gap-2 d-md-flex my-2">
+					<button type="button" class="btn btn-primary me-md-2" onclick="addPerson('form_anthropologue');"><i class="bi bi-plus"></i></button>
+					<button type="button" class="btn btn-danger" onclick="removePerson('form_anthropologue');"><i class="bi bi-x"></i></button>
 				</div>
 			</div>
-			<div class="col-auto" style="padding:0; background-color: white;">
-				<img id="img_preview_<?= $i; ?>" src="<?= $url ?>" alt="Image indisponible" style="height: 58px;">
+		</div>
+		*/ ?>
+
+
+
+		<div class="row my-2">
+			<div class="col-md-6">
+				<?php
+				$urls = $subject->getUrlsImg();
+				if (empty($urls)) $urls[] = "";
+
+				for ($i = 0; $i < count($urls); $i++) :
+					$url = $urls[$i];
+				?>
+					<div class="row" id="form_urls_img">
+						<div class="col-md">
+							<div class="form-floating">
+								<input type="text" class="form-control" id="form_urls_img_<?= $i ?>" name="urls_img[]" placeholder="" value="<?= $url ?>" onkeyup="changeImgSrc(`img_preview_<?= $i; ?>`, this.value);">
+								<label for="urls_img_<?= $i ?>" id="form_urls_img_label_<?= $i ?>">Lien de l'image</label>
+							</div>
+						</div>
+						<div class="col-auto" style="padding:0; background-color: white;">
+							<img id="img_preview_<?= $i; ?>" src="<?= $url ?>" alt="Image indisponible" style="height: 58px;">
+						</div>
+					</div>
+				<?php endfor; ?>
 			</div>
-		<?php endfor; ?>
+			<div class="col-md-6">
+				<button type="button" class="btn btn-primary me-md-2" onclick="addCopyImg('urls_img');"><i class="bi bi-plus"></i></button>
+				<button type="button" class="btn btn-danger" onclick="removeCopyImg('urls_img');"><i class="bi bi-x"></i></button>
+			</div>
+		</div>
 
 		<div class="row g-2">
 			<!-- Identifiant -->

@@ -41,9 +41,9 @@ function addPersonDB(idFirstNameInput, idLastNameInput, onSuccess, onFail) {
 
 /**
  * Ajoute un champ texte pour une liste d'input.
+ * @deprecated A remplacer par addCopy qui est plus generique.
  * 
  * @param {string} id nom de l'attribut "name".
- * @param {string} nom Juste pour avoir un beau label.
  */
 function addPerson(id) {
 	// Maj numéro
@@ -75,6 +75,7 @@ function addPerson(id) {
 
 /**
  * Supprime un champ d'une liste d'input.
+ * @deprecated A remplacer par removeCopy qui est plus generique.
  * 
  * @param {string} id
  */
@@ -92,6 +93,55 @@ function removePerson(id) {
 
 	// Suppression de l'élément
 	toRemove.remove();
+}
+
+/**
+ * Copy un champ input.
+ * @param {string} name Nom de l'input. L'id du parent à copier doit être au format `form_${name}`.
+ * @returns {number} Numéro de la nouvelle copy.
+ */
+function addCopy(name) {
+	let id = `form_${name}`;
+	// Récupération de l'original
+	let elem = document.getElementById(id);
+
+	// Calcul nouveau numéro
+	let num = elem.parentElement.childElementCount;
+	console.log(num);
+
+	// Copie
+	let copyNode = elem.cloneNode(true);
+	const idCopy = `${id}_copy_${num}`;
+	copyNode.id = idCopy;
+	elem.parentElement.appendChild(copyNode);
+	let copy = document.getElementById(idCopy);
+
+	// Modification des champs
+	let inputCopy = copy.getElementsByTagName("input")[0];
+	inputCopy.id = `${id}_${num}`;
+	let labelCopy = copy.getElementsByTagName("label")[0];
+	inputCopy.id = `${id}_label_${num}`;
+
+	return num;
+}
+
+function removeCopy(name) {
+	console.log("Non implémenté");
+}
+
+function changeImgSrc(id, value) {
+	document.getElementById(id).src = value;
+}
+
+function addCopyImg(name) {
+	let num = addCopy(name);
+	let id = `form_${name}`;
+
+	let copy = document.getElementById(`${id}_copy_${num}`);
+	let inputCopy = copy.getElementsByTagName("input")[0];
+	inputCopy.onkeyup = function () { changeImgSrc(`img_preview_${num}`, inputCopy.value); }
+	let imgCopy = copy.getElementsByTagName("img")[0];
+	imgCopy.id = `img_preview_${num}`;
 }
 
 /**
