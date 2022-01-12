@@ -108,7 +108,7 @@ class Helper {
 	 * @param string $keyName Nom de la colonne sélectionnée.
 	 * @return array Array des résultats sous forme d'une liste. ex: array("resultat 1", "resultat 2", ...)
 	 */
-	public static function querySelectList($sql) {
+	public static function querySelectList($sql) : array {
 		// Requete SQL
 		$resQuery = Helper::querySelect($sql);
 		

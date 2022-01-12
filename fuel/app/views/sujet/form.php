@@ -70,15 +70,24 @@ Form::open(array(
 				document.getElementById(id).src = value;
 			}
 		</script>
-		<div class="col-md">
-			<div class="form-floating">
-				<input type="text" class="form-control" name="url_img" placeholder="" value="<?= $subject->getUrlImg(); ?>" onkeyup="changeImgSrc(`img_preview`, this.value);">
-				<label for="url_img">Lien de l'image</label>
+
+		<?php
+		$urls = $subject->getUrlsImg();
+		if (empty($urls)) $urls[] = "";
+
+		for ($i = 0; $i < count($urls); $i++) :
+			$url = $urls[$i];
+		?>
+			<div class="col-md">
+				<div class="form-floating">
+					<input type="text" class="form-control" name="urls_img[]" placeholder="" value="<?= $url ?>" onkeyup="changeImgSrc(`img_preview_<?= $i; ?>`, this.value);">
+					<label for="url_img">Lien de l'image</label>
+				</div>
 			</div>
-		</div>		
-		<div class="col-auto" style="padding:0; background-color: white;">
-			<img id="img_preview" src="<?= $subject->getUrlImg() ?>" alt="Image indisponible" style="height: 58px;">
-		</div>
+			<div class="col-auto" style="padding:0; background-color: white;">
+				<img id="img_preview_<?= $i; ?>" src="<?= $url ?>" alt="Image indisponible" style="height: 58px;">
+			</div>
+		<?php endfor; ?>
 
 		<div class="row g-2">
 			<!-- Identifiant -->

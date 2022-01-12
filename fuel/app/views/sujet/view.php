@@ -74,11 +74,16 @@ $subject = $subject;
 					</div>
 				</div>
 			</div>
-			<?php if ($subject->getUrlImg() !== null) : ?>
+			<?php
+			$urls = $subject->getUrlsImg();
+			if (empty($urls)) $urls[] = "";
+			for ($i = 0; $i < count($urls); $i++) :
+				$url = $urls[$i];
+			?>
 				<div class="col-auto" style="padding:0; background-color: white;">
-					<img src="<?= $subject->getUrlImg() ?>" alt="Image indisponible" style="width: 400px;">
+					<img src="<?= $url ?>" alt="Image indisponible" style="width: 400px;">
 				</div>
-			<?php endif; ?>
+			<?php endfor; ?>
 		</div>
 
 	</section>

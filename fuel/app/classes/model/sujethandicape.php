@@ -21,7 +21,6 @@ class Sujethandicape extends Model {
 	private ?string $contexteNormatif = null;
 	private string $commentContext = "";
 	private string $commentDiagnosis = "";
-	private ?string $urlImg = null;
 	private int $idTypeDepot = 4;
 	private int $idSepulture = 4;
 	private ?int $idDepot = null;
@@ -43,6 +42,8 @@ class Sujethandicape extends Model {
 	private $pathologies;
 	/** @var Appareil[]|unset Array au format id_appareil => Appareil */
 	private $itemsHelp;
+	/** @var string[]|unset */
+	private $urlsImg;
 
 	private bool $empty = false;
 	/** @var bool|unset */
@@ -144,6 +145,11 @@ class Sujethandicape extends Model {
 			}
 		}
 		else if ($setWithEmpty) $this->itemsHelp = array();
+
+		// Récupération des urls d'images
+		if (isset($data["urls_img"])) {
+			$this->urlsImg = $data["urls_img"];
+		}
 	}
 
 	/**
@@ -210,7 +216,6 @@ class Sujethandicape extends Model {
 	public function getContexteNormatif() { return $this->contexteNormatif; }
 	public function getCommentContext() { return $this->commentContext; }
 	public function getCommentDiagnosis() { return $this->commentDiagnosis; }
-	public function getUrlImg() { return $this->urlImg; }
 	public function getIdTypeDepot() { return $this->idTypeDepot; }
 	public function getIdTypeSepulture() { return $this->idSepulture; }
 	public function getIdDepot() { return $this->idDepot; }
@@ -329,6 +334,14 @@ class Sujethandicape extends Model {
 
 	public function getItemHelp($idItem) {
 		return $this->getItemsHelp()[$idItem];
+	}
+
+	public function getUrlsImg() : array {
+		if (!isset($this->urlsImg)) {
+			if ($this->getId() === null) return array();
+			$this->urlsImg = Helper::querySelectList("SELECT url_img FROM sujet_image WHERE id_sujet={$this->getId()}");
+		}
+		return $this->urlsImg;
 	}
 
 	public function hasDiagnosis(int $idDiagnosis) {
@@ -494,6 +507,17 @@ class Sujethandicape extends Model {
 			); }
 		);
 
+		// Maj des images
+		$this->updateOnDB(
+			"sujet_image",
+			"id_sujet",
+			$this->getUrlsImg(),
+			function (string $url) { return array(
+				"id_sujet" => $this->id,
+				"url_img" => $url
+			); }
+		);
+
 		// Maj des diagnostic
 		$values = array();
 		// Définition de toutes les paires diagnostic-localisation
@@ -554,12 +578,10 @@ class Sujethandicape extends Model {
 			"contexte_normatif" => $this->contexteNormatif,
 			"comment_contexte" => $this->commentContext,
 			"comment_diagnostic" => $this->commentDiagnosis,
-			"url_img" => $this->urlImg,
 			"id_type_depot" => $this->idTypeDepot,
 			"id_sepulture" => $this->idSepulture,
 			"id_depot" => $this->idDepot,
 			"id_groupe_sujets" => $this->idGroupeSujet,
-			"url_img" => $this->urlImg
 		);
 	}
 
