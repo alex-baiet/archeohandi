@@ -69,11 +69,19 @@ Form::open(array(
 	<h3 class="text-center my-2">Sujet handicapé</h3>
 	<div class="row g-2">
 		<!-- URL Image -->
+		<script>
+			function changeImgSrc(id, value) {
+				document.getElementById(id).src = value;
+			}
+		</script>
 		<div class="col-md">
 			<div class="form-floating">
-				<input type="text" class="form-control" name="url_img" placeholder="" value="<?= $subject->getUrlImg(); ?>">
+				<input type="text" class="form-control" name="url_img" placeholder="" value="<?= $subject->getUrlImg(); ?>" onkeyup="changeImgSrc(`img_preview`, this.value);">
 				<label for="url_img">Lien de l'image</label>
 			</div>
+		</div>		
+		<div class="col-auto" style="padding:0; background-color: white;">
+			<img id="img_preview" src="<?= $subject->getUrlImg() ?>" alt="Image indisponible" style="height: 58px;">
 		</div>
 
 		<div class="row g-2">

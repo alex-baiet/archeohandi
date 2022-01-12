@@ -75,8 +75,8 @@ $subject = $subject;
 				</div>
 			</div>
 			<?php if ($subject->getUrlImg() !== null) : ?>
-				<div class="col-auto">
-					<img src="<?= $subject->getUrlImg() ?>" alt="Image indisponible" style="width: 400px">
+				<div class="col-auto" style="padding:0; background-color: white;">
+					<img src="<?= $subject->getUrlImg() ?>" alt="Image indisponible" style="width: 400px;">
 				</div>
 			<?php endif; ?>
 		</div>
