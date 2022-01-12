@@ -82,7 +82,8 @@ class Sujethandicape extends Model {
 		Archeo::mergeValue($this->contexteNormatif, $data, "contexte_normatif");
 		Archeo::mergeValue($this->commentContext, $data, "comment_contexte");
 		Archeo::mergeValue($this->commentDiagnosis, $data, "comment_diagnostic");
-		Archeo::mergeValue($this->urlImg, $data, "url_illustration");
+		Archeo::mergeValue($this->urlImg, $data, "url_img");
+		if (empty($this->urlImg)) $this->urlImg = null;
 		Archeo::mergeValue($this->idTypeDepot, $data, "id_type_depot", "int");
 		Archeo::mergeValue($this->idSepulture, $data, "id_sepulture", "int");
 		Archeo::mergeValue($this->idDepot, $data, "id_depot", "int");
@@ -209,7 +210,7 @@ class Sujethandicape extends Model {
 	public function getContexteNormatif() { return $this->contexteNormatif; }
 	public function getCommentContext() { return $this->commentContext; }
 	public function getCommentDiagnosis() { return $this->commentDiagnosis; }
-	public function getUrlIllustration() { return $this->urlIllustration; }
+	public function getUrlImg() { return $this->urlImg; }
 	public function getIdTypeDepot() { return $this->idTypeDepot; }
 	public function getIdTypeSepulture() { return $this->idSepulture; }
 	public function getIdDepot() { return $this->idDepot; }
@@ -558,6 +559,7 @@ class Sujethandicape extends Model {
 			"id_sepulture" => $this->idSepulture,
 			"id_depot" => $this->idDepot,
 			"id_groupe_sujets" => $this->idGroupeSujet,
+			"url_img" => $this->urlImg
 		);
 	}
 

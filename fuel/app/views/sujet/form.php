@@ -68,13 +68,20 @@ Form::open(array(
 
 	<h3 class="text-center my-2">Sujet handicapé</h3>
 	<div class="row g-2">
-		<div class="row g-2">
+		<!-- URL Image -->
+		<div class="col-md">
+			<div class="form-floating">
+				<input type="text" class="form-control" name="url_img" placeholder="" value="<?= $subject->getUrlImg(); ?>">
+				<label for="url_img">Lien de l'image</label>
+			</div>
+		</div>
 
+		<div class="row g-2">
 			<!-- Identifiant -->
 			<div class="col-md-6">
 				<div class="form-floating">
 					<input type="text" class="form-control" name="id_sujet_handicape" placeholder="" value="<?= $subject->getIdSujetHandicape(); ?>">
-					<label for="id_sujet">Identifiant du sujet</label>
+					<label for="id_sujet_handicape">Identifiant du sujet</label>
 				</div>
 			</div>
 
