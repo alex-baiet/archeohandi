@@ -38,7 +38,6 @@ use Fuel\Core\Asset;
 		echoLogo("inrap.jpg");
 		echoLogo("creaah.png");
 		echoLogo("artehis.jpg");
-		echoLogo("amis.png");
 		echoLogo("cnrs.png");
 		echo Asset::img("logo/adn.jpg", array('style' => "width: 100 px; height: 80px; margin: 15px;", "alt" => "adn.jpg"));
 		?>

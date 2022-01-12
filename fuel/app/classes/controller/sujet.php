@@ -1,6 +1,5 @@
 <?php
 
-use Fuel\Core\Controller;
 use Fuel\Core\Controller_Template;
 use Fuel\Core\Input;
 use Fuel\Core\Response;
