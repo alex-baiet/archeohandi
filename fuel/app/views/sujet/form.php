@@ -24,10 +24,6 @@ $subject = isset($subject) ? $subject : new Sujethandicape(array());
 $idOperation = isset($idOperation) ? $idOperation : $subject->getGroup()->getIdOperation();
 /** @var bool Ajoute un bouton pour rester sur la page. */
 $btnStay = isset($btnStay) ? $btnStay : false;
-/** @var string */
-$msgType = isset($msgType) ? $msgType : "success";
-/** @var string */
-$msg = isset($msg) ? $msg : null;
 
 if (!empty($msg)) {
 	Helper::alertBootstrap($msg, $msgType);

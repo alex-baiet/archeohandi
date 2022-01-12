@@ -140,7 +140,7 @@ class Helper {
 
 	/** Affiche une alert bootstrap. */
 	public static function alertBootstrap(string $text, string $color) {
-		$text = str_replace("<br>", "fjsqlkfjmldsjklqs", $text);
+		if (empty($text)) return;
 		echo '
 			<div class="alert alert-' . $color . ' alert-dismissible text-center my-2 fade show" role="alert">
 				' . $text . '

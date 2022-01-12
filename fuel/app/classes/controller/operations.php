@@ -5,6 +5,7 @@ use Fuel\Core\Input;
 use Fuel\Core\Response;
 use Fuel\Core\View;
 use Model\Helper;
+use Model\Messagehandler;
 use Model\Operation;
 use Model\Sujethandicape;
 
@@ -19,10 +20,9 @@ class Controller_Operations extends Controller_Template {
 		if (isset($_POST['delete_op'])) {
 			$result = Operation::deleteOnDB($_POST["delete_op"]);
 			if ($result === null) {
-				$data["msgType"] = "success_delete";
+				Messagehandler::prepareAlert("Suppression de l'opération réussi.", "success");
 			} else {
-				$data["msgType"] = "error_delete";
-				$data["msg"] = $result;
+				Messagehandler::prepareAlert("Echec de la suppression de l'opération.", "danger");
 			}
 		}
 
@@ -91,6 +91,7 @@ class Controller_Operations extends Controller_Template {
 			}
 			else if ($operation->saveOnDB()) {
 				// Ajout de l'opération avec succès
+				Messagehandler::prepareAlert("Ajout de l'opération réussi.", "success");
 				Response::redirect("/sujet/add/{$operation->getId()}");
 			}
 		}
@@ -104,21 +105,22 @@ class Controller_Operations extends Controller_Template {
 	//L'action view sert pour la page view de opération qui affiche les détails d'une opération
 	public function action_view($id) {
 		$data = array();
-		
+
+		$operation = Operation::fetchSingle($id);		
+		if ($operation === null) {
+			Messagehandler::prepareAlert("L'opération n'existe pas (quelqu'un vient peut-être de le supprimer).", "danger");
+			Response::redirect("accueil");
+		}
+
 		// Suppression d'un sujet (si l'utilisateur le demande)
 		if (isset($_POST['delete_sujet'])) {
 			$result = Sujethandicape::deleteOnDB($_POST["delete_sujet"]);
 			if ($result === null) {
-				$data["msgType"] = "success_delete";
+				Messagehandler::prepareAlert("Suppression du sujet réussi.", "success");
 			} else {
-				$data["msgType"] = "error_delete";
-				$data["msg"] = $result;
+				Messagehandler::prepareAlert("Echec de la suppression du sujet.", "danger");
 			}
 		}
-
-		// Récupération des informations de l'opération
-		$operation = Operation::fetchSingle($id);
-		if ($operation === null) Response::redirect("/operations");
 
 		// Ajout des données à la view
 		$data["operation"] = $operation;
@@ -129,7 +131,12 @@ class Controller_Operations extends Controller_Template {
 	//L'action edit sert pour la page edit de opération qui affiche les informations d'une opération pour les modifier
 	public function action_edit($id){
 		// Récupération des informations de l'opération
-		$operation = Operation::fetchSingle($id);
+		$operation = Operation::fetchSingle($id);		
+		if ($operation === null) {
+			Messagehandler::prepareAlert("L'opération n'existe pas (quelqu'un vient peut-être de le supprimer).", "danger");
+			Response::redirect("accueil");
+		}
+
 		/** @var null|string */
 		$errors = null;
 		
@@ -141,6 +148,7 @@ class Controller_Operations extends Controller_Template {
 			if ($result === true) {
 				// Les données sont valides : on met à jour la BDD
 				$operation->saveOnDB();
+				Messagehandler::prepareAlert("Modification de l'opération réussi.", "success");
 
 				if (Controller_Operations::DEBUG === true) {
 					Helper::varDump($operation);

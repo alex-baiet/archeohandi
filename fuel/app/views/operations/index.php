@@ -17,11 +17,6 @@ $all_nom_op = $all_nom_op;
 /** @var array */
 $all_annee = $all_annee;
 
-/** @var string|null  */
-$msg = isset($msg) ? $msg : null;
-/** @var string|null */
-$msgType = isset($msgType) ? $msgType : null;
-
 ?>
 
 <script type="text/javascript">
@@ -88,15 +83,6 @@ $msgType = isset($msgType) ? $msgType : null;
 		<?= Form::close(); ?>
 	</div>
 
-	<?php
-		// Affichage message d'erreur / de succès
-		switch ($msgType) {
-			case "error_delete": Helper::alertBootstrap("Une erreur est survenue lors de la suppression de l'opération : $msg", 'danger'); break;
-			case "success_delete": Helper::alertBootstrap("Suppression effectuée", 'success'); break;
-			case "success_add": Helper::alertBootstrap("L'ajout a été effectué", 'success'); break;
-			case "success_update": Helper::alertBootstrap("Modification effectuée", 'success'); break;
-		}
-	?>
 </div>
 <br />
 <!-- Contenu de la page -->

@@ -23,15 +23,11 @@ Asset::js("form.js");
 	<?php
 	$data = array("idOperation" => $idOperation, "btnStay" => true);
 	if (isset($subject)) $data["subject"] = $subject;
-	if (isset($msg)) $data["msg"] = $msg;
-	if (isset($msgType)) $data["msgType"] = $msgType;
 	?>
 	<?= View::forge("sujet/form", $data); ?>
 </div>
 
-<?= Asset::js('script_recherche.js'); ?>
-
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 	//Permet d'afficher les informations cachées (champs texte, sélection d'option)
 	function function_toggle(id) {
 		if (document.getElementById("autre_mobilier_" + id).checked === true) {
@@ -77,4 +73,4 @@ Asset::js("form.js");
 		//Supprime le dernier de la div contenu
 		$('.contenu').children().last().remove();
 	}
-</script>
+</script> -->

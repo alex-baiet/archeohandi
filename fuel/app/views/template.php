@@ -1,6 +1,8 @@
 <?php
 
 use Fuel\Core\Asset;
+use Model\Messagehandler;
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -51,6 +53,8 @@ use Fuel\Core\Asset;
       </div>
     </div>
   </nav>
+
+  <?php Messagehandler::echoAlert(); ?>
 
   <!-- Tout le contenu de la page -->
   <?= $content; ?>
