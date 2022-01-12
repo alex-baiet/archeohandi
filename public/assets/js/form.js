@@ -125,8 +125,13 @@ function addCopy(name) {
 	return num;
 }
 
+/** Supprime le dernier champs copier de la liste de champs correspondant au name. */
 function removeCopy(name) {
-	console.log("Non implémenté");
+	let parent = document.getElementById(`form_${name}`).parentElement;
+	if (parent.childElementCount > 1) {
+		// Suppression
+		parent.lastElementChild.remove();
+	}
 }
 
 function changeImgSrc(id, value) {

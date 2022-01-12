@@ -122,7 +122,7 @@ Form::open(array(
 			</div>
 			<div class="col-md-6">
 				<button type="button" class="btn btn-primary me-md-2" onclick="addCopyImg('urls_img');"><i class="bi bi-plus"></i></button>
-				<button type="button" class="btn btn-danger" onclick="removeCopyImg('urls_img');"><i class="bi bi-x"></i></button>
+				<button type="button" class="btn btn-danger" onclick="removeCopy('urls_img');"><i class="bi bi-x"></i></button>
 			</div>
 		</div>
 
