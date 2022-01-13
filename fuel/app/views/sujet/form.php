@@ -368,8 +368,15 @@ Form::open(array(
 		<textarea class="form-control" name="comment_diagnostic" rows="2"><?= $subject->getCommentDiagnosis(); ?></textarea>
 	</div>
 
-	<!-- URL Image -->
 	<h3>Iconographie</h3>
+	<!-- Lien Nakala -->
+	<div class="row my-2">
+		<div class="col-md-auto">
+			<a href="https://nakala.fr/u/collections/10.34847/nkl.2400swmp" class="btn btn-primary" target="_blank">Aller sur Nakala</a>
+		</div>
+	</div>
+
+	<!-- Listes URL images -->
 	<div class="row my-2">
 		<div class="col-md" id="form_urls_img_parent">
 			<?php

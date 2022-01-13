@@ -1,5 +1,6 @@
 <?php
 
+use Model\Nakalaimg;
 use Model\Sujethandicape;
 
 /** @var Sujethandicape */
@@ -74,16 +75,6 @@ $subject = $subject;
 					</div>
 				</div>
 			</div>
-			<?php
-			$urls = $subject->getUrlsImg();
-			if (empty($urls)) $urls[] = "";
-			for ($i = 0; $i < count($urls); $i++) :
-				$url = $urls[$i];
-			?>
-				<div class="col-auto" style="padding:0; background-color: white;">
-					<img src="<?= $url ?>" alt="Image indisponible" style="width: 400px;">
-				</div>
-			<?php endfor; ?>
 		</div>
 
 	</section>
@@ -198,6 +189,25 @@ $subject = $subject;
 				<div class="p-2">Commentaire du diagnostic : <?= $subject->getCommentDiagnosis(); ?></div>
 			</div>
 		</div>
+	</section>
+	<br />
+
+	<section>
+		<h4>Iconographie</h4>
+		<?php
+		$urls = $subject->getUrlsImg();
+		if (empty($urls)) $urls[] = "";
+		for ($i = 0; $i < count($urls); $i++) :
+			$url = $urls[$i];
+		?>
+			<?php if (Nakalaimg::urlIsNakalaImg($url)) : ?>
+				<a href="<?= Nakalaimg::urlImgToUrlNakala($url); ?>" target="_blank">
+					<img src="<?= $url ?>" alt="Image indisponible" style="height: 300px;">
+				</a>
+			<?php else : ?>
+				<img src="<?= $url ?>" alt="Image indisponible" style="width: 400px;">
+			<?php endif; ?>
+		<?php endfor; ?>
 	</section>
 
 	<div class="d-grid gap-2 d-md-block p-1">
