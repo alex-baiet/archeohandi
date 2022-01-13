@@ -95,6 +95,40 @@ function removePerson(id) {
 	toRemove.remove();
 }
 
+//#region CopyInput
+/** @type {Map<string, number>} Contient le dernier numéro ajouté pour chaque nom. */
+var numCounter = new Map();
+/** @type {Map<string, HTMLElement} Contient les elements original */
+var originals = new Map();
+
+/**
+ * Récupère la copie originale.
+ * @param {string} name
+ */
+function getOriginalCopy(name) {
+	if (!originals.has(name)) {
+		origin = document.getElementById(`form_${name}_copy_0`);
+		originals.set(name, origin);
+	}
+
+	return originals.get(name);
+}
+
+/**
+ * 
+ * @param {string} name 
+ * @returns number
+ */
+function getNumNewCopy(name) {
+	if (!numCounter.has(name)) {
+		numCounter.set(name, 1);
+	} else {
+		numCounter.set(name, numCounter.get(name) +1);
+	}
+
+	return numCounter.get(name);
+}
+
 /**
  * Copy un champ input.
  * @param {string} name Nom de l'input. L'id du parent à copier doit être au format `form_${name}`.
@@ -102,11 +136,11 @@ function removePerson(id) {
  */
 function addCopy(name) {
 	let id = `form_${name}`;
-	// Récupération de l'original
-	let elem = document.getElementById(id);
+	/** Element original */
+	let elem = getOriginalCopy(name);
 
-	// Calcul nouveau numéro
-	let num = elem.parentElement.childElementCount;
+	/** Nouveau numéro */
+	let num = getNumNewCopy(name);
 	console.log(num);
 
 	// Copie
@@ -119,18 +153,33 @@ function addCopy(name) {
 	// Modification des champs
 	let inputCopy = copy.getElementsByTagName("input")[0];
 	inputCopy.id = `${id}_${num}`;
+	inputCopy.value = "";
 	let labelCopy = copy.getElementsByTagName("label")[0];
 	inputCopy.id = `${id}_label_${num}`;
+	let btnRemoveCopy = copy.getElementsByTagName("button")[0];
+	btnRemoveCopy.onclick = () => { removeElem(name, num); }
 
 	return num;
 }
 
-/** Supprime le dernier champs copier de la liste de champs correspondant au name. */
-function removeCopy(name) {
-	let parent = document.getElementById(`form_${name}`).parentElement;
+/**
+ * Supprime le dernier champs copier de la liste de champs correspondant au name.
+ * 
+ * @param {string} name Nom du champ input.
+ * @param {number} num Numéro de la copie.
+ */
+function removeElem(name, num) {
+	const parent = document.getElementById(`form_${name}_parent`);
+	const id = `form_${name}_copy_${num}`;
+	let elem = document.getElementById(id);
 	if (parent.childElementCount > 1) {
-		// Suppression
-		parent.lastElementChild.remove();
+		let isOriginal = getOriginalCopy(name).id == id;
+		elem.remove();
+		// Remplacement de la node original de copie.
+		if (isOriginal) {
+			originals.set(name, parent.children[0]);
+			console.log("fsjsfjfqssfd");
+		}
 	}
 }
 
@@ -147,7 +196,9 @@ function addCopyImg(name) {
 	inputCopy.onkeyup = function () { changeImgSrc(`img_preview_${num}`, inputCopy.value); }
 	let imgCopy = copy.getElementsByTagName("img")[0];
 	imgCopy.id = `img_preview_${num}`;
+	imgCopy.src = "";
 }
+//#endregion
 
 /**
  * Active les checkbox de localisation lors du clic sur le switch du diagnostic concerné.
