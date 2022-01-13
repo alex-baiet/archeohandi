@@ -379,10 +379,11 @@ Form::open(array(
 			for ($i = 0; $i < count($urls); $i++) :
 				$url = $urls[$i];
 			?>
-				<div class="row" id="form_urls_img_copy_0">
+				<div class="row" id="form_urls_img_copy_<?= $i; ?>">
 					<div class="col-md">
 						<div class="form-floating">
-							<input type="text" class="form-control" id="form_urls_img_<?= $i ?>" name="urls_img[]" placeholder="" value="<?= $url ?>" onkeyup="changeImgSrc(`img_preview_<?= $i; ?>`, this.value);">
+							<input type="text" class="form-control" id="form_urls_img_<?= $i ?>" name="urls_img[]"
+								placeholder="" value="<?= $url ?>" onkeyup="changeImgSrc(`form_urls_img_<?= $i ?>`, `img_preview_<?= $i; ?>`, this.value);">
 							<label for="urls_img_<?= $i ?>" id="form_urls_img_label_<?= $i ?>">Lien de l'image</label>
 						</div>
 					</div>
@@ -390,7 +391,7 @@ Form::open(array(
 						<img id="img_preview_<?= $i; ?>" src="<?= $url ?>" alt="Image indisponible" style="height: 58px;">
 					</div>
 					<div class="col-auto">
-						<button type="button" class="btn btn-danger btn-remove-copy" onclick="removeElem('urls_img', 0);"><i class="bi bi-x"></i></button>
+						<button type="button" class="btn btn-danger btn-remove-copy" onclick="removeElem('urls_img', <?= $i; ?>);"><i class="bi bi-x"></i></button>
 					</div>
 				</div>
 			<?php endfor; ?>

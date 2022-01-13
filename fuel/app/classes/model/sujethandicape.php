@@ -148,7 +148,7 @@ class Sujethandicape extends Model {
 
 		// Récupération des urls d'images
 		if (isset($data["urls_img"])) {
-			$this->urlsImg = $data["urls_img"];
+			$this->setUrlsImg($data["urls_img"]);
 		}
 	}
 
@@ -402,6 +402,10 @@ class Sujethandicape extends Model {
 	public function setIdSujetHandicape(string $value) {
 		$this->validation->resetValidation();
 		$this->idSujetHandicape = $value;
+	}
+
+	private function setUrlsImg(array $urls) {
+		$this->urlsImg = array_unique(array_filter($urls));
 	}
 
 	/** Réinitialise l'id pour permettre de dupliquer les données dans la BDD. */

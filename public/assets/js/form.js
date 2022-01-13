@@ -121,7 +121,7 @@ function getOriginalCopy(name) {
  */
 function getNumNewCopy(name) {
 	if (!numCounter.has(name)) {
-		numCounter.set(name, 1);
+		numCounter.set(name, document.getElementById(`form_${name}_parent`).childElementCount);
 	} else {
 		numCounter.set(name, numCounter.get(name) +1);
 	}
@@ -183,17 +183,27 @@ function removeElem(name, num) {
 	}
 }
 
-function changeImgSrc(id, value) {
-	document.getElementById(id).src = value;
+/**
+ * 
+ * @param {string} id id de la balise img.
+ * @param {string} value Source cible de l'image.
+ */
+function changeImgSrc(idInput, idImg) {
+	let input = document.getElementById(idInput);
+	let img = document.getElementById(idImg);
+
+	if (input.value.startsWith("10.34847")) input.value = "https://api.nakala.fr/data/" + input.value;
+	img.src = input.value;
 }
 
 function addCopyImg(name) {
 	let num = addCopy(name);
 	let id = `form_${name}`;
+	let idCopy = `${id}_copy_${num}`;
 
-	let copy = document.getElementById(`${id}_copy_${num}`);
+	let copy = document.getElementById(idCopy);
 	let inputCopy = copy.getElementsByTagName("input")[0];
-	inputCopy.onkeyup = function () { changeImgSrc(`img_preview_${num}`, inputCopy.value); }
+	inputCopy.onkeyup = function () { changeImgSrc(idCopy, `img_preview_${num}`); }
 	let imgCopy = copy.getElementsByTagName("img")[0];
 	imgCopy.id = `img_preview_${num}`;
 	imgCopy.src = "";
