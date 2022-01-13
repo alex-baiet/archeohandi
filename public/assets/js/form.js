@@ -154,8 +154,8 @@ function addCopy(name) {
 	let inputCopy = copy.getElementsByTagName("input")[0];
 	inputCopy.id = `${id}_${num}`;
 	inputCopy.value = "";
-	let labelCopy = copy.getElementsByTagName("label")[0];
-	inputCopy.id = `${id}_label_${num}`;
+	// let labelCopy = copy.getElementsByTagName("label")[0];
+	// labelCopy.id = `${id}_label_${num}`;
 	let btnRemoveCopy = copy.getElementsByTagName("button")[0];
 	btnRemoveCopy.onclick = () => { removeElem(name, num); }
 
@@ -192,6 +192,7 @@ function changeImgSrc(idInput, idImg) {
 	let input = document.getElementById(idInput);
 	let img = document.getElementById(idImg);
 
+	console.log(input.value);
 	if (input.value.startsWith("10.34847")) input.value = "https://api.nakala.fr/data/" + input.value;
 	img.src = input.value;
 }
@@ -199,11 +200,10 @@ function changeImgSrc(idInput, idImg) {
 function addCopyImg(name) {
 	let num = addCopy(name);
 	let id = `form_${name}`;
-	let idCopy = `${id}_copy_${num}`;
 
-	let copy = document.getElementById(idCopy);
+	let copy = document.getElementById(`${id}_copy_${num}`);
 	let inputCopy = copy.getElementsByTagName("input")[0];
-	inputCopy.onkeyup = function () { changeImgSrc(idCopy, `img_preview_${num}`); }
+	inputCopy.onkeyup = function () { changeImgSrc(`${id}_${num}`, `img_preview_${num}`); }
 	let imgCopy = copy.getElementsByTagName("img")[0];
 	imgCopy.id = `img_preview_${num}`;
 	imgCopy.src = "";
