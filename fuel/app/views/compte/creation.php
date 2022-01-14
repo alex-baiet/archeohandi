@@ -40,7 +40,7 @@ $defaultAttr = array("type" => "text", "class" => "form-control", "placeholder" 
 					<?= Form::label("Email", "email"); ?>
 				</div>
 				<p class="text-muted">
-					Une fois le compte créer, vous recevrez un message à l'adresse indiqué.
+					Une fois le compte créé, vous recevrez un message au mail donné.
 				</p>
 			</div>
 		</div>

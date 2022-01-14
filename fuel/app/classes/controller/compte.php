@@ -52,7 +52,7 @@ class Controller_Compte extends Controller_Template {
 					$headers
 				);
 				if ($result) {
-					Messagehandler::prepareAlert("La demande de création de compte a été envoyé. Vous recevrez un mail de confirmation ", "success");
+					Messagehandler::prepareAlert("La demande de création de compte a été envoyé. Vous recevrez un mail de confirmation avec vos identifiants une fois la création validée par un administrateur.", "success");
 					Response::redirect("/accueil");
 				} else {
 					Messagehandler::prepareAlert("La demande de création de compte n'a pas pu être envoyé.", "danger");
