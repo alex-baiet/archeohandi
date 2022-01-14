@@ -36,4 +36,5 @@ archeohandi.code-workspace
 /fuel/app/config/crypt.php
 
 # test files
-fuel/app/classes/controller/test.php
+/fuel/app/classes/controller/test.php
+/fuel/app/views/test/
