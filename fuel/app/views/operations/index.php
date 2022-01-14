@@ -3,7 +3,6 @@
 use Fuel\Core\Asset;
 use Fuel\Core\Form;
 use Fuel\Core\View;
-use Model\Helper;
 use Model\Operation;
 
 /** @var Operation[] */
