@@ -1,9 +1,14 @@
 <?php
+/*
+Contenu du mail envoyé lors de la demande de création de compte.
+*/
 
 /** @var string */
 $firstName = $firstName;
 /** @var string */
 $lastName = $lastName;
+/** @var string */
+$email = $email;
 /** @var string */
 $msg = $msg;
 
@@ -27,7 +32,10 @@ $msg = $msg;
 
 	<p>
 		Monsieur/Madame <?= "$firstName $lastName" ?> demande l'ouverture
-		d'un compte sur la base de données Archéologie du Handicap.
+		d'un compte sur la base de données Archéologie du Handicap.<br>
+		<br>
+
+		Mail de la personne : <a href="mailto:<?= $email; ?>"><?= $email ?></a>
 	</p>
 
 	<?php if (!empty($msg)) : ?>
@@ -37,9 +45,12 @@ $msg = $msg;
 		</blockquote>
 	<?php endif; ?>
 
-	<a href="https://google.com">
-		<button>Confirmer</button>
-	</a>
+	<form action="https://archeohandi.huma-num.fr/public/compte/creation_confirmation" method="POST">
+		<input type="hidden" name="prenom" value="<?= $firstName ?>">
+		<input type="hidden" name="nom" value="<?= $lastName ?>">
+		<input type="hidden" name="email" value="<?= $email ?>">
+		<button type="submit">Confirmer la création</button>
+	</form>
 
 </body>
 

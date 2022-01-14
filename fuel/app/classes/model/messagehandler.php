@@ -6,18 +6,26 @@ class Messagehandler {
 	/** Prepare l'affichage d'une alert qui sera afficher lors du prochain chargement de page. */
 	public static function prepareAlert(string $msg, string $type = "primary") {
 		Messagehandler::startSession();
-		
 		if (empty($msg)) return;
-		$_SESSION["msg"] = $msg;
-		$_SESSION["type"] = $type;
+
+		if (!isset($_SESSION["msg"])) {
+			$_SESSION["msg"] = array();
+			$_SESSION["type"] = array();
+		}
+
+		$_SESSION["msg"][] = $msg;
+		$_SESSION["type"][] = $type;
 	}
 
-	/** Affiche l'alert préparé avec prepareAlert(). Utilisé au chargement de chaque page. */
+	/** Affiche les alerts préparé avec prepareAlert(). Utilisé au chargement de chaque page. */
 	public static function echoAlert() {
 		Messagehandler::startSession();
 
 		if (empty($_SESSION["msg"])) return;
-		Helper::alertBootstrap($_SESSION["msg"], $_SESSION["type"]);
+
+		for ($i=0; $i < count($_SESSION["msg"]); $i++) { 
+			Helper::alertBootstrap($_SESSION["msg"][$i], $_SESSION["type"][$i]);
+		}
 		unset($_SESSION["msg"]);
 		unset($_SESSION["type"]);
 	}

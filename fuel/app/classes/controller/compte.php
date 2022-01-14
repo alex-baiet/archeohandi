@@ -17,19 +17,25 @@ class Controller_Compte extends Controller_Template {
 		if (isset($_POST["create"])) {
 			$firstName = Helper::secureString($_POST["prenom"]);
 			$lastName = Helper::secureString($_POST["nom"]);
+			$email = Helper::secureString($_POST["email"]);
 
 			// Validation des champs
-			$errors = array();
-			if (empty($firstName)) $errors[] = "Indiquez votre prénom.";
+			$error = false;
+			if (empty($firstName)) {
+				$error = true;
+				Messagehandler::prepareAlert("Indiquez votre prénom.", "danger");
+			}
 			else $firstName[0] = strtoupper($firstName[0]);
-			if (empty($lastName)) $errors[] = "Indiquez votre prénom.";
+
+			if (empty($lastName)) {
+				$error = true;
+				Messagehandler::prepareAlert("Indiquez votre nom.", "danger");
+			}
 			else $lastName = strtoupper($lastName);
 
-			if (!empty($errors)) {
-				// Données invalide : Préparation affichage des erreurs
-				Helper::varDump($errors);
+			if (!$error) {
+				// Les données sont valides
 
-			} else {
 				$headers  = "MIME-Version: 1.0\r\n";
 				$headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
 				$headers .= "From: noreply@archeologieduhandicap\r\n";
@@ -41,11 +47,12 @@ class Controller_Compte extends Controller_Template {
 					View::forge("compte/mail", array(
 						"firstName" => $firstName,
 						"lastName" => $lastName,
+						"email" => $email,
 						"msg" => $_POST["msg"])),
 					$headers
 				);
 				if ($result) {
-					Messagehandler::prepareAlert("La demande de création de compte a été envoyé.", "success");
+					Messagehandler::prepareAlert("La demande de création de compte a été envoyé. Vous recevrez un mail de confirmation ", "success");
 					Response::redirect("/accueil");
 				} else {
 					Messagehandler::prepareAlert("La demande de création de compte n'a pas pu être envoyé.", "danger");
@@ -63,5 +70,14 @@ class Controller_Compte extends Controller_Template {
 		$data = array();
 		$this->template->title = 'Accueil';
 		$this->template->content = View::forge('compte/connexion', $data);
+	}
+
+	/** Page admin uniquement : permet de créer le compte */
+	public function action_creation_confirmation() {
+		if (!isset($_POST["email"])) Response::redirect("/accueil");
+
+		$data = array();
+		$this->template->title = 'Confirmation création';
+		$this->template->content = View::forge('compte/creation_confirmation', $data);
 	}
 }

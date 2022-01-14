@@ -1,6 +1,7 @@
 <?php
 
 use Fuel\Core\Form;
+use Model\Helper;
 
 $defaultAttr = array("type" => "text", "class" => "form-control", "placeholder" => "", "autocomplete" => "off");
 
@@ -12,20 +13,35 @@ $defaultAttr = array("type" => "text", "class" => "form-control", "placeholder" 
 
 	<form action="" method="POST" style="background-color: #F5F5F5; padding: 10px;">
 
-		<!-- Message à envoyer -->
 		<div class="row my-2">
+			<!-- Prenom -->
 			<div class="col-md-6">
 				<div class="form-floating">
-					<?= Form::input("prenom", null, $defaultAttr); ?>
+					<?= Form::input("prenom", Helper::arrayGetString("prenom", $_POST), $defaultAttr); ?>
 					<?= Form::label("Prénom", "prenom"); ?>
 				</div>
 			</div>
 
+			<!-- Nom -->
 			<div class="col-md-6">
 				<div class="form-floating">
-					<?= Form::input("nom", null, $defaultAttr); ?>
+					<?= Form::input("nom", Helper::arrayGetString("nom", $_POST), $defaultAttr); ?>
 					<?= Form::label("Nom", "nom"); ?>
 				</div>
+			</div>
+		</div>
+
+		<!-- Email -->
+		<div class="row my-2">
+			<div class="col-md">
+				<div class="form-floating">
+					<?= Form::input("email", Helper::arrayGetString("email", $_POST),
+						array("type" => "email", "class" => "form-control", "placeholder" => "", "autocomplete" => "off")); ?>
+					<?= Form::label("Email", "email"); ?>
+				</div>
+				<p class="text-muted">
+					Une fois le compte créer, vous recevrez un message à l'adresse indiqué.
+				</p>
 			</div>
 		</div>
 
@@ -33,7 +49,7 @@ $defaultAttr = array("type" => "text", "class" => "form-control", "placeholder" 
 		<div class="row my-2">
 			<div class="col-md">
 				<?= Form::label("Message", "msg"); ?>
-				<?= Form::textarea("msg", null, $defaultAttr); ?>
+				<?= Form::textarea("msg", Helper::arrayGetString("msg", $_POST), $defaultAttr); ?>
 			</div>
 		</div>
 		
