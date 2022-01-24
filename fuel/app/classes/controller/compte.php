@@ -6,6 +6,7 @@ use Fuel\Core\View;
 use Model\Compte;
 use Model\Helper;
 use Model\Messagehandler;
+use Model\Redirect;
 
 /**
  * Gestion des pages des connexion et de création ici
@@ -96,6 +97,6 @@ class Controller_Compte extends Controller_Template {
 		Compte::disconnect();
 
 		if (isset($_POST["previous_page"])) Response::redirect($_POST["previous_page"]);
-		else Response::redirect("/accueil");
+		else Redirect::redirectBack();
 	}
 }

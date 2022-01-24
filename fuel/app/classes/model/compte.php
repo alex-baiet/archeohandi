@@ -102,7 +102,7 @@ class Compte {
 
 	private static function checkPermError(string $msg) {
 		Messagehandler::prepareAlert($msg, "danger");
-		Response::redirect("/accueil");
+		Redirect::redirectBack();
 	}
 
 	public function getLogin(): string { return $this->login; }

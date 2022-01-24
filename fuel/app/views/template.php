@@ -7,6 +7,7 @@ use Fuel\Core\Uri;
 use Model\Compte;
 use Model\Helper;
 use Model\Messagehandler;
+use Model\Redirect;
 
 ?>
 <!DOCTYPE html>
@@ -107,3 +108,7 @@ use Model\Messagehandler;
 </body>
 
 </html>
+
+<?php
+Redirect::setPreviousPage();
+?>
