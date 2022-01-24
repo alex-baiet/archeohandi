@@ -1,6 +1,7 @@
 <?php
 
 use Fuel\Core\Controller_Template;
+use Fuel\Core\DB;
 use Fuel\Core\Response;
 use Fuel\Core\View;
 use Model\Compte;
@@ -12,6 +13,8 @@ use Model\Redirect;
  * Gestion des pages des connexion et de création ici
  */
 class Controller_Compte extends Controller_Template {
+	private const DEBUG = false;
+
 	/** Création d'un compte. */
 	public function action_creation() {
 		$data = array();
@@ -85,7 +88,30 @@ class Controller_Compte extends Controller_Template {
 
 	/** Page admin uniquement : permet de créer le compte */
 	public function action_creation_confirmation() {
+		//Compte::checkPermission(Compte::PERM_ADMIN);
+
 		if (!isset($_POST["email"])) Response::redirect("/accueil");
+		$email = $_POST["email"];
+		$firstName = $_POST["prenom"];
+		$lastName = $_POST["nom"];
+
+		if (Controller_Compte::DEBUG === true) {
+			// Suppression de l'ancien compte
+			DB::delete("compte")->where("email", "=", $email)->execute();
+		}
+
+		$login = null;
+		$pw = null;
+		if (Compte::emailExist($email)) {
+			Messagehandler::prepareAlert("Un compte avec le mail indiqué existe déjà. Le compte n'a donc pas été créé.", "danger");
+		} else {	
+			// Création du compte
+			if (Compte::create($firstName, $lastName, $email, $login, $pw)) {
+				Messagehandler::prepareAlert("Compte créé !", "success");
+			} else {
+				Messagehandler::prepareAlert("Le compte n'a pas pû être créé.", "danger");
+			}
+		}
 
 		$data = array();
 		$this->template->title = 'Confirmation création';

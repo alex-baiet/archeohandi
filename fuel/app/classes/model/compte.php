@@ -10,6 +10,8 @@ class Compte {
 	public const PERM_ADMIN = "admin";
 	public const PERM_WRITE = "write";
 
+	/** Liste de tous les charactères pouvant être généré dans un mot de passe. */
+	private const ALLOWED_PASSWORD = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 	/** Durée de vie de la connexion en secondes. */
 	private const CONNECT_LIFE = 60 * 60 * 24 * 7; // une semaine
 
@@ -45,10 +47,56 @@ class Compte {
 		return Compte::$instance;
 	}
 
-	/** Créer un nouveau compte dans la BDD. */
-	public static function create(string $firstName, string $lastName, string $email) {
-
+	public static function emailExist(string $email): bool {
+		// Test un compte existe déjà ?
+		$results = DB::select()->from("compte")->where("email", "=", $email)->execute()->as_array();
+		return !empty($results);
 	}
+
+	#region Création de compte
+	/** Créer un nouveau compte dans la BDD. */
+	public static function create(string $firstName, string $lastName, string $email, &$newLogin, &$newPassword): bool {
+		if (Compte::emailExist($email)) return false;
+
+		$login = Compte::generateLogin($firstName, $lastName);
+		$pw = Compte::generatePassword();
+
+		list($insertId, $rowAffected) = DB::insert("compte")
+			->set(array(
+				"login" => $login,
+				"mdp" => md5($pw),
+				"permission" => Compte::PERM_WRITE,
+				"prenom" => $firstName,
+				"nom" => $lastName,
+				"email" => $email,
+			))
+			->execute();
+
+		if ($rowAffected > 0) {
+			$newLogin = $login;
+			$newPassword = $pw;
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	/** Génère un mot de passe aléatoire. */
+	private static function generatePassword(): string {
+		$pw = "";
+		for ($i = 0; $i < 8; $i++) {
+			$pw .= Compte::ALLOWED_PASSWORD[rand(0, strlen(Compte::ALLOWED_PASSWORD) - 1)];
+		}
+		return $pw;
+	}
+
+	/** Génère un nouveau login unique. */
+	private static function generateLogin(string $firstName, string $lastName): string {
+		$login = strtolower($firstName[0] . $lastName);
+		$login = str_replace(array(" ", "-", "'"), "", $login);
+		return $login;
+	}
+	#endregion
 
 	/**
 	 * Connecte l'utilisateur au compte correspondant.
