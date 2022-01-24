@@ -17,6 +17,8 @@ class Controller_Compte extends Controller_Template {
 
 	/** Création d'un compte. */
 	public function action_creation() {
+		Compte::checkPermission(Compte::PERM_DISCONNECTED);
+
 		$data = array();
 
 		if (isset($_POST["create"])) {
@@ -66,6 +68,8 @@ class Controller_Compte extends Controller_Template {
 
 	/** Connexion à un compte existant. */
 	public function action_connexion() {
+		Compte::checkPermission(Compte::PERM_DISCONNECTED);
+
 		if (isset($_POST["login"]) && isset($_POST["mdp"])) {
 			$login = $_POST["login"];
 			$mdp = $_POST["mdp"];

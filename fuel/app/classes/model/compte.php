@@ -9,6 +9,7 @@ use Fuel\Core\Response;
 class Compte {
 	public const PERM_ADMIN = "admin";
 	public const PERM_WRITE = "write";
+	public const PERM_DISCONNECTED = "disconnected";
 
 	/** Liste de tous les charactères pouvant être généré dans un mot de passe. */
 	private const ALLOWED_PASSWORD = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -149,22 +150,29 @@ class Compte {
 	}
 
 	/** Vérifie que l'utilisateur a les permissions indiqués, et redirige vers l'accueil en cas de problème. */
-	public static function checkPermission(?string $requiredPermission = null) {
+	public static function checkPermission(string $requiredPermission) {		
+
 		// Aucune contrainte demandé
 		if ($requiredPermission === null) return;
-		
-		// Connection requise mais pas de compte : redirection
+
 		$instance = Compte::getInstance();
-		if ($instance === null) Compte::checkPermError("La page que vous vouliez accéder nécessite de se connecter à un compte.");
 
-		// Utilisateur et permission admin
-		if ($instance->getPermission() === Compte::PERM_ADMIN) return;
-		if ($requiredPermission === Compte::PERM_ADMIN) Compte::checkPermError("La page que vous vouliez accéder est réservé aux administrateurs.");
-
-		// Utilisateur et permission write
-		if ($instance->getPermission() === Compte::PERM_WRITE && $requiredPermission === Compte::PERM_WRITE) return;
-
-		Compte::checkPermError("Une erreur est servenu lors de la vérification des droits d'accès à la page.");
+		switch ($requiredPermission) {
+			case Compte::PERM_DISCONNECTED:
+				if ($instance !== null) Compte::checkPermError("Vous devez d'abord vous déconnecter pour pouvoir accéder à cette page.");
+				break;
+			case Compte::PERM_WRITE:
+				if ($instance === null) Compte::checkPermError("La page que vous voulez accéder nécessite de se connecter à un compte.");
+				break;
+			case Compte::PERM_ADMIN:
+				if ($instance === null || $instance->getPermission() !== Compte::PERM_ADMIN) {
+					Compte::checkPermError("La page que vous vouliez accéder est réservé aux administrateurs.");
+				}
+				break;
+			default;
+				Compte::checkPermError("Une erreur est servenu lors de la vérification des droits d'accès à la page.");
+				break;
+		}
 	}
 
 	private static function checkPermError(string $msg) {
