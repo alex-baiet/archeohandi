@@ -42,7 +42,7 @@ class Controller_Compte extends Controller_Template {
 
 				// Données valide : envoie du mail
 				$result = mail(
-					"aleuxpro@gmail.com",
+					"alex.baiet3@gmail.com",
 					"Demande d'accès Archéologie du handicap",
 					View::forge("compte/mail", array(
 						"firstName" => $firstName,

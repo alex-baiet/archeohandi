@@ -35,7 +35,7 @@ $msg = $msg;
 		d'un compte sur la base de données Archéologie du Handicap.<br>
 		<br>
 
-		Mail de la personne : <a href="mailto:<?= $email; ?>"><?= $email ?></a>
+		Mail : <a href="mailto:<?= $email; ?>"><?= $email ?></a>
 	</p>
 
 	<?php if (!empty($msg)) : ?>
