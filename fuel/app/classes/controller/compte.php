@@ -40,22 +40,16 @@ class Controller_Compte extends Controller_Template {
 
 			if (!$error) {
 				// Les données sont valides
-
-				$headers  = "MIME-Version: 1.0\r\n";
-				$headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
-				$headers .= "From: noreply@archeologieduhandicap\r\n";
-
-				// Données valide : envoie du mail
-				$result = mail(
+				$result = Controller_Compte::sendMail(
 					"alex.baiet3@gmail.com",
 					"Demande d'accès Archéologie du handicap",
 					View::forge("compte/mail", array(
 						"firstName" => $firstName,
 						"lastName" => $lastName,
 						"email" => $email,
-						"msg" => $_POST["msg"])),
-					$headers
+						"msg" => $_POST["msg"]))
 				);
+
 				if ($result) {
 					Messagehandler::prepareAlert("La demande de création de compte a été envoyé. Vous recevrez un mail de confirmation avec vos identifiants une fois la création validée par un administrateur.", "success");
 					Response::redirect("/accueil");
@@ -108,6 +102,18 @@ class Controller_Compte extends Controller_Template {
 			// Création du compte
 			if (Compte::create($firstName, $lastName, $email, $login, $pw)) {
 				Messagehandler::prepareAlert("Compte créé !", "success");
+
+				// Mail de confirmation de la création de compte
+				Controller_Compte::sendMail(
+					$email,
+					"Demande d'accès Archéologie du handicap",
+					View::forge("compte/mail_confirmed", array(
+						"firstName" => $firstName,
+						"lastName" => $lastName,
+						"login" => $login,
+						"password" => $pw
+					))
+				);
 			} else {
 				Messagehandler::prepareAlert("Le compte n'a pas pû être créé.", "danger");
 			}
@@ -125,4 +131,13 @@ class Controller_Compte extends Controller_Template {
 		if (isset($_POST["previous_page"])) Response::redirect($_POST["previous_page"]);
 		else Redirect::redirectBack();
 	}
+
+	private static function sendMail(string $to, string $title, string $content): bool {		
+		$headers  = "MIME-Version: 1.0\r\n";
+		$headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
+		$headers .= "From: noreply@archeologieduhandicap\r\n";
+
+		return mail($to, $title, $content, $headers);
+	}
+
 }
