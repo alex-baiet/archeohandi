@@ -4,6 +4,7 @@ namespace Model;
 
 use Fuel\Core\Cookie;
 use Fuel\Core\DB;
+use Fuel\Core\Response;
 
 class Compte {
 	public const PERM_ADMIN = "admin";
@@ -78,6 +79,30 @@ class Compte {
 		Cookie::delete("login");
 		Cookie::delete("mdp");
 		if (isset(Compte::$instance)) unset(Compte::$instance);
+	}
+
+	/** Vérifie que l'utilisateur a les permissions indiqués, et redirige vers l'accueil en cas de problème. */
+	public static function checkPermission(?string $requiredPermission = null) {
+		// Aucune contrainte demandé
+		if ($requiredPermission === null) return;
+		
+		// Connection requise mais pas de compte : redirection
+		$instance = Compte::getInstance();
+		if ($instance === null) Compte::checkPermError("La page que vous vouliez accéder nécessite de se connecter à un compte.");
+
+		// Utilisateur et permission admin
+		if ($instance->getPermission() === Compte::PERM_ADMIN) return;
+		if ($requiredPermission === Compte::PERM_ADMIN) Compte::checkPermError("La page que vous vouliez accéder est réservé aux administrateurs.");
+
+		// Utilisateur et permission write
+		if ($instance->getPermission() === Compte::PERM_WRITE && $requiredPermission === Compte::PERM_WRITE) return;
+
+		Compte::checkPermError("Une erreur est servenu lors de la vérification des droits d'accès à la page.");
+	}
+
+	private static function checkPermError(string $msg) {
+		Messagehandler::prepareAlert($msg, "danger");
+		Response::redirect("/accueil");
 	}
 
 	public function getLogin(): string { return $this->login; }

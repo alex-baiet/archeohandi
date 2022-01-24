@@ -4,6 +4,7 @@ use Fuel\Core\Controller_Template;
 use Fuel\Core\Input;
 use Fuel\Core\Response;
 use Fuel\Core\View;
+use Model\Compte;
 use Model\Helper;
 use Model\Messagehandler;
 use Model\Operation;
@@ -79,6 +80,8 @@ class Controller_Operations extends Controller_Template {
 	}
 
 	public function action_add() {
+		Compte::checkPermission(Compte::PERM_WRITE);
+
 		// Ajout d'une opération
 		if (Input::method() === "POST") {
 			$operation = new Operation($_POST);
