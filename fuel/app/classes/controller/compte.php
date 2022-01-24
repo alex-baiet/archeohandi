@@ -90,4 +90,12 @@ class Controller_Compte extends Controller_Template {
 		$this->template->title = 'Confirmation création';
 		$this->template->content = View::forge('compte/creation_confirmation', $data);
 	}
+	
+	/** Page admin uniquement : permet de créer le compte */
+	public function action_deconnexion() {
+		Compte::disconnect();
+
+		if (isset($_POST["previous_page"])) Response::redirect($_POST["previous_page"]);
+		else Response::redirect("/accueil");
+	}
 }

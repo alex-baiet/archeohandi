@@ -9,8 +9,8 @@ class Compte {
 	public const PERM_ADMIN = "admin";
 	public const PERM_WRITE = "write";
 
-	/** Durée de vie de la connexion. */
-	private const CONNECT_LIFE = 60;
+	/** Durée de vie de la connexion en secondes. */
+	private const CONNECT_LIFE = 300;
 
 	private static ?Compte $instance;
 
@@ -79,6 +79,12 @@ class Compte {
 		}
 
 		return false;
+	}
+
+	public static function disconnect(): void {
+		Cookie::delete("login");
+		Cookie::delete("mdp");
+		if (isset(Compte::$instance)) unset(Compte::$instance);
 	}
 
 	public function getLogin(): string { return $this->login; }

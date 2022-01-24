@@ -2,6 +2,8 @@
 
 use Fuel\Core\Asset;
 use Fuel\Core\Cookie;
+use Fuel\Core\Form;
+use Fuel\Core\Uri;
 use Model\Compte;
 use Model\Helper;
 use Model\Messagehandler;
@@ -46,6 +48,7 @@ use Model\Messagehandler;
 							<span class="sr-only"></span>
 						</a>
 					</li>
+
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Référentiel</a>
 						<div class="dropdown-menu">
@@ -53,18 +56,29 @@ use Model\Messagehandler;
 							<a class="dropdown-item" href="/public/liste/communes?page=1">Liste des communes</a>
 						</div>
 					</li>
-				</ul>
-			</div>
-			<div class="d-flex">
-				<ul class="navbar-nav">
-					<li class="nav-item active">
-						<a class="nav-link" href="/public/compte/connexion">Se connecter
-						</a>
-					</li>
-					<li class="nav-item active">
-						<a class="nav-link" href="/public/compte/creation">Créer un compte
-						</a>
-					</li>
+
+					<?php
+					$account = Compte::getInstance();
+					if ($account !== null) :
+					?>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><?= $account->getLogin(); ?></a>
+							<div class="dropdown-menu">
+								<form action="/public/compte/deconnexion" method="POST">
+									<?= Form::hidden("previous_page", Uri::current()); ?>
+									<?= Form::submit("disconnect", "Se déconnecter", array("class" => "dropdown-item")); ?>
+								</form>
+							</div>
+						</li>
+					<?php else : ?>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Compte</a>
+							<div class="dropdown-menu">
+								<a class="dropdown-item" href="/public/compte/connexion">Se connecter</a>
+								<a class="dropdown-item" href="/public/compte/creation">Créer un compte</a>
+							</div>
+						</li>
+					<?php endif; ?>
 				</ul>
 			</div>
 		</div>
