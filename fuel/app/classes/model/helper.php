@@ -147,4 +147,8 @@ class Helper {
 				<button type="button" class="btn-close" data-dismiss="alert" aria-label="Fermer">
 			</div>';
 	}
+
+	public static function startSession() {
+		if (session_status() !== PHP_SESSION_ACTIVE) session_start();
+	}
 }

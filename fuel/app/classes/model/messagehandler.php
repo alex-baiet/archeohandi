@@ -5,7 +5,7 @@ namespace Model;
 class Messagehandler {
 	/** Prepare l'affichage d'une alert qui sera afficher lors du prochain chargement de page. */
 	public static function prepareAlert(string $msg, string $type = "primary") {
-		Messagehandler::startSession();
+		Helper::startSession();
 		if (empty($msg)) return;
 
 		if (!isset($_SESSION["msg"])) {
@@ -19,7 +19,7 @@ class Messagehandler {
 
 	/** Affiche les alerts préparé avec prepareAlert(). Utilisé au chargement de chaque page. */
 	public static function echoAlert() {
-		Messagehandler::startSession();
+		Helper::startSession();
 
 		if (empty($_SESSION["msg"])) return;
 
@@ -29,8 +29,4 @@ class Messagehandler {
 		unset($_SESSION["msg"]);
 		unset($_SESSION["type"]);
 	}
-
-	private static function startSession() {
-		if (session_status() !== PHP_SESSION_ACTIVE) session_start();
-	} 
 }

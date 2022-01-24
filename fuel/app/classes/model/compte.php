@@ -10,7 +10,7 @@ class Compte {
 	public const PERM_WRITE = "write";
 
 	/** Durée de vie de la connexion en secondes. */
-	private const CONNECT_LIFE = 300;
+	private const CONNECT_LIFE = 60 * 60 * 24 * 7; // une semaine
 
 	private static ?Compte $instance;
 
@@ -30,13 +30,6 @@ class Compte {
 		Archeo::mergeValue($this->email, $data, "email");
 	}
 	
-	// private static function fetchSingle(string $login): ?Compte {
-	// 	if (empty($login)) return null;
-	// 	$res = Helper::querySelectSingle("SELECT * FROM compte WHERE login='$login';");
-	// 	if ($res === null) return null;
-	// 	return new Compte($res);
-	// }
-
 	/** Permet de récupérer le compte avec lequel l'utilisateur est actuellement connecté. */
 	public static function getInstance(): ?Compte {
 		if (!isset(Compte::$instance)) {

@@ -7,6 +7,13 @@ use Model\Helper;
 
 <div class="container">
 	<h1 class="m-2">Connexion</h1>
+	<p>
+		La page de création de compte n'étant pas encore fonctionnel, voici les identifiants d'un compte en attendant :
+		<ul>
+			<li>login : <b>admin</b></li>
+			<li>mot de passe : <b>admin</b></li>
+		</ul>
+	</p>
 
 	<?= Form::open(array("method" => "POST", "style" => "background-color: #F5F5F5; padding: 10px;")); ?>
 		<!-- Login -->
@@ -32,7 +39,7 @@ use Model\Helper;
 		<!-- Boutons de confirmation -->
 		<div class="row">
 			<div class="d-md-flex justify-content-md-end col">
-				<button type="submit" name="create" class="btn btn-success">Demander l'accès</button>
+				<button type="submit" name="create" class="btn btn-success">Se connecter</button>
 			</div>
 		</div>
 
