@@ -94,6 +94,25 @@ class Compte {
 	private static function generateLogin(string $firstName, string $lastName): string {
 		$login = strtolower($firstName[0] . $lastName);
 		$login = str_replace(array(" ", "-", "'"), "", $login);
+
+		$accounts = DB::select()->from("compte")->where("login", "LIKE", "$login%")->execute()->as_array();
+		if (count($accounts) > 0) {
+			for ($i=2; $i < PHP_INT_MAX; $i++) {
+				$contains = false;
+				foreach ($accounts as $accArr) {
+					$acc = new Compte($accArr);
+					if ($acc->getLogin() === $login . $i) {
+						$contains = true;
+						break;
+					}
+				}
+				if (!$contains) {
+					$login .= $i;
+					break;
+				}
+			}
+		}
+
 		return $login;
 	}
 	#endregion
