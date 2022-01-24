@@ -2,6 +2,7 @@
 
 namespace Model;
 
+use Fuel\Core\Cookie;
 use Fuel\Core\DB;
 
 class Compte {
@@ -39,12 +40,13 @@ class Compte {
 	/** Permet de récupérer le compte avec lequel l'utilisateur est actuellement connecté. */
 	public static function getInstance(): ?Compte {
 		if (!isset(Compte::$instance)) {
-			if (isset($_COOKIE["login"]) && isset($_COOKIE["password"])) {
-				Compte::connect($_COOKIE["login"], $_COOKIE["password"]);
+			if (!empty(Cookie::get("login")) && !empty(Cookie::get("mdp"))) {
+				if (!Compte::connect(Cookie::get("login"), Cookie::get("mdp"), true)) {
+					Compte::$instance = null;
+				}
 			} else {
 				Compte::$instance = null;
 			}
-			// Compte::$instance = Compte::fetchFromCookies();
 		}
 		return Compte::$instance;
 	}
@@ -57,21 +59,21 @@ class Compte {
 	/**
 	 * Connecte l'utilisateur au compte correspondant.
 	 */
-	public static function connect(string $login, string $password): bool {
-		$encryptPass = md5($password);
+	public static function connect(string $login, string $password, bool $isEncrypted = false): bool {
+		$encryptPass = $isEncrypted ? $password : md5($password);
 
 		$result = DB::select()
 			->from("compte")
 			->where("login", "=", $login)
-			->where("password", "=", $encryptPass)
+			->where("mdp", "=", $encryptPass)
 			->execute()
 			->as_array();
 
 		if (!empty($result)) {
 			$account = new Compte($result[0]);
 			Compte::$instance = $account;
-			setcookie("login", $account->login, time() + Compte::CONNECT_LIFE);
-			setcookie("password", $account->password, time() + Compte::CONNECT_LIFE);
+			Cookie::set("login", $account->login, Compte::CONNECT_LIFE);
+			Cookie::set("mdp", $account->mdp, Compte::CONNECT_LIFE);
 
 			return true;
 		}

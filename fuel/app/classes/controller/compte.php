@@ -3,6 +3,7 @@
 use Fuel\Core\Controller_Template;
 use Fuel\Core\Response;
 use Fuel\Core\View;
+use Model\Compte;
 use Model\Helper;
 use Model\Messagehandler;
 
@@ -67,6 +68,15 @@ class Controller_Compte extends Controller_Template {
 
 	/** Connexion à un compte existant. */
 	public function action_connexion() {
+		if (isset($_POST["login"]) && isset($_POST["mdp"])) {
+			$login = $_POST["login"];
+			$mdp = $_POST["mdp"];
+			if (Compte::connect($login, $mdp)) {
+				// Connexion réussi
+				Response::redirect("/accueil");
+			}
+		}
+
 		$data = array();
 		$this->template->title = 'Accueil';
 		$this->template->content = View::forge('compte/connexion', $data);
