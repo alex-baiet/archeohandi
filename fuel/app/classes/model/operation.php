@@ -41,6 +41,8 @@ class Operation extends Model {
 	private array $paleoArray;
 	/** @var Sujethandicape[]|unset */
 	private array $subjects;
+	/** @var Compte[]|unset */
+	private array $accounts;
 
 	/**
 	 * Indique que l'objet est valide pour la base de données.
@@ -252,6 +254,19 @@ class Operation extends Model {
 		}
 
 		return $this->subjects;
+	}
+
+	/** @return Compte[] */
+	public function getAccounts(): array {
+		if (!isset($this->accounts)) {
+			$this->accounts = array();
+			$results = DB::select("login_compte")->from("droit_compte")->where("id_operation", "=", $this->id)->execute()->as_array();
+			foreach ($results as $res) {
+				$acc = Compte::fetchSingle($res["login_compte"]);
+				if ($acc !== null) $this->accounts[$acc->getLogin()] = $acc;
+			}
+		}
+		return $this->accounts;
 	}
 	#endregion
 

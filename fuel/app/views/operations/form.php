@@ -204,7 +204,7 @@ if (count($paleos) === 0) $paleos[] = "";
 <div class="row my-2">
 	<div class="col-md" id="form_compte_parent">
 		<?php
-		$accounts = array();
+		$accounts = $operation->getAccounts();
 		if (empty($accounts)) $accounts[] = "";
 
 		for ($i = 0; $i < count($accounts); $i++) :

@@ -48,6 +48,12 @@ class Compte {
 		return Compte::$instance;
 	}
 
+	public static function fetchSingle(string $login): ?Compte {
+		$res = Helper::querySelectSingle("SELECT * FROM compte WHERE login=\"$login\";");
+		if ($res === null) return null;
+		return new Compte($res);
+	}
+
 	public static function emailExist(string $email): bool {
 		// Test un compte existe déjà ?
 		$results = DB::select()->from("compte")->where("email", "=", $email)->execute()->as_array();
