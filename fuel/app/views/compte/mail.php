@@ -45,7 +45,7 @@ $msg = $msg;
 		</blockquote>
 	<?php endif; ?>
 
-	<form action="https://archeohandi.huma-num.fr/public/compte/creation_confirmation" method="POST">
+	<form action="https://archeohandi.huma-num.fr/public/compte/creation_redirection" method="POST">
 		<input type="hidden" name="prenom" value="<?= $firstName ?>">
 		<input type="hidden" name="nom" value="<?= $lastName ?>">
 		<input type="hidden" name="email" value="<?= $email ?>">

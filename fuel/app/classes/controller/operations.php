@@ -133,6 +133,8 @@ class Controller_Operations extends Controller_Template {
 
 	//L'action edit sert pour la page edit de opération qui affiche les informations d'une opération pour les modifier
 	public function action_edit($id){
+		Compte::checkPermission(Compte::PERM_WRITE);
+
 		// Récupération des informations de l'opération
 		$operation = Operation::fetchSingle($id);		
 		if ($operation === null) {

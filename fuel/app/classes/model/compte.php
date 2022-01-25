@@ -172,7 +172,7 @@ class Compte {
 				break;
 			case Compte::PERM_ADMIN:
 				if ($instance === null || $instance->getPermission() !== Compte::PERM_ADMIN) {
-					Compte::checkPermError("La page que vous vouliez accéder est réservé aux administrateurs.");
+					Compte::checkPermError("La page que vous voulez accéder est réservé aux administrateurs.");
 				}
 				break;
 			default;

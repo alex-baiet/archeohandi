@@ -84,14 +84,31 @@ class Controller_Compte extends Controller_Template {
 		$this->template->content = View::forge('compte/connexion', $data);
 	}
 
-	/** Page admin uniquement : permet de créer le compte */
-	public function action_creation_confirmation() {
-		//Compte::checkPermission(Compte::PERM_ADMIN);
+	public function action_creation_redirection() {
+
+		Helper::startSession();
 
 		if (!isset($_POST["email"])) Response::redirect("/accueil");
-		$email = $_POST["email"];
-		$firstName = $_POST["prenom"];
-		$lastName = $_POST["nom"];
+		$_SESSION["email"] = $_POST["email"];
+		$_SESSION["prenom"] = $_POST["prenom"];
+		$_SESSION["nom"] = $_POST["nom"];
+
+		Response::redirect("/compte/creation_confirmation");
+	}
+
+	/** Page admin uniquement : permet de créer le compte */
+	public function action_creation_confirmation() {
+		Compte::checkPermission(Compte::PERM_ADMIN);
+
+		Helper::startSession();
+
+		if (!isset($_SESSION["email"])) Response::redirect("/accueil");
+		$email = $_SESSION["email"];
+		$firstName = $_SESSION["prenom"];
+		$lastName = $_SESSION["nom"];
+		unset($_SESSION["email"]);
+		unset($_SESSION["prenom"]);
+		unset($_SESSION["nom"]);
 
 		if (Controller_Compte::DEBUG === true) {
 			// Suppression de l'ancien compte

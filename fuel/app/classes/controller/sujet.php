@@ -4,6 +4,7 @@ use Fuel\Core\Controller_Template;
 use Fuel\Core\Input;
 use Fuel\Core\Response;
 use Fuel\Core\View;
+use Model\Compte;
 use Model\Helper;
 use Model\Messagehandler;
 use Model\Operation;
@@ -26,6 +27,8 @@ class Controller_Sujet extends Controller_Template {
 	}
 
 	public function action_edit($id) {
+		Compte::checkPermission(Compte::PERM_WRITE);
+
 		$subject = Sujethandicape::fetchSingle($id);
 		if ($subject === null) {
 			Messagehandler::prepareAlert("Le sujet n'existe pas (quelqu'un vient peut-être de le supprimer).", "danger");
@@ -50,6 +53,8 @@ class Controller_Sujet extends Controller_Template {
 	}
 
 	public function action_add($id) {
+		Compte::checkPermission(Compte::PERM_WRITE);
+
 		$data = array('idOperation' => $id);
 
 		if (Operation::fetchSingle($id) === null) {

@@ -13,6 +13,7 @@ class Controller_Script extends Controller {
 			echo "Les scripts sont actuellement désactivés."; 
 			return;
 		}
+		
 		$subjects = Helper::querySelect("SELECT * FROM sujet_handicape");
 
 		foreach ($subjects as $subj) {
