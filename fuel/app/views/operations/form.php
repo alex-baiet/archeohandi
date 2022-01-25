@@ -226,7 +226,7 @@ if (count($paleos) === 0) $paleos[] = "";
 	</div>
 
 	<div class="col-md-3">
-		<button type="button" class="btn btn-primary me-md-2 btn-add-copy" onclick="addCopy('compte');"><i class="bi bi-plus"></i></button>
+		<button type="button" class="btn btn-primary me-md-2 btn-add-copy" onclick="addCopy('compte', 'compte');"><i class="bi bi-plus"></i></button>
 	</div>
 </div>
 

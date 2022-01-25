@@ -132,9 +132,10 @@ function getNumNewCopy(name) {
 /**
  * Copy un champ input.
  * @param {string} name Nom de l'input. L'id du parent à copier doit être au format `form_${name}`.
+ * @param {string} autoComplete Type de l'autocomplétion à ajouter. Laissez null pour ne pas ajouter d'autocomplétion.
  * @returns {number} Numéro de la nouvelle copy.
  */
-function addCopy(name) {
+function addCopy(name, autoComplete = null) {
 	let id = `form_${name}`;
 	/** Element original */
 	let elem = getOriginalCopy(name);
@@ -157,6 +158,16 @@ function addCopy(name) {
 	// labelCopy.id = `${id}_label_${num}`;
 	let btnRemoveCopy = copy.getElementsByTagName("button")[0];
 	btnRemoveCopy.onclick = () => { removeElem(name, num); }
+
+	// Maj autocomplétion
+	if (autoComplete !== null) {
+		// Suppression ancienne auto-complétion
+		let listCopy = copy.getElementsByClassName("list-group");
+		if (listCopy !== null) listCopy[0].remove();
+
+		// Ajout nouvelle auto complétion
+		addAutocomplete(`${id}_${num}`, autoComplete);
+	}
 
 	return num;
 }
