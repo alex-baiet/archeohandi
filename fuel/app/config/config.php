@@ -313,7 +313,8 @@ return array(
 			'Model\\Sujethandicape',
 			'Model\\Commune',
 			'Model\\Personne',
-			'Model\\Groupesujet'
+			'Model\\Groupesujet',
+			'Model\\Compte'
 		),
 	),
 

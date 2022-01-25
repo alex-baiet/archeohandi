@@ -1,23 +1,38 @@
 <?php
+
 use Model\Commune;
+use Model\Compte;
 
 /** @var string */
 $id = $id;
-/** @var Commune[]|null */
-$communes = isset($communes) ? $communes : null;
 /** @var int */
 $maxResultCount = $maxResultCount;
+/** @var Commune[]|null */
+$communes = isset($communes) ? $communes : null;
+/** @var Compte[]|null */
+$comptes = isset($comptes) ? $comptes : null;
 
 $attributs = "class='list-group-item list-group-item-action border-1 $id-auto-complete' style='cursor: pointer;'";
 
 ?>
 
-<?php if ($communes !== null): ?>
-	<?php for ($i=0; $i<count($communes) && $i<$maxResultCount; $i++): // Affichage de tous les résultats pour les communes ?>
-		<a <?= $attributs ?>><?= $communes[$i]->getNom() ?>, <?= $communes[$i]->getDepartement() ?></a>
-	<?php endfor; ?>
-<?php endif; ?>
+<?php
+// Affichage communes
+if ($communes !== null) {
+	for ($i = 0; $i < count($communes) && $i < $maxResultCount; $i++) {
+		echo "<a $attributs>{$communes[$i]->getNom()}, {$communes[$i]->getDepartement()}</a>";
+	}
+}
 
-<?php if (count($communes) === 0 && count($people) === 0): // Cas pas de résultats trouvés ?>
+// Affichage comptes
+if ($comptes !== null) {
+	for ($i = 0; $i < count($comptes) && $i < $maxResultCount; $i++) {
+		echo "<a $attributs>{$comptes[$i]->getLogin()}</a>";
+	}
+}
+?>
+
+<?php if (empty($communes) && empty($comptes)) : // Cas pas de résultats trouvés 
+?>
 	<p class="list-group-item border-1">Aucun résultat trouvé</p>
 <?php endif; ?>

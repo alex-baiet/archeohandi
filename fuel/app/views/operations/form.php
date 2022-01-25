@@ -202,7 +202,7 @@ if (count($paleos) === 0) $paleos[] = "";
 <p>Non fonctionnels</p>
 
 <div class="row my-2">
-	<div class="col-md" id="form_account_parent">
+	<div class="col-md" id="form_compte_parent">
 		<?php
 		$accounts = array();
 		if (empty($accounts)) $accounts[] = "";
@@ -210,22 +210,23 @@ if (count($paleos) === 0) $paleos[] = "";
 		for ($i = 0; $i < count($accounts); $i++) :
 			$acc = $accounts[$i];
 		?>
-			<div class="row" id="form_account_copy_<?= $i; ?>">
+			<div class="row" id="form_compte_copy_<?= $i; ?>">
 				<div class="col-md">
 					<div class="form-floating">
-						<input type="text" class="form-control" id="form_account_<?= $i ?>" name="account[]" placeholder="" value="<?= $acc ?>">
-						<label for="account_<?= $i ?>" id="form_account_label_<?= $i ?>">Nom du compte</label>
+						<input type="text" class="form-control" id="form_compte_<?= $i ?>" name="comptes[]" placeholder="" value="<?= $acc ?>">
+						<label for="compte_<?= $i ?>" id="form_compte_label_<?= $i ?>">Nom du compte</label>
+						<script>addAutocomplete("form_compte_<?= $i; ?>", "compte");</script>
 					</div>
 				</div>
 				<div class="col-auto">
-					<button type="button" class="btn btn-danger btn-remove-copy" onclick="removeElem('account', <?= $i; ?>);"><i class="bi bi-x"></i></button>
+					<button type="button" class="btn btn-danger btn-remove-copy" onclick="removeElem('compte', <?= $i; ?>);"><i class="bi bi-x"></i></button>
 				</div>
 			</div>
 		<?php endfor; ?>
 	</div>
 
 	<div class="col-md-3">
-		<button type="button" class="btn btn-primary me-md-2 btn-add-copy" onclick="addCopy('account');"><i class="bi bi-plus"></i></button>
+		<button type="button" class="btn btn-primary me-md-2 btn-add-copy" onclick="addCopy('compte');"><i class="bi bi-plus"></i></button>
 	</div>
 </div>
 

@@ -250,7 +250,7 @@ function prepareFormSend() {
  * 
  * @param {string} id Identifiant de l'input
  * @param {string} type Type de recherche.
- * Type possible : commune, personne
+ * Type possible : commune, compte
  */
 function addAutocomplete(id, type) {
 	// Récupération du champ

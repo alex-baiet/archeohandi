@@ -25,7 +25,7 @@ class Compte {
 	private ?string $nom = null;
 	private ?string $email = null;
 
-	private function __construct(array $data) {
+	public function __construct(array $data) {
 		Archeo::mergeValue($this->login, $data, "login");
 		Archeo::mergeValue($this->mdp, $data, "mdp");
 		Archeo::mergeValue($this->permission, $data, "permission");
