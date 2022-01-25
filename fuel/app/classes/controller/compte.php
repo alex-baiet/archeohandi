@@ -76,6 +76,8 @@ class Controller_Compte extends Controller_Template {
 			if (Compte::connect($login, $mdp)) {
 				// Connexion réussi
 				Response::redirect("/accueil");
+			} else {
+				Messagehandler::prepareAlert("Votre login ou/et mot de passe est incorrect.", "danger");
 			}
 		}
 
