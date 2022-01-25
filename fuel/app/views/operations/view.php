@@ -130,7 +130,7 @@ $sujets = $operation->getSubjects();
 		<div class="row">
 			<h2>Sujets handicapés (<?= count($sujets); ?>)</h2>
 			<div class="table-responsive">
-				<div class="scrollbar_view" style="min-height: 600px;">
+				<div class="scrollbar_view" style="height: auto; max-height: 600px;">
 					<table class="table table-striped table-hover table-bordered sticky" data-toggle="table" data-search="true">
 						<thead>
 							<tr class="text-center">
