@@ -73,13 +73,15 @@ $groups = $groups;
 					</thead>
 					<tbody>
 						<?php foreach ($groups as $group) : ?>
-							<tr class="text-center">
-								<td><?= $group->getChronology()->getName(); ?></td>
-								<td><?= $group->getChronology()->getStart(); ?></td>
-								<td><?= $group->getChronology()->getEnd(); ?></td>
-								<td><?= $group->getOperation()->getNomOp(); ?></td>
-								<td><?= $group->getNMI(); ?></td>
-							</tr>
+							<?php if ($group->getOperation() !== null) : ?>
+								<tr class="text-center">
+									<td><?= $group->getChronology()->getName(); ?></td>
+									<td><?= $group->getChronology()->getStart(); ?></td>
+									<td><?= $group->getChronology()->getEnd(); ?></td>
+									<td><?= $group->getOperation()->getNomOp(); ?></td>
+									<td><?= $group->getNMI(); ?></td>
+								</tr>
+							<?php endif; ?>
 						<?php endforeach; ?>
 					</tbody>
 				</table>
