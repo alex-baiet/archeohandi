@@ -1,15 +1,23 @@
 <?php
 
 use Fuel\Core\Controller;
-use Fuel\Core\DB;
 use Fuel\Core\Input;
 use Fuel\Core\Response;
 use Fuel\Core\View;
 use Model\Commune;
 use Model\Helper;
-use Model\Personne;
 
 class Controller_Fonction extends Controller {
+
+	/** @return Commune[] */
+	private static function autoCompleteCommune(string $input): array {
+		$results = Helper::querySelect("SELECT id, nom, departement FROM commune WHERE nom LIKE \"$input%\";");
+		$arr = array();
+		foreach ($results as $res) {
+			$arr[] = new Commune($res);
+		}
+		return $arr;
+	}
 
 	/** Affiche une page de tous les mots permettant de compléter le début de mot "query" passé en POST. */
 	public function action_action() {
@@ -25,30 +33,15 @@ class Controller_Fonction extends Controller {
 		/** @var int */
 		$maxResultCount = Input::post("max_result_count") !== null ? Input::post("max_result_count") : 10;
 
-		/** @var Commune[] */
-		$communes = array();
-		/** @var Personne[] */
-		$people = array();
+		$data = array(
+			"id" => $id,
+			"maxResultCount" => $maxResultCount
+		);
 
 		if ($type === "commune") {
-			$results = Helper::querySelect("SELECT id, nom, departement FROM commune WHERE nom LIKE \"$input%\";");
-			foreach ($results as $res) {
-				$communes[] = new Commune($res);
-			}
-		}
-		if ($type === "personne") {
-			$results = Helper::querySelect("SELECT * FROM personne WHERE nom LIKE \"$input%\" OR prenom LIKE \"$input%\";");
-			foreach ($results as $res) {
-				$people[] = new Personne($res);
-			}
+			$data["communes"] = Controller_Fonction::autoCompleteCommune($input);
 		}
 
-		return Response::forge(View::forge('fonction/action', array(
-			"id" => $id,
-			"type" => $type,
-			"communes" => $communes,
-			"people" => $people,
-			"maxResultCount" => $maxResultCount
-		)));
+		return Response::forge(View::forge('fonction/action', $data));
 	}
 }
