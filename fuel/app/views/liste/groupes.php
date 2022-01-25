@@ -16,9 +16,6 @@ $groups = $groups;
 	<h1 class="m-2">Liste des groupes</h1>
 	<p class="text-muted">Ici vous retrouvez toutes les informations sur les groupes de sujet.</p>
 	<button type="button" id="id_bouton_filtre" class="btn btn-danger">Afficher les filtres de recherche</button>
-	<a class="btn btn-secondary" href="/public/liste/groupes">Rafraichir la page
-		<i class="bi bi-arrow-repeat"></i>
-	</a>
 	
 	<!-- Système de recherche (filtre) -->
 	<?php
@@ -41,7 +38,7 @@ $groups = $groups;
 			<?= Operation::generateSelect("id_operation", "Operation", !empty($_GET["id_operation"]) ? intval($_GET["id_operation"]) : "", false); ?>
 
 			<!-- Champ nom de chronologie -->
-			<?= Chronology::generateSelect("id_chronology", "Chronologie", !empty($_GET["id_chronology"]) ? intval($_GET["id_chronology"]) : "", false); ?>
+			<?= Chronology::generateSelect("id_chronology", "Chronologie", !empty($_GET["id_chronology"]) ? intval($_GET["id_chronology"]) : "", false, true); ?>
 
 			<!-- Champ NMI -->
 			<?php
