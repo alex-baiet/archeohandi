@@ -149,8 +149,14 @@ class Compte {
 		if (isset(Compte::$instance)) unset(Compte::$instance);
 	}
 
-	/** Vérifie que l'utilisateur a les permissions indiqués, et redirige vers l'accueil en cas de problème. */
-	public static function checkPermission(string $requiredPermission) {		
+	/**
+	 * Vérifie que l'utilisateur a les permissions indiqués, et redirige vers l'accueil en cas de problème.
+	 * 
+	 * @param string $requiredPermission Indique la permission nécessaire pour accéder à la page.
+	 * Les différentes permissions sont toutes les constants "PERM_" présents dans Compte.
+	 * @param int|null $idOperation Indique l'opération auxquel l'utilisateur doit avoir les droits.
+	 */
+	public static function checkPermission(string $requiredPermission, ?int $idOperation = null): void {
 
 		// Aucune contrainte demandé
 		if ($requiredPermission === null) return;
