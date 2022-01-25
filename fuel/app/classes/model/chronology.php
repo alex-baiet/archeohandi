@@ -33,7 +33,7 @@ class Chronology extends Model {
 	 * @param string $label Texte du label du select.
 	 * @param mixed $idSelected Identifiant de la valeur sélectionnée par défaut.
 	 */
-	public static function generateSelect(string $field = "id_chronology", string $label = "Chronologie", $idSelected = 18, $formFloating = true, $addEmptyValue): string {
+	public static function generateSelect(string $field = "id_chronology", string $label = "Chronologie", $idSelected = 18, $formFloating = true, $addEmptyValue = false): string {
 		$valueRecover = function ($data) { return $data["id"]; };
 		$textRecover = function ($data) { return $data["name"]; };
 		return Archeo::generateSelect($field, $label, $idSelected, "chronology", $valueRecover, $textRecover, $formFloating, $addEmptyValue);

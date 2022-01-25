@@ -141,7 +141,6 @@ function addCopy(name) {
 
 	/** Nouveau numéro */
 	let num = getNumNewCopy(name);
-	console.log(num);
 
 	// Copie
 	let copyNode = elem.cloneNode(true);
@@ -163,7 +162,7 @@ function addCopy(name) {
 }
 
 /**
- * Supprime le dernier champs copier de la liste de champs correspondant au name.
+ * Supprime le champ de la liste de champs correspondant au name et au num.
  * 
  * @param {string} name Nom du champ input.
  * @param {number} num Numéro de la copie.
@@ -178,7 +177,6 @@ function removeElem(name, num) {
 		// Remplacement de la node original de copie.
 		if (isOriginal) {
 			originals.set(name, parent.children[0]);
-			console.log("fsjsfjfqssfd");
 		}
 	}
 }

@@ -37,6 +37,9 @@ Form::open(array(
 ));
 ?>
 <?php if ($showError) $operation->alertBootstrap("danger"); ?>
+
+<h3 class="text-center">Opération</h3>
+
 <!-- Affichage des champs -->
 <div class="row my-2 pt-1">
 	<div class="col-md-6">
@@ -194,8 +197,41 @@ if (count($paleos) === 0) $paleos[] = "";
 	<?= Form::textarea("bibliographie", $operation->getBibliographie(), array("class" => "form-control")); ?>
 </div>
 
+<!-- Comptes -->
+<h3 class="text-center mt-4">Comptes autorisés</h3>
+<p>Non fonctionnels</p>
+
+<div class="row my-2">
+	<div class="col-md" id="form_account_parent">
+		<?php
+		$accounts = array();
+		if (empty($accounts)) $accounts[] = "";
+
+		for ($i = 0; $i < count($accounts); $i++) :
+			$acc = $accounts[$i];
+		?>
+			<div class="row" id="form_account_copy_<?= $i; ?>">
+				<div class="col-md">
+					<div class="form-floating">
+						<input type="text" class="form-control" id="form_account_<?= $i ?>" name="account[]" placeholder="" value="<?= $acc ?>">
+						<label for="account_<?= $i ?>" id="form_account_label_<?= $i ?>">Nom du compte</label>
+					</div>
+				</div>
+				<div class="col-auto">
+					<button type="button" class="btn btn-danger btn-remove-copy" onclick="removeElem('account', <?= $i; ?>);"><i class="bi bi-x"></i></button>
+				</div>
+			</div>
+		<?php endfor; ?>
+	</div>
+
+	<div class="col-md-3">
+		<button type="button" class="btn btn-primary me-md-2 btn-add-copy" onclick="addCopy('account');"><i class="bi bi-plus"></i></button>
+	</div>
+</div>
+
 <br/>
 
+<!-- Confirmation / retour -->
 <div class="row">
 	<div class="d-md-block col">
 		<a class="btn btn-secondary" href="/public/operations" role="button">Retour</a>
