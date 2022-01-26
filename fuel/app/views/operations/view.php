@@ -151,12 +151,12 @@ $sujets = $operation->getSubjects();
 									<td class="col-auto">
 
 										<a title="Consulter #<?= $sujet->getId(); ?>" href="/public/sujet/view/<?= $sujet->getId(); ?>">
-											<img class="icon see" width="30px" src="https://archeohandi.huma-num.fr/public/assets/img/reply.svg" alt="Consulter">
+											<?= Asset::img("reply.svg", array("class"=>"icon see", "width" => "30px", "alt" => "Consulter")) ?>
 										</a>
 										
 										<?php if (Compte::checkPermission(Compte::PERM_WRITE, $operation->getId())) : ?>
 											<a title="Editer #<?= $sujet->getId(); ?>" href="/public/sujet/edit/<?= $sujet->getId(); ?>">
-												<img class="icon edit" width="24px" src="https://archeohandi.huma-num.fr/public/assets/img/pen.svg" alt="Éditer">
+												<?= Asset::img("pen.svg", array("class"=>"icon edit", "width" => "24px", "alt" => "Éditer")) ?>
 											</a>
 											
 											<?= Form::open(array("method" => "POST")); ?>
@@ -166,7 +166,7 @@ $sujets = $operation->getSubjects();
 													data-bs-toggle="modal"
 													data-bs-target="#validationPopup"
 													onclick="deleteSubject(<?= $sujet->getId(); ?>)">
-													<img class="icon del" width="25px" src="https://archeohandi.huma-num.fr/public/assets/img/trash.svg" alt="Supprimer">
+													<?= Asset::img("trash.svg", array("class"=>"icon del", "width" => "25px", "alt" => "Supprimer")) ?>
 												</button>
 											<?= Form::close(); ?>
 										<?php endif; ?>
