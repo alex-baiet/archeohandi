@@ -3,6 +3,7 @@
 use Fuel\Core\Asset;
 use Fuel\Core\Form;
 use Fuel\Core\View;
+use Model\Compte;
 use Model\Operation;
 
 /** @var Operation[] */
@@ -33,7 +34,9 @@ $countSubject = $countSubject;
 	<!-- Titre principal de la page -->
 	<h1 class="m-2">Opérations
 		<!-- Bouton "Ajout d'un opération -->
-		<a class="btn btn-primary btn-sm" href="/public/operations/add">Ajouter une opération <i class="bi bi-plus-circle-fill"></i></a>
+		<?php if (Compte::checkPermission(Compte::PERM_WRITE)) : ?>
+			<a class="btn btn-primary btn-sm" href="/public/operations/add">Ajouter une opération <i class="bi bi-plus-circle-fill"></i></a>
+		<?php endif; ?>
 	</h1>
 	
 	<p class="text-muted">
@@ -122,20 +125,22 @@ $countSubject = $countSubject;
 										<?= Asset::img("reply.svg", array("class"=>"icon see", "width" => "30px", "alt" => "Consulter")) ?>
 									</a>
 
-									<a class="" title="Editer #<?= $op->getId(); ?>" href="/public/operations/edit/<?= $op->getId(); ?>">
-										<?= Asset::img("pen.svg", array("class"=>"icon edit", "width" => "24px", "alt" => "Éditer")) ?>
-									</a>
+									<?php if (Compte::checkPermission(Compte::PERM_ADMIN, $op->getId())) : ?>
+										<a class="" title="Editer #<?= $op->getId(); ?>" href="/public/operations/edit/<?= $op->getId(); ?>">
+											<?= Asset::img("pen.svg", array("class"=>"icon edit", "width" => "24px", "alt" => "Éditer")) ?>
+										</a>
 
-									<form action="" method="post" id="form_suppr_<?= $op->getId(); ?>">
-										<button
-												type="button"
-												class="btn"
-												data-bs-toggle="modal"
-												data-bs-target="#validationPopup"
-												onclick="deleteOperation(<?= $op->getId(); ?>)">
-											<?= Asset::img("trash.svg", array("class"=>"icon del", "width" => "25px", "alt" => "Supprimer")) ?>
-										</button>
-									</form>
+										<form action="" method="post" id="form_suppr_<?= $op->getId(); ?>">
+											<button
+													type="button"
+													class="btn"
+													data-bs-toggle="modal"
+													data-bs-target="#validationPopup"
+													onclick="deleteOperation(<?= $op->getId(); ?>)">
+												<?= Asset::img("trash.svg", array("class"=>"icon del", "width" => "25px", "alt" => "Supprimer")) ?>
+											</button>
+										</form>
+									<?php endif; ?>
 
 								</td>
 							</tr>

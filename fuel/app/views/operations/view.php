@@ -3,6 +3,7 @@
 use Fuel\Core\Asset;
 use Fuel\Core\Form;
 use Fuel\Core\View;
+use Model\Compte;
 use Model\Helper;
 use Model\Operation;
 use Model\Typedepot;
@@ -26,9 +27,11 @@ $sujets = $operation->getSubjects();
 
 <div class="container">
 	<h1 class="m-2">Opération <?= $operation->getNomOp(); ?>
-		<a class="btn btn-primary btn-sm" href="/public/sujet/add/<?= $operation->getId(); ?>">
-			Ajouter des sujets<i class="bi bi-plus-circle-fill"></i>
-		</a>
+		<?php if (Compte::checkPermission(Compte::PERM_WRITE, $operation->getId())) : ?>
+			<a class="btn btn-primary btn-sm" href="/public/sujet/add/<?= $operation->getId(); ?>">
+				Ajouter des sujets <i class="bi bi-plus-circle-fill"></i>
+			</a>
+		<?php endif; ?>
 	</h1>
 	<p class="text-muted">Ici vous retrouvez toutes les informations de l'opération <strong><?= $operation->getNomOp(); ?></strong>.
 	</p>
@@ -151,20 +154,22 @@ $sujets = $operation->getSubjects();
 											<img class="icon see" width="30px" src="https://archeohandi.huma-num.fr/public/assets/img/reply.svg" alt="Consulter">
 										</a>
 										
-										<a title="Editer #<?= $sujet->getId(); ?>" href="/public/sujet/edit/<?= $sujet->getId(); ?>">
-											<img class="icon edit" width="24px" src="https://archeohandi.huma-num.fr/public/assets/img/pen.svg" alt="Éditer">
-										</a>
-										
-										<?= Form::open(array("method" => "POST")); ?>
-											<button
-												type="button"
-												class="btn"
-												data-bs-toggle="modal"
-												data-bs-target="#validationPopup"
-												onclick="deleteSubject(<?= $sujet->getId(); ?>)">
-												<img class="icon del" width="25px" src="https://archeohandi.huma-num.fr/public/assets/img/trash.svg" alt="Supprimer">
-											</button>
-										<?= Form::close(); ?>
+										<?php if (Compte::checkPermission(Compte::PERM_WRITE, $operation->getId())) : ?>
+											<a title="Editer #<?= $sujet->getId(); ?>" href="/public/sujet/edit/<?= $sujet->getId(); ?>">
+												<img class="icon edit" width="24px" src="https://archeohandi.huma-num.fr/public/assets/img/pen.svg" alt="Éditer">
+											</a>
+											
+											<?= Form::open(array("method" => "POST")); ?>
+												<button
+													type="button"
+													class="btn"
+													data-bs-toggle="modal"
+													data-bs-target="#validationPopup"
+													onclick="deleteSubject(<?= $sujet->getId(); ?>)">
+													<img class="icon del" width="25px" src="https://archeohandi.huma-num.fr/public/assets/img/trash.svg" alt="Supprimer">
+												</button>
+											<?= Form::close(); ?>
+										<?php endif; ?>
 										
 									</td>
 								</tr>
