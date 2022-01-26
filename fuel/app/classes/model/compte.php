@@ -160,8 +160,16 @@ class Compte {
 	 */
 	public static function checkPermissionRedirect(string $errorMsg, string $permission, ?int $idOperation = null) {
 		if (!Compte::checkPermission($permission, $idOperation)) {
-			Messagehandler::prepareAlert($errorMsg, "danger");
-			Redirect::redirectBack();
+			if (Compte::getInstance() === null) {
+				// Redirection vers la page de connexion
+				Messagehandler::prepareAlert($errorMsg, "danger");
+				Redirect::setPreviousPage();
+				Response::redirect("/compte/connexion");
+			} else {
+				// Redirection vers la page précédente
+				Messagehandler::prepareAlert($errorMsg, "danger");
+				Redirect::redirectBack();
+			}
 		}
 	}
 
