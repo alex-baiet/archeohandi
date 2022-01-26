@@ -1,11 +1,9 @@
 <?php
 
 use Fuel\Core\Asset;
-use Fuel\Core\Cookie;
 use Fuel\Core\Form;
 use Fuel\Core\Uri;
 use Model\Compte;
-use Model\Helper;
 use Model\Messagehandler;
 use Model\Redirect;
 
@@ -54,7 +52,6 @@ use Model\Redirect;
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Référentiel</a>
 						<div class="dropdown-menu">
 							<a class="dropdown-item" href="/public/liste/groupes">Liste des groupes</a>
-							<a class="dropdown-item" href="/public/liste/communes?page=1">Liste des communes</a>
 						</div>
 					</li>
 
