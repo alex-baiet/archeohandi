@@ -374,6 +374,10 @@ Form::open(array(
 		<div class="col-md-auto">
 			<a href="https://nakala.fr/u/collections/10.34847/nkl.2400swmp" class="btn btn-primary" target="_blank">Aller sur Nakala</a>
 		</div>
+
+		<div class="col-md-auto">
+			<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#helpPopup">Aide <i class="bi bi-question-circle"></i></button>
+		</div>
 	</div>
 
 	<!-- Listes URL images -->
@@ -429,6 +433,33 @@ Form::open(array(
 		<?php endif; ?>
 	</div>
 
+</div>
+
+<!-- Popup d'aide d'ajout d'image -->
+<div class="modal" id="helpPopup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="helpPopupLabel" aria-hidden="true">
+	<div class="modal-dialog" style="max-width: 800px;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="helpPopupLabel">Aide</h5>
+			</div>
+			<div class="modal-body">
+				<p>
+					Pour ajouter une image de Nakala au sujet, allez d'abord sur l'affichage d'une image directement sur Nakala,
+					puis copiez l'un des deux champs comme indiqué dans l'image suivante :<br>
+					<?= Asset::img("help/demo_url.png", array("style" => "width: 100%;")); ?><br>
+					<br>
+					Collez le champ dans la zone, et si une prévisualisation de l'image s'affiche,
+					c'est que votre image a bien été ajoutée au sujet !<br>
+					<br>
+					Il est aussi possible d'importer des images provenant d'autres sites, mais attention,
+					si les images sur ces sites sont supprimées, elles ne seront plus disponible ici non plus.
+				</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#helpPopup">Retour</button>
+			</div>
+		</div>
+	</div>
 </div>
 
 <?= Form::close(); ?>
