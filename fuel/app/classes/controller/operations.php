@@ -18,12 +18,17 @@ class Controller_Operations extends Controller_Template {
 		$data = array();
 
 		// Suppression d'une opération
-		if (isset($_POST['delete_op'])) {
-			$result = Operation::deleteOnDB($_POST["delete_op"]);
-			if ($result === null) {
-				Messagehandler::prepareAlert("Suppression de l'opération réussi.", "success");
+		if (isset($_POST["delete_op"])) {
+			$idOp = $_POST["delete_op"];
+			if (!Compte::checkPermission(Compte::PERM_ADMIN, $idOp)) {
+				Messagehandler::prepareAlert("Seul le créateur de l'opération à le droit de supprimer l'opération", "danger");
 			} else {
-				Messagehandler::prepareAlert("Echec de la suppression de l'opération.", "danger");
+				$result = Operation::deleteOnDB($idOp);
+				if ($result === null) {
+					Messagehandler::prepareAlert("Suppression de l'opération réussi.", "success");
+				} else {
+					Messagehandler::prepareAlert("Echec de la suppression de l'opération.", "danger");
+				}
 			}
 		}
 
@@ -80,7 +85,7 @@ class Controller_Operations extends Controller_Template {
 	}
 
 	public function action_add() {
-		Compte::checkPermission(Compte::PERM_WRITE);
+		Compte::checkPermissionRedirect("Vous devez avoir un compte pour pouvoir créer une opération.", Compte::PERM_WRITE);
 
 		// Ajout d'une opération
 		if (Input::method() === "POST") {
@@ -121,11 +126,16 @@ class Controller_Operations extends Controller_Template {
 
 		// Suppression d'un sujet (si l'utilisateur le demande)
 		if (isset($_POST['delete_sujet'])) {
-			$result = Sujethandicape::deleteOnDB($_POST["delete_sujet"]);
-			if ($result === null) {
-				Messagehandler::prepareAlert("Suppression du sujet réussi.", "success");
+			$idSubject = $_POST['delete_sujet'];
+			if (!Compte::checkPermission(Compte::PERM_WRITE, $id)) {
+				Messagehandler::prepareAlert("Vous n'avez pas les permissions nécessaires sur l'opération pour pouvoir supprimer un sujet.", "danger");
 			} else {
-				Messagehandler::prepareAlert("Echec de la suppression du sujet.", "danger");
+				$result = Sujethandicape::deleteOnDB($idSubject);
+				if ($result === null) {
+					Messagehandler::prepareAlert("Suppression du sujet réussi.", "success");
+				} else {
+					Messagehandler::prepareAlert("Echec de la suppression du sujet.", "danger");
+				}
 			}
 		}
 
@@ -137,7 +147,7 @@ class Controller_Operations extends Controller_Template {
 
 	//L'action edit sert pour la page edit de opération qui affiche les informations d'une opération pour les modifier
 	public function action_edit($id){
-		Compte::checkPermission(Compte::PERM_WRITE);
+		Compte::checkPermissionRedirect("Seul le créateur de l'opération peut éditer les informations de l'opération.", Compte::PERM_WRITE, $id);
 
 		// Récupération des informations de l'opération
 		$operation = Operation::fetchSingle($id);		

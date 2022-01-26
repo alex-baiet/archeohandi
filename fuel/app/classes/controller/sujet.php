@@ -27,9 +27,13 @@ class Controller_Sujet extends Controller_Template {
 	}
 
 	public function action_edit($id) {
-		Compte::checkPermission(Compte::PERM_WRITE);
-
 		$subject = Sujethandicape::fetchSingle($id);
+		Compte::checkPermissionRedirect(
+			"Vous n'êtes pas autorisés à éditer un sujet de l'opération.",
+			Compte::PERM_WRITE,
+			$subject->getGroup()->getOperation()->getId()
+		);
+
 		if ($subject === null) {
 			Messagehandler::prepareAlert("Le sujet n'existe pas (quelqu'un vient peut-être de le supprimer).", "danger");
 			Response::redirect("accueil");
@@ -53,7 +57,7 @@ class Controller_Sujet extends Controller_Template {
 	}
 
 	public function action_add($id) {
-		Compte::checkPermission(Compte::PERM_WRITE);
+		Compte::checkPermissionRedirect("Vous n'êtes pas autorisés à ajouter un sujet sur cette opération.", Compte::PERM_WRITE, $id);
 
 		$data = array('idOperation' => $id);
 

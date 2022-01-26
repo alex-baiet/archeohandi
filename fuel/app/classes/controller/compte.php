@@ -17,7 +17,7 @@ class Controller_Compte extends Controller_Template {
 
 	/** Création d'un compte. */
 	public function action_creation() {
-		Compte::checkPermission(Compte::PERM_DISCONNECTED);
+		Compte::checkPermissionRedirect("Vous êtes déjà connecté.", Compte::PERM_DISCONNECTED);
 
 		$data = array();
 
@@ -68,7 +68,7 @@ class Controller_Compte extends Controller_Template {
 
 	/** Connexion à un compte existant. */
 	public function action_connexion() {
-		Compte::checkPermission(Compte::PERM_DISCONNECTED);
+		Compte::checkPermissionRedirect("Vous êtes déjà connecté.", Compte::PERM_DISCONNECTED);
 
 		if (isset($_POST["login"]) && isset($_POST["mdp"])) {
 			$login = $_POST["login"];
@@ -100,7 +100,7 @@ class Controller_Compte extends Controller_Template {
 
 	/** Page admin uniquement : permet de créer le compte */
 	public function action_creation_confirmation() {
-		Compte::checkPermission(Compte::PERM_ADMIN);
+		Compte::checkPermissionRedirect("Seul les administrateurs peuvent accéder à cette page.", Compte::PERM_ADMIN);
 
 		Helper::startSession();
 

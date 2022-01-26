@@ -309,7 +309,7 @@ class Operation extends Model {
 	 */
 	public function accountRights(string $login): ?string {
 		if ($this->getAccountAdmin() !== null && $this->getAccountAdmin()->getLogin() === $login) return Compte::PERM_ADMIN;
-		if (isset($this->getAccounts[$login])) return Compte::PERM_WRITE;
+		if (isset($this->getAccounts()[$login])) return Compte::PERM_WRITE;
 		return null;
 	}
 

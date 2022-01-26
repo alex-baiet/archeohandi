@@ -32,7 +32,7 @@ $password = $password;
 	<p>
 		Bonjour <?= "$firstName $lastName" ?>,<br>
 		<br>
-		Votre demande de compte a été validé !<br>
+		Votre demande de compte a été validée !<br>
 		<br>
 		Vos identifiants :
 	</p>
@@ -41,6 +41,10 @@ $password = $password;
 		<li>login : <b><?= $login ?></b></li>
 		<li>mot de passe : <b><?= $password ?></b></li>
 	</ul>
+
+	<p>
+		<a href="https://archeohandi.huma-num.fr/">Site web Archéologie du handicap</a>
+	</p>
 </body>
 
 </html>

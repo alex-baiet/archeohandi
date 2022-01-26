@@ -156,55 +156,62 @@ class Compte {
 	}
 
 	/**
-	 * Vérifie que l'utilisateur a les permissions indiqués, et redirige vers l'accueil en cas de problème.
+	 * Vérifie que l'utilisateur a les permissions indiqués, et redirige vers la page précédente si les droits sont insuffisant.
+	 */
+	public static function checkPermissionRedirect(string $errorMsg, string $permission, ?int $idOperation = null) {
+		if (!Compte::checkPermission($permission, $idOperation)) {
+			Messagehandler::prepareAlert($errorMsg, "danger");
+			Redirect::redirectBack();
+		}
+	}
+
+	/**
+	 * Vérifie que l'utilisateur a les permissions indiqués.
 	 * 
 	 * @param string $requiredPermission Indique la permission nécessaire pour accéder à la page.
 	 * Les différentes permissions sont toutes les constants "PERM_" présents dans Compte.
 	 * @param int|null $idOperation Indique l'opération auxquel l'utilisateur doit avoir les droits.
+	 * @return true Si la permission est valide.
 	 */
-	public static function checkPermission(string $requiredPermission, ?int $idOperation = null): void {
+	public static function checkPermission(string $permission, ?int $idOperation = null): bool {
 
 		// Aucune contrainte demandé
-		if ($requiredPermission === null) return;
-
+		if ($permission === null) return true;
 		$account = Compte::getInstance();
+		if ($account !== null && $account->getPermission() === Compte::PERM_ADMIN) return true;
+
 		$op = $idOperation !== null ? Operation::fetchSingle($idOperation) : null;
 
-		switch ($requiredPermission) {
+		switch ($permission) {
 			case Compte::PERM_DISCONNECTED:
-				if ($account !== null) Compte::checkPermError("Vous devez d'abord vous déconnecter pour pouvoir accéder à cette page.");
-				break;
+				if ($account !== null) return false;
+				return true;
 
 			case Compte::PERM_WRITE:
-				if ($account === null) Compte::checkPermError("La page que vous voulez accéder nécessite de se connecter à un compte.");
+				if ($account === null) return false;
 				if ($op !== null
 					&& $account->getPermission() === Compte::PERM_WRITE
 					&& $op->accountRights($account->getLogin()) === null
 				) {
-					Compte::checkPermError("Vous n'êtes pas autorisé à accéder à cette opération.");
+					return false;
 				}
-				break;
+				return true;
 
 			case Compte::PERM_ADMIN:
-				if ($account === null || $account->getPermission() !== Compte::PERM_ADMIN) {
-					Compte::checkPermError("La page que vous voulez accéder est réservé aux administrateurs.");
-				}
-				if ($op !== null
-					&& $account->getPermission() === Compte::PERM_WRITE
-					&& $op->accountRights($account->getLogin()) !== Compte::PERM_ADMIN
-				) {
-					Compte::checkPermError("Vous n'êtes pas autorisé à accéder à cette opération.");
-				}
-				break;
-			default;
-				Compte::checkPermError("Une erreur est servenu lors de la vérification des droits d'accès à la page.");
-				break;
-		}
-	}
+				if ($account === null) return false;
+				if ($op === null && $account->getPermission() !== Compte::PERM_ADMIN) return false;
 
-	private static function checkPermError(string $msg) {
-		Messagehandler::prepareAlert($msg, "danger");
-		Redirect::redirectBack();
+				if ($op !== null) {
+					return $account->getPermission() === Compte::PERM_WRITE
+						&& $op->accountRights($account->getLogin()) === Compte::PERM_ADMIN;
+				}
+				break;
+
+			default;
+				return false;
+		}
+
+		return false;
 	}
 
 	public function getLogin(): ?string { return $this->login; }
