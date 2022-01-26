@@ -167,18 +167,33 @@ class Compte {
 		// Aucune contrainte demandé
 		if ($requiredPermission === null) return;
 
-		$instance = Compte::getInstance();
+		$account = Compte::getInstance();
+		$op = $idOperation !== null ? Operation::fetchSingle($idOperation) : null;
 
 		switch ($requiredPermission) {
 			case Compte::PERM_DISCONNECTED:
-				if ($instance !== null) Compte::checkPermError("Vous devez d'abord vous déconnecter pour pouvoir accéder à cette page.");
+				if ($account !== null) Compte::checkPermError("Vous devez d'abord vous déconnecter pour pouvoir accéder à cette page.");
 				break;
+
 			case Compte::PERM_WRITE:
-				if ($instance === null) Compte::checkPermError("La page que vous voulez accéder nécessite de se connecter à un compte.");
+				if ($account === null) Compte::checkPermError("La page que vous voulez accéder nécessite de se connecter à un compte.");
+				if ($op !== null
+					&& $account->getPermission() === Compte::PERM_WRITE
+					&& $op->accountRights($account->getLogin()) === null
+				) {
+					Compte::checkPermError("Vous n'êtes pas autorisé à accéder à cette opération.");
+				}
 				break;
+
 			case Compte::PERM_ADMIN:
-				if ($instance === null || $instance->getPermission() !== Compte::PERM_ADMIN) {
+				if ($account === null || $account->getPermission() !== Compte::PERM_ADMIN) {
 					Compte::checkPermError("La page que vous voulez accéder est réservé aux administrateurs.");
+				}
+				if ($op !== null
+					&& $account->getPermission() === Compte::PERM_WRITE
+					&& $op->accountRights($account->getLogin()) !== Compte::PERM_ADMIN
+				) {
+					Compte::checkPermError("Vous n'êtes pas autorisé à accéder à cette opération.");
 				}
 				break;
 			default;
@@ -197,5 +212,4 @@ class Compte {
 	public function getPrenom(): ?string { return $this->prenom; }
 	public function getNom(): ?string { return $this->nom; }
 	public function getEmail(): ?string { return $this->email; }
-
 }

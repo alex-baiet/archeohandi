@@ -300,6 +300,17 @@ class Operation extends Model {
 	}
 	#endregion
 
+	/**
+	 * Renvoie les droits qu'à un compte sur l'opération.
+	 * @return string Niveau de droit du compte sur l'opération.
+	 * @return null Si le compte n'a aucun droit sur l'opération.
+	 */
+	public function accountRights(string $login): ?string {
+		if ($this->getAccountAdmin() !== null && $this->getAccountAdmin()->getLogin() === $login) return Compte::PERM_ADMIN;
+		if (isset($this->getAccounts[$login])) return Compte::PERM_WRITE;
+		return null;
+	}
+
 	#region Validation
 	/**
 	 * Vérifie que toutes les valeurs sont correctes.

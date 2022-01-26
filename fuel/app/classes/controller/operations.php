@@ -11,7 +11,7 @@ use Model\Operation;
 use Model\Sujethandicape;
 
 class Controller_Operations extends Controller_Template {
-	private const DEBUG = true;
+	private const DEBUG = false;
 
 	/** Page d'affichages de toutes les opérations */
 	public function action_index() {
