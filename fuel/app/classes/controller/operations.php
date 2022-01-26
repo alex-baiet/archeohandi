@@ -74,12 +74,16 @@ class Controller_Operations extends Controller_Template {
 			}
 		}
 
+		// Calcul nombre de sujets enregistrés
+		$countSubject = intval(Helper::querySelectSingle("SELECT COUNT(id) AS total FROM sujet_handicape")["total"]);
+
 		// Ajout des valeurs à la view.
 		$data['operations'] = $operations;
 		$data['all_site'] = $all_site;
 		$data['all_user'] = $all_user;
 		$data['all_nom_op'] = $all_nom_op;
 		$data['all_annee'] = $all_annee;
+		$data['countSubject'] = $countSubject;
 		$this->template->title = 'Opérations';
 		$this->template->content = View::forge('operations/index', $data, false);
 	}

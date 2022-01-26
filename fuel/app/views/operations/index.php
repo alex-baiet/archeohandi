@@ -15,6 +15,8 @@ $all_user = $all_user;
 $all_nom_op = $all_nom_op;
 /** @var array */
 $all_annee = $all_annee;
+/** @var int */
+$countSubject = $countSubject;
 
 ?>
 
@@ -29,12 +31,15 @@ $all_annee = $all_annee;
 <div class="container">
 	
 	<!-- Titre principal de la page -->
-	<h1 class="m-2">Opérations (<?= count($operations); ?>)</h1>
-
-	<!-- Bouton "Ajout d'un opération -->
-	<a class="btn btn-primary btn-sm" href="/public/operations/add">Ajouter une opération <i class="bi bi-plus-circle-fill"></i></a>
+	<h1 class="m-2">Opérations
+		<!-- Bouton "Ajout d'un opération -->
+		<a class="btn btn-primary btn-sm" href="/public/operations/add">Ajouter une opération <i class="bi bi-plus-circle-fill"></i></a>
+	</h1>
 	
-	<p class="text-muted">Ici vous retrouvez toutes les informations sur les opérations.</p>
+	<p class="text-muted">
+		Ici vous pouvez retrouvez toutes les informations sur les opérations.<br>
+		<b> <?= count($operations); ?></b> opérations existantes pour un total de <b><?= $countSubject; ?></b> sujets enregistrés.
+	</p>
 
 	<div class="ml-3">
 		<button type="button" id="id_bouton_filtre" class="btn btn-danger">Afficher les filtres de recherche</button>
