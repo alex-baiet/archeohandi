@@ -11,7 +11,7 @@ use Model\Operation;
 use Model\Sujethandicape;
 
 class Controller_Operations extends Controller_Template {
-	private const DEBUG = false;
+	private const DEBUG = true;
 
 	/** Page d'affichages de toutes les opérations */
 	public function action_index() {
@@ -86,16 +86,20 @@ class Controller_Operations extends Controller_Template {
 		if (Input::method() === "POST") {
 			$operation = new Operation($_POST);
 			
-			if (Controller_Operations::DEBUG === true) {
-				// Débuggage
-				echo "Tentative de création d'une opération...<br>";
-				Helper::varDump($_POST);
-				Helper::varDump($operation);
-			}
-			else if ($operation->saveOnDB()) {
-				// Ajout de l'opération avec succès
-				Messagehandler::prepareAlert("Ajout de l'opération réussi.", "success");
-				Response::redirect("/sujet/add/{$operation->getId()}");
+			if ($operation->saveOnDB()) {
+				if (Controller_Operations::DEBUG === true) {
+					// Débuggage
+					echo "Tentative de création d'une opération...<br>";
+					Helper::varDump($_POST);
+					Helper::varDump($operation);
+				}
+				else {
+					// Ajout de l'opération avec succès
+					Messagehandler::prepareAlert("Ajout de l'opération réussi.", "success");
+					Response::redirect("/sujet/add/{$operation->getId()}");
+				}
+			} else {
+				Messagehandler::prepareAlert("Erreur inconnue lors de l'ajout de l'opération.");
 			}
 		}
 
@@ -158,7 +162,7 @@ class Controller_Operations extends Controller_Template {
 				if (Controller_Operations::DEBUG === true) {
 					Helper::varDump($operation);
 				} else {
-					Response::redirect("/operations?success_modif");
+					Response::redirect("/operations");
 				}
 			} else {
 				// Les données ne sont pas valides : on affiche les problèmes

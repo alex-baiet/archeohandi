@@ -192,7 +192,7 @@ class Compte {
 		Redirect::redirectBack();
 	}
 
-	public function getLogin(): string { return $this->login; }
+	public function getLogin(): ?string { return $this->login; }
 	public function getPermission(): ?string { return $this->permission; }
 	public function getPrenom(): ?string { return $this->prenom; }
 	public function getNom(): ?string { return $this->nom; }

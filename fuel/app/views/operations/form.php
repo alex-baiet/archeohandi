@@ -2,6 +2,7 @@
 
 use Fuel\Core\Asset;
 use Fuel\Core\Form;
+use Model\Compte;
 use Model\Operation;
 use Model\Organisme;
 use Model\Typeoperation;
@@ -205,15 +206,15 @@ if (count($paleos) === 0) $paleos[] = "";
 	<div class="col-md" id="form_compte_parent">
 		<?php
 		$accounts = $operation->getAccounts();
-		if (empty($accounts)) $accounts[] = "";
+		if (empty($accounts)) $accounts[""] = new Compte(array());
 
-		for ($i = 0; $i < count($accounts); $i++) :
-			$acc = $accounts[$i];
+		$i = 0;
+		foreach ($accounts as $acc) :
 		?>
 			<div class="row" id="form_compte_copy_<?= $i; ?>">
 				<div class="col-md">
 					<div class="form-floating">
-						<input type="text" class="form-control" id="form_compte_<?= $i ?>" name="comptes[]" placeholder="" value="<?= $acc ?>">
+						<input type="text" class="form-control" id="form_compte_<?= $i ?>" name="compte[]" placeholder="" value="<?= $acc->getLogin() ?>" autocomplete="off">
 						<label for="compte_<?= $i ?>" id="form_compte_label_<?= $i ?>">Nom du compte</label>
 						<script>addAutocomplete("form_compte_<?= $i; ?>", "compte");</script>
 					</div>
@@ -222,7 +223,7 @@ if (count($paleos) === 0) $paleos[] = "";
 					<button type="button" class="btn btn-danger btn-remove-copy" onclick="removeElem('compte', <?= $i; ?>);"><i class="bi bi-x"></i></button>
 				</div>
 			</div>
-		<?php endfor; ?>
+		<?php $i++; endforeach; ?>
 	</div>
 
 	<div class="col-md-3">

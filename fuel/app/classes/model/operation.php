@@ -41,6 +41,8 @@ class Operation extends Model {
 	private array $paleoArray;
 	/** @var Sujethandicape[]|unset */
 	private array $subjects;
+	/** @var Compte|null|unset */
+	private ?Compte $accountAdmin;
 	/** @var Compte[]|unset */
 	private array $accounts;
 
@@ -108,9 +110,15 @@ class Operation extends Model {
 				$this->paleopathologistes = $data["paleopathologistes"];
 			}
 		}
+		if (isset($data["compte"])) {
+			$this->accounts = array();
+			foreach ($data["compte"] as $login) {
+				$account = Compte::fetchSingle($login);
+				if ($account !== null) $this->accounts[$login] = $account;
+			}
+		}
 
 		if (isset($data["commune"])) $this->idCommune = Commune::nameToId($data["commune"]);
-
 	}
 
 	/**
@@ -256,11 +264,33 @@ class Operation extends Model {
 		return $this->subjects;
 	}
 
+	public function getAccountAdmin(): ?Compte {
+		if (!isset($this->accountAdmin)) {
+			$results = DB::select("login_compte")
+				->from("droit_compte")
+				->where("id_operation", "=", $this->id)
+				->where("droit", "=", Compte::PERM_ADMIN)
+				->execute()
+				->as_array();
+			if (empty($results)) {
+				$this->accountAdmin = null;
+			} else {
+				$this->accountAdmin = Compte::fetchSingle($results[0]["login_compte"]);
+			}
+		}
+		return $this->accountAdmin;
+	}
+
 	/** @return Compte[] */
 	public function getAccounts(): array {
 		if (!isset($this->accounts)) {
 			$this->accounts = array();
-			$results = DB::select("login_compte")->from("droit_compte")->where("id_operation", "=", $this->id)->execute()->as_array();
+			$results = DB::select("login_compte")
+				->from("droit_compte")
+				->where("id_operation", "=", $this->id)
+				->where("droit", "=", Compte::PERM_WRITE)
+				->execute()
+				->as_array();
 			foreach ($results as $res) {
 				$acc = Compte::fetchSingle($res["login_compte"]);
 				if ($acc !== null) $this->accounts[$acc->getLogin()] = $acc;
@@ -270,6 +300,7 @@ class Operation extends Model {
 	}
 	#endregion
 
+	#region Validation
 	/**
 	 * Vérifie que toutes les valeurs sont correctes.
 	 * @return true|string Renvoie un string contenant un message d'erreurs en cas de test non passant, ou l'opération en cas de succès.
@@ -315,6 +346,17 @@ class Operation extends Model {
 		// Correction bibliographie
 		$this->bibliographie = Helper::secureString($this->bibliographie);
 
+		// Correction des comptes
+		if (Compte::getInstance() === null) $this->invalidate("Vous devez être connecter à un compte pour pouvoir créer une opération.");
+		else {
+			if (!isset($this->accounts)) {
+				$this->getAccounts();
+			}
+			$admin = $this->getAccountAdmin();
+			if ($admin === null) $admin = Compte::getInstance();
+			if (isset($this->accounts[$admin->getLogin()])) unset($this->accounts[$admin->getLogin()]);
+		}
+
 		// Vérification final
 		if ($this->validated === false) {
 			return $this->invalidReason;
@@ -339,13 +381,23 @@ class Operation extends Model {
 		$arr = $this->toArray();
 
 		if ($this->id === -1 || Operation::fetchSingle($this->id) === null) {
+			if (Compte::getInstance() === null) {
+				Messagehandler::prepareAlert("Pour créer une opération, vous devez être connecter à un compte.", "danger");
+				return false;
+			}
+
 			// L'opération n'existe pas : on la rajoute à la BDD
 			$arr["id"] = null;
 			list($insertId, $rowAffected) = DB::insert("operations")
 				->set($arr)
 				->execute();
 			$this->id = $insertId;
+
 			if ($rowAffected < 1) return false;
+
+			// Ajout créateur de l'opération en tant qu'admin de l'operation
+			$admin = Compte::getInstance();
+			$this->addAccount($admin->getLogin(), Compte::PERM_ADMIN);
 		}
 		else {
 			// L'opération existe : on la met à jour
@@ -353,11 +405,27 @@ class Operation extends Model {
 				->set($arr)
 				->where("id", $this->id)
 				->execute();
-				if ($rowAffected < 1) return false;
+		}
+
+		// Maj droits des comptes
+		if (isset($this->accounts)) {
+			DB::delete("droit_compte")->where("id_operation", "=", $this->id)->where("droit", "!=", Compte::PERM_ADMIN)->execute();
+			foreach ($this->accounts as $acc) {
+				$this->addAccount($acc->getLogin(), Compte::PERM_WRITE);
+			}
 		}
 
 		// Tout s'est bien passé.
 		return true;
+	}
+
+	/** Ajoute un compte pour l'opération dans la BDD. */
+	private function addAccount(string $login, string $droit) {
+		DB::insert("droit_compte")->set(array(
+			"id_operation" => $this->id,
+			"login_compte" => $login,
+			"droit" => $droit
+		))->execute();
 	}
 
 	/** Affiche une alert bootstrap seulement si des erreurs existent. */
@@ -370,6 +438,22 @@ class Operation extends Model {
 				</div>';
 		}
 	}
+
+	/** Annule la validation de l'objet. */
+	private function resetValidation() {
+		$this->validated = null;
+		$this->invalidReason = null;
+	}
+
+	/** Invalide les données, rendant impossible l'export des données en ligne. */
+	private function invalidate(string $reason) {
+		if ($this->validated !== false) {
+			$this->validated = false;
+			$this->invalidReason = "Les données sont invalides pour les raisons suivantes :<br>\n";
+		}
+		$this->invalidReason .= "- $reason<br>\n";
+	}
+	#endregion
 
 	/** Renvoie l'array des données représentant l'objet. */
 	public function toArray(): array {
@@ -394,21 +478,6 @@ class Operation extends Model {
 			"paleopathologistes" => $this->paleopathologistes,
 			"bibliographie" => $this->bibliographie,
 		);
-	}
-
-	/** Annule la validation de l'objet. */
-	private function resetValidation() {
-		$this->validated = null;
-		$this->invalidReason = null;
-	}
-
-	/** Invalide les données, rendant impossible l'export des données en ligne. */
-	private function invalidate(string $reason) {
-		if ($this->validated !== false) {
-			$this->validated = false;
-			$this->invalidReason = "Les données sont invalides pour les raisons suivantes :<br>\n";
-		}
-		$this->invalidReason .= "- $reason<br>\n";
 	}
 
 }

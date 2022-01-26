@@ -10,8 +10,6 @@ use Model\Typesepulture;
 
 /** @var Operation Operation actuelle. */
 $operation = $operation;
-/** @var string Contient le type d'erreur/succès à afficher */
-$msgType = isset($msgType) ? $msgType : null;
 /** @var string Message a afficher. */
 $msg = isset($msg) ? $msg : null;
 
@@ -34,18 +32,6 @@ $sujets = $operation->getSubjects();
 	</h1>
 	<p class="text-muted">Ici vous retrouvez toutes les informations de l'opération <strong><?= $operation->getNomOp(); ?></strong>.
 	</p>
-	<?php
-
-	// Affichage message d'erreur / succès
-	switch ($msgType) {
-		case 'error_delete': Helper::alertBootstrap("Une erreur est survenu lors de la suppression du sujet : $msg", 'danger'); break;
-		case 'success_add': Helper::alertBootstrap('Ajout effectué.', 'success'); break;
-		case 'success_update': Helper::alertBootstrap('Modification effectuée.', 'success'); break;
-		case 'success_delete': Helper::alertBootstrap('Suppression effectuée.', 'success'); break;
-		default: break;
-	}
-
-	?>
 
 	<!-- Contenu de la page. Affichage des informations de l'opération -->
 	<div class="container" style="background-color: #F5F5F5;">
