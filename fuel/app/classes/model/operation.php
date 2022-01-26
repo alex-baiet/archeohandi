@@ -162,6 +162,8 @@ class Operation extends Model {
 		$result = DB::delete("operations")->where("id", "=", $id)->execute();
 		if ($result < 1) return "L'opération n'a pas pû être supprimé";
 
+		DB::delete("droit_compte")->where("id_operation", "=", $id)->execute();
+
 		// Tous s'est bien passé
 		return null;
 	}
