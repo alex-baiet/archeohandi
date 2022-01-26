@@ -1,3 +1,10 @@
+<?php
+
+use Fuel\Core\Asset;
+use Fuel\Core\Form;
+
+?>
+
 <!-- Entête de la page -->
 <div class="container col-auto">
   <h1 class="m-2">Liste des communes</h1>
@@ -105,7 +112,6 @@
 </div>
 
 
-<?= Asset::js('script_recherche.js'); ?>
 <?= Asset::css('scrollbar.css'); ?>
 <!-- Script permet d'afficher ou non les options du filtre -->
 <script>
