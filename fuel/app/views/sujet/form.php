@@ -53,12 +53,12 @@ Form::open(array(
 		<div class="col-md-6">
 			<div class="form-floating">
 				<input name="NMI" id="form_NMI" value="<?= $group !== null ? $group->getNMI() : "" ?>"
-					type="number" class="form-control" placeholder="">
+					type="number" class="form-control" placeholder="NMI" min="0">
 				<label for="form_NMI">NMI</label>
 			</div>
 		</div>
 
-		<!-- Chronology -->
+		<!-- Chronologie -->
 		<div class="col-md-6">
 			<?= Chronology::generateSelect("id_chronologie", "Chronologie", $group !== null && $group->getChronology() !== null ? $group->getChronology()->getId() : 18); ?>
 		</div>
@@ -71,8 +71,9 @@ Form::open(array(
 			<!-- Identifiant -->
 			<div class="col-md-6">
 				<div class="form-floating">
-					<input type="text" class="form-control" name="id_sujet_handicape" placeholder="" value="<?= $subject->getIdSujetHandicape(); ?>">
-					<label for="id_sujet_handicape">Identifiant du sujet</label>
+					<input name="id_sujet_handicape" id="form_id_sujet_handicape" value="<?= $subject->getIdSujetHandicape(); ?>"
+						type="text" class="form-control" placeholder="" maxlength="256">
+					<label for="form_id_sujet_handicape">Identifiant du sujet</label>
 				</div>
 			</div>
 
@@ -88,16 +89,18 @@ Form::open(array(
 			<!-- Âge minimum estimé de décès -->
 			<div class="col-md-6">
 				<div class="form-floating">
-					<?= Form::input("age_min", $subject->getAgeMin(), array("type" => "number", "class" => "form-control", "min" => "0", "max" => "130", "placeholder" => "")); ?>
-					<?= Form::label("Âge minimum au décès", "age_min"); ?>
+					<input name="age_min" id="form_age_min" value="<?= $subject->getAgeMin(); ?>"
+						type="number" class="form-control" placeholder="Âge minimum au décès" min="0" max="130" step="1">
+					<label for="form_age_min">Âge minimum au décès</label>
 				</div>
 			</div>
 
 			<!-- Âge maximum estimé de décès -->
 			<div class="col-md-6">
 				<div class="form-floating">
-					<?= Form::input("age_max", $subject->getAgeMax(), array("type" => "number", "class" => "form-control", "min" => "0", "max" => "130", "placeholder" => "")); ?>
-					<?= Form::label("Âge maximum au décès", "age_max"); ?>
+					<input name="age_max" id="form_age_max" value="<?= $subject->getAgeMax(); ?>"
+						type="number" class="form-control" placeholder="Âge maximum au décès" min="0" max="130" step="1">
+					<label for="form_age_max">Âge maximum au décès</label>
 				</div>
 			</div>
 		</div>
@@ -106,16 +109,18 @@ Form::open(array(
 			<!-- Période minimum estimé -->
 			<div class="col-md-6">
 				<div class="form-floating">
-					<?= Form::input("dating_min", $subject->getDatingMin(), array("type" => "number", "class" => "form-control", "placeholder" => "")); ?>
-					<?= Form::label("Datation début", "dating_min"); ?>
+					<input name="dating_min" id="form_dating_min" value="<?= $subject->getDatingMin(); ?>"
+						type="number" class="form-control" placeholder="Datation minimale" min="-7000000" max="<?= date("Y") ?>" step="1">
+					<label for="form_dating_min">Datation minimale</label>
 				</div>
 			</div>
 
 			<!-- Période maximum estimé -->
 			<div class="col-md-6">
 				<div class="form-floating">
-					<?= Form::input("dating_max", $subject->getDatingMax(), array("type" => "number", "class" => "form-control", "placeholder" => "")); ?>
-					<?= Form::label("Datation fin", "dating_max"); ?>
+					<input name="dating_max" id="form_dating_max" value="<?= $subject->getDatingMax(); ?>"
+						type="number" class="form-control" placeholder="Datation maximal" min="-7000000" max="<?= date("Y") ?>" step="1">
+					<label for="form_dating_max">Datation maximale</label>
 				</div>
 			</div>
 
@@ -193,10 +198,10 @@ Form::open(array(
 
 	<!-- Commentaire contexte -->
 	<div class="col-md-12">
-		<label for="comment_contexte">Commentaire</label>
-		<div class="input-group">
-			<textarea class="form-control" name="comment_contexte" rows="2"><?= $subject->getCommentContext(); ?></textarea>
-		</div>
+		<label for="form_comment_contexte">Commentaire</label>
+		<textarea name="comment_contexte" id="form_comment_contexte"
+			class="form-control" rows="2" maxlength="65535"
+		><?= $subject->getCommentContext(); ?></textarea>
 	</div>
 	<br />
 
