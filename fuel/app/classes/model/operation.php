@@ -4,7 +4,6 @@ namespace Model;
 
 use Fuel\Core\DB;
 use Fuel\Core\Model;
-use InvalidArgumentException;
 
 /** Représentation d'une opération dans la base de données. */
 class Operation extends Model {

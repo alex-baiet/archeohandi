@@ -157,7 +157,7 @@ function addCopy(name, autoComplete = null) {
 	// let labelCopy = copy.getElementsByTagName("label")[0];
 	// labelCopy.id = `${id}_label_${num}`;
 	let btnRemoveCopy = copy.getElementsByTagName("button")[0];
-	btnRemoveCopy.onclick = () => { removeElem(name, num); }
+	btnRemoveCopy.onclick = () => { removeCopy(name, num); }
 
 	// Maj autocomplétion
 	if (autoComplete !== null) {
@@ -178,7 +178,7 @@ function addCopy(name, autoComplete = null) {
  * @param {string} name Nom du champ input.
  * @param {number} num Numéro de la copie.
  */
-function removeElem(name, num) {
+function removeCopy(name, num) {
 	const parent = document.getElementById(`form_${name}_parent`);
 	const id = `form_${name}_copy_${num}`;
 	let elem = document.getElementById(id);

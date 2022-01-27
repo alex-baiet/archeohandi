@@ -2,6 +2,7 @@
 
 use Fuel\Core\Asset;
 use Fuel\Core\Form;
+use Fuel\Core\View;
 use Model\Compte;
 use Model\Operation;
 use Model\Organisme;
@@ -143,54 +144,19 @@ Form::open(array(
 
 <!-- Anthropologues -->
 <?php
-/** Créer les attributs pour les inputs des anthropologues et paleopathologistes. */
-function generateAttr(string $id) {
-	return array("type" => "text", "class" => "form-control", "placeholder" => "", "id" => $id, "autocomplete" => "off");
-}
+
 
 $anthropologues = $operation->getAnthropologues();
-if (count($anthropologues) === 0) $anthropologues[] = "";
+if (empty($anthropologues)) $anthropologues[] = "";
 ?>
-<div class="row my-2">
-	<div class="col-md-6">
-		<?php for ($i = 0; $i < count($anthropologues); $i++): $anthro = $anthropologues[$i]; ?>
-			<div class="form-floating">
-				<?= Form::input("anthropologues[]", $anthro, generateAttr("form_anthropologue_$i")); ?>
-				<?= Form::label("Anthropologue", "anthropologue_$i", array("id" => "form_anthropologue_label_$i")); ?>
-			</div>
-		<?php endfor; ?>
-	</div>
-
-	<div class="col-md-6">
-		<div class="d-grid gap-2 d-md-flex my-2">
-			<button type="button" class="btn btn-primary me-md-2" onclick="addPerson('form_anthropologue');"><i class="bi bi-plus"></i></button>
-			<button type="button" class="btn btn-danger" onclick="removePerson('form_anthropologue');"><i class="bi bi-x"></i></button>
-		</div>
-	</div>
-</div>
+<?= View::forge("fonction/multiple_input", array("name" => "anthropologues", "datas" => $anthropologues, "label" => "Anthropologue")); ?>
 
 <!-- Paleopathologistes -->
 <?php
 $paleos = $operation->getPaleopathologistes();
-if (count($paleos) === 0) $paleos[] = "";
+if (empty($paleos)) $paleos[] = "";
 ?>
-<div class="row my-2">
-	<div class="col-md-6">
-		<?php for ($i = 0; $i < count($paleos); $i++): $paleo = $paleos[$i]; ?>
-			<div class="form-floating">
-				<?= Form::input("paleopathologistes[]", $paleo, generateAttr("form_paleopathologiste_$i")); ?>
-				<?= Form::label("Paleopathologiste", "paleopathologiste_$i", array("id" => "form_paleopathologiste_label_$i")); ?>
-			</div>
-		<?php endfor; ?>
-	</div>
-
-	<div class="col-md-6">
-		<div class="d-grid gap-2 d-md-flex my-2">
-			<button type="button" class="btn btn-primary me-md-2" onclick="addPerson('form_paleopathologiste');"><i class="bi bi-plus"></i></button>
-			<button type="button" class="btn btn-danger" onclick="removePerson('form_paleopathologiste');"><i class="bi bi-x"></i></button>
-		</div>
-	</div>
-</div>
+<?= View::forge("fonction/multiple_input", array("name" => "paleopathologistes", "datas" => $paleos, "label" => "Paleopathologiste")); ?>
 
 <!-- Bibliographie -->
 <div class="col-md-12">
@@ -202,34 +168,22 @@ if (count($paleos) === 0) $paleos[] = "";
 <h3 class="text-center mt-4">Comptes autorisés</h3>
 <p>Non fonctionnels</p>
 
-<div class="row my-2">
-	<div class="col-md" id="form_compte_parent">
-		<?php
-		$accounts = $operation->getAccounts();
-		if (empty($accounts)) $accounts[""] = new Compte(array());
-
-		$i = 0;
-		foreach ($accounts as $acc) :
-		?>
-			<div class="row" id="form_compte_copy_<?= $i; ?>">
-				<div class="col-md">
-					<div class="form-floating">
-						<input type="text" class="form-control" id="form_compte_<?= $i ?>" name="compte[]" placeholder="" value="<?= $acc->getLogin() ?>" autocomplete="off">
-						<label for="compte_<?= $i ?>" id="form_compte_label_<?= $i ?>">Nom du compte</label>
-						<script>addAutocomplete("form_compte_<?= $i; ?>", "compte");</script>
-					</div>
-				</div>
-				<div class="col-auto">
-					<button type="button" class="btn btn-danger btn-remove-copy" onclick="removeElem('compte', <?= $i; ?>);"><i class="bi bi-x"></i></button>
-				</div>
-			</div>
-		<?php $i++; endforeach; ?>
-	</div>
-
-	<div class="col-md-3">
-		<button type="button" class="btn btn-primary me-md-2 btn-add-copy" onclick="addCopy('compte', 'compte');"><i class="bi bi-plus"></i></button>
-	</div>
-</div>
+<?php
+$accounts = $operation->getAccounts();
+if (empty($accounts)) $accounts[""] = new Compte(array());
+$logins = array();
+foreach ($accounts as $acc) {
+	$logins[] = $acc->getLogin();
+}
+?>
+<?=
+View::forge("fonction/multiple_input", array(
+	"name" => "compte",
+	"datas" => $logins,
+	"label" => "Nom du compte",
+	"autocompletion" => "compte"
+));
+?>
 
 <br/>
 

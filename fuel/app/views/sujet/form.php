@@ -402,7 +402,7 @@ Form::open(array(
 						<img id="img_preview_<?= $i; ?>" src="<?= $url ?>" alt="Image indisponible" style="height: 58px;">
 					</div>
 					<div class="col-auto">
-						<button type="button" class="btn btn-danger btn-remove-copy" onclick="removeElem('urls_img', <?= $i; ?>);"><i class="bi bi-x"></i></button>
+						<button type="button" class="btn btn-danger btn-remove-copy" onclick="removeCopy('urls_img', <?= $i; ?>);"><i class="bi bi-x"></i></button>
 					</div>
 				</div>
 			<?php endfor; ?>
