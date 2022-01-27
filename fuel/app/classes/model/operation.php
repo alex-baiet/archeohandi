@@ -46,17 +46,6 @@ class Operation extends Model {
 	private array $accounts;
 
 	private Validation $validation;
-	/**
-	 * Indique que l'objet est valide pour la base de données.
-	 * undefined signifie que l'objet n'a pas encore été vérifié.
-	 * @var bool|null 
-	 */
-	private $validated = null;
-	/**
-	 * Message indiquant pourquoi l'objet n'est pas valide.
-	 * @var string|null
-	 */
-	private $invalidReason = null;
 	#endregion
 
 	/** Construit l'Operation depuis la liste des données. */
@@ -316,11 +305,8 @@ class Operation extends Model {
 	}
 
 	#region Validation
-	/**
-	 * Vérifie que toutes les valeurs sont correctes.
-	 * @return true|string Renvoie un string contenant un message d'erreurs en cas de test non passant, ou l'opération en cas de succès.
-	 */
-	public function validate() {
+	/** Vérifie que toutes les valeurs sont correctes. */
+	public function validate(): bool {
 		return $this->validation->validate(function () {
 			$validation = $this->validation;
 
@@ -358,8 +344,8 @@ class Operation extends Model {
 			// Correction bibliographie
 			$this->bibliographie = Helper::secureString($this->bibliographie);
 
-			// Correction des comptes
-			if (Compte::getInstance() === null) $validation->invalidate("Vous devez être connecter à un compte pour pouvoir créer une opération.");
+			// Vérification des comptes
+			if (Compte::getInstance() === null) $validation->invalidate("Vous devez être connecter à un compte pour pouvoir créer/modifier une opération.");
 			else {
 				if (!isset($this->accounts)) {
 					$this->getAccounts();
@@ -377,9 +363,7 @@ class Operation extends Model {
 	 */
 	public function saveOnDB(): bool {
 		// Validation des données
-		if ($this->validated == null) $this->validate();
-		// Cas données non valide
-		if (!$this->validated) return false;
+		if (!$this->validate()) return false;
 
 		// Préparation des valeurs à envoyer à la BDD
 		$arr = $this->toArray();
