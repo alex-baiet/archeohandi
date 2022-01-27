@@ -52,8 +52,9 @@ Form::open(array(
 		<!-- NMI -->
 		<div class="col-md-6">
 			<div class="form-floating">
-				<input type="number" class="form-control" name="NMI" placeholder="" value="<?= $group !== null ? $group->getNMI() : "" ?>">
-				<label for="NMI">NMI</label>
+				<input name="NMI" id="form_NMI" value="<?= $group !== null ? $group->getNMI() : "" ?>"
+					type="number" class="form-control" placeholder="">
+				<label for="form_NMI">NMI</label>
 			</div>
 		</div>
 

@@ -47,7 +47,7 @@ Form::open(array(
 	<div class="col-md-6">
 		<div class="form-floating">
 			<input name="adresse" id="form_adresse" value="<?= $operation->getAdresse() ?>"
-				type="text" class="form-control" placeholder="" maxlength="256">
+				type="text" class="form-control" placeholder="Adresse" maxlength="256">
 			<label for="form_adresse">Adresse</label>
 		</div>
 	</div>
@@ -57,7 +57,7 @@ Form::open(array(
 			$year = $operation->getAnnee() < 1800 ? date("Y") : $operation->getAnnee();
 			?>
 			<input name="annee" id="form_annee" value="<?= $year ?>"
-				type="number" class="form-control" placeholder="" min="1800" max="<?= date("Y") ?>">
+				type="number" class="form-control" placeholder="Année de l'opération" min="1800" max="<?= date("Y") ?>">
 			<label for="form_annee">Année de l'opération</label>
 		</div>
 	</div>
@@ -66,14 +66,14 @@ Form::open(array(
 	<div class="col-md-6">
 		<div class="form-floating">
 			<input name="X" id="form_X" value="<?= $operation->getX() ?>"
-				type="number" class="form-control" placeholder="" min="-180" max="180" step="any">
+				type="number" class="form-control" placeholder="Longitude" min="-180" max="180" step="any">
 			<label for="form_X">Longitude</label>
 		</div>
 	</div>
 	<div class="col-md-6">
 		<div class="form-floating">
 			<input name="Y" id="form_Y" value="<?= $operation->getY() ?>"
-				type="number" class="form-control" placeholder="" min="-90" max="90" step="any">
+				type="number" class="form-control" placeholder="Latitude" min="-90" max="90" step="any">
 			<label for="form_Y">Latitude</label>
 		</div>
 	</div>
@@ -84,7 +84,7 @@ Form::open(array(
 		<div class="form-floating">
 			<?php $fullName = $operation->getCommune() === null ? "" : $operation->getCommune()->fullName(); ?>
 			<input name="commune" id="form_commune" value="<?= $fullName ?>"
-				type="text" class="form-control" placeholder="" autocomplete="off">
+				type="text" class="form-control" placeholder="Commune" autocomplete="off">
 			<label for="form_commune">Commune</label>
 			<script>addAutocomplete("form_commune", "commune");</script>
 		</div>
@@ -102,21 +102,21 @@ Form::open(array(
 	<div class="col-md-4">
 		<div class="form-floating">
 			<input name="EA" id="form_EA" value="<?= $operation->getEA() ?>"
-				type="text" class="form-control" placeholder="" maxlength="256">
+				type="text" class="form-control" placeholder="EA" maxlength="256">
 			<label for="form_EA">EA</label>
 		</div>
 	</div>
 	<div class="col-md-4">
 		<div class="form-floating">
 			<input name="OA" id="form_OA" value="<?= $operation->getOA() ?>"
-				type="text" class="form-control" placeholder="" maxlength="256">
+				type="text" class="form-control" placeholder="OA" maxlength="256">
 			<label for="form_OA">OA</label>
 		</div>
 	</div>
 	<div class="col-md-4">
 		<div class="form-floating">
 			<input name="numero_operation" id="form_numero_operation" value="<?= $operation->getNumeroOperation() ?>"
-				type="text" class="form-control" placeholder="" maxlength="256">
+				type="text" class="form-control" placeholder="Numéro d'opération" maxlength="256">
 			<label for="form_numero_operation">Numéro d'opération</label>
 		</div>
 	</div>
@@ -125,14 +125,14 @@ Form::open(array(
 	<div class="col-md-6">
 		<div class="form-floating">
 			<input name="patriarche" id="form_patriarche" value="<?= $operation->getPatriarche() ?>"
-				type="text" class="form-control" placeholder="" maxlength="256">
+				type="text" class="form-control" placeholder="Patriarche" maxlength="256">
 			<label for="form_patriarche">Patriarche</label>
 		</div>
 	</div>
 	<div class="col-md-6">
 		<div class="form-floating">
 			<input name="arrete_prescription" id="form_arrete_prescription" value="<?= $operation->getArretePrescription() ?>"
-				type="text" class="form-control" placeholder="" maxlength="256">
+				type="text" class="form-control" placeholder="Arrêté de prescription" maxlength="256">
 			<label for="form_arrete_prescription">Arrêté de prescription</label>
 		</div>
 	</div>
@@ -143,7 +143,7 @@ Form::open(array(
 	<div class="col-md-6">
 		<div class="form-floating">
 			<input name="responsable" id="form_responsable" value="<?= $operation->getResponsable() ?>"
-				type="text" class="form-control" placeholder="" maxlength="256" autocomplete="off">
+				type="text" class="form-control" placeholder="Responsable de l'opération" maxlength="256" autocomplete="off">
 			<label for="form_responsable">Responsable de l'opération</label>
 		</div>
 	</div>
