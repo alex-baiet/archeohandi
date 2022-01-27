@@ -21,8 +21,8 @@ class Sujethandicape extends Model {
 	private ?string $contexteNormatif = null;
 	private string $commentContext = "";
 	private string $commentDiagnosis = "";
-	private int $idTypeDepot = 4;
-	private int $idSepulture = 4;
+	private int $idTypeDepot = -1;
+	private int $idSepulture = -1;
 	private ?int $idDepot = null;
 	private ?int $idGroupeSujet = null;
 
@@ -106,7 +106,8 @@ class Sujethandicape extends Model {
 		if (isset($_POST["id_mobiliers"])) {
 			$this->furnitures = array();
 			foreach ($_POST["id_mobiliers"] as $furnitureId) {
-				$this->furnitures[] = Mobilier::fetchSingle($furnitureId);
+				$item = Mobilier::fetchSingle($furnitureId);
+				if ($item !== null) $this->furnitures[] = $item;
 			}
 		}
 		else if ($setWithEmpty) $this->furnitures = array();
@@ -117,7 +118,8 @@ class Sujethandicape extends Model {
 			foreach ($data["diagnostics"] as $idDiagnosis => $dataSpots) {
 				$spots = array();
 				foreach ($dataSpots as $idSpot) {
-					$spots[$idSpot] = Localisation::fetchSingle($idSpot);
+					$item = Localisation::fetchSingle($idSpot);
+					if ($item !== null) $spots[$idSpot] = $item;
 				}
 				$this->diagnosis[$idDiagnosis] = new Subjectdiagnosis(Diagnostic::fetchSingle($idDiagnosis), $spots);
 			}
@@ -128,7 +130,8 @@ class Sujethandicape extends Model {
 		if (isset($data["pathologies"])) {
 			$this->pathologies = array();
 			foreach ($data["pathologies"] as $idPathology) {
-				$this->pathologies[$idPathology] = Pathology::fetchSingle($idPathology);
+				$item = Pathology::fetchSingle($idPathology);
+				if ($item !== null) $this->pathologies[$idPathology] = $item;
 			}
 		}
 		else if ($setWithEmpty) $this->pathologies = array();
@@ -137,7 +140,8 @@ class Sujethandicape extends Model {
 		if (isset($data["appareils"])) {
 			$this->itemsHelp = array();
 			foreach ($data["appareils"] as $idItem) {
-				$this->itemsHelp[$idItem] = Appareil::fetchSingle($idItem);
+				$item = Appareil::fetchSingle($idItem);
+				if ($item !== null) $this->itemsHelp[$idItem] = $item;
 			}
 		}
 		else if ($setWithEmpty) $this->itemsHelp = array();
