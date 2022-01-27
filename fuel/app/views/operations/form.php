@@ -66,14 +66,14 @@ Form::open(array(
 	<div class="col-md-6">
 		<div class="form-floating">
 			<input name="X" id="form_X" value="<?= $operation->getX() ?>"
-				type="number" class="form-control" placeholder="" min="-180" max="180">
+				type="number" class="form-control" placeholder="" min="-180" max="180" step="any">
 			<label for="form_X">Longitude</label>
 		</div>
 	</div>
 	<div class="col-md-6">
 		<div class="form-floating">
 			<input name="Y" id="form_Y" value="<?= $operation->getY() ?>"
-				type="number" class="form-control" placeholder="" min="-90" max="90">
+				type="number" class="form-control" placeholder="" min="-90" max="90" step="any">
 			<label for="form_Y">Latitude</label>
 		</div>
 	</div>
