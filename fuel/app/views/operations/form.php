@@ -38,7 +38,7 @@ Form::open(array(
 	"style" => "background-color: #F5F5F5; padding: 10px;"
 ));
 ?>
-<?php if ($showError) $operation->alertBootstrap("danger"); ?>
+<?php if ($showError) $operation->echoErrors(); ?>
 
 <h3 class="text-center">Opération</h3>
 

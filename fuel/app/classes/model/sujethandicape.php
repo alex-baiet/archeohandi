@@ -46,10 +46,6 @@ class Sujethandicape extends Model {
 	private $urlsImg;
 
 	private bool $empty = false;
-	/** @var bool|unset */
-	private bool $validated;
-	/** @var string|unset */
-	private string $invalidReason;
 	private Validation $validation;
 	#endregion
 

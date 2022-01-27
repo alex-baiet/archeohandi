@@ -45,6 +45,7 @@ class Operation extends Model {
 	/** @var Compte[]|unset */
 	private array $accounts;
 
+	private Validation $validation;
 	/**
 	 * Indique que l'objet est valide pour la base de données.
 	 * undefined signifie que l'objet n'a pas encore été vérifié.
@@ -60,12 +61,13 @@ class Operation extends Model {
 
 	/** Construit l'Operation depuis la liste des données. */
 	public function __construct(array $data) {
+		$this->validation = new Validation();
 		$this->mergeValues($data);
 	}
 
 	/** Ajoute les données de l'array donnée à l'objet. Pratique pour les POST et GET. */
 	public function mergeValues(array $data) {
-		$this->resetValidation();
+		$this->validation->resetValidation();
 		
 		// Suppression des valeurs obsolètes
 		$this->commune = null;
@@ -319,65 +321,54 @@ class Operation extends Model {
 	 * @return true|string Renvoie un string contenant un message d'erreurs en cas de test non passant, ou l'opération en cas de succès.
 	 */
 	public function validate() {
-		// L'objet à déjà été validé : on retourne le résultat précédent.
-		if ($this->validated !== null) {
-			if ($this->validated) return true;
-			else return $this->invalidReason;
-		}
+		return $this->validation->validate(function () {
+			$validation = $this->validation;
 
-		// Tests de validation des données
-		$this->adresse = Helper::secureString($this->adresse);
+			// Tests de validation des données
+			$this->adresse = Helper::secureString($this->adresse);
 
-		if (!Helper::stringIsInt($this->annee)) $this->invalidate("L'année indiquée doit être un nombre.");
-		if (!is_numeric($this->x)) $this->invalidate("La position sur x (longitude) indiquée doit être un nombre.");
-		if (!is_numeric($this->y)) $this->invalidate("La position sur y (latitude) indiquée doit être un nombre.");
-		if ($this->getCommune() === null) $this->invalidate("La commune n'existe pas.");
-		if ($this->getOrganisme() === null) $this->invalidate("L'organisation n'existe pas.");
-		if ($this->getTypeOperation() === null) $this->invalidate("Le type d'opération n'existe pas.");
-		$this->aRevoir = Helper::secureString($this->aRevoir);
+			if (!Helper::stringIsInt($this->annee)) $validation->invalidate("L'année indiquée doit être un nombre.");
+			if (!is_numeric($this->x)) $validation->invalidate("La position sur x (longitude) indiquée doit être un nombre.");
+			if (!is_numeric($this->y)) $validation->invalidate("La position sur y (latitude) indiquée doit être un nombre.");
+			if ($this->getCommune() === null) $validation->invalidate("La commune n'existe pas.");
+			if ($this->getOrganisme() === null) $validation->invalidate("L'organisation n'existe pas.");
+			if ($this->getTypeOperation() === null) $validation->invalidate("Le type d'opération n'existe pas.");
+			$this->aRevoir = Helper::secureString($this->aRevoir);
 
-		$res = Helper::verifAlpha($this->EA, 'alphanum');
-		if ($res === false) $this->invalidate("La valeur \"EA\" contient des caractères interdit.");
-		else $this->EA = $res;
+			$res = Helper::verifAlpha($this->EA, 'alphanum');
+			if ($res === false) $validation->invalidate("La valeur \"EA\" contient des caractères interdit.");
+			else $this->EA = $res;
 
-		$res = Helper::verifAlpha($this->OA, 'alphanum');
-		if ($res === false) $this->invalidate("La valeur \"OA\" contient des caractères interdit.");
-		else $this->OA = $res;
+			$res = Helper::verifAlpha($this->OA, 'alphanum');
+			if ($res === false) $validation->invalidate("La valeur \"OA\" contient des caractères interdit.");
+			else $this->OA = $res;
 
-		$res = Helper::verifAlpha($this->patriarche, 'alphanum');
-		if ($res === false) $this->invalidate("Le patriarche contient des caractères interdit.");
-		else $this->patriarche = $res;
+			$res = Helper::verifAlpha($this->patriarche, 'alphanum');
+			if ($res === false) $validation->invalidate("Le patriarche contient des caractères interdit.");
+			else $this->patriarche = $res;
 
-		$res = Helper::verifAlpha($this->numeroOperation, 'alphanum');
-		if ($res === false) $this->invalidate("Le numéro d'opération contient des caractères interdit.");
-		else $this->numeroOperation = $res;
+			$res = Helper::verifAlpha($this->numeroOperation, 'alphanum');
+			if ($res === false) $validation->invalidate("Le numéro d'opération contient des caractères interdit.");
+			else $this->numeroOperation = $res;
 
-		$res = Helper::verifAlpha($this->arretePrescription, 'alphanum');
-		if ($res === false) $this->invalidate("L'arrete de prescription contient des caractères interdit.");
-		else $this->arretePrescription = $res;
+			$res = Helper::verifAlpha($this->arretePrescription, 'alphanum');
+			if ($res === false) $validation->invalidate("L'arrete de prescription contient des caractères interdit.");
+			else $this->arretePrescription = $res;
 
-		// Correction bibliographie
-		$this->bibliographie = Helper::secureString($this->bibliographie);
+			// Correction bibliographie
+			$this->bibliographie = Helper::secureString($this->bibliographie);
 
-		// Correction des comptes
-		if (Compte::getInstance() === null) $this->invalidate("Vous devez être connecter à un compte pour pouvoir créer une opération.");
-		else {
-			if (!isset($this->accounts)) {
-				$this->getAccounts();
+			// Correction des comptes
+			if (Compte::getInstance() === null) $validation->invalidate("Vous devez être connecter à un compte pour pouvoir créer une opération.");
+			else {
+				if (!isset($this->accounts)) {
+					$this->getAccounts();
+				}
+				$admin = $this->getAccountAdmin();
+				if ($admin === null) $admin = Compte::getInstance();
+				if (isset($this->accounts[$admin->getLogin()])) unset($this->accounts[$admin->getLogin()]);
 			}
-			$admin = $this->getAccountAdmin();
-			if ($admin === null) $admin = Compte::getInstance();
-			if (isset($this->accounts[$admin->getLogin()])) unset($this->accounts[$admin->getLogin()]);
-		}
-
-		// Vérification final
-		if ($this->validated === false) {
-			return $this->invalidReason;
-		}
-
-		// Les données sont conforme et sont validés.
-		$this->validated = true;
-		return true;
+		});
 	}
 
 	/**
@@ -442,30 +433,7 @@ class Operation extends Model {
 	}
 
 	/** Affiche une alert bootstrap seulement si des erreurs existent. */
-	public function alertBootstrap(string $type) {
-		if ($this->validate() !== true) {
-			echo '
-				<div class="alert alert-' . $type . ' alert-dismissible text-center my-2 fade show" role="alert">
-					' . $this->invalidReason . '
-					<button type="button" class="btn-close" data-dismiss="alert" aria-label="Fermer">
-				</div>';
-		}
-	}
-
-	/** Annule la validation de l'objet. */
-	private function resetValidation() {
-		$this->validated = null;
-		$this->invalidReason = null;
-	}
-
-	/** Invalide les données, rendant impossible l'export des données en ligne. */
-	private function invalidate(string $reason) {
-		if ($this->validated !== false) {
-			$this->validated = false;
-			$this->invalidReason = "Les données sont invalides pour les raisons suivantes :<br>\n";
-		}
-		$this->invalidReason .= "- $reason<br>\n";
-	}
+	public function echoErrors() { $this->validation->echoErrors(); }
 	#endregion
 
 	/** Renvoie l'array des données représentant l'objet. */
