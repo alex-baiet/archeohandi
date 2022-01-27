@@ -212,14 +212,10 @@ Form::open(array(
 			<?php $subFurnituresId = $subject->getFurnituresId(); ?>
 			<?php foreach (Mobilier::fetchAll() as $mobilier) : ?>
 				<div class="form-check form-switch">
-					<?php
-					$attr = array("class" => "form-check-input");
-					if (in_array($mobilier->getId(), $subFurnituresId)) {
-						$attr["checked"] = 1;
-					}
-					?>
-					<?= Form::label($mobilier->getNom(), null); ?>
-					<?= Form::checkbox("id_mobiliers[]", $mobilier->getId(), $attr); ?>
+					<label for="form_id_mobiliers_<?= $mobilier->getId() ?>"><?= $mobilier->getNom() ?></label>
+					<input name="id_mobiliers[]" id="form_id_mobiliers_<?= $mobilier->getId() ?>" value="<?= $mobilier->getId() ?>"
+						type="checkbox" class="form-check-input" placeholder="<?= $mobilier->getNom() ?>"
+						<?php if (in_array($mobilier->getId(), $subFurnituresId)) : ?>checked<?php endif; ?>>
 				</div>
 			<?php endforeach; ?>
 			<div id="block_description_autre_mobilier_' . $noLigne . '" class="' . $d_none_descp_autre_mobilier . '">
@@ -228,29 +224,35 @@ Form::open(array(
 			</div>
 		</div>
 
+		<!-- Dépôt -->
 		<div class="col-md-6">
 			<h3>Dépôt</h3>
-			<?php $depot = $subject->getDepot(); ?>
-			<?php if ($depot !== null && $depot->getId() !== null) echo Form::hidden("id_depot", $depot->getId()); ?>
+			<?php
+			$depot = $subject->getDepot();
+			if ($depot !== null && $depot->getId() !== null) echo Form::hidden("id_depot", $depot->getId());
+			?>
+
 			<!-- Numéro de dépôt -->
 			<div class="form-floating my-2">
-				<?= Form::input("num_inventaire", $depot === null ? null : $depot->getNumInventaire(), array("type" => "text", "class" => "form-control", "placeholder" => "")); ?>
-				<?= Form::label("Numéro de dépôt", "num_inventaire"); ?>
+				<input name="num_inventaire" id="form_num_inventaire" value="<?= $depot === null ? null : $depot->getNumInventaire() ?>"
+					type="text" class="form-control" placeholder="Numéro de dépôt" maxlength="256">
+				<label for="form_num_inventaire">Numéro de dépôt</label>
 			</div>
 
 			<!-- Commune du dépôt -->
 			<div class="form-floating my-2">
-				<?= Form::input("depot_commune", $depot !== null && $depot->getCommune() !== null ? $depot->getCommune()->fullName() : null, array("type" => "text", "class" => "form-control", "placeholder" => "", "autocomplete" => "off")); ?>
-				<?= Form::label("Rechercher une commune", "depot_commune"); ?>
+				<?php $communeName = $depot !== null && $depot->getCommune() !== null ? $depot->getCommune()->fullName() : null; ?>
+				<input name="depot_commune" id="form_depot_commune" value="<?= $communeName ?>"
+					type="text" class="form-control" placeholder="Commune" maxlength="256" autocomplete="off">
+				<label for="form_depot_commune">Commune</label>
 			</div>
-			<script>
-				addAutocomplete("form_depot_commune", "commune");
-			</script>
+			<script>addAutocomplete("form_depot_commune", "commune");</script>
 
 			<!-- Adresse du dépôt -->
 			<div class="form-floating my-2">
-				<?= Form::input("depot_adresse", $depot === null ? null : $depot->getAdresse(), array("type" => "text", "class" => "form-control", "placeholder" => "")); ?>
-				<?= Form::label("Adresse du dépôt", "depot_adresse"); ?>
+				<input name="depot_adresse" id="form_depot_adresse" value="<?= $depot === null ? null : $depot->getAdresse() ?>"
+					type="text" class="form-control" placeholder="Adresse du dépôt" maxlength="256">
+				<label for="form_depot_adresse">Adresse du dépôt</label>
 			</div>
 		</div>
 	</div>
