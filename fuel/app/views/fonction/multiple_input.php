@@ -12,6 +12,8 @@ $datas = $datas;
 $label = $label;
 /** @var string|unset */
 if (isset($autocompletion)) $autocompletion = $autocompletion;
+/** @var bool */
+$imageInput = isset($imageInput) ? $imageInput : false;
 
 ?>
 <div class="row my-2">
@@ -23,13 +25,23 @@ if (isset($autocompletion)) $autocompletion = $autocompletion;
 					<div class="form-floating">
 						<input
 							name="<?= $name ?>[]" value="<?= $item ?>" id="form_<?= "{$name}_$i" ?>"
-							type="text" class="form-control" placeholder="" autocomplete="off">
+							type="text" class="form-control" placeholder="" autocomplete="off"
+							<?php if ($imageInput) : ?>
+								onkeyup="changeImgSrc(`form_<?= $name ?>_<?= $i ?>`, `<?= $name ?>_preview_<?= $i; ?>`, this.value);"
+							<?php endif; ?>
+							>
 						<label for="<?= "{$name}_$i" ?>" id="form_<?= $name ?>_label_<?= $i ?>"><?= $label ?></label>
 						<?php if (isset($autocompletion)) : ?>
 							<script>addAutocomplete("form_<?= $name ?>_<?= $i; ?>", "<?= $autocompletion ?>");</script>
 						<?php endif; ?>
 					</div>
 				</div>
+
+				<?php if ($imageInput) : ?>
+					<div class="col-auto" style="padding:0; background-color: white;">
+						<img id="<?= $name ?>_preview_<?= $i; ?>" src="<?= $item ?>" alt="Image indisponible" style="height: 58px;">
+					</div>
+				<?php endif; ?>
 
 				<div class="col-auto">
 					<div class="my-2">
@@ -43,7 +55,15 @@ if (isset($autocompletion)) $autocompletion = $autocompletion;
 
 	<div class="col-md-3">
 		<div class="my-2">
-			<button type="button" class="btn btn-primary me-md-2" onclick="addCopy('<?= $name; ?>');"><i class="bi bi-plus"></i></button>
+			<button type="button" class="btn btn-primary me-md-2"
+			<?php if ($imageInput) : ?>
+				onclick="addCopyImg('<?= $name; ?>');"
+			<?php else : ?>
+				onclick="addCopy('<?= $name; ?>');"
+			<?php endif; ?>
+			>
+				<i class="bi bi-plus"></i>
+			</button>
 		</div>
 	</div>
 </div>

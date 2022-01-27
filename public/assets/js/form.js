@@ -127,7 +127,7 @@ function addCopyImg(name) {
 	let inputCopy = copy.getElementsByTagName("input")[0];
 	inputCopy.onkeyup = function () { changeImgSrc(`${id}_${num}`, `img_preview_${num}`); }
 	let imgCopy = copy.getElementsByTagName("img")[0];
-	imgCopy.id = `img_preview_${num}`;
+	imgCopy.id = `${name}_preview_${num}`;
 	imgCopy.src = "";
 }
 //#endregion

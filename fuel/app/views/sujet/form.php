@@ -3,6 +3,7 @@
 use Fuel\Core\Asset;
 use Fuel\Core\Form;
 use Fuel\Core\FuelException;
+use Fuel\Core\View;
 use Model\Appareil;
 use Model\Chronology;
 use Model\Diagnostic;
@@ -381,38 +382,20 @@ Form::open(array(
 	</div>
 
 	<!-- Listes URL images -->
-	<div class="row my-2">
-		<div class="col-md" id="form_urls_img_parent">
-			<?php
-			$urls = $subject->getUrlsImg();
-			if (empty($urls)) $urls[] = "";
+	<?php
+	$urls = $subject->getUrlsImg();
+	if (empty($urls)) $urls[] = "";
+	?>
 
-			for ($i = 0; $i < count($urls); $i++) :
-				$url = $urls[$i];
-			?>
-				<div class="row" id="form_urls_img_copy_<?= $i; ?>">
-					<div class="col-md">
-						<div class="form-floating">
-							<input type="text" class="form-control" id="form_urls_img_<?= $i ?>" name="urls_img[]"
-								placeholder="" value="<?= $url ?>" onkeyup="changeImgSrc(`form_urls_img_<?= $i ?>`, `img_preview_<?= $i; ?>`, this.value);">
-							<label for="urls_img_<?= $i ?>" id="form_urls_img_label_<?= $i ?>">Lien de l'image</label>
-						</div>
-					</div>
-					<div class="col-auto" style="padding:0; background-color: white;">
-						<img id="img_preview_<?= $i; ?>" src="<?= $url ?>" alt="Image indisponible" style="height: 58px;">
-					</div>
-					<div class="col-auto">
-						<button type="button" class="btn btn-danger btn-remove-copy" onclick="removeCopy('urls_img', <?= $i; ?>);"><i class="bi bi-x"></i></button>
-					</div>
-				</div>
-			<?php endfor; ?>
-		</div>
-
-		<div class="col-md-3">
-			<button type="button" class="btn btn-primary me-md-2 btn-add-copy" onclick="addCopyImg('urls_img');"><i class="bi bi-plus"></i></button>
-		</div>
-	</div>
-
+	<?=
+	View::forge("fonction/multiple_input", array(
+		"name" => "urls_img",
+		"datas" => $urls,
+		"label" => "Lien URL de l'image",
+		"imageInput" => true
+	));
+	?>
+	
 </div>
 
 <!-- Bouton de confirmation/retour -->
