@@ -78,6 +78,7 @@ class Controller_Operations extends Controller_Template {
 		$countSubject = intval(Helper::querySelectSingle("SELECT COUNT(id) AS total FROM sujet_handicape")["total"]);
 
 		// Ajout des valeurs à la view.
+		krsort($operations);
 		$data['operations'] = $operations;
 		$data['all_site'] = $all_site;
 		$data['all_user'] = $all_user;

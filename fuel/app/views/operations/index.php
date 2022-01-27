@@ -41,7 +41,7 @@ $countSubject = $countSubject;
 	
 	<p class="text-muted">
 		Ici vous pouvez retrouvez toutes les informations sur les opérations.<br>
-		<b> <?= count($operations); ?></b> opérations existantes pour un total de <b><?= $countSubject; ?></b> sujets enregistrés.
+		<b><?= count($operations); ?></b> opérations existantes pour un total de <b><?= $countSubject; ?></b> sujets enregistrés.
 	</p>
 
 	<div class="ml-3">
@@ -121,22 +121,22 @@ $countSubject = $countSubject;
 								<td><?= $op->getY() ?></td>
 								<td class="col-auto">
 
-									<a title="Consulter #<?= $op->getId(); ?>" href="/public/operations/view/<?= $op->getId(); ?>">
+									<a title="Consulter #<?= $op->getId(); ?>" href="/public/operations/view/<?= $op->getId() ?>">
 										<?= Asset::img("reply.svg", array("class"=>"icon see", "width" => "30px", "alt" => "Consulter")) ?>
 									</a>
 
 									<?php if (Compte::checkPermission(Compte::PERM_ADMIN, $op->getId())) : ?>
-										<a class="" title="Editer #<?= $op->getId(); ?>" href="/public/operations/edit/<?= $op->getId(); ?>">
+										<a class="" title="Editer #<?= $op->getId(); ?>" href="/public/operations/edit/<?= $op->getId() ?>">
 											<?= Asset::img("pen.svg", array("class"=>"icon edit", "width" => "24px", "alt" => "Éditer")) ?>
 										</a>
 
-										<form action="" method="post" id="form_suppr_<?= $op->getId(); ?>">
+										<form action="" method="post" id="form_suppr_<?= $op->getId() ?>">
 											<button
 													type="button"
 													class="btn"
 													data-bs-toggle="modal"
 													data-bs-target="#validationPopup"
-													onclick="deleteOperation(<?= $op->getId(); ?>)">
+													onclick="deleteOperation(<?= $op->getId() ?>)">
 												<?= Asset::img("trash.svg", array("class"=>"icon del", "width" => "25px", "alt" => "Supprimer")) ?>
 											</button>
 										</form>

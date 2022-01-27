@@ -33,8 +33,8 @@ Asset::js("form.js");
 
 <?=
 Form::open(array(
-	'action' => $action,
-	'method' => 'POST',
+	"action" => $action,
+	"method" => "POST",
 	"style" => "background-color: #F5F5F5; padding: 10px;"
 ));
 ?>
@@ -46,42 +46,46 @@ Form::open(array(
 <div class="row my-2 pt-1">
 	<div class="col-md-6">
 		<div class="form-floating">
-			<?= Form::input("adresse", $operation->getAdresse(), $defaultAttr); ?>
-			<?= Form::label('Adresse', 'adresse'); ?>
+			<input name="adresse" id="form_adresse" value="<?= $operation->getAdresse() ?>"
+				type="text" class="form-control" placeholder="" maxlength="256">
+			<label for="form_adresse">Adresse</label>
 		</div>
 	</div>
 	<div class="col-md-6">
 		<div class="form-floating">
-			<?= Form::input("annee", $operation->getAnnee(), array("type" => "number", "class" => "form-control", "placeholder" => "")); ?>
-			<?= Form::label('Année de l\'opération', 'annee'); ?>
+			<?php
+			$year = $operation->getAnnee() < 1800 ? date("Y") : $operation->getAnnee();
+			?>
+			<input name="annee" id="form_annee" value="<?= $year ?>"
+				type="number" class="form-control" placeholder="" min="1800" max="<?= date("Y") ?>">
+			<label for="form_annee">Année de l'opération</label>
 		</div>
 	</div>
 </div>
 <div class="row my-2">
 	<div class="col-md-6">
 		<div class="form-floating">
-			<?= Form::input("X", $operation->getX(), array("type" => "number", "class" => "form-control", "placeholder" => "", "step" => "any")); ?>
-			<?= Form::label('Position X', 'X'); ?>
+			<input name="X" id="form_X" value="<?= $operation->getX() ?>"
+				type="number" class="form-control" placeholder="" min="-180" max="180">
+			<label for="form_X">Longitude</label>
 		</div>
 	</div>
 	<div class="col-md-6">
 		<div class="form-floating">
-			<?= Form::input("Y", $operation->getY(), array("type" => "number", "class" => "form-control", "placeholder" => "", "step" => "any")); ?>
-			<?= Form::label('Position Y', 'Y'); ?>
+			<input name="Y" id="form_Y" value="<?= $operation->getY() ?>"
+				type="number" class="form-control" placeholder="" min="-90" max="90">
+			<label for="form_Y">Latitude</label>
 		</div>
 	</div>
 </div>
-<?php /*<div class="col-md-12">
-	<?= Form::label('À revoir', 'a_revoir'); ?>
-	<?= Form::textarea("a_revoir", $operation->getARevoir(), array("class" => "form-control")); ?>
-</div>*/ ?>
 
 <div class="row my-4">
 	<div class="col-md-4">
 		<div class="form-floating">
 			<?php $fullName = $operation->getCommune() === null ? "" : $operation->getCommune()->fullName(); ?>
-			<?= Form::input("commune", $fullName, array("type" => "text", "class" => "form-control", "placeholder" => "", "autocomplete" => "off")); ?>
-			<?= Form::label('Commune', 'commune'); ?>
+			<input name="commune" id="form_commune" value="<?= $fullName ?>"
+				type="text" class="form-control" placeholder="" autocomplete="off">
+			<label for="form_commune">Commune</label>
 			<script>addAutocomplete("form_commune", "commune");</script>
 		</div>
 	</div>
@@ -97,34 +101,39 @@ Form::open(array(
 <div class="row my-2">
 	<div class="col-md-4">
 		<div class="form-floating">
-			<?= Form::input("EA", $operation->getEA(), $defaultAttr); ?>
-			<?= Form::label('EA', 'EA'); ?>
+			<input name="EA" id="form_EA" value="<?= $operation->getEA() ?>"
+				type="text" class="form-control" placeholder="" maxlength="256">
+			<label for="form_EA">EA</label>
 		</div>
 	</div>
 	<div class="col-md-4">
 		<div class="form-floating">
-			<?= Form::input("OA", $operation->getOA(), $defaultAttr); ?>
-			<?= Form::label('OA', 'OA'); ?>
+			<input name="OA" id="form_OA" value="<?= $operation->getOA() ?>"
+				type="text" class="form-control" placeholder="" maxlength="256">
+			<label for="form_OA">OA</label>
 		</div>
 	</div>
 	<div class="col-md-4">
 		<div class="form-floating">
-			<?= Form::input("numero_operation", $operation->getNumeroOperation(), $defaultAttr); ?>
-			<?= Form::label('Numéro d\'opération', 'numero_operation'); ?>
+			<input name="numero_operation" id="form_numero_operation" value="<?= $operation->getNumeroOperation() ?>"
+				type="text" class="form-control" placeholder="" maxlength="256">
+			<label for="form_numero_operation">Numéro d'opération</label>
 		</div>
 	</div>
 </div>
 <div class="row my-2">
 	<div class="col-md-6">
 		<div class="form-floating">
-			<?= Form::input("patriarche", $operation->getPatriarche(), $defaultAttr); ?>
-			<?= Form::label('Patriarche', 'patriarche'); ?>
+			<input name="patriarche" id="form_patriarche" value="<?= $operation->getPatriarche() ?>"
+				type="text" class="form-control" placeholder="" maxlength="256">
+			<label for="form_patriarche">Patriarche</label>
 		</div>
 	</div>
 	<div class="col-md-6">
 		<div class="form-floating">
-			<?= Form::input("arrete_prescription", $operation->getArretePrescription(), $defaultAttr); ?>
-			<?= Form::label('Arrêté de prescription', 'arrete_prescription'); ?>
+			<input name="arrete_prescription" id="form_arrete_prescription" value="<?= $operation->getArretePrescription() ?>"
+				type="text" class="form-control" placeholder="" maxlength="256">
+			<label for="form_arrete_prescription">Arrêté de prescription</label>
 		</div>
 	</div>
 </div>
@@ -133,19 +142,15 @@ Form::open(array(
 <div class="row my-2">
 	<div class="col-md-6">
 		<div class="form-floating">
-			<?=
-				Form::input("responsable", $operation->getResponsable(),
-					array("type" => "text", "class" => "form-control", "placeholder" => "", "autocomplete" => "off"));
-			?>
-			<?= Form::label("Responsable de l'opération", "responsable"); ?>
+			<input name="responsable" id="form_responsable" value="<?= $operation->getResponsable() ?>"
+				type="text" class="form-control" placeholder="" maxlength="256" autocomplete="off">
+			<label for="form_responsable">Responsable de l'opération</label>
 		</div>
 	</div>
 </div>
 
 <!-- Anthropologues -->
 <?php
-
-
 $anthropologues = $operation->getAnthropologues();
 if (empty($anthropologues)) $anthropologues[] = "";
 ?>
@@ -160,8 +165,9 @@ if (empty($paleos)) $paleos[] = "";
 
 <!-- Bibliographie -->
 <div class="col-md-12">
-	<?= Form::label('Bibliographie', 'bibliographie'); ?>
-	<?= Form::textarea("bibliographie", $operation->getBibliographie(), array("class" => "form-control")); ?>
+	<label for="form_bibliographie">Bibliographie</label>
+	<textarea name="bibliographie" id="form_bibliographie" value="<?= $operation->getBibliographie() ?>"
+		class="form-control" maxlength="65535"></textarea>
 </div>
 
 <!-- Comptes -->

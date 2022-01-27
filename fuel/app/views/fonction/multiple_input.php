@@ -40,7 +40,7 @@ $imageInput = isset($imageInput) ? $imageInput : false;
 					<div class="form-floating">
 						<input
 							name="<?= $name ?>[]" value="<?= $item ?>" id="form_<?= "{$name}_$i" ?>"
-							type="text" class="form-control" placeholder="" autocomplete="off"
+							type="text" class="form-control" placeholder="" maxlength="256" <?php if (isset($autocompletion)) : ?>autocomplete="off"<?php endif; ?>
 							<?php if ($imageInput) : ?>
 								onkeyup="changeImgSrc(`form_<?= $name ?>_<?= $i ?>`, `<?= $name ?>_preview_<?= $i; ?>`, this.value);"
 							<?php endif; ?>
