@@ -86,7 +86,7 @@ class Operation extends Model {
 
 		if (isset($data["anthropologues"])) {
 			if (is_array($data["anthropologues"])) {
-				$this->anthroArray = $data["anthropologues"];
+				$this->anthroArray = array_filter($data["anthropologues"]);
 				$this->anthropologues = implode(',', $this->anthroArray);
 			} else {
 				$this->anthropologues = $data["anthropologues"];
@@ -94,7 +94,7 @@ class Operation extends Model {
 		}
 		if (isset($data["paleopathologistes"])) {
 			if (is_array($data["paleopathologistes"])) {
-				$this->paleoArray = $data["paleopathologistes"];
+				$this->paleoArray = array_filter($data["paleopathologistes"]);
 				$this->paleopathologistes = implode(',', $this->paleoArray);
 			} else {
 				$this->paleopathologistes = $data["paleopathologistes"];
