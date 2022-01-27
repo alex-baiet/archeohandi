@@ -16,6 +16,21 @@ if (isset($autocompletion)) $autocompletion = $autocompletion;
 $imageInput = isset($imageInput) ? $imageInput : false;
 
 ?>
+
+<script>
+	function zoomPreview(elem) {
+		console.log(elem.src);
+
+		let bigPreview = document.getElementById("<?= $name ?>_big_preview");
+		bigPreview.src = elem.src;
+		bigPreview.style.display = "block";
+	}
+</script>
+
+<?php if ($imageInput) : ?>
+	<img id="<?= $name ?>_big_preview" src="" alt="Image indisponible" style="display: none; height: 400px; width: 100%; object-fit: contain;">;
+<?php endif; ?>
+
 <div class="row my-2">
 	<div class="col-md-9" id="form_<?= $name; ?>_parent">
 		<?php $i=0; foreach ($datas as $item) : ?>
@@ -39,7 +54,9 @@ $imageInput = isset($imageInput) ? $imageInput : false;
 
 				<?php if ($imageInput) : ?>
 					<div class="col-auto" style="padding:0; background-color: white;">
-						<img id="<?= $name ?>_preview_<?= $i; ?>" src="<?= $item ?>" alt="Image indisponible" style="height: 58px;">
+						<img
+							id="<?= $name ?>_preview_<?= $i ?>" src="<?= $item ?>" alt="Image indisponible" style="height: 58px; cursor: pointer;"
+							onclick="zoomPreview(this);">
 					</div>
 				<?php endif; ?>
 
