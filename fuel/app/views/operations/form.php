@@ -166,7 +166,6 @@ if (empty($paleos)) $paleos[] = "";
 
 <!-- Comptes -->
 <h3 class="text-center mt-4">Comptes autorisés</h3>
-<p>Non fonctionnels</p>
 
 <?php
 $accounts = $operation->getAccounts();
