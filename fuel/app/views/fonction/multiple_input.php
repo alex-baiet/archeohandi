@@ -28,7 +28,7 @@ $imageInput = isset($imageInput) ? $imageInput : false;
 </script>
 
 <?php if ($imageInput) : ?>
-	<img id="<?= $name ?>_big_preview" src="" alt="Image indisponible" style="display: none; height: 400px; width: 100%; object-fit: contain;">;
+	<img id="<?= $name ?>_big_preview" src="" alt="Image indisponible" style="display: none; height: 400px; width: 100%; object-fit: contain;">
 <?php endif; ?>
 
 <div class="row my-2">

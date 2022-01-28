@@ -432,7 +432,7 @@ Form::open(array(
 				<p>
 					Pour ajouter une image de Nakala au sujet, allez d'abord sur l'affichage d'une image directement sur Nakala,
 					puis copiez l'un des deux champs comme indiqué dans l'image suivante :<br>
-					<?= Asset::img("help/demo_url.png", array("style" => "width: 100%;")); ?><br>
+					<?= Asset::img("help/demo_url.png", array("style" => "width: 100%;")) ?><br>
 					<br>
 					Collez le champ dans la zone, et si une prévisualisation de l'image s'affiche,
 					c'est que votre image a bien été ajoutée au sujet !<br>
