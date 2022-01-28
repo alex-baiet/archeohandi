@@ -369,7 +369,7 @@ Form::open(array(
 	<!-- Commentaire du diagnostic -->
 	<label for="comment_diagnostic">Commentaire du diagnostic</label>
 	<div class="input-group">
-		<textarea class="form-control" name="comment_diagnostic" rows="2"><?= $subject->getCommentDiagnosis(); ?></textarea>
+		<textarea class="form-control" name="comment_diagnostic" rows="2" maxlength="65535"><?= $subject->getCommentDiagnosis(); ?></textarea>
 	</div>
 
 	<h3>Iconographie</h3>
