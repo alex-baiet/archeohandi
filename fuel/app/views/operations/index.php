@@ -40,7 +40,7 @@ $countSubject = $countSubject;
 	</h1>
 	
 	<p class="text-muted">
-		Ici vous pouvez retrouvez toutes les informations sur les opérations.<br>
+		Ici vous pouvez retrouver toutes les informations sur les opérations.<br>
 		<b><?= count($operations); ?></b> opérations existantes pour un total de <b><?= $countSubject; ?></b> sujets enregistrés.
 	</p>
 

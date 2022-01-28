@@ -40,6 +40,11 @@ class Controller_Compte extends Controller_Template {
 			}
 			else $lastName = strtoupper($lastName);
 
+			if (Compte::emailExist($email)) {
+				$error = true;
+				Messagehandler::prepareAlert("Un compte avec le mail donné existe déjà.", "danger");
+			}
+
 			if (!$error) {
 				// Les données sont valides
 				$result = Controller_Compte::sendMail(
