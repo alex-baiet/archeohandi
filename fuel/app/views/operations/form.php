@@ -166,8 +166,8 @@ if (empty($paleos)) $paleos[] = "";
 <!-- Bibliographie -->
 <div class="col-md-12">
 	<label for="form_bibliographie">Bibliographie</label>
-	<textarea name="bibliographie" id="form_bibliographie" value="<?= $operation->getBibliographie() ?>"
-		class="form-control" maxlength="65535"></textarea>
+	<textarea name="bibliographie" id="form_bibliographie"
+		class="form-control" maxlength="65535"><?= $operation->getBibliographie() ?></textarea>
 </div>
 
 <!-- Comptes -->
