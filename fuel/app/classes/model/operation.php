@@ -189,8 +189,7 @@ class Operation extends Model {
 	/** Créer un nom pour l'opération */
 	public function getNomOp(): string {
 		return ($this->getCommune() !== null ? $this->getCommune()->getNom() : "")
-			.(!empty($this->adresse) ? ", {$this->adresse}" : "")
-			.", {$this->annee}";
+			.(!empty($this->adresse) ? ", {$this->adresse}" : "");
 	}
 
 	public function getCommune(): ?Commune {

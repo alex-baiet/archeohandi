@@ -101,7 +101,6 @@ $countSubject = $countSubject;
 					<thead>
 						<tr class="text-center">
 							<!-- <th scope="col">#</th> -->
-							<th scope="col">Identifiant</th>
 							<th scope="col">Utilisateur de la saisie</th>
 							<th scope="col">Nom</th>
 							<th scope="col">Année</th>
@@ -113,8 +112,7 @@ $countSubject = $countSubject;
 					<tbody>
 						<?php foreach ($operations as $op) :  ?>
 							<tr class="text-center">
-								<td><?= $op->getId() ?></td>
-								<td><?= $op->getIdUser() ?></td>
+								<td><?= $op->getAccountAdmin() !== null ? $op->getAccountAdmin()->getLogin() : null ?></td>
 								<td><?= $op->getNomOp() ?></td>
 								<td><?= $op->getAnnee() ?></td>
 								<td><?= $op->getX() ?></td>
