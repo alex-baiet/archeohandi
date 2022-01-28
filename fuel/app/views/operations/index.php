@@ -104,8 +104,6 @@ $countSubject = $countSubject;
 							<th scope="col">Utilisateur de la saisie</th>
 							<th scope="col">Nom</th>
 							<th scope="col">Année</th>
-							<th scope="col">Position X</th>
-							<th scope="col">Position Y</th>
 							<th scope="col">Actions</th>
 						</tr>
 					</thead>
@@ -115,8 +113,6 @@ $countSubject = $countSubject;
 								<td><?= $op->getAccountAdmin() !== null ? $op->getAccountAdmin()->getLogin() : null ?></td>
 								<td><?= $op->getNomOp() ?></td>
 								<td><?= $op->getAnnee() ?></td>
-								<td><?= $op->getX() ?></td>
-								<td><?= $op->getY() ?></td>
 								<td class="col-auto">
 
 									<a title="Consulter #<?= $op->getId(); ?>" href="/public/operations/view/<?= $op->getId() ?>">
