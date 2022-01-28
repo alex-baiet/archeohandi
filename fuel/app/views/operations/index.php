@@ -106,7 +106,7 @@ $countSubject = $countSubject;
 							<th scope="col">Année</th>
 							<th scope="col">Position X</th>
 							<th scope="col">Position Y</th>
-							<th scope="col">Options</th>
+							<th scope="col">Actions</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -120,23 +120,26 @@ $countSubject = $countSubject;
 								<td class="col-auto">
 
 									<a title="Consulter #<?= $op->getId(); ?>" href="/public/operations/view/<?= $op->getId() ?>">
-										<?= Asset::img("reply.svg", array("class"=>"icon see", "width" => "30px", "alt" => "Consulter")) ?>
+										Consulter
+										<?= ""//Asset::img("reply.svg", array("class"=>"icon see", "width" => "30px", "alt" => "Consulter")) ?>
 									</a>
 
 									<?php if (Compte::checkPermission(Compte::PERM_ADMIN, $op->getId())) : ?>
+										<br>
 										<a class="" title="Editer #<?= $op->getId(); ?>" href="/public/operations/edit/<?= $op->getId() ?>">
-											<?= Asset::img("pen.svg", array("class"=>"icon edit", "width" => "24px", "alt" => "Éditer")) ?>
+											Editer
+											<?= ""//Asset::img("pen.svg", array("class"=>"icon edit", "width" => "24px", "alt" => "Éditer")) ?>
 										</a>
 
 										<form action="" method="post" id="form_suppr_<?= $op->getId() ?>">
-											<button
-													type="button"
-													class="btn"
+											<a
+													href=""
 													data-bs-toggle="modal"
 													data-bs-target="#validationPopup"
 													onclick="deleteOperation(<?= $op->getId() ?>)">
-												<?= Asset::img("trash.svg", array("class"=>"icon del", "width" => "25px", "alt" => "Supprimer")) ?>
-											</button>
+												Supprimer
+												<?= ""//Asset::img("trash.svg", array("class"=>"icon del", "width" => "25px", "alt" => "Supprimer")) ?>
+											</a>
 										</form>
 									<?php endif; ?>
 

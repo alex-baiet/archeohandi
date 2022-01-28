@@ -129,7 +129,7 @@ $sujets = $operation->getSubjects();
 								<th scope="col">Milieu de vie</th>
 								<th scope="col">Type de dépôt</th>
 								<th scope="col">Type de sépulture</th>
-								<th scope="col">Options</th>
+								<th scope="col">Actions</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -151,23 +151,23 @@ $sujets = $operation->getSubjects();
 									<td class="col-auto">
 
 										<a title="Consulter #<?= $sujet->getId(); ?>" href="/public/sujet/view/<?= $sujet->getId(); ?>">
-											<?= Asset::img("reply.svg", array("class"=>"icon see", "width" => "30px", "alt" => "Consulter")) ?>
+											Consulter
+											<?= ""//Asset::img("reply.svg", array("class"=>"icon see", "width" => "30px", "alt" => "Consulter")) ?>
 										</a>
 										
 										<?php if (Compte::checkPermission(Compte::PERM_WRITE, $operation->getId())) : ?>
+											<br>
 											<a title="Editer #<?= $sujet->getId(); ?>" href="/public/sujet/edit/<?= $sujet->getId(); ?>">
-												<?= Asset::img("pen.svg", array("class"=>"icon edit", "width" => "24px", "alt" => "Éditer")) ?>
+												Editer
+												<?= ""//Asset::img("pen.svg", array("class"=>"icon edit", "width" => "24px", "alt" => "Éditer")) ?>
 											</a>
 											
 											<?= Form::open(array("method" => "POST")); ?>
-												<button
-													type="button"
-													class="btn"
-													data-bs-toggle="modal"
-													data-bs-target="#validationPopup"
-													onclick="deleteSubject(<?= $sujet->getId(); ?>)">
-													<?= Asset::img("trash.svg", array("class"=>"icon del", "width" => "25px", "alt" => "Supprimer")) ?>
-												</button>
+												<a
+													href="" data-bs-toggle="modal" data-bs-target="#validationPopup" onclick="deleteSubject(<?= $sujet->getId(); ?>)">
+													Supprimer
+													<?= ""//Asset::img("trash.svg", array("class"=>"icon del", "width" => "25px", "alt" => "Supprimer")) ?>
+												</a>
 											<?= Form::close(); ?>
 										<?php endif; ?>
 										
