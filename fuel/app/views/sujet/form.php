@@ -110,7 +110,7 @@ Form::open(array(
 			<div class="col-md-6">
 				<div class="form-floating">
 					<input name="dating_min" id="form_dating_min" value="<?= $subject->getDatingMin(); ?>"
-						type="number" class="form-control" placeholder="Datation minimale" min="-7000000" max="<?= date("Y") ?>" step="1">
+						type="number" class="form-control" placeholder="Datation minimale" min="-20000" max="1945" step="1">
 					<label for="form_dating_min">Datation minimale</label>
 				</div>
 			</div>
@@ -119,7 +119,7 @@ Form::open(array(
 			<div class="col-md-6">
 				<div class="form-floating">
 					<input name="dating_max" id="form_dating_max" value="<?= $subject->getDatingMax(); ?>"
-						type="number" class="form-control" placeholder="Datation maximal" min="-7000000" max="<?= date("Y") ?>" step="1">
+						type="number" class="form-control" placeholder="Datation maximal" min="-20000" max="1945" step="1">
 					<label for="form_dating_max">Datation maximale</label>
 				</div>
 			</div>
