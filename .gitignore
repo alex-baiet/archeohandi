@@ -37,4 +37,5 @@ archeohandi.code-workspace
 
 # test files
 /fuel/app/classes/controller/test.php
+/fuel/app/classes/model/test/
 fuel/app/views/test/
