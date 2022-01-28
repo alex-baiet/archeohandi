@@ -212,9 +212,9 @@ Form::open(array(
 			<?php $subFurnituresId = $subject->getFurnituresId(); ?>
 			<?php foreach (Mobilier::fetchAll() as $mobilier) : ?>
 				<div class="form-check form-switch">
-					<label for="form_id_mobiliers_<?= $mobilier->getId() ?>"><?= $mobilier->getNom() ?></label>
+					<label for="form_id_mobiliers_<?= $mobilier->getId() ?>" class="form-check-label"><?= $mobilier->getNom() ?></label>
 					<input name="id_mobiliers[]" id="form_id_mobiliers_<?= $mobilier->getId() ?>" value="<?= $mobilier->getId() ?>"
-						type="checkbox" class="form-check-input" placeholder="<?= $mobilier->getNom() ?>"
+						type="checkbox" class="form-check-input"
 						<?php if (in_array($mobilier->getId(), $subFurnituresId)) : ?>checked<?php endif; ?>>
 				</div>
 			<?php endforeach; ?>
@@ -263,16 +263,6 @@ Form::open(array(
 <div class="row">
 	<div class="col-md-6">
 		<h3>Atteinte invalidante</h3>
-		<style>
-			.th-title-rotate {
-				padding: 0px;
-				margin: 0px;
-				width: 24px;
-				height: 80px;
-				transform: rotate(90deg);
-				transform-origin: 10px 12px;
-			}
-		</style>
 
 		<table>
 			<!-- Tous les titres -->
@@ -292,46 +282,55 @@ Form::open(array(
 			</thead>
 			<tbody>
 				<?php foreach (Diagnostic::fetchAll() as $diagnostic) : ?>
+					<?php
+					$hasDiagnosis = $subject->hasDiagnosis($diagnostic->getId());
+					?>
 					<tr>
 						<!-- Titre des diagnostics -->
 						<td>
 							<div class="form-check form-switch">
-								<?php
-								$attr = array("class" => "form-check-input");
-								$hasDiagnosis = $subject->hasDiagnosis($diagnostic->getId());
-								if ($hasDiagnosis) $attr["checked"] = 1;
-								?>
-								<?= Form::label($diagnostic->getNom(), "diagnostic_{$diagnostic->getId()}", array("class" => "form-check-label")); ?>
-								<?= Form::checkbox("diagnostic_{$diagnostic->getId()}", null, null, $attr); ?>
+								<label for="form_diagnostic_<?= $diagnostic->getId() ?>" class="form-check-label"><?= $diagnostic->getNom() ?></label>
+								<input name="diagnostic_<?= $diagnostic->getId() ?>" id="form_diagnostic_<?= $diagnostic->getId() ?>"
+									type="checkbox" class="form-check-input"
+									<?php if ($hasDiagnosis) : ?>checked<?php endif; ?>>
+
 							</div>
 						</td>
 						<!-- Checkbox des zones atteintes -->
 						<?php foreach ($localisations as $locali) : ?>
 							<td>
 								<?php
-								$attr = array("class" => "form-check-input");
+								$classes = "form-check-input";
+								$hidden = false;
+								$disabled = false;
+								$checked = false;
 								// Ajout des classes pour que la fonction js sache quoi faire sur le checkbox
-								if ($diagnostic->isSpotMandatory($locali->getId())) $attr["class"] .= " always-disabled auto-check";
+								if ($diagnostic->isSpotMandatory($locali->getId())) $classes .= " always-disabled auto-check";
 								if (!$diagnostic->isLocated($locali->getId())) {
-									$attr["class"] .= " always-disabled";
-									$attr["hidden"] = "hidden";
+									$classes .= " always-disabled";
+									$hidden = true;
 								}
 
 								// Maj affichage du checkbox de la localisation si le diagnostic est coché par défaut
 								if ($hasDiagnosis) {
 									$subjectDia = $subject->getDiagnosis($diagnostic->getId());
-									if ($subjectDia->isLocatedFromId($locali->getId())) $attr["checked"] = 1;
+									if ($subjectDia->isLocatedFromId($locali->getId())) $checked = true;
 									if (
 										!$diagnostic->isLocated($locali->getId())
 										|| $diagnostic->isSpotMandatory($locali->getId())
 									) {
-										$attr["disabled"] = "disabled";
+										$disabled = true;
 									}
 								} else {
-									$attr["disabled"] = "disabled";
+										$disabled = true;
 								}
 								?>
-								<?= Form::checkbox("diagnostics[{$diagnostic->getId()}][]", $locali->getId(), null, $attr); ?>
+								<input name="diagnostics[<?= $diagnostic->getId() ?>][]" id="form_diagnostic_<?= $diagnostic->getId() ?>" value="<?= $locali->getId() ?>"
+									type="checkbox" class="form-check-input <?= $classes ?>"
+									<?= $hidden ? "hidden" : null ?>
+									<?= $disabled ? "disabled" : null ?>
+									<?= $checked ? "checked" : null ?>
+								>
 							</td>
 						<?php endforeach; ?>
 						<script>
@@ -348,12 +347,10 @@ Form::open(array(
 		<h3>Appareils compensatoire</h3>
 		<?php foreach (Appareil::fetchAll() as $item) : ?>
 			<div class="form-check form-switch">
-				<?php
-				$attr = array("class" => "form-check-input");
-				if ($subject->hasItemHelp($item->getId())) $attr["checked"] = 1;
-				?>
-				<?= Form::label($item->getName(), null, array("class" => "form-check-label")); ?>
-				<?= Form::checkbox("appareils[]", $item->getId(), null, $attr); ?>
+				<label for="form_appareils_<?= $item->getId() ?>" class="form-check-label"><?= $item->getName() ?></label>
+				<input name="appareils[]" id="form_appareils_<?= $item->getId() ?>" value="<?= $item->getId() ?>"
+					type="checkbox" class="form-check-input"
+					<?php if ($subject->hasItemHelp($item->getId())) : ?>checked<?php endif; ?>>
 			</div>
 		<?php endforeach; ?>
 
@@ -361,12 +358,10 @@ Form::open(array(
 		<h3 style="margin-top: 70px;">Pathologies</h3>
 		<?php foreach (Pathology::fetchAll() as $pathology) : ?>
 			<div class="form-check form-switch">
-				<?php
-				$attr = array("class" => "form-check-input");
-				if ($subject->hasPathology($pathology->getId())) $attr["checked"] = 1;
-				?>
-				<?= Form::label($pathology->getName(), null, array("class" => "form-check-label")); ?>
-				<?= Form::checkbox("pathologies[]", $pathology->getId(), null, $attr); ?>
+				<label for="form_pathologies_<?= $pathology->getId() ?>" class="form-check-label"><?= $pathology->getName() ?></label>
+				<input name="pathologies[]" id="form_pathologies_<?= $pathology->getId() ?>" value="<?= $pathology->getId() ?>"
+					type="checkbox" class="form-check-input"
+					<?php if ($subject->hasPathology($pathology->getId())) : ?>checked<?php endif; ?>>			
 			</div>
 		<?php endforeach; ?>
 	</div>
