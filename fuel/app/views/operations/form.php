@@ -54,7 +54,8 @@ Form::open(array(
 	<div class="col-md-6">
 		<div class="form-floating">
 			<?php
-			$year = $operation->getAnnee() < 1800 ? date("Y") : $operation->getAnnee();
+			$opYear = $operation->getAnnee();
+			$year = $opYear < 1800 || $opYear === null ? null : $operation->getAnnee();
 			?>
 			<input name="annee" id="form_annee" value="<?= $year ?>"
 				type="number" class="form-control" placeholder="Année de l'opération" min="1800" max="<?= date("Y") ?>">

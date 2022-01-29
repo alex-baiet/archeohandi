@@ -88,7 +88,7 @@ class Archeo {
 	 * @param array $key Liste des noms possible de la valeur dans $data.
 	 * @param array $data Contient toutes les données.
 	 */
-	public static function mergeValue(&$value, array &$data, $key, $type = "string") {
+	public static function mergeValue(&$value, array &$data, $key, $type = "string", $nullable = false) {
 		if (!is_array($key)) $key = array($key);
 		foreach ($key as $k) {
 			if (isset($data[$k])) {
@@ -97,7 +97,10 @@ class Archeo {
 						$value = $data[$k];
 						break;
 					case 'int':
-						$value = intval($data[$k]);
+						// Tentative d'assignation d'un null
+						if ($nullable && ($data[$k] === "" || $data[$k] === null)) $value = null;
+						// Assignation d'une vrai valeur
+						else $value = intval($data[$k]);
 						break;				
 					default:
 						throw new FuelException("Le type \"$type\" n'est pas un type valide.");

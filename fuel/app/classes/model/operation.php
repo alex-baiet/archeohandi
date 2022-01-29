@@ -11,7 +11,7 @@ class Operation extends Model {
 	private int $id = -1;
 	private string $idUser = "";
 	private string $aRevoir = "";
-	private int $annee = 0;
+	private ?int $annee = null;
 	private ?int $idCommune = null;
 	private string $adresse = "";
 	private float $x = 0.0;
@@ -69,7 +69,7 @@ class Operation extends Model {
 		Archeo::mergeValue($this->id, $data, "id");
 		Archeo::mergeValue($this->idUser, $data, "id_user");
 		Archeo::mergeValue($this->aRevoir, $data, "a_revoir");
-		Archeo::mergeValue($this->annee, $data, "annee", "int");
+		Archeo::mergeValue($this->annee, $data, "annee", "int", true);
 		Archeo::mergeValue($this->idCommune, $data, "id_commune", "int");
 		Archeo::mergeValue($this->adresse, $data, "adresse");
 		Archeo::mergeValue($this->x, $data, "X");
@@ -312,7 +312,7 @@ class Operation extends Model {
 			// Tests de validation des données
 			$this->adresse = Helper::secureString($this->adresse);
 
-			if (!Helper::stringIsInt($this->annee)) $validation->invalidate("L'année indiquée doit être un nombre.");
+			if ($this->annee !== null && !Helper::stringIsInt($this->annee)) $validation->invalidate("L'année indiquée doit être un nombre.");
 			if (!is_numeric($this->x)) $validation->invalidate("La position sur x (longitude) indiquée doit être un nombre.");
 			if (!is_numeric($this->y)) $validation->invalidate("La position sur y (latitude) indiquée doit être un nombre.");
 			if ($this->getCommune() === null) $validation->invalidate("La commune n'existe pas.");
