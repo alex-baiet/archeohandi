@@ -2,7 +2,7 @@
 
 
 use Fuel\Core\View;
-use Model\Sujethandicape;
+use Model\Db\Sujethandicape;
 
 /** @var Sujethandicape */
 $subject = $subject;

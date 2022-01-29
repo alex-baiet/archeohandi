@@ -1,8 +1,9 @@
 <?php
 
-namespace Model;
+namespace Model\Db;
 
 use Fuel\Core\Model;
+use Model\Helper;
 
 /** Représentation d'un mobilier dans la base de données. */
 class Mobilier extends Model {

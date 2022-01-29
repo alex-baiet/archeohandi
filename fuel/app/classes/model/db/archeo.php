@@ -1,10 +1,11 @@
 <?php
 
-namespace Model;
+namespace Model\Db;
 
 use Closure;
 use Fuel\Core\Form;
 use Fuel\Core\FuelException;
+use Model\Helper;
 
 /** Contient des fonctions facilitant la gestion des modèles de la bases de données. */
 class Archeo {

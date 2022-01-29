@@ -1,10 +1,13 @@
 <?php
 
-namespace Model;
+namespace Model\Db;
 
 use Fuel\Core\Cookie;
 use Fuel\Core\DB;
 use Fuel\Core\Response;
+use Model\Helper;
+use Model\Messagehandler;
+use Model\Redirect;
 
 class Compte {
 	public const PERM_ADMIN = "admin";

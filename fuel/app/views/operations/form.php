@@ -3,10 +3,10 @@
 use Fuel\Core\Asset;
 use Fuel\Core\Form;
 use Fuel\Core\View;
-use Model\Compte;
-use Model\Operation;
-use Model\Organisme;
-use Model\Typeoperation;
+use Model\Db\Compte;
+use Model\Db\Operation;
+use Model\Db\Organisme;
+use Model\Db\Typeoperation;
 
 /** @var string Page de destination lors de la validation du formulaire. */
 $action = $action;

@@ -1,9 +1,9 @@
 <?php
 
-namespace Model;
+namespace Model\Db;
 
-use Fuel\Core\FuelException;
 use Fuel\Core\Model;
+use Model\Helper;
 
 /** Représente un diagnostic pour un Sujethandicape spécifique. */
 class Subjectdiagnosis extends Model {

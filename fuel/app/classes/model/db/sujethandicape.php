@@ -1,10 +1,12 @@
 <?php
 
-namespace Model;
+namespace Model\Db;
 
 use Closure;
 use Fuel\Core\DB;
 use Fuel\Core\Model;
+use Model\Helper;
+use Model\Validation;
 
 /** Représentation d'une opération dans la base de données. */
 class Sujethandicape extends Model {

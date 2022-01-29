@@ -1,9 +1,12 @@
 <?php
 
-namespace Model;
+namespace Model\Db;
 
 use Fuel\Core\DB;
 use Fuel\Core\Model;
+use Model\Helper;
+use Model\Messagehandler;
+use Model\Validation;
 
 /** Représentation d'une opération dans la base de données. */
 class Operation extends Model {

@@ -1,7 +1,7 @@
 <?php
 
 use Fuel\Core\View;
-use Model\Operation;
+use Model\Db\Operation;
 
 /** @var Operation */
 $operation = $operation;

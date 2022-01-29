@@ -1,8 +1,9 @@
 <?php
 
-namespace Model;
+namespace Model\Db;
 
 use Fuel\Core\Model;
+use Model\Helper;
 
 /** Représente une partie du corps. */
 class Localisation extends Model {

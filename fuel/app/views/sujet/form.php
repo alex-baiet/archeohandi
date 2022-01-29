@@ -4,17 +4,17 @@ use Fuel\Core\Asset;
 use Fuel\Core\Form;
 use Fuel\Core\FuelException;
 use Fuel\Core\View;
-use Model\Appareil;
-use Model\Chronology;
-use Model\Diagnostic;
+use Model\Db\Appareil;
+use Model\Db\Chronology;
+use Model\Db\Diagnostic;
+use Model\Db\Localisation;
+use Model\Db\Mobilier;
+use Model\Db\Pathology;
+use Model\Db\Sex;
+use Model\Db\Sujethandicape;
+use Model\Db\Typedepot;
+use Model\Db\Typesepulture;
 use Model\Helper;
-use Model\Localisation;
-use Model\Mobilier;
-use Model\Pathology;
-use Model\Sex;
-use Model\Sujethandicape;
-use Model\Typedepot;
-use Model\Typesepulture;
 
 if (!isset($subject) && !isset($idOperation)) {
 	throw new FuelException("Pour générer le formulaire, il est nécessaire de connaître au moins soit l'id de l'opération parent, soit le sujet handicapé.");

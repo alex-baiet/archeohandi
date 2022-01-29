@@ -4,7 +4,7 @@ use Fuel\Core\Controller_Template;
 use Fuel\Core\DB;
 use Fuel\Core\Response;
 use Fuel\Core\View;
-use Model\Compte;
+use Model\Db\Compte;
 use Model\Helper;
 use Model\Messagehandler;
 use Model\Redirect;

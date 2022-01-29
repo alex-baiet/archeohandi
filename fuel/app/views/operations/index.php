@@ -3,8 +3,8 @@
 use Fuel\Core\Asset;
 use Fuel\Core\Form;
 use Fuel\Core\View;
-use Model\Compte;
-use Model\Operation;
+use Model\Db\Compte;
+use Model\Db\Operation;
 
 /** @var Operation[] */
 $operations = $operations;

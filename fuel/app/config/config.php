@@ -309,12 +309,12 @@ return array(
 			'Fuel\\Core\\ViewModel',
 			'Closure',
 			// A partir d'ici ce sont les classes personnelles
-			'Model\\Operation',
-			'Model\\Sujethandicape',
-			'Model\\Commune',
-			'Model\\Personne',
-			'Model\\Groupesujet',
-			'Model\\Compte'
+			'Model\\Db\\Operation',
+			'Model\\Db\\Sujethandicape',
+			'Model\\Db\\Commune',
+			'Model\\Db\\Personne',
+			'Model\\Db\\Groupesujet',
+			'Model\\Db\\Compte'
 		),
 	),
 

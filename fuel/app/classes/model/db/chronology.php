@@ -1,8 +1,9 @@
 <?php
 
-namespace Model;
+namespace Model\Db;
 
 use Fuel\Core\Model;
+use Model\Helper;
 
 /** Représentation d'une chronologie dans la base de données. */
 class Chronology extends Model {

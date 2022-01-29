@@ -1,10 +1,8 @@
 <?php
 
 use Fuel\Core\Controller_Template;
-use Fuel\Core\DB;
-use Fuel\Core\Input;
 use Fuel\Core\View;
-use Model\Groupesujet;
+use Model\Db\Groupesujet;
 
 class Controller_Liste extends Controller_Template {
 	//L'action groupes sert pour la page groupe qui affiche les différents groupe de sujet

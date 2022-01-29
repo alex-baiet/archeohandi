@@ -1,12 +1,13 @@
 <?php
 
-namespace Model;
+namespace Model\Db;
 
 use Fuel\Core\Form;
 use Fuel\Core\Model;
+use Model\Helper;
 
-/** Représentation d'un type d'opération dans la base de données. */
-class Typeoperation extends Model {
+/** Représentation d'un organisme dans la base de données. */
+class Organisme extends Model {
 	private $id;
 	private $nom;
 
@@ -19,40 +20,40 @@ class Typeoperation extends Model {
 	}
 
 	/**
-	 * Récupère le type d'opération correspondant à l'id.
+	 * Récupère l'organisme correspondant à l'id.
 	 * 
-	 * @param int $id Identifiant du type de l'opération.
-	 * @return Typeoperation|null
+	 * @param int $id Identifiant de l'organisme.
+	 * @return Organisme|null
 	 */
 	public static function fetchSingle(int $id) {
 		if (!is_numeric($id)) return null;
-		$res = Helper::querySelectSingle("SELECT * FROM type_operation WHERE id=$id;");
+		$res = Helper::querySelectSingle("SELECT * FROM organisme WHERE id=$id;");
 		if ($res === null) return null;
 
-		$obj = new Typeoperation($res);
+		$obj = new Organisme($res);
 		return $obj;
 	}
 
 	/**
-	 * Créer un <select> à partir de tous les types d'opération.
+	 * Créer un <select> à partir de tous les organismes.
 	 * 
 	 * @param string $field Valeur du "name" du select.
 	 * @param mixed $idSelected Identifiant de la valeur sélectionnée.
 	 */
 	public static function generateSelect(string $field = "organisme", $idSelected = ""): string {
-		// Récupération de tous les type d'opérations
-		/** @var Typeoperation[] */
-		$types = array();
-		$results = Helper::querySelect("SELECT * FROM type_operation;");
+		// Récupération de tous les organismes
+		/** @var Organisme[] */
+		$organismes = array();
+		$results = Helper::querySelect("SELECT * FROM organisme;");
 		foreach ($results as $result) {
-			$types[] = new Typeoperation($result);
+			$organismes[] = new Organisme($result);
 		}
 		
 		// Création des options
 		$options = array();
 		$options[""] = "Sélectionner";
-		foreach ($types as $typeOp) {
-			$options[$typeOp->getId()] = $typeOp->getNom();
+		foreach ($organismes as $organisme) {
+			$options[$organisme->getId()] = $organisme->getNom();
 		}
 		
 		// Création du code HTML
@@ -63,11 +64,11 @@ class Typeoperation extends Model {
 			$options,
 			array("class" => "form-select")
 		);
-		$html .= Form::label("Type d'opération", $field);
+		$html .= Form::label('Organisme', $field);
 		$html .= '</div>';
 		return $html;
 	}
-	
+
 	public function getId() { return $this->id; }
 	public function getNom() { return $this->nom; }
 }

@@ -1,9 +1,9 @@
 <?php
 
-namespace Model;
+namespace Model\Db;
 
 use Fuel\Core\Model;
-use InvalidArgumentException;
+use Model\Helper;
 
 class Commune extends Model {
 	private $id;

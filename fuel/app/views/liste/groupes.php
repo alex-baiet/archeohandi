@@ -2,10 +2,9 @@
 
 use Fuel\Core\Asset;
 use Fuel\Core\Form;
-use Model\Archeo;
-use Model\Chronology;
-use Model\Groupesujet;
-use Model\Operation;
+use Model\Db\Archeo;
+use Model\Db\Chronology;
+use Model\Db\Operation;
 
 /** @var Groupesujet[] */
 $groups = $groups;

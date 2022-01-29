@@ -1,9 +1,10 @@
 <?php
 
-namespace Model;
+namespace Model\Db;
 
 use Fuel\Core\DB;
 use Fuel\Core\Model;
+use Model\Validation;
 
 /** Représentation d'une opération dans la base de données. */
 class Groupesujet extends Model {

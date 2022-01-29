@@ -1,8 +1,9 @@
 <?php
 
-namespace Model;
+namespace Model\Db;
 
 use Fuel\Core\Model;
+use Model\Helper;
 
 /** Représente un appareil compensatoire pour un sujet handicapé. */
 class Appareil extends Model {

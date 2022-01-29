@@ -1,7 +1,7 @@
 <?php
 
+use Model\Db\Sujethandicape;
 use Model\Nakalaimg;
-use Model\Sujethandicape;
 
 /** @var Sujethandicape */
 $subject = $subject;

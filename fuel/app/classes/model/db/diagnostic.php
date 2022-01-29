@@ -1,8 +1,9 @@
 <?php
 
-namespace Model;
+namespace Model\Db;
 
 use Fuel\Core\Model;
+use Model\Helper;
 
 class Diagnostic extends Model {
 	private int $id;

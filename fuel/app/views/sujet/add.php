@@ -2,8 +2,8 @@
 
 use Fuel\Core\Asset;
 use Fuel\Core\View;
-use Model\Operation;
-use Model\Sujethandicape;
+use Model\Db\Operation;
+use Model\Db\Sujethandicape;
 
 /** @var int */
 $idOperation = $idOperation;

@@ -3,11 +3,10 @@
 use Fuel\Core\Asset;
 use Fuel\Core\Form;
 use Fuel\Core\View;
-use Model\Compte;
-use Model\Helper;
-use Model\Operation;
-use Model\Typedepot;
-use Model\Typesepulture;
+use Model\Db\Compte;
+use Model\Db\Operation;
+use Model\Db\Typedepot;
+use Model\Db\Typesepulture;
 
 /** @var Operation Operation actuelle. */
 $operation = $operation;

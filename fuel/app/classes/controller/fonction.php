@@ -5,9 +5,8 @@ use Fuel\Core\DB;
 use Fuel\Core\Input;
 use Fuel\Core\Response;
 use Fuel\Core\View;
-use Model\Commune;
-use Model\Compte;
-use Model\Helper;
+use Model\Db\Commune;
+use Model\Db\Compte;
 
 class Controller_Fonction extends Controller {
 
