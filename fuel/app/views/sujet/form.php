@@ -355,7 +355,7 @@ Form::open(array(
 		<?php endforeach; ?>
 
 		<!-- Pathologies -->
-		<h3 style="margin-top: 70px;">Pathologies</h3>
+		<h4 style="margin-top: 30px;">Pathologies infectieuses</h4>
 		<?php foreach (Pathology::fetchAll() as $pathology) : ?>
 			<div class="form-check form-switch">
 				<label for="form_pathologies_<?= $pathology->getId() ?>" class="form-check-label"><?= $pathology->getName() ?></label>

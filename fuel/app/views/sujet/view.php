@@ -167,7 +167,7 @@ $subject = $subject;
 			</div>
 			<!-- Pathologies -->
 			<div class="col">
-				<h5>Pathologies</h5>
+				<h5>Pathologies infectieuses</h5>
 				<ul>
 					<?php foreach ($subject->getPathologies() as $pathology) : ?>
 						<li><?= $pathology->getName(); ?></li>
