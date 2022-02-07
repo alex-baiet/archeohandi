@@ -137,7 +137,8 @@ Form::open(array(
 	<div class="col-md-4">
 		<div class="form-floating">
 			<input name="EA" id="form_EA" value="<?= $operation->getEA() ?>"
-				type="text" class="form-control" placeholder="EA" maxlength="256">
+				type="text" class="form-control" placeholder="EA" maxlength="256"
+				title="Indiquez le numéro de l'entité archéologique.">
 			<label for="form_EA">EA</label>
 		</div>
 	</div>
@@ -146,7 +147,8 @@ Form::open(array(
 	<div class="col-md-4">
 		<div class="form-floating">
 			<input name="OA" id="form_OA" value="<?= $operation->getOA() ?>"
-				type="text" class="form-control" placeholder="OA" maxlength="256">
+				type="text" class="form-control" placeholder="OA" maxlength="256"
+				title="Indiquez le numéro d'opération archéologique">
 			<label for="form_OA">OA</label>
 		</div>
 	</div>
@@ -155,7 +157,8 @@ Form::open(array(
 	<div class="col-md-4">
 		<div class="form-floating">
 			<input name="numero_operation" id="form_numero_operation" value="<?= $operation->getNumeroOperation() ?>"
-				type="text" class="form-control" placeholder="Numéro d'opération" maxlength="256">
+				type="text" class="form-control" placeholder="Numéro d'opération" maxlength="256"
+				title="Indiquez le numéro de l'opération (propre à l'opérateur)">
 			<label for="form_numero_operation">Numéro de l'opération</label>
 		</div>
 	</div>
@@ -167,7 +170,8 @@ Form::open(array(
 	<div class="col-md-6">
 		<div class="form-floating">
 			<input name="patriarche" id="form_patriarche" value="<?= $operation->getPatriarche() ?>"
-				type="text" class="form-control" placeholder="Patriarche" maxlength="256">
+				type="text" class="form-control" placeholder="Patriarche" maxlength="256"
+				title="Indiquez le patriarche de l'opération">
 			<label for="form_patriarche">Patriarche</label>
 		</div>
 	</div>
@@ -176,7 +180,8 @@ Form::open(array(
 	<div class="col-md-6">
 		<div class="form-floating">
 			<input name="arrete_prescription" id="form_arrete_prescription" value="<?= $operation->getArretePrescription() ?>"
-				type="text" class="form-control" placeholder="Arrêté de prescription" maxlength="256">
+				type="text" class="form-control" placeholder="Arrêté de prescription" maxlength="256"
+				title="Indiquez le numéro de l'arrêté de prescription">
 			<label for="form_arrete_prescription">Arrêté de prescription</label>
 		</div>
 	</div>
@@ -187,7 +192,8 @@ Form::open(array(
 	<div class="col-md-6">
 		<div class="form-floating">
 			<input name="responsable" id="form_responsable" value="<?= $operation->getResponsable() ?>"
-				type="text" class="form-control" placeholder="Responsable de l'opération" maxlength="256" autocomplete="off">
+				type="text" class="form-control" placeholder="Responsable de l'opération" maxlength="256" autocomplete="off"
+				title="Indiquez le responsable de l'opération, de préférence au format Prénom NOM.">
 			<label for="form_responsable">Responsable de l'opération</label>
 		</div>
 	</div>
@@ -198,20 +204,43 @@ Form::open(array(
 $anthropologues = $operation->getAnthropologues();
 if (empty($anthropologues)) $anthropologues[] = "";
 ?>
-<?= View::forge("fonction/multiple_input", array("name" => "anthropologues", "datas" => $anthropologues, "label" => "Anthropologue")); ?>
+<?=
+View::forge("fonction/multiple_input", array(
+	"name" => "anthropologues",
+	"datas" => $anthropologues,
+	"label" => "Anthropologue",
+	"inputAttributes" => array(
+		"maxlength" => "256",
+		"title" => "Indiquez le nom de l'anthropologue au format Prénom NOM."
+	)
+));
+?>
 
 <!-- Paleopathologistes -->
 <?php
 $paleos = $operation->getPaleopathologistes();
 if (empty($paleos)) $paleos[] = "";
 ?>
-<?= View::forge("fonction/multiple_input", array("name" => "paleopathologistes", "datas" => $paleos, "label" => "Paleopathologiste")); ?>
+<?=
+View::forge("fonction/multiple_input", array(
+	"name" => "paleopathologistes",
+	"datas" => $paleos,
+	"label" => "Paleopathologiste",
+	"inputAttributes" => array(
+		"maxlength" => "256",
+		"title" => "Indiquez le nom du paléopathologiste au format Prénom NOM."
+	)
+));
+?>
 
 <!-- Bibliographie -->
 <div class="col-md-12">
 	<label for="form_bibliographie">Bibliographie</label>
 	<textarea name="bibliographie" id="form_bibliographie"
-		class="form-control" maxlength="65535"><?= $operation->getBibliographie() ?></textarea>
+		class="form-control" maxlength="65535"
+		title="Indiquez les références bibliographiques où sont mentionnés les détails du cas.">
+		<?= $operation->getBibliographie() ?>
+	</textarea>
 </div>
 
 <!-- Comptes -->
@@ -230,7 +259,11 @@ View::forge("fonction/multiple_input", array(
 	"name" => "compte",
 	"datas" => $logins,
 	"label" => "Nom du compte",
-	"autocompletion" => "compte"
+	"autocompletion" => "compte",
+	"inputAttributes" => array(
+		"maxlength" => "256",
+		"title" => "Indiquez le nom d'un compte autorisé à éditer les sujets de l'opération."
+	)
 ));
 ?>
 

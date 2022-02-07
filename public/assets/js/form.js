@@ -67,8 +67,9 @@ function addCopy(name, autoComplete = null) {
 	let inputCopy = copy.getElementsByTagName("input")[0];
 	inputCopy.id = `${id}_${num}`;
 	inputCopy.value = "";
-	// let labelCopy = copy.getElementsByTagName("label")[0];
-	// labelCopy.id = `${id}_label_${num}`;
+	let labelCopy = copy.getElementsByTagName("label")[0];
+	labelCopy.id = `${id}_label_${num}`;
+	labelCopy.htmlFor = `${id}_${num}`;
 	let btnRemoveCopy = copy.getElementsByTagName("button")[0];
 	btnRemoveCopy.onclick = () => { removeCopy(name, num); }
 

@@ -14,6 +14,8 @@ $label = $label;
 if (isset($autocompletion)) $autocompletion = $autocompletion;
 /** @var bool */
 $imageInput = isset($imageInput) ? $imageInput : false;
+/** @var array */
+$inputAttributes = isset($inputAttributes) ? $inputAttributes : array();
 
 ?>
 
@@ -39,13 +41,19 @@ $imageInput = isset($imageInput) ? $imageInput : false;
 				<div class="col-md">
 					<div class="form-floating">
 						<input
-							name="<?= $name ?>[]" value="<?= $item ?>" id="form_<?= "{$name}_$i" ?>"
-							type="text" class="form-control" placeholder="<?= $label ?>" maxlength="256" <?php if (isset($autocompletion)) : ?>autocomplete="off"<?php endif; ?>
+							name="<?= $name ?>[]"
+							value="<?= $item ?>"
+							id="form_<?= "{$name}_$i" ?>"
+							type="text"
+							class="form-control"
+							placeholder="<?= $label ?>"
+							<?php if (isset($autocompletion)) : ?>autocomplete="off"<?php endif; ?>
 							<?php if ($imageInput) : ?>
 								onkeyup="changeImgSrc(`form_<?= $name ?>_<?= $i ?>`, `<?= $name ?>_preview_<?= $i; ?>`, this.value);"
 							<?php endif; ?>
+							<?php foreach ($inputAttributes as $key => $value) echo " $key='$value'"; ?>
 							>
-						<label for="<?= "{$name}_$i" ?>" id="form_<?= $name ?>_label_<?= $i ?>"><?= $label ?></label>
+						<label for="<?= "form_{$name}_$i" ?>" id="form_<?= $name ?>_label_<?= $i ?>"><?= $label ?></label>
 						<?php if (isset($autocompletion)) : ?>
 							<script>addAutocomplete("form_<?= $name ?>_<?= $i; ?>", "<?= $autocompletion ?>");</script>
 						<?php endif; ?>
@@ -76,7 +84,7 @@ $imageInput = isset($imageInput) ? $imageInput : false;
 			<?php if ($imageInput) : ?>
 				onclick="addCopyImg('<?= $name; ?>');"
 			<?php else : ?>
-				onclick="addCopy('<?= $name; ?>');"
+				onclick="addCopy('<?= $name; ?>', <?= isset($autocompletion) ? '\''.$autocompletion.'\'' : 'null' ?>);"
 			<?php endif; ?>
 			>
 				<i class="bi bi-plus"></i>

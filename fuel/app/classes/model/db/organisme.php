@@ -33,10 +33,10 @@ class Organisme extends Model {
 		return $obj;
 	}
 
-	public static function fetchOptions($idSelected = ""): string {
+	public static function fetchOptions($idSelected = -1): string {
 		$valueRecover = function ($data) { return $data["id"]; };
 		$textRecover = function ($data) { return $data["nom"]; };
-		return Archeo::fetchOptions("organisme", $valueRecover, $textRecover, $idSelected);
+		return Archeo::fetchOptions("organisme", $valueRecover, $textRecover, $idSelected, false);
 	}
 
 	public function getId() { return $this->id; }

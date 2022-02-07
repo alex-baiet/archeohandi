@@ -33,7 +33,7 @@ class Typeoperation extends Model {
 		return $obj;
 	}
 
-	public static function fetchOptions($idSelected = ""): string {
+	public static function fetchOptions($idSelected = -1): string {
 		$valueRecover = function ($data) { return $data["id"]; };
 		$textRecover = function ($data) { return $data["nom"]; };
 		return Archeo::fetchOptions("type_operation", $valueRecover, $textRecover, $idSelected, false);

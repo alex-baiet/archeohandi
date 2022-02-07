@@ -14,7 +14,10 @@ $errors = $errors;
 	
 	<!-- Entête de la page -->
 	<h1 class="m-2">Modification d'une opération</h1>
-	<p class="text-muted">Opération <b><?= $operation->getNomOp() ?></b></p>
+	<p class="text-muted">
+		Opération <b><?= $operation->getNomOp() ?></b><br>
+		Pour plus d'informations sur un champ, laissez la souris au dessus du champ pour avoir plus d'informations.
+	</p>
 
 	<?= View::forge("operations/form", array("action" => "operations/edit/{$operation->getId()}", "operation" => $operation)); ?>
 	
