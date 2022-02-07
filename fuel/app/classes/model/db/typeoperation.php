@@ -2,7 +2,6 @@
 
 namespace Model\Db;
 
-use Fuel\Core\Form;
 use Fuel\Core\Model;
 use Model\Helper;
 

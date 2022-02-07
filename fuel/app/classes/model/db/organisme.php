@@ -2,7 +2,6 @@
 
 namespace Model\Db;
 
-use Fuel\Core\Form;
 use Fuel\Core\Model;
 use Model\Helper;
 
@@ -38,41 +37,6 @@ class Organisme extends Model {
 		$valueRecover = function ($data) { return $data["id"]; };
 		$textRecover = function ($data) { return $data["nom"]; };
 		return Archeo::fetchOptions("organisme", $valueRecover, $textRecover, $idSelected);
-	}
-
-	/**
-	 * Créer un <select> à partir de tous les organismes.
-	 * 
-	 * @param string $field Valeur du "name" du select.
-	 * @param mixed $idSelected Identifiant de la valeur sélectionnée.
-	 */
-	public static function generateSelect(string $field = "organisme", $idSelected = ""): string {
-		// Récupération de tous les organismes
-		/** @var Organisme[] */
-		$organismes = array();
-		$results = Helper::querySelect("SELECT * FROM organisme;");
-		foreach ($results as $result) {
-			$organismes[] = new Organisme($result);
-		}
-		
-		// Création des options
-		$options = array();
-		$options[""] = "Sélectionner";
-		foreach ($organismes as $organisme) {
-			$options[$organisme->getId()] = $organisme->getNom();
-		}
-		
-		// Création du code HTML
-		$html = '<div class="form-floating">';
-		$html .= Form::select(
-			$field,
-			$idSelected,
-			$options,
-			array("class" => "form-select")
-		);
-		$html .= Form::label('Organisme', $field);
-		$html .= '</div>';
-		return $html;
 	}
 
 	public function getId() { return $this->id; }
