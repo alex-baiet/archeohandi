@@ -89,7 +89,7 @@ $sujets = $operation->getSubjects();
 			</div>
 			<div class="col">
 				<div class="p-2">
-					Anthropologues :
+					Anthropologue(s) :
 					<?php foreach ($operation->getAnthropologues() as $person): ?>
 						<br>- <?= $person; ?>
 					<?php endforeach; ?>
@@ -97,7 +97,7 @@ $sujets = $operation->getSubjects();
 			</div>
 			<div class="col">
 				<div class="p-2">
-					Paleopathologiste :
+					Paleopathologiste(s) :
 					<?php foreach ($operation->getPaleopathologistes() as $person): ?>
 						<br>- <?= $person; ?>
 					<?php endforeach; ?>
@@ -190,7 +190,7 @@ $sujets = $operation->getSubjects();
 
 <?php else : ?>
 	<div class="container">
-		<h2>Aucun sujets handicapés</h2>
+		<h2>Aucun sujet handicapé</h2>
 	</div>
 <?php endif; ?>
 

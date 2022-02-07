@@ -41,7 +41,8 @@ $countSubject = $countSubject;
 	
 	<p class="text-muted">
 		Ici vous pouvez retrouver toutes les informations sur les opérations.<br>
-		<b><?= count($operations); ?></b> opérations existantes pour un total de <b><?= $countSubject; ?></b> sujets enregistrés.
+		<b><?= count($operations); ?></b> opérations existantes pour un total de <b><?= $countSubject; ?></b> sujets enregistrés.<br>
+		Pour éditer les sujets d'une opération, veuillez d'abord <b>consulter</b> l'opération en question puis vous pourrez éditer ses sujets.
 	</p>
 
 	<div class="ml-3">
@@ -101,8 +102,8 @@ $countSubject = $countSubject;
 					<thead>
 						<tr class="text-center">
 							<!-- <th scope="col">#</th> -->
-							<th scope="col">Utilisateur de la saisie</th>
-							<th scope="col">Nom</th>
+							<th scope="col">Auteur de la saisie</th>
+							<th scope="col">Nom du site</th>
 							<th scope="col">Année</th>
 							<th scope="col">Actions</th>
 						</tr>
