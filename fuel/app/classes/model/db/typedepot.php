@@ -32,17 +32,10 @@ class Typedepot extends Model {
 		return new Typedepot($res);
 	}
 
-	/**
-	 * Créer un <select> à partir de tous les types de dépôt.
-	 * 
-	 * @param string $field Valeur du "name" du select.
-	 * @param string $label Nom du label du select.
-	 * @param mixed $idSelected Identifiant de la valeur sélectionnée.
-	 */
-	public static function generateSelect(string $field = "id_type_depot", string $label = "Type de dépôt", int $idSelected = 4): string {
+	public static function fetchOptions($idSelected = -1) {
 		$valueRecover = function (array $data) { return $data["id"]; };
 		$textRecover = function (array $data) { return $data["nom"]; };
-		return Archeo::generateSelect($field, $label, $idSelected, "type_depot", $valueRecover, $textRecover, true, false);
+		return Archeo::fetchOptions("type_depot", $valueRecover, $textRecover, $idSelected, false);
 	}
 
 	public function getId() { return $this->id; }

@@ -181,7 +181,7 @@ Form::open(array(
 		<div class="form-floating">
 			<input name="arrete_prescription" id="form_arrete_prescription" value="<?= $operation->getArretePrescription() ?>"
 				type="text" class="form-control" placeholder="Arrêté de prescription" maxlength="256"
-				title="Indiquez le numéro de l'arrêté de prescription">
+				title="Indiquez le numéro de l'arrêté de prescription.">
 			<label for="form_arrete_prescription">Arrêté de prescription</label>
 		</div>
 	</div>
@@ -238,7 +238,7 @@ View::forge("fonction/multiple_input", array(
 	<label for="form_bibliographie">Bibliographie</label>
 	<textarea name="bibliographie" id="form_bibliographie"
 		class="form-control" maxlength="65535"
-		title="Indiquez les références bibliographiques où sont mentionnés les détails du cas.">
+		title="Indiquez les références bibliographiques où sont mentionnés les détails du cas (selon les normes GALLIA/CNRS).">
 		<?= $operation->getBibliographie() ?>
 	</textarea>
 </div>

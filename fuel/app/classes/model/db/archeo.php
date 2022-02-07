@@ -19,7 +19,7 @@ class Archeo {
 	 * @param mixed $idSelected Identifiant de la valeur sélectionnée.
 	 * @param bool $addEmptyValue Ajoute une valeur "Sélectionner" avec value="".
 	 */
-	public static function fetchOptions(string $table, Closure $valueRecover, Closure $textRecover, $idSelected, bool $addEmptyValue = true): string {
+	public static function fetchOptions(string $table, Closure $valueRecover, Closure $textRecover, $idSelected, bool $addEmptyValue = false): string {
 		// Récupération de tous les objects
 		$results = Helper::querySelect("SELECT * FROM $table;");
 

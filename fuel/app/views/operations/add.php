@@ -15,7 +15,7 @@ $operation;
 
 	<p class="text-muted">
 		Ici vous pouvez ajouter une nouvelle opération.<br>
-		Pour plus d'informations sur un champ, laissez la souris au dessus du champ pour avoir plus d'informations.
+		Pour plus d'informations, laissez la souris au dessus du champ pour afficher un texte d'aide.
 	</p>
 	
 	<?php

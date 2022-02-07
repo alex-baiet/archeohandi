@@ -16,7 +16,9 @@ $subject = $subject;
 			<i class="bi bi-arrow-repeat"></i>
 		</a>
 	</h1>
-	<p class="text-muted">Ici vous pouvez modifier le sujet handicapé.</p>
+	<p class="text-muted">
+		Pour plus d'informations sur un champ, laissez la souris au dessus du champ pour afficher un texte d'aide.
+	</p>
 
 	<?= View::forge("sujet/form", array("subject" => $subject)); ?>
 </div>
