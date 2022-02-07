@@ -14,6 +14,8 @@ use Model\Redirect;
  */
 class Controller_Compte extends Controller_Template {
 	private const DEBUG = false;
+	/** Token de sécurité devant être validé pour pouvoir créer un compte. */
+	private const TOKEN = "c7e626f1f507f3798570649c91ff9a5e";
 
 	/** Création d'un compte. */
 	public function action_creation() {
@@ -51,6 +53,7 @@ class Controller_Compte extends Controller_Template {
 			if (!$error) {
 				// Les données sont valides
 				$result = Controller_Compte::sendMail(
+					// "alex.baiet3@gmail.com",
 					"cyrille.le-forestier@inrap.fr, valerie.delattre@inrap.fr",
 					"Demande d'accès Archéologie du handicap",
 					View::forge("compte/mail", array(
@@ -94,6 +97,7 @@ class Controller_Compte extends Controller_Template {
 		$this->template->content = View::forge('compte/connexion', $data);
 	}
 
+	/** @deprecated La redirection n'est plus utilisé. */
 	public function action_creation_redirection() {
 
 		Helper::startSession();
@@ -108,28 +112,29 @@ class Controller_Compte extends Controller_Template {
 
 	/** Page admin uniquement : permet de créer le compte */
 	public function action_creation_confirmation() {
-		Compte::checkPermissionRedirect("Seul les administrateurs peuvent accéder à cette page.", Compte::PERM_ADMIN);
 
-		Helper::startSession();
-
-		if (!isset($_SESSION["email"])) Response::redirect("/accueil");
-		$email = $_SESSION["email"];
-		$firstName = $_SESSION["prenom"];
-		$lastName = $_SESSION["nom"];
-		unset($_SESSION["email"]);
-		unset($_SESSION["prenom"]);
-		unset($_SESSION["nom"]);
-
-		if (Controller_Compte::DEBUG === true) {
-			// Suppression de l'ancien compte
-			DB::delete("compte")->where("email", "=", $email)->execute();
-		}
+		if (!isset($_POST["token"])) Response::redirect("/accueil");
+		$email = $_POST["email"];
+		$firstName = $_POST["prenom"];
+		$lastName = $_POST["nom"];
+		$token = $_POST["token"];
 
 		$login = null;
 		$pw = null;
+
+		$error = false;
+		
+		if ($token !== Controller_Compte::TOKEN) {
+			$error = true;
+			Messagehandler::prepareAlert("Impossible de créer le compte : le token donné ne corresponde pas.");
+		}
+
 		if (Compte::emailExist($email)) {
+			$error = true;
 			Messagehandler::prepareAlert("Un compte avec le mail indiqué existe déjà. Le compte n'a donc pas été créé.", "danger");
-		} else {	
+		}
+		
+		if (!$error) {
 			// Création du compte
 			if (Compte::create($firstName, $lastName, $email, $login, $pw)) {
 				Messagehandler::prepareAlert("Compte créé !", "success");
@@ -164,7 +169,7 @@ class Controller_Compte extends Controller_Template {
 	}
 
 	/** Envoie un mail. */
-	private static function sendMail(string $to, string $title, string $content): bool {		
+	private static function sendMail(string $to, string $title, string $content): bool {
 		$headers  = "MIME-Version: 1.0\r\n";
 		$headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
 		$headers .= "From: noreply@archeologieduhandicap\r\n";

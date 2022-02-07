@@ -45,10 +45,11 @@ $msg = $msg;
 		</blockquote>
 	<?php endif; ?>
 
-	<form action="https://archeohandi.huma-num.fr/public/compte/creation_redirection" method="POST">
+	<form action="https://archeohandi.huma-num.fr/public/compte/creation_confirmation" method="POST">
 		<input type="hidden" name="prenom" value="<?= $firstName ?>">
 		<input type="hidden" name="nom" value="<?= $lastName ?>">
 		<input type="hidden" name="email" value="<?= $email ?>">
+		<input type="hidden" name="token" value="c7e626f1f507f3798570649c91ff9a5e">
 		<button type="submit">Confirmer la création</button>
 	</form>
 
