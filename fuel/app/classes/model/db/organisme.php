@@ -34,6 +34,12 @@ class Organisme extends Model {
 		return $obj;
 	}
 
+	public static function fetchOptions($idSelected = ""): string {
+		$valueRecover = function ($data) { return $data["id"]; };
+		$textRecover = function ($data) { return $data["nom"]; };
+		return Archeo::fetchOptions("organisme", $valueRecover, $textRecover, $idSelected);
+	}
+
 	/**
 	 * Créer un <select> à partir de tous les organismes.
 	 * 

@@ -34,41 +34,12 @@ class Typeoperation extends Model {
 		return $obj;
 	}
 
-	/**
-	 * Créer un <select> à partir de tous les types d'opération.
-	 * 
-	 * @param string $field Valeur du "name" du select.
-	 * @param mixed $idSelected Identifiant de la valeur sélectionnée.
-	 */
-	public static function generateSelect(string $field = "organisme", $idSelected = ""): string {
-		// Récupération de tous les type d'opérations
-		/** @var Typeoperation[] */
-		$types = array();
-		$results = Helper::querySelect("SELECT * FROM type_operation;");
-		foreach ($results as $result) {
-			$types[] = new Typeoperation($result);
-		}
-		
-		// Création des options
-		$options = array();
-		$options[""] = "Sélectionner";
-		foreach ($types as $typeOp) {
-			$options[$typeOp->getId()] = $typeOp->getNom();
-		}
-		
-		// Création du code HTML
-		$html = '<div class="form-floating">';
-		$html .= Form::select(
-			$field,
-			$idSelected,
-			$options,
-			array("class" => "form-select")
-		);
-		$html .= Form::label("Type d'opération", $field);
-		$html .= '</div>';
-		return $html;
+	public static function fetchOptions($idSelected = ""): string {
+		$valueRecover = function ($data) { return $data["id"]; };
+		$textRecover = function ($data) { return $data["nom"]; };
+		return Archeo::fetchOptions("type_operation", $valueRecover, $textRecover, $idSelected, false);
 	}
-	
+
 	public function getId() { return $this->id; }
 	public function getNom() { return $this->nom; }
 }

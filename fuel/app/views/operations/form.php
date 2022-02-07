@@ -44,62 +44,96 @@ Form::open(array(
 
 <!-- Affichage des champs -->
 <div class="row my-2 pt-1">
+
+	<!-- Commune -->
+	<div class="col-md-6">
+		<div class="form-floating">
+			<?php $fullName = $operation->getCommune() === null ? "" : $operation->getCommune()->fullName(); ?>
+			<input name="commune" id="form_commune" value="<?= $fullName ?>"
+				type="text" class="form-control" placeholder="Commune" autocomplete="off"
+				title="Indiquer la commune en utilisant l'autocomplétion.">
+			<label for="form_commune">Commune</label>
+			<script>addAutocomplete("form_commune", "commune");</script>
+		</div>
+	</div>
+
+	<!-- Adresse -->
 	<div class="col-md-6">
 		<div class="form-floating">
 			<input name="adresse" id="form_adresse" value="<?= $operation->getAdresse() ?>"
-				type="text" class="form-control" placeholder="Adresse" maxlength="256">
+				type="text" class="form-control" placeholder="Adresse" maxlength="256"
+				title="Indiquez l'adresse de l'opération.">
 			<label for="form_adresse">Adresse</label>
 		</div>
 	</div>
+
+</div>
+
+<div class="row my-2">
+
+	<!-- Longitude -->
 	<div class="col-md-6">
+		<div class="form-floating">
+			<input name="X" id="form_X" value="<?= $operation->getX() ?>"
+				type="number" class="form-control" placeholder="Longitude" min="-180" max="180" step="any"
+				title="Indiquez la position GPS horizontale.">
+			<label for="form_X">Longitude</label>
+		</div>
+	</div>
+
+	<!-- Latitude -->
+	<div class="col-md-6">
+		<div class="form-floating">
+			<input name="Y" id="form_Y" value="<?= $operation->getY() ?>"
+				type="number" class="form-control" placeholder="Latitude" min="-90" max="90" step="any"
+				title="Indiquez la position GPS verticale.">
+			<label for="form_Y">Latitude</label>
+		</div>
+	</div>
+
+</div>
+
+<div class="row my-4">
+
+	<!-- Année -->
+	<div class="col-md-4">
 		<div class="form-floating">
 			<?php
 			$opYear = $operation->getAnnee();
 			$year = $opYear < 1800 || $opYear === null ? null : $operation->getAnnee();
 			?>
 			<input name="annee" id="form_annee" value="<?= $year ?>"
-				type="number" class="form-control" placeholder="Année de l'opération" min="1800" max="<?= date("Y") ?>">
+				type="number" class="form-control" placeholder="Année de l'opération" min="1800" max="<?= date("Y") ?>"
+				title="Mettez l'année de l'opération, ou la dernière année si l'opération s'est déroulé sur plusieurs année.">
 			<label for="form_annee">Année de l'opération</label>
 		</div>
 	</div>
-</div>
-<div class="row my-2">
-	<div class="col-md-6">
-		<div class="form-floating">
-			<input name="X" id="form_X" value="<?= $operation->getX() ?>"
-				type="number" class="form-control" placeholder="Longitude" min="-180" max="180" step="any">
-			<label for="form_X">Longitude</label>
-		</div>
-	</div>
-	<div class="col-md-6">
-		<div class="form-floating">
-			<input name="Y" id="form_Y" value="<?= $operation->getY() ?>"
-				type="number" class="form-control" placeholder="Latitude" min="-90" max="90" step="any">
-			<label for="form_Y">Latitude</label>
-		</div>
-	</div>
-</div>
 
-<div class="row my-4">
+	<!-- Organisme -->
 	<div class="col-md-4">
 		<div class="form-floating">
-			<?php $fullName = $operation->getCommune() === null ? "" : $operation->getCommune()->fullName(); ?>
-			<input name="commune" id="form_commune" value="<?= $fullName ?>"
-				type="text" class="form-control" placeholder="Commune" autocomplete="off">
-			<label for="form_commune">Commune</label>
-			<script>addAutocomplete("form_commune", "commune");</script>
+			<select name="id_organisme" id="form_id_organisme" class="form-select"
+				title="Sélectionner l'organisme attaché à l'opération.">
+				<?= Organisme::fetchOptions($operation->getIdOrganisme()); ?>
+			</select>
+			<label for="form_id_type_op">Organisme</label>
 		</div>
 	</div>
 
+	<!-- Type de l'opération -->
 	<div class="col-md-4">
-		<?= Organisme::generateSelect("id_organisme", $operation->getIdOrganisme()); ?>
-	</div>
-	<div class="col-md-4">
-		<?= Typeoperation::generateSelect("id_type_op", $operation->getIdTypeOp()); ?>
+		<div class="form-floating">
+			<select name="id_type_op" id="form_id_type_op" class="form-select"
+				title="Sélectionner le type de l'opération.">
+				<?= Typeoperation::fetchOptions($operation->getIdTypeOp()); ?>
+			</select>
+			<label for="form_id_type_op">Type d'opération</label>
+		</div>
 	</div>
 </div>
 
 <div class="row my-2">
+	<!-- EA -->
 	<div class="col-md-4">
 		<div class="form-floating">
 			<input name="EA" id="form_EA" value="<?= $operation->getEA() ?>"
@@ -107,6 +141,8 @@ Form::open(array(
 			<label for="form_EA">EA</label>
 		</div>
 	</div>
+
+	<!-- OA -->
 	<div class="col-md-4">
 		<div class="form-floating">
 			<input name="OA" id="form_OA" value="<?= $operation->getOA() ?>"
@@ -114,15 +150,20 @@ Form::open(array(
 			<label for="form_OA">OA</label>
 		</div>
 	</div>
+
+	<!-- Numéro de l'opération -->
 	<div class="col-md-4">
 		<div class="form-floating">
 			<input name="numero_operation" id="form_numero_operation" value="<?= $operation->getNumeroOperation() ?>"
 				type="text" class="form-control" placeholder="Numéro d'opération" maxlength="256">
-			<label for="form_numero_operation">Numéro d'opération</label>
+			<label for="form_numero_operation">Numéro de l'opération</label>
 		</div>
 	</div>
+
 </div>
 <div class="row my-2">
+
+	<!-- Patriarche -->
 	<div class="col-md-6">
 		<div class="form-floating">
 			<input name="patriarche" id="form_patriarche" value="<?= $operation->getPatriarche() ?>"
@@ -130,6 +171,8 @@ Form::open(array(
 			<label for="form_patriarche">Patriarche</label>
 		</div>
 	</div>
+
+	<!-- Arrêté de prescription -->
 	<div class="col-md-6">
 		<div class="form-floating">
 			<input name="arrete_prescription" id="form_arrete_prescription" value="<?= $operation->getArretePrescription() ?>"

@@ -14,10 +14,8 @@ $operation;
 	<h1 class="m-2">Ajout d'une opération</h1>
 
 	<p class="text-muted">
-		Ici vous pouvez ajouter une opération de façon simplifiée.
-		Pour aller plus vite, vous pouvez utiliser la touche TAB
-		<?= Asset::img('TAB.jpg', array('width' => '60px', 'height' => '30px')); ?>
-		pour aller d'un champs texte à un autre.
+		Ici vous pouvez ajouter une nouvelle opération.<br>
+		Pour plus d'informations sur un champ à remplir, laissez la souris au dessus du champ pour avoir plus d'informations.
 	</p>
 	
 	<?php

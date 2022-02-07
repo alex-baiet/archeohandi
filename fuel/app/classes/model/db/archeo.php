@@ -11,6 +11,36 @@ use Model\Helper;
 class Archeo {
 
 	/**
+	 * Retourne le code html des options pour construire un select.
+	 * 
+	 * @param string $table Nom de la table dans la BDD où récupérer les données.
+	 * @param Closure $valueRecover Lambda permettant de récupérer la "value" pour les options à partir d'une donnée.
+	 * @param Closure $valueRecover Lambda permettant de récupérer le texte à afficher pour les options à partir d'une donnée.
+	 * @param mixed $idSelected Identifiant de la valeur sélectionnée.
+	 * @param bool $addEmptyValue Ajoute une valeur "Sélectionner" avec value="".
+	 */
+	public static function fetchOptions(string $table, Closure $valueRecover, Closure $textRecover, $idSelected, bool $addEmptyValue = true): string {
+		// Récupération de tous les objects
+		$results = Helper::querySelect("SELECT * FROM $table;");
+
+		// Création des options
+		$options = array();
+		if ($addEmptyValue) $options[""] = "Sélectionner";
+		foreach ($results as $result) {
+			$options[$valueRecover($result)] = $textRecover($result);
+		}
+		asort($options);
+
+		// Ecriture en html des options
+		$html = "";
+		foreach ($options as $value => $text) {
+			$html .= "<option value='$value'".($idSelected === $value ? " selected" : "").">$text</option>\n";
+		}
+
+		return $html;
+	}
+
+	/**
 	 * Créer un <select> à partir de toutes les données d'une table.
 	 * 
 	 * @param string $field Valeur du "name" du select.
@@ -19,6 +49,7 @@ class Archeo {
 	 * @param string $table Nom de la table dans la BDD où récupérer les données.
 	 * @param Closure $valueRecover Lambda permettant de récupérer la "value" pour les options à partir d'une donnée.
 	 * @param Closure $valueRecover Lambda permettant de récupérer le texte à afficher pour les options à partir d'une donnée.
+	 * @deprecated Utilisez Archeo::fetchSelectOptions pour construire un select.
 	 */
 	public static function generateSelect(string $field, string $label, $idSelected, string $table, Closure $valueRecover, Closure $textRecover, bool $formFloating = true, bool $addEmptyValue = true): string {
 		// Récupération de tous les objects
@@ -31,6 +62,16 @@ class Archeo {
 			$options[$valueRecover($result)] = $textRecover($result);
 		}
 		asort($options);
+
+		// Création des attributs
+		$attr = array();
+		if ($formFloating) {
+			$attr["class"] = "form-select";
+		} else {
+			$attr["class"] = "form-select custom-select my-1 mr-2";
+			$attr["style"] = "width: 15em;";
+		}
+		if (!empty($title)) $attr["title"] = $title;
 		
 		// Création du code HTML
 		if ($formFloating) {
@@ -39,14 +80,14 @@ class Archeo {
 				$field,
 				$idSelected,
 				$options,
-				array("class" => "form-select")
+				$attr
 			);
 			$html .= Form::label($label, $field);
 			$html .= '</div>';
 		} else {
-			$html = "<div class='form-check form-check-inline'>";
+			$html = "<div class='form-check form-check-inline'>"; // form-check ???
 			$html .= Form::label($label, $field);
-			$html .= Form::select($field, $idSelected, $options, array("class" => "form-select custom-select my-1 mr-2", "style" => "width:15em"));
+			$html .= Form::select($field, $idSelected, $options, $attr);
 			$html .= "</div>";
 		}
 
