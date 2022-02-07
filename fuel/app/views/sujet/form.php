@@ -50,8 +50,8 @@ Form::open(array(
 		<?php if ($group !== null && $group->getId() !== null) echo Form::hidden("id_group", $group->getId()); ?>
 
 		<!-- NMI -->
-		<div class="form-floating">
-				<div class="col-md-6">
+		<div class="col-md-6">
+			<div class="form-floating">
 				<input name="NMI" id="form_NMI" value="<?= $group !== null ? $group->getNMI() : "" ?>"
 					type="number" class="form-control" placeholder="NMI" min="0"
 					title="Indiquez le Nombre Minimum d'Individu que compose le groupe dont fait parti le sujet handicapé.">
@@ -237,9 +237,8 @@ Form::open(array(
 		<label for="form_comment_contexte">Commentaire</label>
 		<textarea name="comment_contexte" id="form_comment_contexte"
 			class="form-control" rows="2" maxlength="65535"
-			title="Ecrivez ici des commentaires sur le groupe ou la sépulture en question si cela est nécessaire.">
-			<?= $subject->getCommentContext(); ?>
-		</textarea>
+			title="Ecrivez ici des commentaires sur le groupe ou la sépulture en question si cela est nécessaire."
+		><?= $subject->getCommentContext(); ?></textarea>
 	</div>
 	<br />
 
@@ -256,9 +255,10 @@ Form::open(array(
 						<?php if (in_array($mobilier->getId(), $subFurnituresId)) : ?>checked<?php endif; ?>>
 				</div>
 			<?php endforeach; ?>
-			<div id="block_description_autre_mobilier_' . $noLigne . '" class="' . $d_none_descp_autre_mobilier . '">
-				<label class="form-check-label" for="mobilier_description">Description du mobilier</label>
-				<textarea class="form-control" name="mobilier_description" rows="2"></textarea>
+			<div>
+				<label class="form-check-label" for="form_description_mobilier">Description du mobilier</label>
+				<textarea class="form-control" name="description_mobilier" id="form_description_mobilier" rows="2"
+				><?= $subject->getDescriptionMobilier() ?></textarea>
 			</div>
 		</div>
 
@@ -411,9 +411,8 @@ Form::open(array(
 	<label for="comment_diagnostic">Commentaire du diagnostic</label>
 	<div class="input-group">
 		<textarea class="form-control" name="comment_diagnostic" rows="2" maxlength="65535"
-			title="Ecrivez ici des commentaires sur le diagnostique si besoin.">
-			<?= $subject->getCommentDiagnosis(); ?>
-		</textarea>
+			title="Ecrivez ici des commentaires sur le diagnostique si besoin."
+		><?= $subject->getCommentDiagnosis(); ?></textarea>
 	</div>
 
 	<h3>Iconographie</h3>

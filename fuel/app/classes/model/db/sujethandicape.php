@@ -23,6 +23,7 @@ class Sujethandicape extends Model {
 	private ?string $contexteNormatif = null;
 	private string $commentContext = "";
 	private string $commentDiagnosis = "";
+	private string $descriptionMobilier = "";
 	private int $idTypeDepot = -1;
 	private int $idSepulture = -1;
 	private ?int $idDepot = null;
@@ -81,6 +82,7 @@ class Sujethandicape extends Model {
 		Archeo::mergeValue($this->contexteNormatif, $data, "contexte_normatif");
 		Archeo::mergeValue($this->commentContext, $data, "comment_contexte");
 		Archeo::mergeValue($this->commentDiagnosis, $data, "comment_diagnostic");
+		Archeo::mergeValue($this->descriptionMobilier, $data, "description_mobilier");
 		Archeo::mergeValue($this->urlImg, $data, "url_img");
 		if (empty($this->urlImg)) $this->urlImg = null;
 		Archeo::mergeValue($this->idTypeDepot, $data, "id_type_depot", "int");
@@ -218,6 +220,7 @@ class Sujethandicape extends Model {
 	public function getContexteNormatif() { return $this->contexteNormatif; }
 	public function getCommentContext() { return $this->commentContext; }
 	public function getCommentDiagnosis() { return $this->commentDiagnosis; }
+	public function getDescriptionMobilier() { return $this->descriptionMobilier; }
 	public function getIdTypeDepot() { return $this->idTypeDepot; }
 	public function getIdTypeSepulture() { return $this->idSepulture; }
 	public function getIdDepot() { return $this->idDepot; }
@@ -584,6 +587,7 @@ class Sujethandicape extends Model {
 			"contexte_normatif" => $this->contexteNormatif,
 			"comment_contexte" => $this->commentContext,
 			"comment_diagnostic" => $this->commentDiagnosis,
+			"description_mobilier" => $this->descriptionMobilier,
 			"id_type_depot" => $this->idTypeDepot,
 			"id_sepulture" => $this->idSepulture,
 			"id_depot" => $this->idDepot,
