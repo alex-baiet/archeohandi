@@ -92,7 +92,7 @@ class Compte {
 	}
 	
 	/** Génère un mot de passe aléatoire. */
-	private static function generatePassword(): string {
+	public static function generatePassword(): string {
 		$pw = "";
 		for ($i = 0; $i < 8; $i++) {
 			$pw .= Compte::ALLOWED_PASSWORD[rand(0, strlen(Compte::ALLOWED_PASSWORD) - 1)];
@@ -101,9 +101,8 @@ class Compte {
 	}
 
 	/** Génère un nouveau login unique. */
-	private static function generateLogin(string $firstName, string $lastName): string {
-		$login = strtolower($firstName[0] . $lastName);
-		$login = str_replace(array(" ", "-", "'"), "", $login);
+	public static function generateLogin(string $firstName, string $lastName): string {
+		$login = strtolower(Helper::removeNonAlphabet(Helper::replaceAccent($firstName[0] . $lastName)));
 
 		$accounts = DB::select()->from("compte")->where("login", "LIKE", "$login%")->execute()->as_array();
 		if (count($accounts) > 0) {

@@ -32,13 +32,16 @@ class Controller_Compte extends Controller_Template {
 				$error = true;
 				Messagehandler::prepareAlert("Indiquez votre prénom.", "danger");
 			}
-			else $firstName[0] = strtoupper($firstName[0]);
 
 			if (empty($lastName)) {
 				$error = true;
 				Messagehandler::prepareAlert("Indiquez votre nom.", "danger");
 			}
-			else $lastName = strtoupper($lastName);
+
+			if (!$error && empty(Compte::generateLogin($firstName, $lastName))) {
+				$error = true;
+				Messagehandler::prepareAlert("Les prénom et nom donné ne permettent pas de créer un login. Ecrivez-les en alphabet latin.");
+			}
 
 			if (Compte::emailExist($email)) {
 				$error = true;
@@ -48,7 +51,7 @@ class Controller_Compte extends Controller_Template {
 			if (!$error) {
 				// Les données sont valides
 				$result = Controller_Compte::sendMail(
-					"alex.baiet3@gmail.com",
+					"cyrille.le-forestier@inrap.fr, valerie.delattre@inrap.fr",
 					"Demande d'accès Archéologie du handicap",
 					View::forge("compte/mail", array(
 						"firstName" => $firstName,
@@ -160,6 +163,7 @@ class Controller_Compte extends Controller_Template {
 		else Redirect::redirectBack();
 	}
 
+	/** Envoie un mail. */
 	private static function sendMail(string $to, string $title, string $content): bool {		
 		$headers  = "MIME-Version: 1.0\r\n";
 		$headers .= "Content-type: text/html; charset=iso-8859-1\r\n";

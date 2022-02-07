@@ -151,4 +151,14 @@ class Helper {
 	public static function startSession() {
 		if (session_status() !== PHP_SESSION_ACTIVE) session_start();
 	}
+
+	/** Convertit les caractères ayant des accents en caractères sans accents. */
+	public static function replaceAccent(string $value) {
+		return iconv('ISO-8859-1','ASCII//TRANSLIT',$value);
+	}
+
+	/** Supprime tout les caractères n'étant pas une lettre alphabétique sans accent. */
+	public static function removeNonAlphabet(string $value): string {
+		return preg_replace('/[^a-z^A-Z]+/u', '', $value);
+	}
 }

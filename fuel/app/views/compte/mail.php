@@ -31,7 +31,7 @@ $msg = $msg;
 <body>
 
 	<p>
-		Monsieur/Madame <?= "$firstName $lastName" ?> demande l'ouverture
+		Monsieur/Madame <b><?= "$firstName $lastName" ?></b> demande l'ouverture
 		d'un compte sur la base de données Archéologie du Handicap.<br>
 		<br>
 
