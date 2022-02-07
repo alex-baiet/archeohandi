@@ -48,13 +48,6 @@ use Model\Redirect;
 						</a>
 					</li>
 
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Référentiel</a>
-						<div class="dropdown-menu">
-							<a class="dropdown-item" href="/public/liste/groupes">Liste des groupes</a>
-						</div>
-					</li>
-
 					<?php
 					$account = Compte::getInstance();
 					if ($account !== null) :
