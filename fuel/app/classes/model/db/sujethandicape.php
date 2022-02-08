@@ -53,9 +53,9 @@ class Sujethandicape extends Model {
 	#endregion
 
 	/** Construit le Sujethandicape depuis la liste des données. */
-	public function __construct(array $data) {
+	public function __construct(array $data, bool $setWithEmpty = false) {
 		$this->validation = new Validation();
-		$this->mergeValues($data);
+		$this->mergeValues($data, $setWithEmpty);
 	}
 
 	/**
@@ -557,7 +557,6 @@ class Sujethandicape extends Model {
 		DB::delete($table)
 			->where($idSujetName, "=", $this->getId())
 			->execute();
-		$values = array();
 		// Ajout des nouvelles valeurs dans la BDD
 		foreach ($toInsert as $obj) {
 			DB::insert($table)

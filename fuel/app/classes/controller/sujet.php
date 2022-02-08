@@ -43,12 +43,15 @@ class Controller_Sujet extends Controller_Template {
 
 		if (Input::method() === "POST") {
 			// Maj du sujet
-			$subject = new Sujethandicape($_POST);
+			$subject = new Sujethandicape($_POST, true);
 			if ($subject->saveOnDB() && Controller_Sujet::DEBUG === false) {
 				Messagehandler::prepareAlert("Modification du sujet réussi.", "success");
 				Response::redirect("operations/view/".$subject->getGroup()->getIdOperation());
 			} else if (Controller_Sujet::DEBUG === true) {
+				echo "POST";
 				Helper::varDump($_POST);
+				echo "Objet";
+				Helper::varDump($subject);
 			}
 		}
 
