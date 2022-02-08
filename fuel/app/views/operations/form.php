@@ -15,10 +15,6 @@ $showError = isset($operation);
 /** @var Operation Operation sur lequel construire le formulaire. */
 $operation = isset($operation) ? $operation : new Operation(array());
 
-/** @var string|unset Texte du popup de confirmation du formulaire. Si non défini, il n'y aura pas de popup. */
-if (isset($modalBodyMain)) $modalBodyMain = $modalBodyMain;
-/** @var string|unset */
-if (isset($modalBodyInfo)) $modalBodyInfo = $modalBodyInfo;
 /** @var bool */
 $displayOnlyFields = isset($displayOnlyFields) ? $displayOnlyFields : false;
 
@@ -50,7 +46,7 @@ Form::open(array(
 		<div class="form-floating">
 			<?php $fullName = $operation->getCommune() === null ? "" : $operation->getCommune()->fullName(); ?>
 			<input name="commune" id="form_commune" value="<?= $fullName ?>"
-				type="text" class="form-control" placeholder="Commune" autocomplete="off"
+				type="text" class="form-control" placeholder="Commune" autocomplete="chrome-off"
 				title="Indiquez la commune de l'opération.">
 			<label for="form_commune">Commune</label>
 			<script>addAutocomplete("form_commune", "commune");</script>
@@ -75,8 +71,9 @@ Form::open(array(
 	<div class="col-md-6">
 		<div class="form-floating">
 			<input name="X" id="form_X" value="<?= $operation->getX() ?>"
-				type="number" class="form-control" placeholder="Longitude" min="-180" max="180" step="any"
+				type="number" class="form-control" placeholder="Longitude" min="-180" max="180" step="any" required
 				title="Indiquez la position GPS horizontale.">
+			<div class="form-msg-error">La valeur doit être un nombre entre -180 et 180.</div>
 			<label for="form_X">Longitude</label>
 		</div>
 	</div>
@@ -85,8 +82,9 @@ Form::open(array(
 	<div class="col-md-6">
 		<div class="form-floating">
 			<input name="Y" id="form_Y" value="<?= $operation->getY() ?>"
-				type="number" class="form-control" placeholder="Latitude" min="-90" max="90" step="any"
+				type="number" class="form-control" placeholder="Latitude" min="-90" max="90" step="any" required
 				title="Indiquez la position GPS verticale.">
+			<div class="form-msg-error">La valeur doit être un nombre entre -90 et 90.</div>
 			<label for="form_Y">Latitude</label>
 		</div>
 	</div>
@@ -105,6 +103,7 @@ Form::open(array(
 			<input name="annee" id="form_annee" value="<?= $year ?>"
 				type="number" class="form-control" placeholder="Année de l'opération" min="1800" max="<?= date("Y") ?>"
 				title="Mettez l'année de l'opération, ou la dernière année si l'opération s'est déroulé sur plusieurs année.">
+			<div class="form-msg-error">La valeur doit être un nombre entre 1800 et <?= date("Y") ?>.</div>
 			<label for="form_annee">Année de l'opération</label>
 		</div>
 	</div>
@@ -276,35 +275,8 @@ View::forge("fonction/multiple_input", array(
 	</div>
 	
 	<div class="d-md-flex justify-content-md-end col">
-		<?php if (isset($modalBodyMain)): ?>
-			<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#validationPopup">Confirmer</button>
-		<?php else: ?>
-			<?= Form::submit('submit', 'Modifier', array('class' => 'btn btn-success')); ?>
-		<?php endif; ?>
+		<?= Form::submit('submit', 'Modifier', array('class' => 'btn btn-success')); ?>
 	</div>
 </div>
-
-<?php if (isset($modalBodyMain)): ?>
-	<!-- Popup de confirmation -->
-	<div class="modal" id="validationPopup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="validationPopupLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="validationPopupLabel">Voulez-vous continuer ?</h5>
-				</div>
-				<div class="modal-body">
-					<p>
-						<?= $modalBodyMain; ?><br><br>
-						<i class='bi bi-info-circle-fill'></i> <?= $modalBodyInfo; ?>
-					</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#validationPopup">Retour</button>
-					<button type="submit" class="btn btn-success" name="confirm_operation" id="form_confirm_operation" value="">Continuer</button>
-				</div>
-			</div>
-		</div>
-	</div>
-<?php endif; ?>
 
 <?= Form::close(); ?>

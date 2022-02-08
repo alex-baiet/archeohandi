@@ -19,13 +19,7 @@ $operation;
 	</p>
 	
 	<?php
-	$data = array(
-		"action" => "operations/add",
-		"modalBodyMain" => 
-			"En continuant, vous allez ajouter des sujets à l'opération que vous venez de créer.
-			En vous stopant, vous serrez redirigé vers la page des opérations.",
-		"modalBodyInfo" => "Pour ajouter des sujets plus tard, il vous suffit d'aller dans le détail d'une opération."
-	);
+	$data = array("action" => "operations/add");
 	if (isset($operation)) $data["operation"] = $operation;
 	echo View::forge("operations/form", $data);
 	?>

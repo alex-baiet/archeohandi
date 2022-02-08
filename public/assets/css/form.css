@@ -3,11 +3,13 @@
 	position: relative;
 }
 
-/* Affichage des inputs. */
 .form-control:invalid {
-	box-shadow: 0 0 0 0.25rem rgba(255, 0, 0, 0.3);
-	/* background-color: #ff000010; */
 	border-color: red;
+}
+
+/* Affichage des inputs. */
+.form-control:invalid:focus {
+	box-shadow: 0 0 0 0.25rem rgba(255, 0, 0, 0.3);
 }
 
 /* Affichage des message d'erreurs pour les inputs non-valides */
@@ -16,6 +18,11 @@
 	position: absolute;
 	bottom: 0;
 	transform: translateY(100%);
+	z-index: 1;
+	width: 100%;
+	padding-left: 10px;
+
+	color: red;
 }
 
 .form-control:invalid + .form-msg-error {
