@@ -15,14 +15,20 @@ use Model\Db\Sujethandicape;
 use Model\Db\Typedepot;
 use Model\Db\Typesepulture;
 use Model\Helper;
+use Model\Redirect;
 
-if (!isset($subject) && !isset($idOperation)) {
-	throw new FuelException("Pour générer le formulaire, il est nécessaire de connaître au moins soit l'id de l'opération parent, soit le sujet handicapé.");
-}
+/** @var null|int */
+$idOp = null;
+if (isset($idOperation)) $idOp = $idOperation;
+if (isset($subject)) $idOp = $subject->getGroup()->getIdOperation();
+
 /** @var Sujethandicape Base pour définir les valeurs du formulaires. */
 $subject = isset($subject) ? $subject : new Sujethandicape(array());
-/** @var int */
-$idOperation = isset($idOperation) ? $idOperation : $subject->getGroup()->getIdOperation();
+
+/** @var null|int */
+$idOperation = isset($idOperation) ? $idOperation : null;
+if ($subject->getGroup() !== null) $idOperation = $subject->getGroup()->getIdOperation();
+
 /** @var bool Ajoute un bouton pour rester sur la page. */
 $btnStay = isset($btnStay) ? $btnStay : false;
 
@@ -40,7 +46,9 @@ Form::open(array(
 	"onsubmit" => "prepareFormSend()"
 ));
 ?>
-<input type="hidden" name="id_operation" value="<?= $idOperation ?>">
+<?php if ($idOperation !== null) : ?>
+	<input type="hidden" name="id_operation" value="<?= $idOperation ?>">
+<?php endif; ?>
 <?php if ($subject->getId() !== null) echo Form::hidden("id", $subject->getId()); ?>
 <div class="col-auto">
 	<h2 class="text-center">Groupe du sujet</h2>
@@ -447,7 +455,7 @@ Form::open(array(
 <!-- Bouton de confirmation/retour -->
 <div class="row" style="margin-top: 10px;">
 	<div class="d-md-block col">
-		<a class="btn btn-secondary" href="/public/operations/view/<?= $idOperation; ?>" role="button">Retour</a>
+		<a class="btn btn-secondary" href="<?= Redirect::getPreviousPage(); ?>" role="button">Retour</a>
 	</div>
 
 	<div class="d-md-flex justify-content-md-end col">

@@ -6,7 +6,7 @@ use Fuel\Core\Input;
 use Fuel\Core\Response;
 use Fuel\Core\View;
 use Model\Db\Commune;
-use Model\Db\Compte;
+use Model\Compte;
 
 class Controller_Fonction extends Controller {
 

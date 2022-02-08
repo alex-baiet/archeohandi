@@ -1,10 +1,12 @@
 <?php
 
-namespace Model\Db;
+namespace Model;
 
 use Fuel\Core\Cookie;
 use Fuel\Core\DB;
 use Fuel\Core\Response;
+use Model\Db\Archeo;
+use Model\Db\Operation;
 use Model\Helper;
 use Model\Messagehandler;
 use Model\Redirect;

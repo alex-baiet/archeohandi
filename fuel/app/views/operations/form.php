@@ -3,24 +3,24 @@
 use Fuel\Core\Asset;
 use Fuel\Core\Form;
 use Fuel\Core\View;
-use Model\Db\Compte;
+use Model\Compte;
 use Model\Db\Operation;
 use Model\Db\Organisme;
 use Model\Db\Typeoperation;
 
 /** @var string Page de destination lors de la validation du formulaire. */
 $action = $action;
-$showError = false;
+
+$showError = isset($operation);
 /** @var Operation Operation sur lequel construire le formulaire. */
-if (isset($operation)) {
-	$operation = $operation;
-	$showError = true;
-}
-else $operation = new Operation(array());
+$operation = isset($operation) ? $operation : new Operation(array());
+
 /** @var string|unset Texte du popup de confirmation du formulaire. Si non défini, il n'y aura pas de popup. */
 if (isset($modalBodyMain)) $modalBodyMain = $modalBodyMain;
 /** @var string|unset */
 if (isset($modalBodyInfo)) $modalBodyInfo = $modalBodyInfo;
+/** @var bool */
+$displayOnlyFields = isset($displayOnlyFields) ? $displayOnlyFields : false;
 
 /** Array des attributs les plus communs. */
 $defaultAttr = array("type" => "text", "class" => "form-control", "placeholder" => "");
