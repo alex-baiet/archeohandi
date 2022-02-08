@@ -30,7 +30,14 @@ $inputAttributes = isset($inputAttributes) ? $inputAttributes : array();
 </script>
 
 <?php if ($imageInput) : ?>
-	<img id="<?= $name ?>_big_preview" src="" alt="Image indisponible" style="display: none; height: 400px; width: 100%; object-fit: contain;">
+	<div style="position: relative;">
+		<img
+			id="<?= $name ?>_big_preview"
+			src=""
+			alt="Image indisponible"
+			style="display: none; height: 400px; width: 100%; object-fit: contain;"
+			onclick="this.style.display='none'">
+	</div>
 <?php endif; ?>
 
 <div class="row my-2">
@@ -63,7 +70,9 @@ $inputAttributes = isset($inputAttributes) ? $inputAttributes : array();
 				<?php if ($imageInput) : ?>
 					<div class="col-auto" style="padding:0; background-color: white;">
 						<img
-							id="<?= $name ?>_preview_<?= $i ?>" src="<?= $item ?>" alt="Image indisponible" style="height: 58px; cursor: pointer;"
+							id="<?= $name ?>_preview_<?= $i ?>"
+							src="<?= $item ?>" alt="Image indisponible"
+							style="height: 58px; cursor: pointer; <?= empty($item) ? 'display: none;' : '' ?>"
 							onclick="zoomPreview(this);">
 					</div>
 				<?php endif; ?>

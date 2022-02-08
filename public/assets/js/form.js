@@ -118,6 +118,7 @@ function changeImgSrc(idInput, idImg) {
 	console.log(input.value);
 	if (input.value.startsWith("10.34847")) input.value = "https://api.nakala.fr/data/" + input.value;
 	img.src = input.value;
+	img.style.display = input.value == "" ? "none" : "block";
 }
 
 function addCopyImg(name) {
@@ -126,10 +127,11 @@ function addCopyImg(name) {
 
 	let copy = document.getElementById(`${id}_copy_${num}`);
 	let inputCopy = copy.getElementsByTagName("input")[0];
-	inputCopy.onkeyup = function () { changeImgSrc(`${id}_${num}`, `img_preview_${num}`); }
+	inputCopy.onkeyup = function () { changeImgSrc(`${id}_${num}`, `${name}_preview_${num}`); }
 	let imgCopy = copy.getElementsByTagName("img")[0];
 	imgCopy.id = `${name}_preview_${num}`;
 	imgCopy.src = "";
+	imgCopy.style.display = "none";
 }
 //#endregion
 

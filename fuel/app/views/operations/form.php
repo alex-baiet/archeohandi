@@ -51,7 +51,7 @@ Form::open(array(
 			<?php $fullName = $operation->getCommune() === null ? "" : $operation->getCommune()->fullName(); ?>
 			<input name="commune" id="form_commune" value="<?= $fullName ?>"
 				type="text" class="form-control" placeholder="Commune" autocomplete="off"
-				title="Indiquer la commune en utilisant l'autocomplétion.">
+				title="Indiquez la commune de l'opération.">
 			<label for="form_commune">Commune</label>
 			<script>addAutocomplete("form_commune", "commune");</script>
 		</div>
