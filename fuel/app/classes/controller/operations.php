@@ -15,6 +15,8 @@ class Controller_Operations extends Controller_Template {
 
 	/** Page d'affichages de toutes les opérations */
 	public function action_index() {
+		Compte::checkPermissionRedirect("Vous devez avoir un compte pour voir les opérations.", Compte::PERM_WRITE);
+
 		$data = array();
 
 		// Suppression d'une opération

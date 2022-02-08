@@ -435,6 +435,7 @@ class Sujethandicape extends Model {
 			if ($this->contexteNormatif === "") $this->contexteNormatif = null;
 			if (Typedepot::fetchSingle($this->idTypeDepot) === null) $validation->invalidate("Choisissez une valeur pour le type de dépôt.");
 			if (Typesepulture::fetchSingle($this->idSepulture) === null) $validation->invalidate("Choisissez une valeur pour le type de sepulture.");
+			if (empty($this->getPathologies()) && empty($this->getAllDiagnosis())) $validation->invalidate("Le sujet doit avoir au moins un diagnostic ou une pathologie.");
 
 			if (!$this->group->validate()) $validation->invalidate();
 		});
