@@ -40,12 +40,16 @@ use Model\Redirect;
 			<a class="navbar-brand" href="/public/accueil">
 				<i class="bi bi-house-fill"></i> Accueil
 			</a>
+			
 			<div class="collapse navbar-collapse" id="navbarTogglerDemo03">
 				<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+
 					<li class="nav-item active">
-						<a class="nav-link" href="/public/operations">Opérations
-							<span class="sr-only"></span>
-						</a>
+						<a class="nav-link" href="/public/operations">Opérations</a>
+					</li>
+
+					<li class="nav-item active">
+						<a class="nav-link" href="/public/search">Rechercher</a>
 					</li>
 
 					<?php
