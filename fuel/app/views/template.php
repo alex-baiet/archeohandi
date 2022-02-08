@@ -28,6 +28,7 @@ use Model\Redirect;
 	<?= Asset::js('button.js'); ?>
 	<?= Asset::js('form.js'); ?>
 	<?= Asset::css('button.css'); ?>
+	<?= Asset::css('form.css'); ?>
 </head>
 
 <body>

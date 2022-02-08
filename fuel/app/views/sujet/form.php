@@ -2,7 +2,6 @@
 
 use Fuel\Core\Asset;
 use Fuel\Core\Form;
-use Fuel\Core\FuelException;
 use Fuel\Core\View;
 use Model\Db\Appareil;
 use Model\Db\Chronology;

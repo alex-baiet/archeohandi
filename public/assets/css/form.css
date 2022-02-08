@@ -1,0 +1,23 @@
+
+.form-floating {
+	position: relative;
+}
+
+/* Affichage des inputs. */
+.form-control:invalid {
+	box-shadow: 0 0 0 0.25rem rgba(255, 0, 0, 0.3);
+	/* background-color: #ff000010; */
+	border-color: red;
+}
+
+/* Affichage des message d'erreurs pour les inputs non-valides */
+.form-msg-error {
+	display: none;
+	position: absolute;
+	bottom: 0;
+	transform: translateY(100%);
+}
+
+.form-control:invalid + .form-msg-error {
+	display: block;
+}
