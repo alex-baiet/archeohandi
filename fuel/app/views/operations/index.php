@@ -26,6 +26,17 @@ $countSubject = $countSubject;
 		let btnElem = document.getElementById("form_delete_op");
 		btnElem.value = idSubject;
 	}
+
+	/** Permet d'afficher ou non les options du filtre */
+	function switchFilterView() {
+		if ($("#filtres_recherche").hasClass("d-none")) {
+			$("#id_bouton_filtre").text("Masquer les options de recherche");
+			$("#filtres_recherche").removeClass("d-none");
+		} else {
+			$("#id_bouton_filtre").text("Afficher les options de recherche");
+			$("#filtres_recherche").addClass("d-none");
+		}
+	}
 </script>
 
 <!-- Entête de la page -->
@@ -46,7 +57,7 @@ $countSubject = $countSubject;
 	</p>
 
 	<div class="ml-3">
-		<button type="button" id="id_bouton_filtre" class="btn btn-danger">Afficher les options de recherche</button>
+		<button type="button" id="id_bouton_filtre" class="btn btn-danger" onclick="switchFilterView()">Afficher les options de recherche</button>
 
 		<!-- Système de recherche (filtre) -->
 		<?php
@@ -132,11 +143,8 @@ $countSubject = $countSubject;
 											</a>
 
 											<form action="" method="post" id="form_suppr_<?= $op->getId() ?>">
-												<a
-														href=""
-														data-bs-toggle="modal"
-														data-bs-target="#validationPopup"
-														onclick="deleteOperation(<?= $op->getId() ?>)">
+												<a href="" data-bs-toggle="modal" data-bs-target="#validationPopup"
+													onclick="deleteOperation(<?= $op->getId() ?>)">
 													Supprimer
 													<?= ""//Asset::img("trash.svg", array("class"=>"icon del", "width" => "25px", "alt" => "Supprimer")) ?>
 												</a>
@@ -159,19 +167,6 @@ $countSubject = $countSubject;
 	"infoText" => "La suppression est irréversible.",
 	"btnName" => "delete_op"
 )); ?>
-
-<script>
-	//Script permet d'afficher ou non les options du filtre
-	$("#id_bouton_filtre").click(function() {
-		if ($("#filtres_recherche").hasClass("d-none")) {
-			$("#id_bouton_filtre").text("Masquer les filtres de recherche");
-			$("#filtres_recherche").removeClass("d-none");
-		} else {
-			$("#id_bouton_filtre").text("Afficher les filtres de recherche");
-			$("#filtres_recherche").addClass("d-none");
-		}
-	});
-</script>
 
 <?php
 //Fonction permettant d'afficher un message d'alert
