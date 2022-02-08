@@ -16,7 +16,13 @@ class Validation extends Model {
 
 	public function __construct() { }
 
+	/**
+	 * Renvoie un boolean indiquant si les données sont valides.
+	 * 
+	 * @param Closure $lambdaTest Tests à effectuer si la validation n'a pas encore été faites.
+	 */
 	public function validate(Closure $lambdaTest): bool {
+		// Test déjà effectué, on renvoie la valeur définie
 		if (isset($this->validated)) return $this->validated;
 
 		$lambdaTest();

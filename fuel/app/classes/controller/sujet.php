@@ -14,6 +14,8 @@ class Controller_Sujet extends Controller_Template {
 	private const DEBUG = false;
 
 	public function action_view($id) {
+		Compte::checkPermissionRedirect("Vous devez être connecté pour pouvoir consulter un sujet.", Compte::PERM_WRITE);
+
 		$subject = Sujethandicape::fetchSingle($id);
 		if ($subject === null) {
 			Messagehandler::prepareAlert("Le sujet n'existe pas (quelqu'un vient peut-être de le supprimer).", "danger");

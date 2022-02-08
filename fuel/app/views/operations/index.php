@@ -46,7 +46,7 @@ $countSubject = $countSubject;
 	</p>
 
 	<div class="ml-3">
-		<button type="button" id="id_bouton_filtre" class="btn btn-danger">Afficher les filtres de recherche</button>
+		<button type="button" id="id_bouton_filtre" class="btn btn-danger">Afficher les options de recherche</button>
 
 		<!-- Système de recherche (filtre) -->
 		<?php
@@ -105,7 +105,9 @@ $countSubject = $countSubject;
 							<th scope="col">Auteur de la saisie</th>
 							<th scope="col">Nom du site</th>
 							<th scope="col">Année</th>
-							<th scope="col">Actions</th>
+							<?php if (Compte::checkPermission(Compte::PERM_WRITE)) : ?>
+								<th scope="col">Actions</th>
+							<?php endif; ?>
 						</tr>
 					</thead>
 					<tbody>
@@ -114,33 +116,34 @@ $countSubject = $countSubject;
 								<td><?= $op->getAccountAdmin() !== null ? $op->getAccountAdmin()->getLogin() : null ?></td>
 								<td><?= $op->getNomOp() ?></td>
 								<td><?= $op->getAnnee() ?></td>
-								<td class="col-auto">
-
-									<a title="Consulter #<?= $op->getId(); ?>" href="/public/operations/view/<?= $op->getId() ?>">
-										Consulter
-										<?= ""//Asset::img("reply.svg", array("class"=>"icon see", "width" => "30px", "alt" => "Consulter")) ?>
-									</a>
-
-									<?php if (Compte::checkPermission(Compte::PERM_ADMIN, $op->getId())) : ?>
-										<br>
-										<a class="" title="Editer #<?= $op->getId(); ?>" href="/public/operations/edit/<?= $op->getId() ?>">
-											Editer
-											<?= ""//Asset::img("pen.svg", array("class"=>"icon edit", "width" => "24px", "alt" => "Éditer")) ?>
+	
+								<?php if (Compte::checkPermission(Compte::PERM_WRITE)) : ?>
+									<td class="col-auto">
+										<a title="Consulter #<?= $op->getId(); ?>" href="/public/operations/view/<?= $op->getId() ?>">
+											Consulter
+											<?= ""//Asset::img("reply.svg", array("class"=>"icon see", "width" => "30px", "alt" => "Consulter")) ?>
 										</a>
 
-										<form action="" method="post" id="form_suppr_<?= $op->getId() ?>">
-											<a
-													href=""
-													data-bs-toggle="modal"
-													data-bs-target="#validationPopup"
-													onclick="deleteOperation(<?= $op->getId() ?>)">
-												Supprimer
-												<?= ""//Asset::img("trash.svg", array("class"=>"icon del", "width" => "25px", "alt" => "Supprimer")) ?>
+										<?php if (Compte::checkPermission(Compte::PERM_ADMIN, $op->getId())) : ?>
+											<br>
+											<a class="" title="Editer #<?= $op->getId(); ?>" href="/public/operations/edit/<?= $op->getId() ?>">
+												Editer
+												<?= ""//Asset::img("pen.svg", array("class"=>"icon edit", "width" => "24px", "alt" => "Éditer")) ?>
 											</a>
-										</form>
-									<?php endif; ?>
 
-								</td>
+											<form action="" method="post" id="form_suppr_<?= $op->getId() ?>">
+												<a
+														href=""
+														data-bs-toggle="modal"
+														data-bs-target="#validationPopup"
+														onclick="deleteOperation(<?= $op->getId() ?>)">
+													Supprimer
+													<?= ""//Asset::img("trash.svg", array("class"=>"icon del", "width" => "25px", "alt" => "Supprimer")) ?>
+												</a>
+											</form>
+										<?php endif; ?>
+									</td>
+								<?php endif; ?>
 							</tr>
 						<?php endforeach; ?>
 					</tbody>

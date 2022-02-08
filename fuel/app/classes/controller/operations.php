@@ -121,6 +121,8 @@ class Controller_Operations extends Controller_Template {
 
 	//L'action view sert pour la page view de opération qui affiche les détails d'une opération
 	public function action_view($id) {
+		Compte::checkPermissionRedirect("Vous devez être connecté pour pouvoir consulter une opération.", Compte::PERM_WRITE);
+
 		$data = array();
 
 		$operation = Operation::fetchSingle($id);		
