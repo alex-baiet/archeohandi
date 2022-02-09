@@ -62,8 +62,8 @@ class Import {
 		$op->setARevoir($columns[$iarevoir]);
 		$op->setAdresse($columns[$iadresse]);
 		$op->setAnnee(intval($columns[$iannee]));
-		$op->setX(intval($columns[$ix]));
-		$op->setY(intval($columns[$iy]));
+		$op->setX(floatval($columns[$ix]));
+		$op->setY(floatval($columns[$iy]));
 		$op->setEA($columns[$iea]);
 		$op->setOA($columns[$ioa]);
 		$op->setPatriarche($columns[$ipatriarche]);
