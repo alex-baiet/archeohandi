@@ -18,7 +18,9 @@ $subject = $subject;
 <!-- Entête de la page -->
 <div class="container-xl">
 	<h1 class="m-2">Sujet <?= $subject->getIdSujetHandicape(); ?></h1>
-	<p class="text-muted">Ici vous retrouvez toutes les informations du sujet <strong><?= $subject->getIdSujetHandicape(); ?></strong>.</p>
+	<p class="text-muted">
+		Ici vous retrouvez toutes les informations du sujet <strong><?= $subject->getIdSujetHandicape(); ?></strong>.
+	</p>
 
 	<!-- Contenu de la page -->
 	<section>
@@ -84,43 +86,37 @@ $subject = $subject;
 		<h4>Groupe du sujet</h4>
 		<?php $group = $subject->getGroup(); ?>
 		<div class="row">
-			<div class="col-md-4">
-				<div class="p-2">NMI : <?= $group->getNMI(); ?></div>
-			</div>
-			<div class="col-md-4">
-				<div class="p-2">Opération : <?= $group->getOperation()->getNomOp(); ?></div>
-			</div>
-			<div class="col-md-4">
-				<div class="p-2">Période : <?= $group->getChronology()->getName(); ?></div>
-			</div>
+			<div class="col-md-4 m-2">NMI : <?= $group->getNMI(); ?></div>
+			<div class="col-md-4 m-2">Opération : <?= $group->getOperation()->getNomOp(); ?></div>
+			<div class="col-md-4 m-2">Période : <?= $group->getChronology()->getName(); ?></div>
 		</div>
 		<div class="row">
-			<div class="col-md-4">
-				<div class="p-2">Date de début : <?= $group->getChronology()->getStart(); ?></div>
-			</div>
-			<div class="col-md-4">
-				<div class="p-2">Date de fin : <?= $group->getChronology()->getEnd(); ?></div>
-			</div>
+			<div class="col-md-4 m-2">Date de début : <?= $group->getChronology()->getStart(); ?></div>
+			<div class="col-md-4 m-2">Date de fin : <?= $group->getChronology()->getEnd(); ?></div>
 		</div>
 	</section>
 	<br />
 
 	<!-- Dépôt -->
 	<section>
+		<?php
+		$depot = $subject->getDepot();
+		if ($depot !== null) {
+			$numInventaire = $depot->getNumInventaire();
+			$communeName = $depot->getCommune() !== null ? $depot->getCommune()->fullName() : "aucun";
+			$address = $depot->getAdresse();
+		} else {
+			$numInventaire = null;
+			$communeName = "aucun";
+			$address = null;
+		}
+		?>
 		<h4>Dépôt</h4>
 		<?php $depot = $subject->getDepot(); ?>
 		<div class="row">
-			<div class="col">
-				<div class="p-2">Numéro d'inventaire : <?= $depot->getNumInventaire(); ?>
-				</div>
-			</div>
-			<div class="col">
-				<?php $commune = $depot->getCommune(); ?>
-				<div class="p-2">Commune : <?= $commune !== null ? $commune->fullName() : "aucun" ?></div>
-			</div>
-			<div class="col">
-				<div class="p-2">Adresse : <?= $depot->getAdresse(); ?></div>
-			</div>
+			<div class="col m-2">Numéro d'inventaire : <?= $numInventaire; ?></div>
+			<div class="col m-2">Commune : <?= $communeName ?></div>
+			<div class="col m-2">Adresse : <?= $address; ?></div>
 		</div>
 	</section>
 	<br />
@@ -129,12 +125,10 @@ $subject = $subject;
 	<section>
 		<h4>Accessoire</h4>
 		<div class="row">
-			<div class="col">
-				<div class="p-2">
-					<?php foreach ($subject->getFurnitures() as $furniture) : ?>
-						<?= $furniture->getNom(); ?><br>
-					<?php endforeach; ?>
-				</div>
+			<div class="col m-2">
+				<?php foreach ($subject->getFurnitures() as $furniture) : ?>
+					<?= $furniture->getNom(); ?><br>
+				<?php endforeach; ?>
 			</div>
 		</div>
 	</section>
@@ -185,9 +179,7 @@ $subject = $subject;
 			</div>
 		</div>
 		<div class="row">
-			<div class="col">
-				<div class="p-2">Commentaire du diagnostic : <?= $subject->getCommentDiagnosis(); ?></div>
-			</div>
+			<div class="col m-2">Commentaire du diagnostic : <?= $subject->getCommentDiagnosis(); ?></div>
 		</div>
 	</section>
 	<br />
