@@ -237,9 +237,8 @@ View::forge("fonction/multiple_input", array(
 	<label for="form_bibliographie">Bibliographie</label>
 	<textarea name="bibliographie" id="form_bibliographie"
 		class="form-control" maxlength="65535"
-		title="Indiquez les références bibliographiques où sont mentionnés les détails du cas (selon les normes GALLIA/CNRS).">
-		<?= $operation->getBibliographie() ?>
-	</textarea>
+		title="Indiquez les références bibliographiques où sont mentionnés les détails du cas (selon les normes GALLIA/CNRS)."
+		><?= $operation->getBibliographie() ?></textarea>
 </div>
 
 <!-- Comptes -->
