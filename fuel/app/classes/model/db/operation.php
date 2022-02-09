@@ -296,6 +296,24 @@ class Operation extends Model {
 	}
 	#endregion
 
+	#region Setters
+	public function setId(int $value) { $this->id = $value; }
+	public function setARevoir(string $value) { $this->aRevoir = $value; }
+	public function setAnnee(?int $value) { $this->annee = $value; }
+	public function setAdresse(string $value) { $this->adresse = $value; }
+	public function setX(float $value) { $this->x = $value; }
+	public function setY(float $value) { $this->y = $value; }
+	public function setEA(string $value) { $this->EA = $value; }
+	public function setOA(string $value) { $this->OA = $value; }
+	public function setPatriarche(string $value) { $this->patriarche = $value; }
+	public function setNumeroOperation(string $value) { $this->numeroOperation = $value; }
+	public function setArretePrescription(string $value) { $this->arretePrescription = $value; }
+	public function setResponsable(string $value) { $this->responsable = $value; }
+	public function setAnthropologues(string $value) { $this->anthropologues = $value; }
+	public function setPaleopathologistes(string $value) { $this->paleopathologistes = $value; }
+	public function setBibliographie(string $value) { $this->bibliographie = $value; }
+	#endregion
+
 	/**
 	 * Renvoie les droits qu'à un compte sur l'opération.
 	 * @return string Niveau de droit du compte sur l'opération.

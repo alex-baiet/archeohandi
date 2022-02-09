@@ -5,6 +5,7 @@ use Fuel\Core\DB;
 use Fuel\Core\View;
 use Model\Compte;
 use Model\Helper;
+use Model\Script\Import;
 
 class Controller_Script extends Controller_Template {
 	private const ACTIVE = false;
@@ -52,6 +53,13 @@ class Controller_Script extends Controller_Template {
 		if (!$this->checkPermission()) return;
 
 		$data = array();
+
+		// Récupérations des opérations
+		$operations = array();
+		if (isset($_FILES["file_operation"]) && $_FILES["file_operation"]["error"] === 0) {
+			$operations = Import::fileToOperations(file_get_contents($_FILES["file_operation"]["tmp_name"]));
+		}
+		$data["operations"] = $operations;
 		
 		$this->template->title = 'Import CSV | Résultats';
 		$this->template->content = View::forge('script/import_csv_result', $data, false);
