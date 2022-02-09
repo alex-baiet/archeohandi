@@ -135,6 +135,7 @@ function addCopyImg(name) {
 }
 //#endregion
 
+//#region CheckboxHandler
 /**
  * Active les checkbox de localisation lors du clic sur le switch du diagnostic concerné.
  * 
@@ -171,7 +172,9 @@ function prepareFormSend() {
 		disabled.disabled = false;
 	}
 }
+//#endregion
 
+//#region Autocompletion
 /**
  * Ajoute l'autocomplétion à l'input donné en utilisant la base de données.
  * 
@@ -236,6 +239,7 @@ function emptyAutocompletes() {
 		autocomp.innerHTML = "";
 	}
 }
+//#endregion
 
 // Prépare le document pour pouvoir fermer les autocomplétions automatiquement.
 $(document).ready(function () {

@@ -1,7 +1,6 @@
 <?php
 
 use Fuel\Core\Controller_Template;
-use Fuel\Core\DB;
 use Fuel\Core\Response;
 use Fuel\Core\View;
 use Model\Compte;
@@ -34,17 +33,14 @@ class Controller_Compte extends Controller_Template {
 				$error = true;
 				Messagehandler::prepareAlert("Indiquez votre prénom.", "danger");
 			}
-
 			if (empty($lastName)) {
 				$error = true;
 				Messagehandler::prepareAlert("Indiquez votre nom.", "danger");
 			}
-
 			if (!$error && empty(Compte::generateLogin($firstName, $lastName))) {
 				$error = true;
 				Messagehandler::prepareAlert("Les prénom et nom donné ne permettent pas de créer un login. Ecrivez-les en alphabet latin.");
 			}
-
 			if (Compte::emailExist($email)) {
 				$error = true;
 				Messagehandler::prepareAlert("Un compte avec le mail donné existe déjà.", "danger");
@@ -52,9 +48,10 @@ class Controller_Compte extends Controller_Template {
 
 			if (!$error) {
 				// Les données sont valides
+				$to = Controller_Compte::DEBUG === true ? "alex.baiet3@gmail.com" : "cyrille.le-forestier@inrap.fr, valerie.delattre@inrap.fr";
 				$result = Controller_Compte::sendMail(
 					// "alex.baiet3@gmail.com",
-					"cyrille.le-forestier@inrap.fr, valerie.delattre@inrap.fr",
+					$to,
 					"Demande d'accès Archéologie du handicap",
 					View::forge("compte/mail", array(
 						"firstName" => $firstName,

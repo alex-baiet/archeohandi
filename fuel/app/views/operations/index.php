@@ -124,7 +124,8 @@ $countSubject = $countSubject;
 					<tbody>
 						<?php foreach ($operations as $op) :  ?>
 							<tr class="text-center">
-								<td><?= $op->getAccountAdmin() !== null ? $op->getAccountAdmin()->getLogin() : null ?></td>
+								<?php $author = $op->getAccountAdmin() ?>
+								<td><?= $author !== null ? "{$author->getPrenom()} {$author->getNom()}" : null ?></td>
 								<td><?= $op->getNomOp() ?></td>
 								<td><?= $op->getAnnee() ?></td>
 	
