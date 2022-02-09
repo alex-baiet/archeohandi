@@ -1,18 +1,28 @@
 <?php
 
-use Fuel\Core\Controller;
+use Fuel\Core\Controller_Template;
 use Fuel\Core\DB;
+use Fuel\Core\View;
+use Model\Compte;
 use Model\Helper;
 
-class Controller_Script extends Controller {
+class Controller_Script extends Controller_Template {
 	private const ACTIVE = false;
+
+	/** Vérifie que les scripts peuvent être exécutés. */
+	private function checkPermission(): bool {
+		Compte::checkPermissionRedirect("Cette page est reservé aux administrateurs.", Compte::PERM_ADMIN);
+
+		if (Controller_Script::ACTIVE === true) {
+			echo "Les scripts sont actuellement désactivés."; 
+			return false;
+		}
+		return true;
+	}
 
 	/** Met au bon format les données de datation des sujets handicapés. */
 	public function action_datationreformat() {
-		if (Controller_Script::ACTIVE === false) {
-			echo "Les scripts sont actuellement désactivés."; 
-			return;
-		}
+		if (!$this->checkPermission()) return;
 		
 		$subjects = Helper::querySelect("SELECT * FROM sujet_handicape");
 
@@ -27,5 +37,23 @@ class Controller_Script extends Controller {
 				->where("id", "=", $subj["id"])
 				->execute();
 		}
-	} 
+	}
+
+	public function action_import_csv() {
+		if (!$this->checkPermission()) return;
+
+		$data = array();
+		
+		$this->template->title = 'Import CSV';
+		$this->template->content = View::forge('script/import_csv', $data, false);
+	}
+
+	public function action_import_csv_result() {
+		if (!$this->checkPermission()) return;
+
+		$data = array();
+		
+		$this->template->title = 'Import CSV | Résultats';
+		$this->template->content = View::forge('script/import_csv_result', $data, false);
+	}
 }
