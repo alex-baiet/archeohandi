@@ -2,13 +2,18 @@
 
 use Model\Db\Operation;
 
-
 /** @var Operation[] */
 $operations = $operations;
 
 ?>
 
 <style>
+	.fold-parent {
+		border-style: solid;
+		border-width: 1px;
+		border-color: black;
+	}
+
 	.fold-content {
 		display: none;
 	}
@@ -46,10 +51,13 @@ foreach ($_FILES as $file) {
 
 <?php foreach ($operations as $op) : ?>
 	<div class="fold-parent">
-		<h3>Operation</h3>
-		<pre class="fold-content">
-			<?php var_dump($op); ?>
-		</pre>
+		<h3 style="background-color: <?= $op->validate() ? "#0f04" : "#f004" ?>">Operation</h3>
+		<div class="fold-content">
+			<?= $op->echoErrors() ?>
+			<pre>
+				<?php var_dump($op); ?>
+			</pre>
+		</div>
 	</div>
 
 <?php endforeach; ?>

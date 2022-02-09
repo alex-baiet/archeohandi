@@ -298,6 +298,7 @@ class Operation extends Model {
 
 	#region Setters
 	public function setId(int $value) { $this->id = $value; }
+	public function setIdUser(string $value) { $this->idUser = $value; }
 	public function setARevoir(string $value) { $this->aRevoir = $value; }
 	public function setAnnee(?int $value) { $this->annee = $value; }
 	public function setAdresse(string $value) { $this->adresse = $value; }
@@ -312,6 +313,11 @@ class Operation extends Model {
 	public function setAnthropologues(string $value) { $this->anthropologues = $value; }
 	public function setPaleopathologistes(string $value) { $this->paleopathologistes = $value; }
 	public function setBibliographie(string $value) { $this->bibliographie = $value; }
+
+	public function setIdCommune(int $value) {
+		$this->idCommune = $value;
+		$this->commune = null;
+	}
 	#endregion
 
 	/**

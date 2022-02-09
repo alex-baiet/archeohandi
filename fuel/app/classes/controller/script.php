@@ -58,6 +58,11 @@ class Controller_Script extends Controller_Template {
 		$operations = array();
 		if (isset($_FILES["file_operation"]) && $_FILES["file_operation"]["error"] === 0) {
 			$operations = Import::fileToOperations(file_get_contents($_FILES["file_operation"]["tmp_name"]));
+
+			// Ajout des operations a la BDD
+			foreach ($operations as $op) {
+				$op->saveOnDB();
+			}
 		}
 		$data["operations"] = $operations;
 		

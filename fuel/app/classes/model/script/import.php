@@ -12,6 +12,7 @@ class Import {
 	 */
 	public static function fileToOperations(string $textCSV): array {
 		$lines = explode("\n", $textCSV);
+		unset($lines[0]);
 		$operations = array();
 
 		foreach ($lines as $line) {
@@ -31,24 +32,24 @@ class Import {
 		$iid = 0;
 		$iarevoir = 1;
 		$icommune = 2;
-		$iadresse = 4;
-		$icodePostal = 5;
-		$iannee = 6;
-		$ix = 7;
-		$iy = 8;
-		$iz = 9;
-		$itypeOp = 10;
-		$iea = 11;
-		$ioa = 12;
-		$ipatriarche = 13;
-		$inumOp = 14;
-		$iarretePrescription = 15;
-		$iorganisme = 16;
-		$iresponsable = 17;
-		$ianthropo1 = 18;
-		$ianthropo2 = 19;
-		$ipaleo = 20;
-		$ibibliographie = 21;
+		$iadresse = 3;
+		$icodePostal = 4;
+		$iannee = 5;
+		$ix = 6;
+		$iy = 7;
+		$iz = 8;
+		$itypeOp = 9;
+		$iea = 10;
+		$ioa = 11;
+		$ipatriarche = 12;
+		$inumOp = 13;
+		$iarretePrescription = 14;
+		$iorganisme = 15;
+		$iresponsable = 16;
+		$ianthropo1 = 17;
+		$ianthropo2 = 18;
+		$ipaleo = 19;
+		$ibibliographie = 20;
 		#endregion
 
 		$columns = explode(";", $line);
@@ -56,7 +57,23 @@ class Import {
 		$op = new Operation(array());
 
 		// Remplissage de l'opération
+		$op->setIdUser("ab");
+		$op->setIdCommune(-1);
 		$op->setARevoir($columns[$iarevoir]);
+		$op->setAdresse($columns[$iadresse]);
+		$op->setAnnee(intval($columns[$iannee]));
+		$op->setX(intval($columns[$ix]));
+		$op->setY(intval($columns[$iy]));
+		$op->setEA($columns[$iea]);
+		$op->setOA($columns[$ioa]);
+		$op->setPatriarche($columns[$ipatriarche]);
+		$op->setNumeroOperation($columns[$inumOp]);
+		$op->setArretePrescription($columns[$iarretePrescription]);
+		$op->setResponsable($columns[$iresponsable]);
+		$anth2 = $columns[$ianthropo2];
+		$op->setAnthropologues($columns[$ianthropo1] . (!empty($anth2) ? ",$anth2" : ""));
+		$op->setPaleopathologistes($columns[$ipaleo]);
+		$op->setBibliographie($columns[$ibibliographie]);
 
 		return $op;
 	}
