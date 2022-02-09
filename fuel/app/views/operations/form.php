@@ -234,7 +234,10 @@ View::forge("fonction/multiple_input", array(
 
 <!-- Bibliographie -->
 <div class="col-md-12">
-	<label for="form_bibliographie">Bibliographie</label>
+	<label for="form_bibliographie">
+		Bibliographie
+		(<a href="https://gallia.cnrs.fr/guide-auteurs/recommandations/" target="_blank">recommandations sur le format de GALLIA</a>)
+	</label>
 	<textarea name="bibliographie" id="form_bibliographie"
 		class="form-control" maxlength="65535"
 		title="Indiquez les références bibliographiques où sont mentionnés les détails du cas (selon les normes GALLIA/CNRS)."
