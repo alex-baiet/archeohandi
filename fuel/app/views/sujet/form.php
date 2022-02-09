@@ -416,43 +416,43 @@ Form::open(array(
 			</div>
 		<?php endforeach; ?>
 	</div>
-
-	<!-- Commentaire du diagnostic -->
-	<label for="comment_diagnostic">Commentaire du diagnostic</label>
-	<div class="input-group">
-		<textarea class="form-control" name="comment_diagnostic" rows="2" maxlength="65535"
-			title="Ecrivez ici des commentaires sur le diagnostique si besoin."
-		><?= $subject->getCommentDiagnosis(); ?></textarea>
-	</div>
-
-	<h3>Iconographie</h3>
-	<!-- Lien Nakala -->
-	<div class="row my-2">
-		<div class="col-md-auto">
-			<a href="https://nakala.fr/u/collections/10.34847/nkl.2400swmp" class="btn btn-primary" target="_blank">Aller sur Nakala</a>
-		</div>
-
-		<div class="col-md-auto">
-			<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#helpPopup">Aide <i class="bi bi-question-circle"></i></button>
-		</div>
-	</div>
-
-	<!-- Listes URL images -->
-	<?php
-	$urls = $subject->getUrlsImg();
-	if (empty($urls)) $urls[] = "";
-	?>
-
-	<?=
-	View::forge("fonction/multiple_input", array(
-		"name" => "urls_img",
-		"datas" => $urls,
-		"label" => "Lien URL de l'image",
-		"imageInput" => true
-	));
-	?>
-	
 </div>
+
+<!-- Commentaire du diagnostic -->
+<label for="comment_diagnostic">Commentaire du diagnostic</label>
+<div class="input-group">
+	<textarea class="form-control" name="comment_diagnostic" rows="2" maxlength="65535"
+		title="Ecrivez ici des commentaires sur le diagnostique si besoin."
+	><?= $subject->getCommentDiagnosis(); ?></textarea>
+</div>
+
+<h3>Iconographie</h3>
+<!-- Lien Nakala -->
+<div class="row my-2">
+	<div class="col-md-auto">
+		<a href="https://nakala.fr/u/collections/10.34847/nkl.2400swmp" class="btn btn-primary" target="_blank">Aller sur Nakala</a>
+	</div>
+
+	<div class="col-md-auto">
+		<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#helpPopup">Aide <i class="bi bi-question-circle"></i></button>
+	</div>
+</div>
+
+<!-- Listes URL images -->
+<?php
+$urls = $subject->getUrlsImg();
+if (empty($urls)) $urls[] = "";
+?>
+
+<?=
+View::forge("fonction/multiple_input", array(
+	"name" => "urls_img",
+	"datas" => $urls,
+	"label" => "Lien URL de l'image",
+	"imageInput" => true
+));
+?>
+
 
 <!-- Bouton de confirmation/retour -->
 <div class="row" style="margin-top: 10px;">
