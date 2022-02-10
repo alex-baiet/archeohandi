@@ -5,7 +5,6 @@ use Fuel\Core\Form;
 use Fuel\Core\View;
 use Model\Db\Compte;
 use Model\Db\Operation;
-use Model\Db\Organisme;
 use Model\Db\Typeoperation;
 
 /** @var string Page de destination lors de la validation du formulaire. */
@@ -41,8 +40,18 @@ Form::open(array(
 <!-- Affichage des champs -->
 <div class="row my-2 pt-1">
 
+	<!-- Departement -->
+	<div class="col-md-4">
+		<div class="form-floating">
+			<input name="departement" id="form_departement" value=""
+				type="text" class="form-control" placeholder="Département" autocomplete="off"
+				title="Indiquez le département de l'opération">
+			<label for="form_commune">Departement (ne fonctionne pas encore)</label>
+		</div>
+	</div>
+
 	<!-- Commune -->
-	<div class="col-md-6">
+	<div class="col-md-4">
 		<div class="form-floating">
 			<?php $fullName = $operation->getCommune() === null ? "" : $operation->getCommune()->fullName(); ?>
 			<input name="commune" id="form_commune" value="<?= $fullName ?>"
@@ -54,7 +63,7 @@ Form::open(array(
 	</div>
 
 	<!-- Adresse -->
-	<div class="col-md-6">
+	<div class="col-md-4">
 		<div class="form-floating">
 			<input name="adresse" id="form_adresse" value="<?= $operation->getAdresse() ?>"
 				type="text" class="form-control" placeholder="Adresse" maxlength="256"
@@ -65,11 +74,10 @@ Form::open(array(
 
 </div>
 
+<!-- <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3121224.189160384!2d2.166198738935703!3d47.108438324355085!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sfr!2sfr!4v1644502368364!5m2!1sfr!2sfr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe> -->
+<a href="https://www.google.fr/maps" target="_blank">Rechercher une position depuis Google Map</a>
 <div class="row my-2">
 
-	<!-- <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3121224.189160384!2d2.166198738935703!3d47.108438324355085!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sfr!2sfr!4v1644502368364!5m2!1sfr!2sfr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe> -->
-		
-	<a href="https://www.google.fr/maps" target="_blank">Rechercher une position depuis Google Map</a>
 	<!-- Longitude -->
 	<div class="col-md-6">
 		<div class="form-floating">
