@@ -8,8 +8,8 @@ use Model\Helper;
 
 /** Représentation d'un type d'opération dans la base de données. */
 class Typeoperation extends Model {
-	private $id;
-	private $nom;
+	private int $id;
+	private string $nom;
 
 	/**
 	 * Créer l'objet à partir des données en paramètre.
