@@ -109,10 +109,37 @@ Form::open(array(
 	</div>
 
 	<!-- Organisme -->
+	<script>
+		/** Met à jour l'affichage de l'input de l'organisme en fonction de si il existe dans la BDD. */
+		function checkOrganismeExist() {
+			const input = document.getElementById("form_organisme");
+			checkValueExist("organisme", ["nom", "=", input.value], 
+				() => { input.setCustomValidity(""); },
+				() => { input.setCustomValidity("L'organisme n'existe pas."); }
+			);
+		}
+
+		/** Ajoute un organisme à la BDD. */
+		function addOrganisme() {
+			const input = document.getElementById("form_organisme");
+			$.ajax({
+				type: "POST",
+				url: "https://archeohandi.huma-num.fr/public/fonction/add_organisme",
+				data: { name: input.value },
+				success: function (response) {
+					input.setCustomValidity("");
+				}
+			});
+		}
+	</script>
 	<div class="col-md-4">
 		<div class="form-floating">
 			<input name="organisme" id="form_organisme" class="form-control" placeholder="Organisme"
-				title="Entrez l'organisme attaché à l'opération" value="<?= $operation->getOrganisme()->getNom() ?>">
+				title="Entrez l'organisme attaché à l'opération" value="<?= $operation->getOrganisme()->getNom() ?>"
+				oninput="checkOrganismeExist()">
+				<div class="form-msg-error">
+					L'organisme n'existe pas. <a class="link-primary" style="cursor: pointer;" onclick="addOrganisme()">Ajouter l'organisme</a>
+				</div>
 			<label for="form_organimse">Organisme</label>
 			<script>addAutocomplete("form_organisme", "nom", "organisme", [["nom", "LIKE", "?%"]]);</script>
 		</div>

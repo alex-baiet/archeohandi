@@ -234,6 +234,7 @@ function addAutocomplete(id, select, table, where) {
 	$(document).on("click", `.${id}-auto-complete`, function() {
     input.value = $(this).text();
     showList.innerHTML = "";
+		if (input.oninput !== null) input.oninput();
   });
 }
 
@@ -243,6 +244,7 @@ function addAutocomplete(id, select, table, where) {
  * @param {string} id Identifiant de l'input
  * @param {string} type Type de recherche.
  * Type possible : commune, compte
+ * @deprecated Utilisez addAutocomplete qui est plus générique.
  */
 function addAutocompleteOld(id, type) {
 	// Récupération du champ
@@ -300,6 +302,30 @@ function emptyAutocompletes() {
 	for (const autocomp of autocompleteField) {
 		autocomp.innerHTML = "";
 	}
+}
+//#endregion
+
+//#region FieldCheck
+/**
+ * Vérifie qu'une valeur validant la condition existe dans la BDD.
+ * @param {string} table Table dans la BDD où rechercher.
+ * @param {string[]} where ["field", "LIKE", "input"] par exemple.
+ * @param {() => void} onExist Action à exécuter si une valeur existe.
+ * @param {() => void} onNotExist Action à exécuter si aucune valeur n'existe.
+ */
+function checkValueExist(table, where, onExist, onNotExist) {
+	$.ajax({
+		method: "POST",
+		url: "https://archeohandi.huma-num.fr/public/fonction/check_exist",
+		data: {
+			table: table,
+			where: where
+		},
+		success: function (response) {
+			if (response === "1") onExist();
+			else onNotExist();
+		}
+	});
 }
 //#endregion
 
