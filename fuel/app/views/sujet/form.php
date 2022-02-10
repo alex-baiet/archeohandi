@@ -297,7 +297,7 @@ Form::open(array(
 				title="Indiquez la commune du dépôt du sujet">
 			<label for="form_depot_commune">Commune</label>
 		</div>
-		<script>addAutocomplete("form_depot_commune", "commune");</script>
+		<script>addAutocompleteOld("form_depot_commune", "commune");</script>
 
 		<!-- Adresse du dépôt -->
 		<div class="form-floating my-2">

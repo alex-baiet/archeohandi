@@ -4,7 +4,7 @@ namespace Model\Db;
 
 use Fuel\Core\DB;
 use Fuel\Core\Model;
-use Model\Compte;
+use Model\Db\Compte;
 use Model\Helper;
 use Model\Messagehandler;
 use Model\Validation;
@@ -20,7 +20,7 @@ class Operation extends Model {
 	private string $adresse = "";
 	private float $x = 0.0;
 	private float $y = 0.0;
-	private int $idOrganisme = -1;
+	private ?int $idOrganisme = -1;
 	private int $idTypeOp = -1;
 	private string $EA = "";
 	private string $OA = "";
@@ -110,6 +110,11 @@ class Operation extends Model {
 				$account = Compte::fetchSingle($login);
 				if ($account !== null) $this->accounts[$login] = $account;
 			}
+		}
+
+		if (isset($data["organisme"])) {
+			$this->organisme = Organisme::fetchSingleFromName($data["organisme"], false);
+			$this->idOrganisme = $this->organisme !== null ? $this->organisme->getId() : null;
 		}
 
 		if (isset($data["commune"])) $this->idCommune = Commune::nameToId($data["commune"]);

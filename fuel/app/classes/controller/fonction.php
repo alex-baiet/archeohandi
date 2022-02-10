@@ -6,7 +6,8 @@ use Fuel\Core\Input;
 use Fuel\Core\Response;
 use Fuel\Core\View;
 use Model\Db\Commune;
-use Model\Compte;
+use Model\Db\Compte;
+use Model\Helper;
 
 class Controller_Fonction extends Controller {
 
@@ -38,6 +39,28 @@ class Controller_Fonction extends Controller {
 			$arr[] = new Compte($res);
 		}
 		return $arr;
+	}
+
+	public function action_autocomplete() {
+		$data = array();
+
+		$table = $_POST["table"];
+		$select = $_POST["select"];
+		$where = $_POST["where"];
+		$input = $_POST["input"];
+
+		// Préparation et exécution de la requête
+		$request = DB::select(DB::expr($select))->from($table);
+		foreach ($where as $w) {
+			$w[2] = str_replace("?", $input, $w[2]);
+			$request->or_where($w[0], $w[1], $w[2]);
+		}
+		$data["results"] = $request->execute()->as_array();
+		
+		$data["id"] = $_POST["id"];
+		$data["maxResultCount"] = 10;
+
+		return Response::forge(View::forge('fonction/autocomplete', $data));
 	}
 
 	/** Affiche une page de tous les mots permettant de compléter le début de mot "query" passé en POST. */

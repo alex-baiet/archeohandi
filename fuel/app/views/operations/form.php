@@ -3,7 +3,7 @@
 use Fuel\Core\Asset;
 use Fuel\Core\Form;
 use Fuel\Core\View;
-use Model\Compte;
+use Model\Db\Compte;
 use Model\Db\Operation;
 use Model\Db\Organisme;
 use Model\Db\Typeoperation;
@@ -49,7 +49,7 @@ Form::open(array(
 				type="text" class="form-control" placeholder="Commune" autocomplete="chrome-off"
 				title="Indiquez la commune de l'opération">
 			<label for="form_commune">Commune</label>
-			<script>addAutocomplete("form_commune", "commune");</script>
+			<script>addAutocomplete("form_commune", "CONCAT(nom, ', ', departement)", "commune", [["nom", "LIKE", "?%"]]);</script>
 		</div>
 	</div>
 
@@ -111,11 +111,10 @@ Form::open(array(
 	<!-- Organisme -->
 	<div class="col-md-4">
 		<div class="form-floating">
-			<select name="id_organisme" id="form_id_organisme" class="form-select"
-				title="Sélectionner l'organisme attaché à l'opération">
-				<?= Organisme::fetchOptions($operation->getIdOrganisme()); ?>
-			</select>
-			<label for="form_id_type_op">Organisme</label>
+			<input name="organisme" id="form_organisme" class="form-control" placeholder="Organisme"
+				title="Entrez l'organisme attaché à l'opération" value="<?= $operation->getOrganisme()->getNom() ?>">
+			<label for="form_organimse">Organisme</label>
+			<script>addAutocomplete("form_organisme", "nom", "organisme", [["nom", "LIKE", "?%"]]);</script>
 		</div>
 	</div>
 

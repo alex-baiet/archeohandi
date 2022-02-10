@@ -1,7 +1,7 @@
 <?php
 
 use Model\Commune;
-use Model\Compte;
+use Model\Db\Compte;
 
 /** @var string */
 $id = $id;

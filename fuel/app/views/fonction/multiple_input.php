@@ -62,7 +62,7 @@ $inputAttributes = isset($inputAttributes) ? $inputAttributes : array();
 							>
 						<label for="<?= "form_{$name}_$i" ?>" id="form_<?= $name ?>_label_<?= $i ?>"><?= $label ?></label>
 						<?php if (isset($autocompletion)) : ?>
-							<script>addAutocomplete("form_<?= $name ?>_<?= $i; ?>", "<?= $autocompletion ?>");</script>
+							<script>addAutocompleteOld("form_<?= $name ?>_<?= $i; ?>", "<?= $autocompletion ?>");</script>
 						<?php endif; ?>
 					</div>
 				</div>

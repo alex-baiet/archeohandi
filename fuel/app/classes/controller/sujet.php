@@ -4,7 +4,7 @@ use Fuel\Core\Controller_Template;
 use Fuel\Core\Input;
 use Fuel\Core\Response;
 use Fuel\Core\View;
-use Model\Compte;
+use Model\Db\Compte;
 use Model\Db\Operation;
 use Model\Db\Sujethandicape;
 use Model\Helper;

@@ -80,7 +80,7 @@ function addCopy(name, autoComplete = null) {
 		if (listCopy !== null) listCopy[0].remove();
 
 		// Ajout nouvelle auto complétion
-		addAutocomplete(`${id}_${num}`, autoComplete);
+		addAutocompleteOld(`${id}_${num}`, autoComplete);
 	}
 
 	return num;
@@ -179,10 +179,72 @@ function prepareFormSend() {
  * Ajoute l'autocomplétion à l'input donné en utilisant la base de données.
  * 
  * @param {string} id Identifiant de l'input
+ * @param {string} select Expression de selection.
+ * @param {string} table Table cible de recherche.
+ * @param {string[][]} where array de condition aux format ["champs", "=", "input"].
+ * Les "?" sont remplacé par la valeur du champ input appartenant à l'id.
+ */
+function addAutocomplete(id, select, table, where) {
+	// Récupération du champ
+	/** @type {HTMLFormElement} */
+	let input = document.getElementById(id);
+	if (input === null) {
+		console.error(`Le champ ${id} n'existe pas.`);
+		return;
+	}
+
+	// Création de la zone d'autocomplétion
+	let showList = document.createElement("div");
+	showList.className = "list-group";
+	showList.id = `${id}_list`;
+	showList.style.position = "absolute";
+	showList.style.zIndex = 100;
+	input.parentNode.appendChild(showList);
+	autocompleteField.push(showList);
+
+	// Assignation de l'action à faire à chaque modification du champ
+	input.onkeyup = function() {
+		let currentValue = input.value;
+
+		if (currentValue != "") {
+			// Accès à la BDD via une autre page
+      $.ajax({
+        url: "https://archeohandi.huma-num.fr/public/fonction/autocomplete.php",
+        method: "POST",
+        data: {
+					id: id,
+					select: select,
+					table: table,
+					where: where,
+					input: currentValue,
+				},
+        success: function (data) {
+					// Action effectué lors du retour de la reponse
+					showList.innerHTML = data;
+				}
+      });
+    }
+		else {
+			// Rien d'entré...
+      showList.innerHTML = "";
+    }
+	}
+
+	// Ajout action en cas de sélection d'une des autocomplétion
+	$(document).on("click", `.${id}-auto-complete`, function() {
+    input.value = $(this).text();
+    showList.innerHTML = "";
+  });
+}
+
+/**
+ * Ajoute l'autocomplétion à l'input donné en utilisant la base de données.
+ * 
+ * @param {string} id Identifiant de l'input
  * @param {string} type Type de recherche.
  * Type possible : commune, compte
  */
-function addAutocomplete(id, type) {
+function addAutocompleteOld(id, type) {
 	// Récupération du champ
 	/** @type {HTMLFormElement} */
 	let input = document.getElementById(id);

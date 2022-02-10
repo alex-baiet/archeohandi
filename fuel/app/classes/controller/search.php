@@ -2,7 +2,7 @@
 
 use Fuel\Core\Controller_Template;
 use Fuel\Core\View;
-use Model\Compte;
+use Model\Db\Compte;
 
 class Controller_Search extends Controller_Template {
 	public function action_index() {

@@ -3,7 +3,7 @@
 use Fuel\Core\Asset;
 use Fuel\Core\Form;
 use Fuel\Core\Uri;
-use Model\Compte;
+use Model\Db\Compte;
 use Model\Messagehandler;
 use Model\Redirect;
 
