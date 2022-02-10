@@ -3,6 +3,9 @@
 namespace Model\Script;
 
 use Model\Db\Operation;
+use Model\Db\Organisme;
+use Model\Db\Typeoperation;
+use Model\Helper;
 
 /** Permet de convertir des fichiers CSV en models. */
 class Import {
@@ -74,6 +77,11 @@ class Import {
 		$op->setAnthropologues($columns[$ianthropo1] . (!empty($anth2) ? ",$anth2" : ""));
 		$op->setPaleopathologistes($columns[$ipaleo]);
 		$op->setBibliographie($columns[$ibibliographie]);
+		$org = Organisme::fetchSingleFromName($columns[$iorganisme]);
+		Helper::varDump($org->getId());
+		$op->setIdOrganisme($org->getId());
+		$type = Typeoperation::fetchSingleFromName($columns[$itypeOp]);
+		$op->setIdTypeOperation($type->getId());
 
 		return $op;
 	}

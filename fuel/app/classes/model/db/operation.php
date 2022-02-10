@@ -318,6 +318,17 @@ class Operation extends Model {
 		$this->idCommune = $value;
 		$this->commune = null;
 	}
+
+	public function setIdOrganisme(int $value) {
+		$this->idOrganisme = $value;
+		$this->organisme = null;
+	}
+
+	public function setIdTypeOperation(int $value) {
+		$this->idTypeOp = $value;
+		$this->typeOp = null;
+	}
+
 	#endregion
 
 	/**
@@ -341,32 +352,10 @@ class Operation extends Model {
 			$this->adresse = Helper::secureString($this->adresse);
 
 			if ($this->annee !== null && !Helper::stringIsInt($this->annee)) $validation->invalidate("L'année indiquée doit être un nombre.");
-			if (!is_numeric($this->x)) $validation->invalidate("La position sur x (longitude) indiquée doit être un nombre.");
-			if (!is_numeric($this->y)) $validation->invalidate("La position sur y (latitude) indiquée doit être un nombre.");
 			if ($this->getCommune() === null) $validation->invalidate("La commune n'existe pas.");
 			if ($this->getOrganisme() === null) $validation->invalidate("L'organisation n'existe pas.");
 			if ($this->getTypeOperation() === null) $validation->invalidate("Le type d'opération n'existe pas.");
 			$this->aRevoir = Helper::secureString($this->aRevoir);
-
-			$res = Helper::verifAlpha($this->EA, 'alphanum');
-			if ($res === false) $validation->invalidate("La valeur \"EA\" contient des caractères interdit.");
-			else $this->EA = $res;
-
-			$res = Helper::verifAlpha($this->OA, 'alphanum');
-			if ($res === false) $validation->invalidate("La valeur \"OA\" contient des caractères interdit.");
-			else $this->OA = $res;
-
-			$res = Helper::verifAlpha($this->patriarche, 'alphanum');
-			if ($res === false) $validation->invalidate("Le patriarche contient des caractères interdit.");
-			else $this->patriarche = $res;
-
-			$res = Helper::verifAlpha($this->numeroOperation, 'alphanum');
-			if ($res === false) $validation->invalidate("Le numéro d'opération contient des caractères interdit.");
-			else $this->numeroOperation = $res;
-
-			$res = Helper::verifAlpha($this->arretePrescription, 'alphanum');
-			if ($res === false) $validation->invalidate("L'arrete de prescription contient des caractères interdit.");
-			else $this->arretePrescription = $res;
 
 			// Correction bibliographie
 			$this->bibliographie = Helper::secureString($this->bibliographie);
@@ -389,6 +378,7 @@ class Operation extends Model {
 	 * @return bool Indique le succès de l'ajout.
 	 */
 	public function saveOnDB(): bool {
+		$this->validation->resetValidation();
 		// Validation des données
 		if (!$this->validate()) return false;
 

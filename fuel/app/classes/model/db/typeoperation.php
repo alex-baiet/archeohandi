@@ -2,6 +2,7 @@
 
 namespace Model\Db;
 
+use Fuel\Core\DB;
 use Fuel\Core\Model;
 use Model\Helper;
 
@@ -37,6 +38,15 @@ class Typeoperation extends Model {
 		$valueRecover = function ($data) { return $data["id"]; };
 		$textRecover = function ($data) { return $data["nom"]; };
 		return Archeo::fetchOptions("type_operation", $valueRecover, $textRecover, $idSelected, false);
+	}
+
+	/**
+	 * Récupère le type d'opération correspondant au nom indiqué, ou le type "Indéterminé" si non trouvé.
+	 */
+	public static function fetchSingleFromName(string $name): Typeoperation {
+		$result = DB::select()->from("type_operation")->where("nom", "=", trim($name))->execute()->as_array();
+		if (empty($result)) return Typeoperation::fetchSingle(-1);
+		return new Typeoperation($result[0]); 
 	}
 
 	public function getId() { return $this->id; }

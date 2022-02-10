@@ -32,33 +32,30 @@ $operations = $operations;
 	});
 </script>
 
-<h2>Fichiers envoyés</h2>
+<div class="container">
+	<h2>Fichiers envoyés</h2>
 
-<pre>
-<?php print_r($_FILES) ?>
-</pre>
+	<pre><?php print_r($_FILES) ?></pre>
 
-<h2>Contenu des fichiers</h2>
-<pre>
-<?php
-foreach ($_FILES as $file) {
-	if ($file["error"] === 0) echo file_get_contents($file['tmp_name']);
-}
-?>
-</pre>
+	<h2>Contenu des fichiers</h2>
+	<pre>
+	<?php
+	foreach ($_FILES as $file) {
+		if ($file["error"] === 0) echo file_get_contents($file['tmp_name']);
+	}
+	?>
+	</pre>
 
-<h2>Affichages des résultats</h2>
+	<h2>Affichages des résultats</h2>
 
-<?php foreach ($operations as $op) : ?>
-	<div class="fold-parent">
-		<h3 style="background-color: <?= $op->validate() ? "#0f04" : "#f004" ?>">Operation</h3>
-		<div class="fold-content">
-			<?= $op->echoErrors() ?>
-			<pre>
-				<?php var_dump($op); ?>
-			</pre>
+	<?php foreach ($operations as $op) : ?>
+		<div class="fold-parent">
+			<h3 style="background-color: <?= $op->validate() ? "#0f04" : "#f004" ?>">Operation</h3>
+			<div class="fold-content">
+				<?= $op->echoErrors() ?>
+				<pre><?php var_dump($op); ?></pre>
+			</div>
 		</div>
-	</div>
 
-<?php endforeach; ?>
-
+	<?php endforeach; ?>
+</div>
