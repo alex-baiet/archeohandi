@@ -47,7 +47,7 @@ Form::open(array(
 			<?php $fullName = $operation->getCommune() === null ? "" : $operation->getCommune()->fullName(); ?>
 			<input name="commune" id="form_commune" value="<?= $fullName ?>"
 				type="text" class="form-control" placeholder="Commune" autocomplete="chrome-off"
-				title="Indiquez la commune de l'opération.">
+				title="Indiquez la commune de l'opération">
 			<label for="form_commune">Commune</label>
 			<script>addAutocomplete("form_commune", "commune");</script>
 		</div>
@@ -58,8 +58,8 @@ Form::open(array(
 		<div class="form-floating">
 			<input name="adresse" id="form_adresse" value="<?= $operation->getAdresse() ?>"
 				type="text" class="form-control" placeholder="Adresse" maxlength="256"
-				title="Indiquez l'adresse de l'opération.">
-			<label for="form_adresse">Adresse</label>
+				title="Indiquez l'adresse de l'opération">
+			<label for="form_adresse">Adresse ou nom du site</label>
 		</div>
 	</div>
 
@@ -72,8 +72,8 @@ Form::open(array(
 		<div class="form-floating">
 			<input name="X" id="form_X" value="<?= $operation->getX() ?>"
 				type="number" class="form-control" placeholder="Longitude" min="-180" max="180" step="any" required
-				title="Indiquez la position GPS horizontale.">
-			<div class="form-msg-error">La valeur doit être un nombre entre -180 et 180.</div>
+				title="Indiquez la position GPS horizontale">
+			<div class="form-msg-error">La valeur doit être un nombre entre -180 et 180</div>
 			<label for="form_X">Longitude</label>
 		</div>
 	</div>
@@ -83,8 +83,8 @@ Form::open(array(
 		<div class="form-floating">
 			<input name="Y" id="form_Y" value="<?= $operation->getY() ?>"
 				type="number" class="form-control" placeholder="Latitude" min="-90" max="90" step="any" required
-				title="Indiquez la position GPS verticale.">
-			<div class="form-msg-error">La valeur doit être un nombre entre -90 et 90.</div>
+				title="Indiquez la position GPS verticale">
+			<div class="form-msg-error">La valeur doit être un nombre entre -90 et 90</div>
 			<label for="form_Y">Latitude</label>
 		</div>
 	</div>
@@ -102,8 +102,8 @@ Form::open(array(
 			?>
 			<input name="annee" id="form_annee" value="<?= $year ?>"
 				type="number" class="form-control" placeholder="Année de l'opération" min="1800" max="<?= date("Y") ?>"
-				title="Mettez l'année de l'opération, ou la dernière année si l'opération s'est déroulé sur plusieurs année.">
-			<div class="form-msg-error">La valeur doit être un nombre entre 1800 et <?= date("Y") ?>.</div>
+				title="Mettez l'année de l'opération, ou la dernière année si l'opération s'est déroulé sur plusieurs année">
+			<div class="form-msg-error">La valeur doit être un nombre entre 1800 et <?= date("Y") ?></div>
 			<label for="form_annee">Année de l'opération</label>
 		</div>
 	</div>
@@ -112,7 +112,7 @@ Form::open(array(
 	<div class="col-md-4">
 		<div class="form-floating">
 			<select name="id_organisme" id="form_id_organisme" class="form-select"
-				title="Sélectionner l'organisme attaché à l'opération.">
+				title="Sélectionner l'organisme attaché à l'opération">
 				<?= Organisme::fetchOptions($operation->getIdOrganisme()); ?>
 			</select>
 			<label for="form_id_type_op">Organisme</label>
@@ -123,7 +123,7 @@ Form::open(array(
 	<div class="col-md-4">
 		<div class="form-floating">
 			<select name="id_type_op" id="form_id_type_op" class="form-select"
-				title="Sélectionner le type de l'opération.">
+				title="Sélectionner le type de l'opération">
 				<?= Typeoperation::fetchOptions($operation->getIdTypeOp()); ?>
 			</select>
 			<label for="form_id_type_op">Type d'opération</label>
@@ -137,7 +137,7 @@ Form::open(array(
 		<div class="form-floating">
 			<input name="EA" id="form_EA" value="<?= $operation->getEA() ?>"
 				type="text" class="form-control" placeholder="EA" maxlength="256"
-				title="Indiquez le numéro de l'entité archéologique.">
+				title="Indiquez le numéro de l'entité archéologique">
 			<label for="form_EA">EA</label>
 		</div>
 	</div>
@@ -180,7 +180,7 @@ Form::open(array(
 		<div class="form-floating">
 			<input name="arrete_prescription" id="form_arrete_prescription" value="<?= $operation->getArretePrescription() ?>"
 				type="text" class="form-control" placeholder="Arrêté de prescription" maxlength="256"
-				title="Indiquez le numéro de l'arrêté de prescription.">
+				title="Indiquez le numéro de l'arrêté de prescription">
 			<label for="form_arrete_prescription">Arrêté de prescription</label>
 		</div>
 	</div>
@@ -192,7 +192,7 @@ Form::open(array(
 		<div class="form-floating">
 			<input name="responsable" id="form_responsable" value="<?= $operation->getResponsable() ?>"
 				type="text" class="form-control" placeholder="Responsable de l'opération" maxlength="256" autocomplete="off"
-				title="Indiquez le responsable de l'opération, de préférence au format Prénom NOM.">
+				title="Indiquez le responsable de l'opération, de préférence au format Prénom NOM">
 			<label for="form_responsable">Responsable de l'opération</label>
 		</div>
 	</div>
@@ -210,7 +210,7 @@ View::forge("fonction/multiple_input", array(
 	"label" => "Anthropologue",
 	"inputAttributes" => array(
 		"maxlength" => "256",
-		"title" => "Indiquez le nom de l'anthropologue au format Prénom NOM."
+		"title" => "Indiquez le nom de l'anthropologue au format Prénom NOM"
 	)
 ));
 ?>
@@ -227,7 +227,7 @@ View::forge("fonction/multiple_input", array(
 	"label" => "Paleopathologiste",
 	"inputAttributes" => array(
 		"maxlength" => "256",
-		"title" => "Indiquez le nom du paléopathologiste au format Prénom NOM."
+		"title" => "Indiquez le nom du paléopathologiste au format Prénom NOM"
 	)
 ));
 ?>
@@ -240,7 +240,7 @@ View::forge("fonction/multiple_input", array(
 	</label>
 	<textarea name="bibliographie" id="form_bibliographie"
 		class="form-control" maxlength="65535"
-		title="Indiquez les références bibliographiques où sont mentionnés les détails du cas (selon les normes GALLIA/CNRS)."
+		title="Indiquez les références bibliographiques où sont mentionnés les détails du cas (selon les normes GALLIA/CNRS)"
 		><?= $operation->getBibliographie() ?></textarea>
 </div>
 
@@ -263,7 +263,7 @@ View::forge("fonction/multiple_input", array(
 	"autocompletion" => "compte",
 	"inputAttributes" => array(
 		"maxlength" => "256",
-		"title" => "Indiquez le nom d'un compte autorisé à éditer les sujets de l'opération."
+		"title" => "Indiquez le nom d'un compte autorisé à éditer les sujets de l'opération"
 	)
 ));
 ?>

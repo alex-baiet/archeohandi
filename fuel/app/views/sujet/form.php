@@ -60,8 +60,8 @@ Form::open(array(
 		<div class="form-floating">
 			<input name="NMI" id="form_NMI" value="<?= $group !== null ? $group->getNMI() : "" ?>"
 				type="number" class="form-control" placeholder="NMI" min="0"
-				title="Indiquez le Nombre Minimum d'Individu que compose le groupe dont fait parti le sujet handicapé.">
-			<div class="form-msg-error">La valeur doit être un nombre positif.</div>
+				title="Indiquez le Nombre Minimum d'Individu que compose le groupe dont fait parti le sujet handicapé">
+			<div class="form-msg-error">La valeur doit être un nombre positif</div>
 			<label for="form_NMI">NMI</label>
 		</div>
 	</div>
@@ -89,7 +89,7 @@ Form::open(array(
 				type="text" class="form-control" placeholder="" maxlength="256"
 				onclick="this.required=`required`"
 				title="Indiquez le numéro d'enregistrement du sujet">
-			<div class="form-msg-error">Veuillez indiquer une valeur pour ce champ.</div>
+			<div class="form-msg-error">Veuillez indiquer une valeur pour ce champ</div>
 			<label for="form_id_sujet_handicape">Identifiant du sujet</label>
 		</div>
 	</div>
@@ -109,7 +109,7 @@ Form::open(array(
 			<input name="age_min" id="form_age_min" value="<?= $subject->getAgeMin(); ?>"
 				type="number" class="form-control" placeholder="Âge minimum au décès" min="0" max="130" step="1" required
 				title="Indiquez l'âge minimum estimé du sujet">
-			<div class="form-msg-error">La valeur doit être un nombre entier entre 0 et 130.</div>
+			<div class="form-msg-error">La valeur doit être un nombre entier entre 0 et 130</div>
 			<label for="form_age_min">Âge minimum au décès</label>
 		</div>
 	</div>
@@ -120,7 +120,7 @@ Form::open(array(
 			<input name="age_max" id="form_age_max" value="<?= $subject->getAgeMax(); ?>"
 				type="number" class="form-control" placeholder="Âge maximum au décès" min="0" max="130" step="1" required
 				title="Indiquez l'âge maximum estimé du sujet">
-			<div class="form-msg-error">La valeur doit être un nombre entier entre 0 et 130.</div>
+			<div class="form-msg-error">La valeur doit être un nombre entier entre 0 et 130</div>
 			<label for="form_age_max">Âge maximum au décès</label>
 		</div>
 	</div>
@@ -133,7 +133,7 @@ Form::open(array(
 			<input name="dating_min" id="form_dating_min" value="<?= $subject->getDatingMin(); ?>"
 				type="number" class="form-control" placeholder="Datation minimale" min="-20000" max="1945" step="1" required
 				title="Indiquez la borne inférieure de datation du sujet">
-			<div class="form-msg-error">La valeur doit être un nombre entier entre -20000 et 1945.</div>
+			<div class="form-msg-error">La valeur doit être un nombre entier entre -20000 et 1945</div>
 			<label for="form_dating_min">Datation minimale</label>
 		</div>
 	</div>
@@ -144,7 +144,7 @@ Form::open(array(
 			<input name="dating_max" id="form_dating_max" value="<?= $subject->getDatingMax(); ?>"
 				type="number" class="form-control" placeholder="Datation maximal" min="-20000" max="1945" step="1" required
 				title="Indiquez la borne supérieure de datation du sujet">
-			<div class="form-msg-error">La valeur doit être un nombre entier entre -20000 et 1945.</div>
+			<div class="form-msg-error">La valeur doit être un nombre entier entre -20000 et 1945</div>
 			<label for="form_dating_max">Datation maximale</label>
 		</div>
 	</div>
@@ -188,7 +188,7 @@ Form::open(array(
 				),
 				array(
 					"class" => "form-select",
-					"title" => "Indiquer le type de contexte."
+					"title" => "Indiquer le type de contexte"
 				)
 			);
 			?>
@@ -212,7 +212,7 @@ Form::open(array(
 				),
 				array(
 					"class" => "form-select",
-					"title" => "Indiquez le milieu de vie de l'occupant."
+					"title" => "Indiquez le milieu de vie de l'occupant"
 				)
 			);
 			?>
@@ -234,7 +234,7 @@ Form::open(array(
 				),
 				array(
 					"class" => "form-select",
-					"title" => "Indiquez le contexte de l'occupation."
+					"title" => "Indiquez le contexte de l'occupation"
 				)
 			);
 			?>
@@ -248,7 +248,7 @@ Form::open(array(
 	<label for="form_comment_contexte">Commentaire</label>
 	<textarea name="comment_contexte" id="form_comment_contexte"
 		class="form-control" rows="2" maxlength="65535"
-		title="Ecrivez ici des commentaires sur le groupe ou la sépulture en question si cela est nécessaire."
+		title="Ecrivez ici des commentaires sur le groupe ou la sépulture en question si cela est nécessaire"
 	><?= $subject->getCommentContext(); ?></textarea>
 </div>
 <br />
@@ -256,7 +256,7 @@ Form::open(array(
 <div class="row">
 	<!-- Accessoires -->
 	<div class="col-md-6">
-		<h3>Accessoires</h3>
+		<h3>Accessoire</h3>
 		<?php $subFurnituresId = $subject->getFurnituresId(); ?>
 		<?php foreach (Mobilier::fetchAll() as $mobilier) : ?>
 			<div class="form-check form-switch">
@@ -285,7 +285,7 @@ Form::open(array(
 		<div class="form-floating my-2">
 			<input name="num_inventaire" id="form_num_inventaire" value="<?= $depot === null ? null : $depot->getNumInventaire() ?>"
 				type="text" class="form-control" placeholder="Numéro de dépôt" maxlength="256"
-				title="Indiquez le numéro du dépôt.">
+				title="Indiquez le numéro du dépôt">
 			<label for="form_num_inventaire">Numéro de dépôt</label>
 		</div>
 
@@ -294,7 +294,7 @@ Form::open(array(
 			<?php $communeName = $depot !== null && $depot->getCommune() !== null ? $depot->getCommune()->fullName() : null; ?>
 			<input name="depot_commune" id="form_depot_commune" value="<?= $communeName ?>"
 				type="text" class="form-control" placeholder="Commune" maxlength="256" autocomplete="off"
-				title="Indiquez la commune du dépôt du sujet.">
+				title="Indiquez la commune du dépôt du sujet">
 			<label for="form_depot_commune">Commune</label>
 		</div>
 		<script>addAutocomplete("form_depot_commune", "commune");</script>
@@ -395,7 +395,7 @@ Form::open(array(
 
 	<div class="col-md-6">
 		<!-- Appareils de compensation -->
-		<h3>Appareils compensatoire</h3>
+		<h3>Appareil compensatoire</h3>
 		<?php foreach (Appareil::fetchAll() as $item) : ?>
 			<div class="form-check form-switch">
 				<label for="form_appareils_<?= $item->getId() ?>" class="form-check-label"><?= $item->getName() ?></label>
@@ -406,7 +406,7 @@ Form::open(array(
 		<?php endforeach; ?>
 
 		<!-- Pathologies -->
-		<h4 style="margin-top: 30px;">Pathologies infectieuses</h4>
+		<h4 style="margin-top: 30px;">Pathologie infectieuse</h4>
 		<?php foreach (Pathology::fetchAll() as $pathology) : ?>
 			<div class="form-check form-switch">
 				<label for="form_pathologies_<?= $pathology->getId() ?>" class="form-check-label"><?= $pathology->getName() ?></label>
@@ -422,7 +422,7 @@ Form::open(array(
 <label for="comment_diagnostic">Commentaire du diagnostic</label>
 <div class="input-group">
 	<textarea class="form-control" name="comment_diagnostic" rows="2" maxlength="65535"
-		title="Ecrivez ici des commentaires sur le diagnostique si besoin."
+		title="Ecrivez ici des commentaires sur le diagnostic si besoin"
 	><?= $subject->getCommentDiagnosis(); ?></textarea>
 </div>
 
@@ -491,7 +491,7 @@ View::forge("fonction/multiple_input", array(
 					c'est que votre image a bien été ajoutée au sujet !<br>
 					<br>
 					Il est aussi possible d'importer des images provenant d'autres sites, mais attention,
-					si les images sur ces sites sont supprimées, elles ne seront plus disponible ici non plus.
+					si les images sur ces sites sont supprimées, elles ne seront plus disponibles ici non plus.
 				</p>
 			</div>
 			<div class="modal-footer">

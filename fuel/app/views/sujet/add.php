@@ -20,7 +20,7 @@ Asset::js("form.js");
 	<?php $op = Operation::fetchSingle($idOperation); ?>
 	<p class="text-muted">
 		Opération "<?= $op->getNomOp(); ?>"<br>
-		Pour plus d'informations sur un champ, laissez la souris au dessus du champ pour afficher un texte d'aide.
+		Pour plus d'informations, laissez la souris au dessus du champ pour afficher un texte d'aide.
 	</p>
 
 	<?php

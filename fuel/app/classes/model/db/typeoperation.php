@@ -15,7 +15,7 @@ class Typeoperation extends Model {
 	 * Créer l'objet à partir des données en paramètre.
 	 */
 	public function __construct(array $data) {
-		$this->id = $data["id"];
+		$this->id = intval($data["id"]);
 		$this->nom = $data["nom"];
 	}
 
