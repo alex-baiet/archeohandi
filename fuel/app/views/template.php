@@ -19,7 +19,7 @@ use Model\Redirect;
 
 	<!-- CSS -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
-	<?= Asset::css('bootstrap.min.css') ?>
+	<?= Asset::css('bootstrap/bootstrap.min.css') ?>
 	<?= Asset::css('button.css') ?>
 	<?= Asset::css('form.css') ?>
 	<?= Asset::css('global.css') ?>
