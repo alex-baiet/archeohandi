@@ -28,18 +28,24 @@ use Fuel\Core\Asset;
 		</div>
 	</div>
 </div>
+
+<!-- Logos -->
 <div class="container">
 	<div style="text-align: center;">
-		<?php
-		function echoLogo(string $img) {
-			echo Asset::img("logo/$img", array('style' => "width: 100 px; height: 50px; margin: 15px;", "alt" => $img));
-		}
-
-		echoLogo("inrap.jpg");
-		echoLogo("creaah.png");
-		echoLogo("artehis.jpg");
-		echoLogo("cnrs.png");
-		echo Asset::img("logo/adn.jpg", array('style' => "width: 100 px; height: 80px; margin: 15px;", "alt" => "adn.jpg"));
-		?>
+		<a href="https://www.inrap.fr/" target="_blank">
+			<?= Asset::img("logo/inrap.jpg", array('class' => "logo", "alt" => "inrap")) ?>
+		</a>
+		<a href="https://creaah.cnrs.fr/" target="_blank">
+			<?= Asset::img("logo/creaah.png", array('class' => "logo", "alt" => "creaah")) ?>
+		</a>
+		<a href="https://artehis.u-bourgogne.fr/" target="_blank">
+			<?= Asset::img("logo/artehis.jpg", array('class' => "logo", "alt" => "artehis")) ?>
+		</a>
+		<a href="https://www.cnrs.fr/" target="_blank">
+			<?= Asset::img("logo/cnrs.png", array('class' => "logo", "alt" => "cnrs")) ?>
+		</a>
+		<a href="https://archeonec.hypotheses.org/" target="_blank">
+			<?= Asset::img("logo/adn.jpg", array('class' => "logo", "alt" => "adn", "style" => "height: 80px;")) ?>
+		</a>
 	</div>
 </div>
