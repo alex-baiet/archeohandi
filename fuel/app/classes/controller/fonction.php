@@ -40,20 +40,21 @@ class Controller_Fonction extends Controller {
 		}
 		return $arr;
 	}
-
+	/**
+	 * Affiche une page de tous les mots permettant de compléter le début de mot passé en POST.
+	 */
 	public function action_autocomplete() {
 		$data = array();
 
 		$table = $_POST["table"];
 		$select = $_POST["select"];
 		$where = $_POST["where"];
-		$input = $_POST["input"];
 
 		// Préparation et exécution de la requête
 		$request = DB::select(DB::expr($select))->from($table);
 		foreach ($where as $w) {
-			$w[2] = str_replace("?", $input, $w[2]);
-			$request->or_where($w[0], $w[1], $w[2]);
+			if (isset($w[3]) && $w[3] === "or") $request->or_where($w[0], $w[1], $w[2]);
+			else $request->and_where($w[0], $w[1], $w[2]);
 		}
 		$data["results"] = $request->execute()->as_array();
 		

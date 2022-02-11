@@ -175,13 +175,84 @@ function prepareFormSend() {
 //#endregion
 
 //#region Autocompletion
+
+/**
+ * Récupère une liste selon les conditions indiquées, utilisable dans onResult.
+ * 
+ * @param {string} id Identifiant de l'input
+ * @param {string} select Expression de selection.
+ * @param {string} table Table cible de recherche.
+ * @param {string[][]} where array de condition aux format ["champs", "=", "input"].
+ * @param {(result: string) => void} onResult Action a exécuté lors de la réception du résultat.
+ */
+function autocomplete(id, select, table, where, onResult) {
+	$.ajax({
+		url: "https://archeohandi.huma-num.fr/public/fonction/autocomplete.php",
+		method: "POST",
+		data: {
+			id: id,
+			select: select,
+			table: table,
+			where: where
+		},
+		success: onResult
+	});
+}
+
+/**
+ * Ajoute l'autocomplétion pour le champ des communes uniquement.
+ */
+ function addAutocompleteCommune() {
+	const id = "form_commune";
+	// Récupération des champ
+	let inputCom = document.getElementById(id);
+	let inputDep = document.getElementById(`form_departement`);
+	if (inputCom === null) {
+		console.error(`Le champ ${id} n'existe pas.`);
+		return;
+	}
+
+	// Récupération de la liste
+	let showList = document.getElementById(`${id}_list`);
+
+	// Assignation de l'action à faire à chaque modification du champ
+	inputCom.onkeyup = function() {
+		if (inputCom.value != "") {
+			let where = [["nom", "LIKE", `${inputCom.value}%`]];
+			if (inputDep.value != "") {
+				where.push(["departement", "=", inputDep.value, "and"])
+			}
+			// Autocompletion
+			autocomplete(
+				`form_commune`, `CONCAT(nom, ', ', departement)`, `commune`, where,
+				(data) => { showList.innerHTML = data; }
+			);
+    }
+		else {
+			// Rien d'entré...
+      showList.innerHTML = "";
+    }
+	}
+
+	// Ajout action en cas de sélection d'une des autocomplétion
+	$(document).on("click", `.${id}-auto-complete`, function() {
+		/** @type {string} */
+		const txt = $(this).text();
+		const splited = txt.split(", ");
+    inputCom.value = splited[0];
+    inputDep.value = splited[1];
+    showList.innerHTML = "";
+		if (inputCom.oninput !== null) inputCom.oninput();
+  });
+}
+
 /**
  * Ajoute l'autocomplétion à l'input donné en utilisant la base de données.
  * 
  * @param {string} id Identifiant de l'input
  * @param {string} select Expression de selection.
  * @param {string} table Table cible de recherche.
- * @param {string[][]} where array de condition aux format ["champs", "=", "input"].
+ * @param {string[][]} where array de condition aux format ["champs", "=", "input", "and"].
  * Les "?" sont remplacé par la valeur du champ input appartenant à l'id.
  */
 function addAutocomplete(id, select, table, where) {
@@ -194,11 +265,10 @@ function addAutocomplete(id, select, table, where) {
 	}
 
 	// Création de la zone d'autocomplétion
+	// TODO: vérifier qu'un champ n'existe pas déjà
 	let showList = document.createElement("div");
 	showList.className = "list-group";
 	showList.id = `${id}_list`;
-	showList.style.position = "absolute";
-	showList.style.zIndex = 100;
 	input.parentNode.appendChild(showList);
 	autocompleteField.push(showList);
 
@@ -207,22 +277,19 @@ function addAutocomplete(id, select, table, where) {
 		let currentValue = input.value;
 
 		if (currentValue != "") {
-			// Accès à la BDD via une autre page
-      $.ajax({
-        url: "https://archeohandi.huma-num.fr/public/fonction/autocomplete.php",
-        method: "POST",
-        data: {
-					id: id,
-					select: select,
-					table: table,
-					where: where,
-					input: currentValue,
-				},
-        success: function (data) {
-					// Action effectué lors du retour de la reponse
-					showList.innerHTML = data;
-				}
-      });
+
+			// Copie du where
+			let whereCopy = JSON.parse(JSON.stringify(where));
+			for (let i = 0; i<whereCopy.length; i++) {
+				whereCopy[i][2] = whereCopy[i][2].replace(/\?/g, currentValue)
+			}
+
+			// Autocompletion
+			autocomplete(
+				id, select, table, whereCopy,
+				(data) => { showList.innerHTML = data; }
+			);
+
     }
 		else {
 			// Rien d'entré...

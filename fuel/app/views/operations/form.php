@@ -46,7 +46,8 @@ Form::open(array(
 			<input name="departement" id="form_departement" value=""
 				type="text" class="form-control" placeholder="Département" autocomplete="off"
 				title="Indiquez le département de l'opération">
-			<label for="form_commune">Departement (ne fonctionne pas encore)</label>
+			<label for="form_departement">Departement (ne fonctionne pas encore)</label>
+			<div class="list-group" id="form_departement_list"></div>
 		</div>
 	</div>
 
@@ -58,7 +59,8 @@ Form::open(array(
 				type="text" class="form-control" placeholder="Commune" autocomplete="chrome-off"
 				title="Indiquez la commune de l'opération">
 			<label for="form_commune">Commune</label>
-			<script>addAutocomplete("form_commune", "CONCAT(nom, ', ', departement)", "commune", [["nom", "LIKE", "?%"]]);</script>
+			<div class="list-group" id="form_commune_list"></div>
+			<script>addAutocompleteCommune();</script>
 		</div>
 	</div>
 

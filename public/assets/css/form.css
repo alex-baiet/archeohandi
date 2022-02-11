@@ -28,3 +28,8 @@
 .form-control:invalid + .form-msg-error {
 	display: block;
 }
+
+.list-group {
+	position: absolute;
+	z-index: 100;
+}
