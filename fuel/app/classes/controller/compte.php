@@ -12,7 +12,7 @@ use Model\Redirect;
  * Gestion des pages des connexion et de création ici
  */
 class Controller_Compte extends Controller_Template {
-	private const DEBUG = false;
+	private const DEBUG = true;
 	/** Token de sécurité devant être validé pour pouvoir créer un compte. */
 	private const TOKEN = "c7e626f1f507f3798570649c91ff9a5e";
 
@@ -23,25 +23,26 @@ class Controller_Compte extends Controller_Template {
 		$data = array();
 
 		if (isset($_POST["create"])) {
-			$firstName = Helper::secureString($_POST["prenom"]);
-			$lastName = Helper::secureString($_POST["nom"]);
-			$email = Helper::secureString($_POST["email"]);
+			$_POST["prenom"] = Helper::secureString($_POST["prenom"]);
+			$_POST["nom"] = Helper::secureString($_POST["nom"]);
+			$_POST["email"] = Helper::secureString($_POST["email"]);
+			$_POST["organisme"] = Helper::secureString($_POST["organisme"]);
 
 			// Validation des champs
 			$error = false;
-			if (empty($firstName)) {
+			if (empty($_POST["prenom"])) {
 				$error = true;
 				Messagehandler::prepareAlert("Indiquez votre prénom.", "danger");
 			}
-			if (empty($lastName)) {
+			if (empty($_POST["nom"])) {
 				$error = true;
 				Messagehandler::prepareAlert("Indiquez votre nom.", "danger");
 			}
-			if (!$error && empty(Compte::generateLogin($firstName, $lastName))) {
+			if (!$error && empty(Compte::generateLogin($_POST["prenom"], $_POST["nom"]))) {
 				$error = true;
 				Messagehandler::prepareAlert("Les prénom et nom donné ne permettent pas de créer un login. Ecrivez-les en alphabet latin.");
 			}
-			if (Compte::emailExist($email)) {
+			if (Compte::emailExist($_POST["email"])) {
 				$error = true;
 				Messagehandler::prepareAlert("Un compte avec le mail donné existe déjà.", "danger");
 			}
@@ -53,11 +54,7 @@ class Controller_Compte extends Controller_Template {
 					// "alex.baiet3@gmail.com",
 					$to,
 					"Demande d'accès Archéologie du handicap",
-					View::forge("compte/mail", array(
-						"firstName" => $firstName,
-						"lastName" => $lastName,
-						"email" => $email,
-						"msg" => $_POST["msg"]))
+					View::forge("compte/mail", array("data" => $_POST))
 				);
 
 				if ($result) {
@@ -94,19 +91,6 @@ class Controller_Compte extends Controller_Template {
 		$this->template->content = View::forge('compte/connexion', $data);
 	}
 
-	/** @deprecated La redirection n'est plus utilisé. */
-	public function action_creation_redirection() {
-
-		Helper::startSession();
-
-		if (!isset($_POST["email"])) Response::redirect("/accueil");
-		$_SESSION["email"] = $_POST["email"];
-		$_SESSION["prenom"] = $_POST["prenom"];
-		$_SESSION["nom"] = $_POST["nom"];
-
-		Response::redirect("/compte/creation_confirmation");
-	}
-
 	/** Page admin uniquement : permet de créer le compte */
 	public function action_creation_confirmation() {
 
@@ -114,7 +98,9 @@ class Controller_Compte extends Controller_Template {
 		$email = $_POST["email"];
 		$firstName = $_POST["prenom"];
 		$lastName = $_POST["nom"];
+		$lastName = $_POST["nom"];
 		$token = $_POST["token"];
+		$organisme = $_POST["organisme"];
 
 		$login = null;
 		$pw = null;
@@ -133,7 +119,7 @@ class Controller_Compte extends Controller_Template {
 		
 		if (!$error) {
 			// Création du compte
-			if (Compte::create($firstName, $lastName, $email, $login, $pw)) {
+			if (Compte::create($firstName, $lastName, $email, $login, $pw, $organisme)) {
 				Messagehandler::prepareAlert("Compte créé !", "success");
 
 				// Mail de confirmation de la création de compte

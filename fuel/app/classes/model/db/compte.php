@@ -64,8 +64,16 @@ class Compte {
 	}
 
 	#region Création de compte
-	/** Créer un nouveau compte dans la BDD. */
-	public static function create(string $firstName, string $lastName, string $email, &$newLogin, &$newPassword): bool {
+	/**
+	 * Créer un nouveau compte dans la BDD.
+	 * @param string $firstName 
+	 * @param string $lastName
+	 * @param string $email
+	 * @param string &$newLogin Login fraîchement généré pour le compte.
+	 * @param string &$newPassword Nouveau mot de passe généré du compte.
+	 * @param string $organisme 
+	 */
+	public static function create(string $firstName, string $lastName, string $email, ?string &$newLogin, ?string &$newPassword, string $organisme): bool {
 		if (Compte::emailExist($email)) return false;
 
 		$login = Compte::generateLogin($firstName, $lastName);
@@ -79,6 +87,7 @@ class Compte {
 				"prenom" => $firstName,
 				"nom" => $lastName,
 				"email" => $email,
+				"organisme" => $organisme,
 			))
 			->execute();
 

@@ -42,6 +42,9 @@ $defaultAttr = array("type" => "text", "class" => "form-control", "placeholder" 
 		<!-- Email -->
 		<div class="row mt-4" >
 			<div class="col-md">
+				<p class="text-muted" style="margin-bottom:0;">
+					Une fois le compte créé, vous recevrez un message au mail donné.
+				</p>
 				<div class="form-floating">
 					<input type="email" class="form-control" name="email" class="form_email" value="<?= Helper::arrayGetString("email", $_POST) ?>"
 						placeholder="Email" autocomplete="off"
@@ -49,9 +52,17 @@ $defaultAttr = array("type" => "text", "class" => "form-control", "placeholder" 
 					<div class="form-msg-error">Le mail n'est pas valide.</div>
 					<label for="form_email">Email</label>
 				</div>
-				<p class="text-muted" style="margin-bottom:0;">
-					<br>Une fois le compte créé, vous recevrez un message au mail donné.
-				</p>
+			</div>
+		</div>
+
+		<!-- Organisme -->
+		<div class="row mt-4" >
+			<div class="col-md">
+				<div class="form-floating">
+					<input type="text" class="form-control" name="organisme" class="form_organisme" value="<?= Helper::arrayGetString("organisme", $_POST) ?>"
+						placeholder="Organisme">
+					<label for="form_organisme">Organisme</label>
+				</div>
 			</div>
 		</div>
 
