@@ -117,7 +117,9 @@ class Operation extends Model {
 			$this->idOrganisme = $this->organisme !== null ? $this->organisme->getId() : null;
 		}
 
-		if (isset($data["commune"])) $this->idCommune = Commune::nameToId($data["commune"]);
+		if (isset($data["commune"]) && isset($data["departement"])) {
+			$this->idCommune = Commune::nameToId($data["commune"].', '.$data["departement"]);
+		}
 	}
 
 	/**

@@ -194,10 +194,10 @@ $subject = $subject;
 		?>
 			<?php if (Nakalaimg::urlIsNakalaImg($url)) : ?>
 				<a href="<?= Nakalaimg::urlImgToUrlNakala($url); ?>" target="_blank">
-					<img src="<?= $url ?>" alt="Image indisponible" style="height: 300px;">
+					<img src="<?= $url ?>" alt="" style="height: 300px;">
 				</a>
 			<?php else : ?>
-				<img src="<?= $url ?>" alt="Image indisponible" style="width: 400px;">
+				<img src="<?= $url ?>" alt="" style="width: 400px;">
 			<?php endif; ?>
 		<?php endfor; ?>
 	</section>

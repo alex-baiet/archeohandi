@@ -41,12 +41,13 @@ Form::open(array(
 <div class="row my-2 pt-1">
 
 	<!-- Departement -->
+	<?php $commune = $operation->getCommune(); ?>
 	<div class="col-md-4">
 		<div class="form-floating">
-			<input name="departement" id="form_departement" value=""
+			<input name="departement" id="form_departement" value="<?= $commune !== null ? $commune->getDepartement() : null ?>"
 				type="text" class="form-control" placeholder="Département" autocomplete="off"
 				title="Indiquez le département de l'opération">
-			<label for="form_departement">Departement (ne fonctionne pas encore)</label>
+			<label for="form_departement">Departement</label>
 			<div class="list-group" id="form_departement_list"></div>
 		</div>
 	</div>
@@ -54,8 +55,7 @@ Form::open(array(
 	<!-- Commune -->
 	<div class="col-md-4">
 		<div class="form-floating">
-			<?php $fullName = $operation->getCommune() === null ? "" : $operation->getCommune()->fullName(); ?>
-			<input name="commune" id="form_commune" value="<?= $fullName ?>"
+			<input name="commune" id="form_commune" value="<?= $commune !== null ? $commune->getNom() : null ?>"
 				type="text" class="form-control" placeholder="Commune" autocomplete="chrome-off"
 				title="Indiquez la commune de l'opération">
 			<label for="form_commune">Commune</label>
