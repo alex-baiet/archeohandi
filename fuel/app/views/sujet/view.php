@@ -17,7 +17,7 @@ $subject = $subject;
 
 <!-- Entête de la page -->
 <div class="container-xl">
-	<h1 class="m-2">Sujet <?= $subject->getIdSujetHandicape(); ?></h1>
+	<h1 class="m-2">Sujet n°<?= $subject->getId(); ?> <em>"<?= $subject->getIdSujetHandicape() ?>"</em></h1>
 	<p class="text-muted">
 		Ici vous retrouvez toutes les informations du sujet <strong><?= $subject->getIdSujetHandicape(); ?></strong>.
 	</p>

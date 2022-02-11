@@ -122,7 +122,8 @@ $sujets = $operation->getSubjects();
 					<table class="table table-striped table-hover table-bordered sticky" data-toggle="table" data-search="true">
 						<thead>
 							<tr class="text-center">
-								<th scope="col">Identifiant</th>
+								<th scope="col">Numéro</th>
+								<th scope="col">Nom</th>
 								<th scope="col">Sexe</th>
 								<th scope="col">Datation</th>
 								<th scope="col">Milieu de vie</th>
@@ -141,6 +142,7 @@ $sujets = $operation->getSubjects();
 								$typeSepulture = Typesepulture::fetchSingle($sujet->getIdTypeSepulture());
 							?>
 								<tr class="text-center">
+									<td><?= $sujet->getId()?></td>
 									<td><?= $sujet->getIdSujetHandicape()?></td>
 									<td><?= $sujet->getSexe() ?></td>
 									<td><?= "{$sujet->getDatingMin()} - {$sujet->getDatingMax()}" ?></td>
