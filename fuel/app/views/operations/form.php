@@ -38,28 +38,67 @@ Form::open(array(
 <h3 class="text-center">Opération</h3>
 
 <!-- Affichage des champs -->
-<div class="row my-2 pt-1">
+<div class="row my-4">
 
-	<!-- Departement -->
 	<?php $commune = $operation->getCommune(); ?>
+	<!-- Departement -->
+	<script>
+		/** Permet de vérifier que le département existe. */
+		function checkDepartementExist() {
+			/** @type {HTMLButtonElement} */
+			const field = document.getElementById("form_departement");
+			checkValueExist(
+				"commune",
+				[["departement", "=", field.value]],
+				() => {
+					field.setCustomValidity("");
+					document.getElementById("form_commune").oninput();
+				},
+				() => { field.setCustomValidity("Le departement n'existe pas."); }
+			);
+		}
+	</script>
 	<div class="col-md-4">
 		<div class="form-floating">
 			<input name="departement" id="form_departement" value="<?= $commune !== null ? $commune->getDepartement() : null ?>"
 				type="text" class="form-control" placeholder="Département" autocomplete="off"
-				title="Indiquez le département de l'opération">
-			<label for="form_departement">Departement</label>
-			<div class="list-group" id="form_departement_list"></div>
+				title="Indiquez le département de l'opération"
+				oninput="checkDepartementExist()">
+			<div class="form-msg-error">Le département n'existe pas.</div>
+			<label for="form_departement">Nom du département</label>
+			<script>addAutocomplete(`form_departement`, `DISTINCT departement`, `commune`, [[`departement`, `LIKE`, `?%`]])</script>
 		</div>
 	</div>
 
 	<!-- Commune -->
+	<?php $nameCom = "commune" ?>
+	<script>
+		/** Permet de vérifier que le département existe. */
+		function checkCommuneExist() {
+			/** @type {HTMLButtonElement} */
+			const fieldCom = document.getElementById("form_<?= $nameCom ?>");
+			/** @type {HTMLButtonElement} */
+			const fieldDep = document.getElementById("form_departement");
+			
+			let where = [["nom", "=", fieldCom.value]];
+			if (fieldDep.value != "" && fieldDep.validity.valid) where.push(["departement", "=", fieldDep.value]);
+			
+			checkValueExist(
+				"commune",
+				where,
+				() => { fieldCom.setCustomValidity(""); },
+				() => { fieldCom.setCustomValidity("Le departement n'existe pas."); }
+			);
+		}
+	</script>
 	<div class="col-md-4">
 		<div class="form-floating">
-			<input name="commune" id="form_commune" value="<?= $commune !== null ? $commune->getNom() : null ?>"
+			<input name="<?= $nameCom ?>" id="form_<?= $nameCom ?>" value="<?= $commune !== null ? $commune->getNom() : null ?>"
 				type="text" class="form-control" placeholder="Commune" autocomplete="chrome-off"
-				title="Indiquez la commune de l'opération">
-			<label for="form_commune">Commune</label>
-			<div class="list-group" id="form_commune_list"></div>
+				title="Indiquez la commune de l'opération"
+				oninput="checkCommuneExist()">
+			<div class="form-msg-error">La commune n'existe pas.</div>
+			<label for="form_<?= $nameCom ?>">Commune</label>
 			<script>addAutocompleteCommune();</script>
 		</div>
 	</div>
@@ -126,7 +165,7 @@ Form::open(array(
 		/** Met à jour l'affichage de l'input de l'organisme en fonction de si il existe dans la BDD. */
 		function checkOrganismeExist() {
 			const input = document.getElementById("form_organisme");
-			checkValueExist("organisme", ["nom", "=", input.value], 
+			checkValueExist("organisme", [["nom", "=", input.value]], 
 				() => { input.setCustomValidity(""); },
 				() => { input.setCustomValidity("L'organisme n'existe pas."); }
 			);

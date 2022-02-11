@@ -212,14 +212,19 @@ function autocomplete(id, select, table, where, onResult) {
 		return;
 	}
 
-	// Récupération de la liste
-	let showList = document.getElementById(`${id}_list`);
+	// Création de la zone d'autocomplétion
+	// TODO: vérifier qu'un champ n'existe pas déjà
+	let showList = document.createElement("div");
+	showList.className = "list-group";
+	showList.id = `${id}_list`;
+	inputCom.parentNode.appendChild(showList);
+	autocompleteField.push(showList);
 
 	// Assignation de l'action à faire à chaque modification du champ
 	inputCom.onkeyup = function() {
 		if (inputCom.value != "") {
 			let where = [["nom", "LIKE", `${inputCom.value}%`]];
-			if (inputDep.value != "") {
+			if (inputDep.value != "" && inputDep.validity.valid) {
 				where.push(["departement", "=", inputDep.value, "and"])
 			}
 			// Autocompletion
@@ -242,7 +247,8 @@ function autocomplete(id, select, table, where, onResult) {
     inputCom.value = splited[0];
     inputDep.value = splited[1];
     showList.innerHTML = "";
-		if (inputCom.oninput !== null) inputCom.oninput();
+		inputCom.oninput();
+		inputDep.oninput();
   });
 }
 

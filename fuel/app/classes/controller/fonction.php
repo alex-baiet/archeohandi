@@ -11,7 +11,10 @@ use Model\Helper;
 
 class Controller_Fonction extends Controller {
 
-	/** @return Commune[] */
+	/** 
+	 * @return Commune[]
+	 * @deprecated
+	 */
 	private static function autoCompleteCommune(string $input): array {
 		$results = DB::select("id", "nom", "departement")
 			->from("commune")
@@ -102,7 +105,14 @@ class Controller_Fonction extends Controller {
 		$table = $_POST["table"];
 		$where = $_POST["where"];
 
-		$results = DB::select()->from($table)->where($where[0], $where[1], $where[2])->execute()->as_array();
+		// Préparation et exécution de la requête
+		$query = DB::select()->from($table);
+		foreach ($where as $w) {
+			if (isset($w[3]) && $w[3] === "or") $query->or_where($w[0], $w[1], $w[2]);
+			else $query->and_where($w[0], $w[1], $w[2]);
+		}
+		$results = $query->execute()->as_array();
+
 		return empty($results) ? "0" : "1";
 	}
 
