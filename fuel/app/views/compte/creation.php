@@ -9,7 +9,10 @@ $defaultAttr = array("type" => "text", "class" => "form-control", "placeholder" 
 <div class="container">
 	<h1 class="m-2">Création d'un compte</h1>
 
-	<p class="text-muted">Vous pouvez demander la création d'un compte via ce formulaire.</p>
+	<p class="text-muted">
+		Vous pouvez demander la création d'un compte via ce formulaire.<br>
+		Vous avez déjà un compte ? <a href="/public/compte/connexion">Se connecter</a>
+	</p>
 
 	<form action="" method="POST" style="background-color: #F5F5F5; padding: 10px;">
 

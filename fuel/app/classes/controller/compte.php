@@ -12,7 +12,7 @@ use Model\Redirect;
  * Gestion des pages des connexion et de création ici
  */
 class Controller_Compte extends Controller_Template {
-	private const DEBUG = true;
+	private const DEBUG = false;
 	/** Token de sécurité devant être validé pour pouvoir créer un compte. */
 	private const TOKEN = "c7e626f1f507f3798570649c91ff9a5e";
 

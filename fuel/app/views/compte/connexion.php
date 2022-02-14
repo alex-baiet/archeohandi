@@ -7,6 +7,9 @@ use Model\Helper;
 
 <div class="container">
 	<h1 class="m-2">Connexion</h1>
+	<p class="text-muted">
+		Vous n'avez pas de compte ? <a href="/public/compte/creation">Créer un compte</a>
+	</p>
 
 	<?= Form::open(array("method" => "POST", "style" => "background-color: #F5F5F5; padding: 10px;")); ?>
 		<!-- Login -->
