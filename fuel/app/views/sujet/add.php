@@ -16,11 +16,12 @@ Asset::js("form.js");
 ?>
 
 <div class="container">
-	<h1 class="m-2">Ajout du sujet handicapé n°<?= Sujethandicape::nextId() ?></h1>
+	<h1 class="m-2">Ajout d'un sujet handicapé</h1>
 	<?php $op = Operation::fetchSingle($idOperation); ?>
 	<p class="text-muted">
 		Opération "<?= $op->getNomOp(); ?>"<br>
-		Pour plus d'informations, laissez la souris au dessus du champ pour afficher un texte d'aide.
+		Pour plus d'informations, laissez la souris au dessus du champ pour afficher un texte d'aide.<br>
+		Le numéro du sujet ne sera attribué que après sa création. Vous pourrez ensuite y accéder en consultant le sujet.
 	</p>
 
 	<?php

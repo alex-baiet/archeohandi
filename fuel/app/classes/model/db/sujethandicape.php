@@ -207,7 +207,11 @@ class Sujethandicape extends Model {
 		return null;
 	}
 
-	/** Récupère l'id du prochain ajout de sujet. */
+	/**
+	 * Récupère l'id du prochain ajout de sujet.
+	 * @todo Si plusieurs personnes tentent d'ajouter des sujets en même temps, le numéro peut sera faux pour plusieurs de ces personnes.
+	 * Il faut corriger ça.
+	 */
 	public static function nextId(): int {
 		$req = "SELECT AUTO_INCREMENT
 			FROM information_schema.tables
