@@ -8,7 +8,7 @@ use Model\Db\Sujethandicape;
 /** @var int */
 $idOperation = $idOperation;
 /** @var Sujethandicape */
-$subject;
+if (isset($subject)) $subject = $subject;
 
 ?>
 <?=
@@ -16,7 +16,7 @@ Asset::js("form.js");
 ?>
 
 <div class="container">
-	<h1 class="m-2">Ajout d'un sujet handicapé</h1>
+	<h1 class="m-2">Ajout du sujet handicapé n°<?= Sujethandicape::nextId() ?></h1>
 	<?php $op = Operation::fetchSingle($idOperation); ?>
 	<p class="text-muted">
 		Opération "<?= $op->getNomOp(); ?>"<br>

@@ -207,6 +207,14 @@ class Sujethandicape extends Model {
 		return null;
 	}
 
+	/** Récupère l'id du prochain ajout de sujet. */
+	public static function nextId(): int {
+		$req = "SELECT AUTO_INCREMENT
+			FROM information_schema.tables
+			WHERE table_name = 'sujet_handicape'";
+		return intval(DB::query($req)->execute()->as_array()[0]["AUTO_INCREMENT"]);
+	}
+
 	#region Getters
 	public function getId() { return $this->id; }
 	public function getIdSujetHandicape() { return $this->idSujetHandicape; }

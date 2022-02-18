@@ -436,6 +436,14 @@ Form::open(array(
 	<div class="col-md-auto">
 		<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#helpPopup">Aide <i class="bi bi-question-circle"></i></button>
 	</div>
+
+	<p>
+		<!-- Département, ville, adresse, n° de sépulture, type de pathologie -->
+		<?php
+		//$commune = $subject->getDepot()->getCommune();
+		?>
+		<?= ""//"{$commune->getDepartement()}, {$commune->getNom()}, {$subject->getDepot()->getAdresse()}, {$subject->getTypeSepulture()->getNom()}" ?>
+	</p>
 </div>
 
 <!-- Listes URL images -->
