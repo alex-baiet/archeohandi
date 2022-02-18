@@ -8,7 +8,10 @@ use Fuel\Core\Asset;
 			<span style="font-weight: 100;">Base de données</span> Archéologie du handicap
 			<i class="bi bi-server"></i>
 		</h1>
-		<p class="lead">Pour accéder à la base, cliquer sur le bouton ci-dessous</p>
+		<p class="lead">
+			Pour accéder à la base, cliquer sur le bouton ci-dessous<br>
+			Avant la saisie, <b>lire absolument</b> le mode d'emploi disponible dans la barre de navigation
+		</p>
 		<a class="btn btn-lg btn-primary" href="./operations" role="button">&raquo; Cliquer</a>
 	</div>
 </main>

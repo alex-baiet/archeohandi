@@ -67,6 +67,10 @@ use Model\Redirect;
 						<a class="nav-link" href="/public/search">Rechercher</a>
 					</li>
 
+					<li class="nav-item active">
+						<a class="nav-link" href="/public/assets/other/mode_emploi.pdf" target="_blank">Mode d'emploi</a>
+					</li>
+
 					<?php
 					$account = Compte::getInstance();
 					if ($account !== null) :
@@ -89,6 +93,7 @@ use Model\Redirect;
 							</div>
 						</li>
 					<?php endif; ?>
+					
 				</ul>
 			</div>
 		</div>
