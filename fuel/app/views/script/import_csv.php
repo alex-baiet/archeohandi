@@ -22,8 +22,8 @@
 		</div>
 
 		<div class="mb-3">
-			<label for="file_bibliographies" class="form-label">Bibliographies</label>
-			<input class="form-control" type="file" name="file_bibliographies" id="form_file_bibliographies">
+			<label for="file_atteinte" class="form-label">Atteinte invalidante</label>
+			<input class="form-control" type="file" name="file_atteinte" id="form_file_atteinte">
 		</div>
 
 		<button class="btn btn-success" type="submit" name="submit">Envoyer</button>

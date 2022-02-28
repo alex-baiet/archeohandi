@@ -6,25 +6,37 @@ use Model\Db\Operation;
 use Model\Db\Organisme;
 use Model\Db\Typeoperation;
 use Model\Helper;
+use Model\Importresult;
 
 /** Permet de convertir des fichiers CSV en models. */
 class Import {
 	/**
 	 * Renvoie une liste d'opération depuis le fichier donné.
-	 * @return Operation[]
+	 * @return Importresult[]
 	 */
-	public static function fileToOperations(string $textCSV): array {
+	public static function importFileOperations(string $textCSV): array {
 		$lines = explode("\n", $textCSV);
 		unset($lines[0]);
-		$operations = array();
+		$results = array();
 
 		foreach ($lines as $line) {
-			if (!empty($line)) {
-				$operations[] = Import::lineToOperation($line);
+			if (empty($line)) continue;
+			
+			// Transformation ligne en opération
+			$op = Import::lineToOperation($line);
+
+			if (!$op->validate()) {
+				$results[] = new Importresult($op, Importresult::COLOR_ERROR, "L'opération contient des champs invalides.");
+				continue;
 			}
+			if (!$op->saveOnDB()) {
+				$results[] = new Importresult($op, Importresult::COLOR_ERROR, "Une erreur est survenu lors de l'import sur la BDD.");
+				continue;
+			}
+			$results[] = new Importresult($op, Importresult::COLOR_SUCCESS, "Import réussi.");
 		}
 
-		return $operations;
+		return $results;
 	}
 
 	/**

@@ -55,16 +55,11 @@ class Controller_Script extends Controller_Template {
 		$data = array();
 
 		// Récupérations des opérations
-		$operations = array();
+		$resultsOp = array();
 		if (isset($_FILES["file_operation"]) && $_FILES["file_operation"]["error"] === 0) {
-			$operations = Import::fileToOperations(file_get_contents($_FILES["file_operation"]["tmp_name"]));
-
-			// Ajout des operations a la BDD
-			foreach ($operations as $op) {
-				$op->saveOnDB();
-			}
+			$resultsOp = Import::importFileOperations(file_get_contents($_FILES["file_operation"]["tmp_name"]));
 		}
-		$data["operations"] = $operations;
+		$data["resultsOp"] = $resultsOp;
 		
 		$this->template->title = 'Import CSV | Résultats';
 		$this->template->content = View::forge('script/import_csv_result', $data, false);

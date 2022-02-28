@@ -143,7 +143,13 @@ class Archeo {
 						if ($nullable && ($data[$k] === "" || $data[$k] === null)) $value = null;
 						// Assignation d'une vrai valeur
 						else $value = intval($data[$k]);
-						break;				
+						break;
+					case 'float':
+						// Tentative d'assignation d'un null
+						if ($nullable && ($data[$k] === "" || $data[$k] === null)) $value = null;
+						// Assignation d'une vrai valeur
+						else $value = floatval($data[$k]);
+						break;			
 					default:
 						throw new FuelException("Le type \"$type\" n'est pas un type valide.");
 						break;

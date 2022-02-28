@@ -1,9 +1,9 @@
 <?php
 
-use Model\Db\Operation;
+use Model\Importresult;
 
-/** @var Operation[] */
-$operations = $operations;
+/** @var Importresult[] */
+$resultsOp = $resultsOp;
 
 ?>
 
@@ -48,12 +48,13 @@ $operations = $operations;
 
 	<h2>Affichages des résultats</h2>
 
-	<?php foreach ($operations as $op) : ?>
+	<?php foreach ($resultsOp as $res) : ?>
 		<div class="fold-parent">
-			<h3 style="background-color: <?= $op->validate() ? "#0f04" : "#f004" ?>">Operation</h3>
+			<h3 style="background-color: <?= $res->getColor() ?>">Operation</h3>
 			<div class="fold-content">
-				<?= $op->echoErrors() ?>
-				<pre><?php var_dump($op); ?></pre>
+				<?= $res->getMsg() ?><br>
+				<?= $res->getObj()->echoErrors() ?>
+				<pre><?php var_dump($res->getObj()); ?></pre>
 			</div>
 		</div>
 

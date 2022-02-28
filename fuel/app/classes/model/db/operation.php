@@ -76,8 +76,8 @@ class Operation extends Model {
 		Archeo::mergeValue($this->annee, $data, "annee", "int", true);
 		Archeo::mergeValue($this->idCommune, $data, "id_commune", "int");
 		Archeo::mergeValue($this->adresse, $data, "adresse");
-		Archeo::mergeValue($this->x, $data, "X", "int");
-		Archeo::mergeValue($this->y, $data, "Y", "int");
+		Archeo::mergeValue($this->x, $data, "X", "float");
+		Archeo::mergeValue($this->y, $data, "Y", "float");
 		Archeo::mergeValue($this->idOrganisme, $data, "id_organisme", "int");
 		Archeo::mergeValue($this->idTypeOp, $data, "id_type_op", "int");
 		Archeo::mergeValue($this->EA, $data, "EA");
