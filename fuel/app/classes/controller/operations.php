@@ -110,8 +110,6 @@ class Controller_Operations extends Controller_Template {
 					Messagehandler::prepareAlert("Ajout de l'opération réussi.", "success");
 					Response::redirect("/sujet/add/{$operation->getId()}");
 				}
-			} else {
-				Messagehandler::prepareAlert("Erreur inconnue lors de l'ajout de l'opération.");
 			}
 		}
 

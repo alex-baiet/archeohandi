@@ -38,111 +38,84 @@ Form::open(array(
 <h3 class="text-center">Opération</h3>
 
 <!-- Affichage des champs -->
-<div class="row my-4">
-
-	<?php $commune = $operation->getCommune(); ?>
-	<!-- Departement -->
-	<script>
-		/** Permet de vérifier que le département existe. */
-		function checkDepartementExist() {
-			/** @type {HTMLButtonElement} */
-			const field = document.getElementById("form_departement");
-			checkValueExist(
-				"commune",
-				[["departement", "=", field.value]],
-				() => {
-					field.setCustomValidity("");
-					document.getElementById("form_commune").oninput();
-				},
-				() => { field.setCustomValidity("Le departement n'existe pas."); }
-			);
-		}
-	</script>
-	<div class="col-md-4">
-		<div class="form-floating">
-			<input name="departement" id="form_departement" value="<?= $commune !== null ? $commune->getDepartement() : null ?>"
-				type="text" class="form-control" placeholder="Département" autocomplete="off"
-				title="Indiquez le département de l'opération"
-				oninput="checkDepartementExist()">
-			<div class="form-msg-error">Le département n'existe pas.</div>
-			<label for="form_departement">Nom du département</label>
-			<script>addAutocomplete(`form_departement`, `DISTINCT departement`, `commune`, [[`departement`, `LIKE`, `?%`]])</script>
-		</div>
-	</div>
-
-	<!-- Commune -->
-	<?php $nameCom = "commune" ?>
-	<script>
-		/** Permet de vérifier que le département existe. */
-		function checkCommuneExist() {
-			/** @type {HTMLButtonElement} */
-			const fieldCom = document.getElementById("form_<?= $nameCom ?>");
-			/** @type {HTMLButtonElement} */
-			const fieldDep = document.getElementById("form_departement");
-			
-			let where = [["nom", "=", fieldCom.value]];
-			if (fieldDep.value != "" && fieldDep.validity.valid) where.push(["departement", "=", fieldDep.value]);
-			
-			checkValueExist(
-				"commune",
-				where,
-				() => { fieldCom.setCustomValidity(""); },
-				() => { fieldCom.setCustomValidity("Le departement n'existe pas."); }
-			);
-		}
-	</script>
-	<div class="col-md-4">
-		<div class="form-floating">
-			<input name="<?= $nameCom ?>" id="form_<?= $nameCom ?>" value="<?= $commune !== null ? $commune->getNom() : null ?>"
-				type="text" class="form-control" placeholder="Commune" autocomplete="chrome-off"
-				title="Indiquez la commune de l'opération"
-				oninput="checkCommuneExist()">
-			<div class="form-msg-error">La commune n'existe pas.</div>
-			<label for="form_<?= $nameCom ?>">Commune</label>
-			<script>addAutocompleteCommune();</script>
-		</div>
-	</div>
-
-	<!-- Adresse -->
-	<div class="col-md-4">
-		<div class="form-floating">
-			<input name="adresse" id="form_adresse" value="<?= $operation->getAdresse() ?>"
-				type="text" class="form-control" placeholder="Adresse" maxlength="256"
-				title="Indiquez l'adresse de l'opération">
-			<label for="form_adresse">Adresse ou nom du site</label>
-		</div>
-	</div>
-
-</div>
-
-<!-- <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3121224.189160384!2d2.166198738935703!3d47.108438324355085!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sfr!2sfr!4v1644502368364!5m2!1sfr!2sfr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe> -->
-<a href="https://www.google.fr/maps" target="_blank">Rechercher une position depuis Google Map</a>
+<?php $nameCom = "commune" ?>
 <div class="row my-2">
+	<div class="col-md-8">
+		<div class="row my-4">
+			<?php $commune = $operation->getCommune(); ?>
+			<!-- Departement -->
+			<div class="col-md-6">
+				<div class="form-floating">
+					<input name="departement" id="form_departement" value="<?= $commune !== null ? $commune->getDepartement() : null ?>"
+						type="text" class="form-control" placeholder="Département" autocomplete="off"
+						title="Indiquez le département de l'opération"
+						oninput="FormOperation.checkDepartementExist()">
+					<div class="form-msg-error">Le département n'existe pas.</div>
+					<label for="form_departement">Nom du département</label>
+					<script>addAutocomplete(`form_departement`, `DISTINCT departement`, `commune`, [[`departement`, `LIKE`, `?%`]])</script>
+				</div>
+			</div>
 
-	<!-- Longitude -->
-	<div class="col-md-6">
-		<div class="form-floating">
-			<input name="X" id="form_X" value="<?= $operation->getX() ?>"
-				type="number" class="form-control" placeholder="Longitude" min="-180" max="180" step="any" required
-				title="Indiquez la position GPS horizontale">
-			<div class="form-msg-error">La valeur doit être un nombre entre -180 et 180</div>
-			<label for="form_X">Longitude</label>
+			<!-- Commune -->
+			<div class="col-md-6">
+				<div class="form-floating">
+					<input name="<?= $nameCom ?>" id="form_<?= $nameCom ?>" value="<?= $commune !== null ? $commune->getNom() : null ?>"
+						type="text" class="form-control" placeholder="Commune" autocomplete="chrome-off"
+						title="Indiquez la commune de l'opération"
+						oninput="FormOperation.checkCommuneExist()">
+					<div class="form-msg-error">La commune n'existe pas.</div>
+					<label for="form_<?= $nameCom ?>">Commune</label>
+					<script>addAutocompleteCommune();</script>
+				</div>
+			</div>
+		</div>
+
+		<!-- Adresse -->
+		<div class="row my-4">
+			<div class="col md-12">
+				<div class="form-floating">
+					<input name="adresse" id="form_adresse" value="<?= $operation->getAdresse() ?>"
+						type="text" class="form-control" placeholder="Adresse" maxlength="256"
+						title="Indiquez l'adresse de l'opération">
+					<label for="form_adresse">Adresse ou nom du site</label>
+				</div>
+			</div>
+		</div>
+
+		<div class="row my-2">
+			<!-- Longitude -->
+			<div class="col-md-6">
+				<div class="form-floating">
+					<input name="X" id="form_X" value="<?= $operation->getX() ?>"
+						type="number" class="form-control" placeholder="Longitude" min="-180" max="180" step="any" required
+						title="Indiquez la position GPS horizontale"
+						oninput="FormOperation.updateCoordinate()">
+					<div class="form-msg-error">La valeur doit être un nombre entre -180 et 180</div>
+					<label for="form_X">Longitude</label>
+				</div>
+			</div>
+
+			<!-- Latitude -->
+			<div class="col-md-6">
+				<div class="form-floating">
+					<input name="Y" id="form_Y" value="<?= $operation->getY() ?>"
+						type="number" class="form-control" placeholder="Latitude" min="-90" max="90" step="any" required
+						title="Indiquez la position GPS verticale"
+						oninput="FormOperation.updateCoordinate()">
+					<div class="form-msg-error">La valeur doit être un nombre entre -90 et 90</div>
+					<label for="form_Y">Latitude</label>
+				</div>
+			</div>
 		</div>
 	</div>
 
-	<!-- Latitude -->
-	<div class="col-md-6">
-		<div class="form-floating">
-			<input name="Y" id="form_Y" value="<?= $operation->getY() ?>"
-				type="number" class="form-control" placeholder="Latitude" min="-90" max="90" step="any" required
-				title="Indiquez la position GPS verticale">
-			<div class="form-msg-error">La valeur doit être un nombre entre -90 et 90</div>
-			<label for="form_Y">Latitude</label>
-		</div>
+	<div class="col-md-4">
+		<div id="map" style="height: 250px"></div>
+		<script>
+			FormOperation.prepareMap();
+		</script>
 	</div>
-
 </div>
-
 <div class="row my-4">
 
 	<!-- Année -->
@@ -161,36 +134,13 @@ Form::open(array(
 	</div>
 
 	<!-- Organisme -->
-	<script>
-		/** Met à jour l'affichage de l'input de l'organisme en fonction de si il existe dans la BDD. */
-		function checkOrganismeExist() {
-			const input = document.getElementById("form_organisme");
-			checkValueExist("organisme", [["nom", "=", input.value]], 
-				() => { input.setCustomValidity(""); },
-				() => { input.setCustomValidity("L'organisme n'existe pas."); }
-			);
-		}
-
-		/** Ajoute un organisme à la BDD. */
-		function addOrganisme() {
-			const input = document.getElementById("form_organisme");
-			$.ajax({
-				type: "POST",
-				url: "https://archeohandi.huma-num.fr/public/fonction/add_organisme",
-				data: { name: input.value },
-				success: function (response) {
-					input.setCustomValidity("");
-				}
-			});
-		}
-	</script>
 	<div class="col-md-4">
 		<div class="form-floating">
 			<input name="organisme" id="form_organisme" class="form-control" placeholder="Organisme"
 				title="Entrez l'organisme attaché à l'opération" value="<?= $operation->getOrganisme()->getNom() ?>"
-				oninput="checkOrganismeExist()">
+				oninput="FormOperation.checkOrganismeExist()">
 				<div class="form-msg-error">
-					L'organisme n'existe pas. <a class="link-primary" style="cursor: pointer;" onclick="addOrganisme()">Ajouter l'organisme</a>
+					L'organisme n'existe pas. <a class="link-primary" style="cursor: pointer;" onclick="FormOperation.addOrganisme()">Ajouter l'organisme</a>
 				</div>
 			<label for="form_organimse">Organisme</label>
 			<script>addAutocomplete("form_organisme", "nom", "organisme", [["nom", "LIKE", "?%"]]);</script>
