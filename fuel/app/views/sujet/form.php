@@ -463,10 +463,6 @@ View::forge("fonction/multiple_input", array(
 
 <!-- Bouton de confirmation/retour -->
 <div class="row" style="margin-top: 10px;">
-	<div class="d-md-block col">
-		<a class="btn btn-secondary" href="<?= Redirect::getPreviousPage(); ?>" role="button">Retour</a>
-	</div>
-
 	<div class="d-md-flex justify-content-md-end col">
 		<button type="submit" name="stayOnPage" value="0" class="btn btn-success">
 			Confirmer<?php if ($btnStay) : ?> et sortir<?php endif; ?>

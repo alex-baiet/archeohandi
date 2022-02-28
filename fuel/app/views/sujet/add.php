@@ -16,6 +16,8 @@ Asset::js("form.js");
 ?>
 
 <div class="container">
+	<a class="btn btn-secondary mt-2" href="/public/operations/view/<?= $idOperation ?>" role="button">Retour</a>
+
 	<h1 class="m-2">Ajout d'un sujet handicapé</h1>
 	<?php $op = Operation::fetchSingle($idOperation); ?>
 	<p class="text-muted">

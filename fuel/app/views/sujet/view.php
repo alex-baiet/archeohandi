@@ -1,7 +1,6 @@
 <?php
 
 use Model\Db\Sujethandicape;
-use Model\Nakalaimg;
 
 /** @var Sujethandicape */
 $subject = $subject;
@@ -17,6 +16,8 @@ $subject = $subject;
 
 <!-- Entête de la page -->
 <div class="container-xl">
+	<a class="btn btn-secondary mt-2" href="/public/operations/view/<?= $subject->getGroup()->getIdOperation() ?>" role="button">Retour</a>
+
 	<h1 class="m-2">Sujet n°<?= $subject->getId(); ?> <em>"<?= $subject->getIdSujetHandicape() ?>"</em></h1>
 	<p class="text-muted">
 		Ici vous retrouvez toutes les informations du sujet <strong><?= $subject->getIdSujetHandicape(); ?></strong>.
@@ -197,10 +198,6 @@ $subject = $subject;
 			</a>
 		<?php endfor; ?>
 	</section>
-
-	<div class="d-grid gap-2 d-md-block p-1">
-		<a class="btn btn-secondary" href="/public/operations/view/<?= $subject->getGroup()->getIdOperation(); ?>" role="button">Retour</a>
-	</div>
 </div>
 
 <script type="text/javascript">
