@@ -35,6 +35,7 @@ use Model\Redirect;
 	<?= Asset::js('button.js') ?>
 	<?= Asset::js('form.js') ?>
 	<?= Asset::js('form_operation.js') ?>
+	<?= Asset::js('form_sujet.js') ?>
 
 	<!-- Leaflet -->
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"

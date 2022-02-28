@@ -115,7 +115,6 @@ function changeImgSrc(idInput, idImg) {
 	let input = document.getElementById(idInput);
 	let img = document.getElementById(idImg);
 
-	console.log(input.value);
 	if (input.value.startsWith("10.34847")) input.value = "https://api.nakala.fr/data/" + input.value;
 	img.src = input.value;
 	img.style.display = input.value == "" ? "none" : "block";

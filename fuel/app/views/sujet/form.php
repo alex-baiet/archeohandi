@@ -340,7 +340,7 @@ Form::open(array(
 						<!-- Titre des diagnostics -->
 						<td>
 							<div class="form-check form-switch">
-								<label for="form_diagnostic_<?= $diagnostic->getId() ?>" class="form-check-label"><?= $diagnostic->getNom() ?></label>
+								<label id="form_diagnostic_label_<?= $diagnostic->getId(); ?>" for="form_diagnostic_<?= $diagnostic->getId() ?>" class="form-check-label"><?= $diagnostic->getNom() ?></label>
 								<input name="diagnostic_<?= $diagnostic->getId() ?>" id="form_diagnostic_<?= $diagnostic->getId() ?>"
 									type="checkbox" class="form-check-input"
 									<?php if ($hasDiagnosis) : ?>checked<?php endif; ?>>
@@ -409,10 +409,10 @@ Form::open(array(
 		<h4 style="margin-top: 30px;">Pathologie infectieuse</h4>
 		<?php foreach (Pathology::fetchAll() as $pathology) : ?>
 			<div class="form-check form-switch">
-				<label for="form_pathologies_<?= $pathology->getId() ?>" class="form-check-label"><?= $pathology->getName() ?></label>
+				<label id="form_pathologies_label_<?= $pathology->getId() ?>" for="form_pathologies_<?= $pathology->getId() ?>" class="form-check-label"><?= $pathology->getName() ?></label>
 				<input name="pathologies[]" id="form_pathologies_<?= $pathology->getId() ?>" value="<?= $pathology->getId() ?>"
 					type="checkbox" class="form-check-input"
-					<?php if ($subject->hasPathology($pathology->getId())) : ?>checked<?php endif; ?>>			
+					<?php if ($subject->hasPathology($pathology->getId())) : ?>checked<?php endif; ?>>
 			</div>
 		<?php endforeach; ?>
 	</div>
@@ -434,16 +434,15 @@ Form::open(array(
 	</div>
 
 	<div class="col-md-auto">
+		<button type="button" class="btn btn-primary" onclick="FormSujet.generateDescription(`fast_summary`)">Générer une résumé à copier</button>
+	</div>
+
+	<div class="col-md-auto">
 		<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#helpPopup">Aide <i class="bi bi-question-circle"></i></button>
 	</div>
 
-	<p>
-		<!-- Département, ville, adresse, n° de sépulture, type de pathologie -->
-		<?php
-		//$commune = $subject->getDepot()->getCommune();
-		?>
-		<?= ""//"{$commune->getDepartement()}, {$commune->getNom()}, {$subject->getDepot()->getAdresse()}, {$subject->getTypeSepulture()->getNom()}" ?>
-	</p>
+	<!-- Département, ville, adresse, n° de sépulture, type de pathologie -->
+	<pre id="fast_summary" style="background-color: white; margin: 10px;"></pre>
 </div>
 
 <!-- Listes URL images -->
