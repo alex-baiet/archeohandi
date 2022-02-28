@@ -62,9 +62,16 @@ class FormOperation {
 
 		const inputLon = document.getElementById("form_X");
 		const inputLat = document.getElementById("form_Y");
+		const inputDep = document.getElementById("form_departement");
+		const inputCom = document.getElementById("form_commune");
+		const inputAddr = document.getElementById("form_adresse");
 		Leaflet.setOnClick(result => {
+			console.log(result);
 			inputLon.value = result.latlng.lng;
 			inputLat.value = result.latlng.lat;
+			inputDep.value = result.address.Subregion;
+			inputCom.value = result.address.City;
+			inputAddr.value = result.address.Address;
 			this.updateCoordinate()
 		})
 	}
