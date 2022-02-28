@@ -192,13 +192,9 @@ $subject = $subject;
 		for ($i = 0; $i < count($urls); $i++) :
 			$url = $urls[$i];
 		?>
-			<?php if (Nakalaimg::urlIsNakalaImg($url)) : ?>
-				<a href="<?= Nakalaimg::urlImgToUrlNakala($url); ?>" target="_blank">
-					<img src="<?= $url ?>" alt="" style="height: 300px;">
-				</a>
-			<?php else : ?>
-				<img src="<?= $url ?>" alt="" style="width: 400px;">
-			<?php endif; ?>
+			<a href="<?= $url ?>" target="_blank">
+				<img src="<?= $url ?>" alt="" style="height: 300px;">
+			</a>
 		<?php endfor; ?>
 	</section>
 
