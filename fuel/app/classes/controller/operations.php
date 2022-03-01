@@ -78,6 +78,7 @@ class Controller_Operations extends Controller_Template {
 
 		// Calcul nombre de sujets enregistrés
 		$countSubject = intval(Helper::querySelectSingle("SELECT COUNT(id) AS total FROM sujet_handicape")["total"]);
+		$countOp = intval(Helper::querySelectSingle("SELECT COUNT(id) AS total FROM operations")["total"]);
 
 		// Ajout des valeurs à la view.
 		krsort($operations);
@@ -87,6 +88,7 @@ class Controller_Operations extends Controller_Template {
 		$data['all_nom_op'] = $all_nom_op;
 		$data['all_annee'] = $all_annee;
 		$data['countSubject'] = $countSubject;
+		$data['countOp'] = $countOp;
 		$this->template->title = 'Opérations';
 		$this->template->content = View::forge('operations/index', $data, false);
 	}

@@ -72,8 +72,10 @@ class FormOperation {
 			inputDep.value = result.address.Subregion;
 			inputCom.value = result.address.City;
 			inputAddr.value = result.address.Address;
-			this.updateCoordinate()
+			this.updateCoordinate();
 		})
+
+		this.updateCoordinate();
 	}
 
 	/** Met à jour le marqueur de la carte en fonction de la valeur des champs. */

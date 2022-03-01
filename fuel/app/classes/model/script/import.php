@@ -25,6 +25,7 @@ class Import {
 			// Transformation ligne en opération
 			$op = Import::lineToOperation($line);
 
+			if (Helper::querySelect("SELECT * FROM operations"))
 			if (!$op->validate()) {
 				$results[] = new Importresult($op, Importresult::COLOR_ERROR, "L'opération contient des champs invalides.");
 				continue;
@@ -50,8 +51,9 @@ class Import {
 		$iadresse = 3;
 		$icodePostal = 4;
 		$iannee = 5;
-		$ix = 6;
-		$iy = 7;
+		// Des fichiers inversent les x et y
+		$ix = 7;
+		$iy = 6;
 		$iz = 8;
 		$itypeOp = 9;
 		$iea = 10;

@@ -18,6 +18,8 @@ $all_nom_op = $all_nom_op;
 $all_annee = $all_annee;
 /** @var int */
 $countSubject = $countSubject;
+/** @var int */
+$countOp = $countOp;
 
 ?>
 
@@ -41,7 +43,7 @@ $countSubject = $countSubject;
 
 <!-- Entête de la page -->
 <div class="container">
-	
+
 	<!-- Titre principal de la page -->
 	<h1 class="m-2">Opérations
 		<!-- Bouton "Ajout d'un opération -->
@@ -49,10 +51,10 @@ $countSubject = $countSubject;
 			<a class="btn btn-primary btn-sm" href="/public/operations/add">Ajouter une opération <i class="bi bi-plus-circle-fill"></i></a>
 		<?php endif; ?>
 	</h1>
-	
+
 	<p class="text-muted">
 		Ici vous pouvez retrouver toutes les informations sur les opérations.<br>
-		<b><?= count($operations); ?></b> opérations existantes pour un total de <b><?= $countSubject; ?></b> sujets enregistrés.<br>
+		<b><?= $countOp ?></b> opérations existantes pour un total de <b><?= $countSubject ?></b> sujets enregistrés.<br>
 		Pour éditer les sujets d'une opération, veuillez d'abord <b>consulter</b> l'opération en question puis vous pourrez éditer ses sujets.
 	</p>
 
@@ -113,6 +115,7 @@ $countSubject = $countSubject;
 					<thead>
 						<tr class="text-center">
 							<!-- <th scope="col">#</th> -->
+							<th scope="col">Numéro</th>
 							<th scope="col">Auteur de la saisie</th>
 							<th scope="col">Nom du site</th>
 							<th scope="col">Année</th>
@@ -125,6 +128,7 @@ $countSubject = $countSubject;
 						<?php foreach ($operations as $op) :  ?>
 							<tr class="text-center">
 								<?php $author = $op->getAccountAdmin() ?>
+								<td><?= $op->getNumeroOperation() ?></td>
 								<td><?= $author !== null ? "{$author->getPrenom()} {$author->getNom()}" : null ?></td>
 								<td><?= $op->getNomOp() ?></td>
 								<td><?= $op->getAnnee() ?></td>
