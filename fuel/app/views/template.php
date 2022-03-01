@@ -79,7 +79,7 @@ use Model\Redirect;
 					</li>
 
 					<li class="nav-item active">
-						<a class="nav-link" href="/public/search">Rechercher</a>
+						<a class="nav-link" href="/public/recherche">Rechercher</a>
 					</li>
 
 					<li class="nav-item active">

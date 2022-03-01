@@ -15,11 +15,11 @@ use Fuel\Core\View;
 
 	<form action="" method="post" style="background-color: #F5F5F5; padding: 10px;">
 		<div id="form_operation">
-			<?= View::forge("operations/form", array("action" => "public/search")) ?>
+			<?= View::forge("recherche/form_operation", array("action" => "public/search")) ?>
 		</div>
 
 		<div id="form_sujet">
-			<?= View::forge("sujet/form", array()) ?>
+			<?= View::forge("recherche/form_sujet", array()) ?>
 		</div>
 	</form>
 
