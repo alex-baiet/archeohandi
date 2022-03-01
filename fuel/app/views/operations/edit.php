@@ -12,7 +12,7 @@ $errors = $errors;
 
 <div class="container">
 	
-	<!-- Entête de la page -->
+	<a class="btn btn-secondary mt-2" href="/public/operations" role="button">Retour</a>
 	<h1 class="m-2">Modification d'une opération</h1>
 	<a class="btn btn-primary btn-sm" href="/public/sujet/add/<?= $operation->getId(); ?>" style="margin-right: 10px">
 		Ajouter des sujets <i class="bi bi-plus-circle-fill"></i>

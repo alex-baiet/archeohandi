@@ -11,6 +11,7 @@ $operation;
 <!-- Contenu de la page partie opération -->
 <div class="container">
 
+	<a class="btn btn-secondary mt-2" href="/public/operations" role="button">Retour</a>
 	<h1 class="m-2">Ajout d'une opération</h1>
 
 	<p class="text-muted">

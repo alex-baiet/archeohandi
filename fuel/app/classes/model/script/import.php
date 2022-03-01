@@ -25,7 +25,13 @@ class Import {
 			// Transformation ligne en opération
 			$op = Import::lineToOperation($line);
 
-			if (Helper::querySelect("SELECT * FROM operations"))
+			if (!empty($op->getNumeroOperation())) {
+				$res = Helper::querySelect("SELECT * FROM operations WHERE numero_operation=\"{$op->getNumeroOperation()}\"");
+				if (!empty($res)) {
+					$results[] = new Importresult($op, Importresult::COLOR_WARNING, "Une opération avec le même numéro existe déjà.");
+					continue;
+				}
+			}
 			if (!$op->validate()) {
 				$results[] = new Importresult($op, Importresult::COLOR_ERROR, "L'opération contient des champs invalides.");
 				continue;

@@ -299,13 +299,9 @@ View::forge("fonction/multiple_input", array(
 <br/>
 
 <!-- Confirmation / retour -->
-<div class="row">
-	<div class="d-md-block col">
-		<a class="btn btn-secondary" href="/public/operations" role="button">Retour</a>
-	</div>
-	
+<div class="row">	
 	<div class="d-md-flex justify-content-md-end col">
-		<?= Form::submit('submit', 'Modifier', array('class' => 'btn btn-success')); ?>
+		<button type="submit" class="btn btn-success">Confirmer</button>
 	</div>
 </div>
 

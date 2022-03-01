@@ -13,7 +13,7 @@ $infoText = isset($infoText) ? $infoText : "";
 $btnName = isset($btnName) ? $btnName : null;
 
 ?>
-<div class="modal" id="validationPopup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="validationPopupLabel" aria-hidden="true">
+<div class="modal" id="validationPopup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="validationPopupLabel" aria-hidden="true" style="z-index: 100000;">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
