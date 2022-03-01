@@ -76,7 +76,7 @@ Asset::js("form.js");
 			<!-- Longitude -->
 			<div class="col-md-6">
 				<div class="form-floating">
-					<input name="X" id="form_X" value="<?= $operation->getX() ?>" type="number" class="form-control" placeholder="Longitude" min="-180" max="180" step="any" required title="Indiquez la position GPS horizontale" oninput="FormOperation.updateCoordinate()">
+					<input name="X" id="form_X" value="<?= $operation->getX() ?>" type="number" class="form-control" placeholder="Longitude" min="-180" max="180" step="any" title="Indiquez la position GPS horizontale" oninput="FormOperation.updateCoordinate()">
 					<div class="form-msg-error">La valeur doit être un nombre entre -180 et 180</div>
 					<label for="form_X">Longitude</label>
 				</div>
@@ -85,7 +85,7 @@ Asset::js("form.js");
 			<!-- Latitude -->
 			<div class="col-md-6">
 				<div class="form-floating">
-					<input name="Y" id="form_Y" value="<?= $operation->getY() ?>" type="number" class="form-control" placeholder="Latitude" min="-90" max="90" step="any" required title="Indiquez la position GPS verticale" oninput="FormOperation.updateCoordinate()">
+					<input name="Y" id="form_Y" value="<?= $operation->getY() ?>" type="number" class="form-control" placeholder="Latitude" min="-90" max="90" step="any" title="Indiquez la position GPS verticale" oninput="FormOperation.updateCoordinate()">
 					<div class="form-msg-error">La valeur doit être un nombre entre -90 et 90</div>
 					<label for="form_Y">Latitude</label>
 				</div>
@@ -231,39 +231,6 @@ View::forge("fonction/multiple_input", array(
 	"inputAttributes" => array(
 		"maxlength" => "256",
 		"title" => "Indiquez le nom du paléopathologiste au format Prénom NOM"
-	)
-));
-?>
-
-<!-- Bibliographie -->
-<div class="col-md-12">
-	<label for="form_bibliographie">
-		Bibliographie
-		(<a href="https://gallia.cnrs.fr/guide-auteurs/recommandations/" target="_blank">recommandations sur le format de GALLIA</a>)
-	</label>
-	<textarea name="bibliographie" id="form_bibliographie" class="form-control" maxlength="65535" title="Indiquez les références bibliographiques où sont mentionnés les détails du cas (selon les normes GALLIA/CNRS)"><?= $operation->getBibliographie() ?></textarea>
-</div>
-
-<!-- Comptes -->
-<h3 class="text-center mt-4">Comptes autorisés</h3>
-
-<?php
-$accounts = $operation->getAccounts();
-if (empty($accounts)) $accounts[""] = new Compte(array());
-$logins = array();
-foreach ($accounts as $acc) {
-	$logins[] = $acc->getLogin();
-}
-?>
-<?=
-View::forge("fonction/multiple_input", array(
-	"name" => "compte",
-	"datas" => $logins,
-	"label" => "Nom du compte",
-	"autocompletion" => "compte",
-	"inputAttributes" => array(
-		"maxlength" => "256",
-		"title" => "Indiquez le nom d'un compte autorisé à éditer les sujets de l'opération"
 	)
 ));
 ?>

@@ -18,8 +18,8 @@ class Operation extends Model {
 	private ?int $annee = null;
 	private ?int $idCommune = null;
 	private string $adresse = "";
-	private float $x = 0.0;
-	private float $y = 0.0;
+	private ?float $x = null;
+	private ?float $y = null;
 	private ?int $idOrganisme = -1;
 	private int $idTypeOp = -1;
 	private string $EA = "";
@@ -76,8 +76,8 @@ class Operation extends Model {
 		Archeo::mergeValue($this->annee, $data, "annee", "int", true);
 		Archeo::mergeValue($this->idCommune, $data, "id_commune", "int");
 		Archeo::mergeValue($this->adresse, $data, "adresse");
-		Archeo::mergeValue($this->x, $data, "X", "float");
-		Archeo::mergeValue($this->y, $data, "Y", "float");
+		Archeo::mergeValue($this->x, $data, "X", "float", true);
+		Archeo::mergeValue($this->y, $data, "Y", "float", true);
 		Archeo::mergeValue($this->idOrganisme, $data, "id_organisme", "int");
 		Archeo::mergeValue($this->idTypeOp, $data, "id_type_op", "int");
 		Archeo::mergeValue($this->EA, $data, "EA");
@@ -309,8 +309,8 @@ class Operation extends Model {
 	public function setARevoir(string $value) { $this->aRevoir = $value; }
 	public function setAnnee(?int $value) { $this->annee = $value; }
 	public function setAdresse(string $value) { $this->adresse = $value; }
-	public function setX(float $value) { $this->x = $value; }
-	public function setY(float $value) { $this->y = $value; }
+	public function setX(?float $value) { $this->x = $value; }
+	public function setY(?float $value) { $this->y = $value; }
 	public function setEA(string $value) { $this->EA = $value; }
 	public function setOA(string $value) { $this->OA = $value; }
 	public function setPatriarche(string $value) { $this->patriarche = $value; }

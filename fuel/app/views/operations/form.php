@@ -76,7 +76,7 @@ Asset::js("form.js");
 			<!-- Longitude -->
 			<div class="col-md-6">
 				<div class="form-floating">
-					<input name="X" id="form_X" value="<?= $operation->getX() ?>" type="number" class="form-control" placeholder="Longitude" min="-180" max="180" step="any" required title="Indiquez la position GPS horizontale" oninput="FormOperation.updateCoordinate()">
+					<input name="X" id="form_X" value="<?= $operation->getX() ?>" type="number" class="form-control" placeholder="Longitude" min="-180" max="180" step="any" title="Indiquez la position GPS horizontale" oninput="FormOperation.updateCoordinate()">
 					<div class="form-msg-error">La valeur doit être un nombre entre -180 et 180</div>
 					<label for="form_X">Longitude</label>
 				</div>
@@ -85,7 +85,7 @@ Asset::js("form.js");
 			<!-- Latitude -->
 			<div class="col-md-6">
 				<div class="form-floating">
-					<input name="Y" id="form_Y" value="<?= $operation->getY() ?>" type="number" class="form-control" placeholder="Latitude" min="-90" max="90" step="any" required title="Indiquez la position GPS verticale" oninput="FormOperation.updateCoordinate()">
+					<input name="Y" id="form_Y" value="<?= $operation->getY() ?>" type="number" class="form-control" placeholder="Latitude" min="-90" max="90" step="any" title="Indiquez la position GPS verticale" oninput="FormOperation.updateCoordinate()">
 					<div class="form-msg-error">La valeur doit être un nombre entre -90 et 90</div>
 					<label for="form_Y">Latitude</label>
 				</div>

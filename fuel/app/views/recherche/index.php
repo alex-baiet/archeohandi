@@ -10,7 +10,7 @@ use Fuel\Core\View;
 
 	<div class="btn-group my-4" style="position: relative; left: 50%; transform: translateX(-50%);">
 		<button id="btn_operation" type="button" class="btn btn-outline-primary" onclick="Search.switchPage(`form_operation`, `btn_operation`)">Opération</button>
-		<button id="btn_sujet" type="button" class="btn btn-outline-primary" onclick="Search.switchPage(`form_sujet`, `btn_sujet`)">Sujet</button>
+		<button id="btn_sujet" type="button" class="btn btn-outline-primary" disabled onclick="Search.switchPage(`form_sujet`, `btn_sujet`)">Sujet</button>
 	</div>
 
 	<form action="" method="post" style="background-color: #F5F5F5; padding: 10px;">
