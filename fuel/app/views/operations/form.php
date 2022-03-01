@@ -40,8 +40,12 @@ Form::open(array(
 <!-- Affichage des champs -->
 <?php $nameCom = "commune" ?>
 <div class="row my-2">
-	<div class="col-md-8">
-		<div class="row my-4">
+	<p style="text-align: center; margin-bottom: 6px;">
+		Sélectionner une position sur la carte pour récupérer les coordonnées.
+	</p>
+	<div class="col-md-6">
+
+		<div class="row mb-4 mt-2">
 			<?php $commune = $operation->getCommune(); ?>
 			<!-- Departement -->
 			<div class="col-md-6">
@@ -109,7 +113,7 @@ Form::open(array(
 		</div>
 	</div>
 
-	<div class="col-md-4">
+	<div class="col-md-6">
 		<div id="map" style="height: 250px"></div>
 		<script>
 			FormOperation.prepareMap();
