@@ -20,7 +20,7 @@ $operation;
 	</p>
 	
 	<?php
-	$data = array("action" => "operations/add");
+	$data = array("action" => "/public/operations/add");
 	if (isset($operation)) $data["operation"] = $operation;
 	echo View::forge("operations/form", $data);
 	?>

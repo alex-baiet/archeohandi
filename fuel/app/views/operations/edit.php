@@ -27,7 +27,7 @@ $errors = $errors;
 		Pour plus d'informations sur un champ, laissez la souris au dessus du champ pour afficher un texte d'aide.
 	</p>
 
-	<?= View::forge("operations/form", array("action" => "operations/edit/{$operation->getId()}", "operation" => $operation)); ?>
+	<?= View::forge("operations/form", array("action" => "/public/operations/edit/{$operation->getId()}", "operation" => $operation)); ?>
 	
 </div>
 
