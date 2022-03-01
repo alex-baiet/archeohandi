@@ -115,7 +115,6 @@ $countOp = $countOp;
 					<thead>
 						<tr class="text-center">
 							<!-- <th scope="col">#</th> -->
-							<th scope="col">Numéro</th>
 							<th scope="col">Auteur de la saisie</th>
 							<th scope="col">Nom du site</th>
 							<th scope="col">Année</th>
@@ -128,7 +127,6 @@ $countOp = $countOp;
 						<?php foreach ($operations as $op) :  ?>
 							<tr class="text-center">
 								<?php $author = $op->getAccountAdmin() ?>
-								<td><?= $op->getNumeroOperation() ?></td>
 								<td><?= $author !== null ? "{$author->getPrenom()} {$author->getNom()}" : null ?></td>
 								<td><?= $op->getNomOp() ?></td>
 								<td><?= $op->getAnnee() ?></td>
