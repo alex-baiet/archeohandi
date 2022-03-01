@@ -227,58 +227,9 @@ if (!empty($msg)) {
 <br />
 
 <div class="row">
-	<!-- Accessoires -->
+
 	<div class="col-md-6">
-		<h3>Accessoire</h3>
-		<?php $subFurnituresId = $subject->getFurnituresId(); ?>
-		<?php foreach (Mobilier::fetchAll() as $mobilier) : ?>
-			<div class="form-check form-switch">
-				<label for="form_id_mobiliers_<?= $mobilier->getId() ?>" class="form-check-label"><?= $mobilier->getNom() ?></label>
-				<input name="id_mobiliers[]" id="form_id_mobiliers_<?= $mobilier->getId() ?>" value="<?= $mobilier->getId() ?>" type="checkbox" class="form-check-input" <?php if (in_array($mobilier->getId(), $subFurnituresId)) : ?>checked<?php endif; ?>>
-			</div>
-		<?php endforeach; ?>
-		<div>
-			<label class="form-check-label" for="form_description_mobilier">Description du mobilier</label>
-			<textarea class="form-control" name="description_mobilier" id="form_description_mobilier" rows="2"><?= $subject->getDescriptionMobilier() ?></textarea>
-		</div>
-	</div>
 
-	<!-- Dépôt -->
-	<div class="col-md-6">
-		<h3>Dépôt</h3>
-		<?php
-		$depot = $subject->getDepot();
-		if ($depot !== null && $depot->getId() !== null) echo Form::hidden("id_depot", $depot->getId());
-		?>
-
-		<!-- Numéro de dépôt -->
-		<div class="form-floating my-2">
-			<input name="num_inventaire" id="form_num_inventaire" value="<?= $depot === null ? null : $depot->getNumInventaire() ?>" type="text" class="form-control" placeholder="Numéro de dépôt" maxlength="256" title="Indiquez le numéro du dépôt">
-			<label for="form_num_inventaire">Numéro de dépôt</label>
-		</div>
-
-		<!-- Commune du dépôt -->
-		<div class="form-floating my-2">
-			<?php $communeName = $depot !== null && $depot->getCommune() !== null ? $depot->getCommune()->fullName() : null; ?>
-			<input name="depot_commune" id="form_depot_commune" value="<?= $communeName ?>" type="text" class="form-control" placeholder="Commune" maxlength="256" autocomplete="off" title="Indiquez la commune du dépôt du sujet">
-			<label for="form_depot_commune">Commune</label>
-		</div>
-		<script>
-			addAutocompleteOld("form_depot_commune", "commune");
-		</script>
-
-		<!-- Adresse du dépôt -->
-		<div class="form-floating my-2">
-			<input name="depot_adresse" id="form_depot_adresse" value="<?= $depot === null ? null : $depot->getAdresse() ?>" type="text" class="form-control" placeholder="Adresse du dépôt" maxlength="256" title="Indiquez l'adresse du dépôt du sujet">
-			<label for="form_depot_adresse">Adresse du dépôt</label>
-		</div>
-	</div>
-</div>
-<br />
-
-<!-- Diagnostics -->
-<div class="row">
-	<div class="col-md-6">
 		<h3>Atteinte invalidante</h3>
 
 		<table>
@@ -350,11 +301,61 @@ if (!empty($msg)) {
 				<?php endforeach; ?>
 			</tbody>
 		</table>
+
+		<!-- Pathologies -->
+		<h4 class="mt-4">Pathologie infectieuse</h4>
+		<?php foreach (Pathology::fetchAll() as $pathology) : ?>
+			<div class="form-check form-switch">
+				<label id="form_pathologies_label_<?= $pathology->getId() ?>" for="form_pathologies_<?= $pathology->getId() ?>" class="form-check-label"><?= $pathology->getName() ?></label>
+				<input name="pathologies[]" id="form_pathologies_<?= $pathology->getId() ?>" value="<?= $pathology->getId() ?>" type="checkbox" class="form-check-input" <?php if ($subject->hasPathology($pathology->getId())) : ?>checked<?php endif; ?>>
+			</div>
+		<?php endforeach; ?>
+
 	</div>
 
 	<div class="col-md-6">
+		<!-- Dépôt -->
+		<h3>Dépôt</h3>
+		<?php
+		$depot = $subject->getDepot();
+		if ($depot !== null && $depot->getId() !== null) echo Form::hidden("id_depot", $depot->getId());
+		?>
+		<!-- Numéro de dépôt -->
+		<div class="form-floating my-2">
+			<input name="num_inventaire" id="form_num_inventaire" value="<?= $depot === null ? null : $depot->getNumInventaire() ?>" type="text" class="form-control" placeholder="Numéro de dépôt" maxlength="256" title="Indiquez le numéro du dépôt">
+			<label for="form_num_inventaire">Numéro de dépôt</label>
+		</div>
+		<!-- Commune du dépôt -->
+		<div class="form-floating my-2">
+			<?php $communeName = $depot !== null && $depot->getCommune() !== null ? $depot->getCommune()->fullName() : null; ?>
+			<input name="depot_commune" id="form_depot_commune" value="<?= $communeName ?>" type="text" class="form-control" placeholder="Commune" maxlength="256" autocomplete="off" title="Indiquez la commune du dépôt du sujet">
+			<label for="form_depot_commune">Commune</label>
+		</div>
+		<script>
+			addAutocompleteOld("form_depot_commune", "commune");
+		</script>
+		<!-- Adresse du dépôt -->
+		<div class="form-floating my-2">
+			<input name="depot_adresse" id="form_depot_adresse" value="<?= $depot === null ? null : $depot->getAdresse() ?>" type="text" class="form-control" placeholder="Adresse du dépôt" maxlength="256" title="Indiquez l'adresse du dépôt du sujet">
+			<label for="form_depot_adresse">Adresse du dépôt</label>
+		</div>
+
+		<!-- Accessoires -->
+		<h3 class="mt-4">Accessoire</h3>
+		<?php $subFurnituresId = $subject->getFurnituresId(); ?>
+		<?php foreach (Mobilier::fetchAll() as $mobilier) : ?>
+			<div class="form-check form-switch">
+				<label for="form_id_mobiliers_<?= $mobilier->getId() ?>" class="form-check-label"><?= $mobilier->getNom() ?></label>
+				<input name="id_mobiliers[]" id="form_id_mobiliers_<?= $mobilier->getId() ?>" value="<?= $mobilier->getId() ?>" type="checkbox" class="form-check-input" <?php if (in_array($mobilier->getId(), $subFurnituresId)) : ?>checked<?php endif; ?>>
+			</div>
+		<?php endforeach; ?>
+		<div>
+			<label class="form-check-label" for="form_description_mobilier">Description du mobilier</label>
+			<textarea class="form-control" name="description_mobilier" id="form_description_mobilier" rows="2"><?= $subject->getDescriptionMobilier() ?></textarea>
+		</div>
+
 		<!-- Appareils de compensation -->
-		<h3>Appareil compensatoire</h3>
+		<h3 class="mt-4">Appareil compensatoire</h3>
 		<?php foreach (Appareil::fetchAll() as $item) : ?>
 			<div class="form-check form-switch">
 				<label for="form_appareils_<?= $item->getId() ?>" class="form-check-label"><?= $item->getName() ?></label>
@@ -362,16 +363,10 @@ if (!empty($msg)) {
 			</div>
 		<?php endforeach; ?>
 
-		<!-- Pathologies -->
-		<h4 style="margin-top: 30px;">Pathologie infectieuse</h4>
-		<?php foreach (Pathology::fetchAll() as $pathology) : ?>
-			<div class="form-check form-switch">
-				<label id="form_pathologies_label_<?= $pathology->getId() ?>" for="form_pathologies_<?= $pathology->getId() ?>" class="form-check-label"><?= $pathology->getName() ?></label>
-				<input name="pathologies[]" id="form_pathologies_<?= $pathology->getId() ?>" value="<?= $pathology->getId() ?>" type="checkbox" class="form-check-input" <?php if ($subject->hasPathology($pathology->getId())) : ?>checked<?php endif; ?>>
-			</div>
-		<?php endforeach; ?>
 	</div>
+
 </div>
+<br />
 
 <!-- Commentaire du diagnostic -->
 <label for="comment_diagnostic">Commentaire du diagnostic</label>

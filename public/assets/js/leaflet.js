@@ -24,8 +24,9 @@ class Leaflet {
 			zoomOffset: -1,
 			accessToken: 'pk.eyJ1IjoieW91bGFjIiwiYSI6ImNreDA0YzZ1dzBubGEydHB6ZzJtZHJqaWwifQ.D5slRhh0SpY8Cy0LO6N0Hg'
 		}).addTo(Leaflet.map);
-		this.map.setMaxBounds(bounds);
 
+		this.map.setMaxBounds(bounds);
+		document.getElementsByClassName("leaflet-control-zoom")[0].style.display = "none";
 
 		// Initialisation geocodeService
 		Leaflet.geocodeService = L.esri.Geocoding.geocodeService({ apikey: "AAPKe9e63b0e7f4048e6bff53201d20b4b92Z5BraV8Ow8Qvorsmc4WsR3stO83QGD3tXEUKZZexGfR-MyLf-F9NRZz3eQs9miYI" })
