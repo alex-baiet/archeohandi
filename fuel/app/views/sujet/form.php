@@ -40,13 +40,16 @@ if (!empty($msg)) {
 <?php if ($idOperation !== null) : ?>
 	<input type="hidden" name="id_operation" value="<?= $idOperation ?>">
 <?php endif; ?>
-<?php if ($subject->getId() !== null) echo Form::hidden("id", $subject->getId()); ?>
+<?php if ($subject->getId() !== null) : ?>
+	<input type="hidden" name="id" value="<?= $subject->getId() ?>">
+<?php endif; ?>
 <h2 class="text-center">Groupe du sujet</h2>
 
 <div class="row g-2">
 	<?php $group = $subject->getGroup(); ?>
-	<?php if ($group !== null && $group->getId() !== null) echo Form::hidden("id_group", $group->getId()); ?>
-
+	<?php if ($group !== null && $group->getId() !== null) : ?>
+		<input type="hidden" name="id_group" value="<?= $group->getId() ?>">
+	<?php endif; ?>
 	<!-- NMI -->
 	<div class="col-md-6">
 		<div class="form-floating">
@@ -231,6 +234,7 @@ if (!empty($msg)) {
 	<div class="col-md-6">
 
 		<h3>Atteinte invalidante</h3>
+		<p class="text-muted"><em>D : Partie droite, G : Partie gauche</em></p>
 
 		<table>
 			<!-- Tous les titres -->
@@ -317,8 +321,10 @@ if (!empty($msg)) {
 		<h3>Dépôt</h3>
 		<?php
 		$depot = $subject->getDepot();
-		if ($depot !== null && $depot->getId() !== null) echo Form::hidden("id_depot", $depot->getId());
-		?>
+		if ($depot !== null && $depot->getId() !== null) :
+			?>
+			<input type="hidden" name="id_depot" value="<?= $depot->getId() ?>">
+		<?php endif; ?>
 		<!-- Numéro de dépôt -->
 		<div class="form-floating my-2">
 			<input name="num_inventaire" id="form_num_inventaire" value="<?= $depot === null ? null : $depot->getNumInventaire() ?>" type="text" class="form-control" placeholder="Numéro de dépôt" maxlength="256" title="Indiquez le numéro du dépôt">
