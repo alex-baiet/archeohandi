@@ -30,5 +30,14 @@ Asset::js("form.js");
 	$data = array("idOperation" => $idOperation, "btnStay" => true);
 	if (isset($subject)) $data["subject"] = $subject;
 	?>
-	<?= View::forge("sujet/form", $data); ?>
+	<form action="" method="post" style="background-color: #F5F5F5; padding: 10px;" onsubmit="prepareFormSend()">
+		<?= View::forge("sujet/form", $data); ?>
+
+		<div class="row" style="margin-top: 10px;">
+			<div class="d-md-flex justify-content-md-end col">		
+				<button type="submit" name="stayOnPage" value="0" class="btn btn-success">Confirmer et sortir</button>
+				<button type="submit" name="stayOnPage" value="1" class="btn btn-success" style="margin-left: 10px">Confirmer et dupliquer la fiche</button>
+			</div>
+		</div>
+	</form>
 </div>

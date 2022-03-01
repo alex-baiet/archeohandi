@@ -27,7 +27,14 @@ $errors = $errors;
 		Pour plus d'informations sur un champ, laissez la souris au dessus du champ pour afficher un texte d'aide.
 	</p>
 
-	<?= View::forge("operations/form", array("action" => "/public/operations/edit/{$operation->getId()}", "operation" => $operation)); ?>
-	
+	<form action="/public/operations/edit/<?= $operation->getId() ?>" method="post" style="background-color: #F5F5F5; padding: 10px;">
+		<?= View::forge("operations/form", array("operation" => $operation)); ?>
+
+		<div class="row">
+			<div class="d-md-flex justify-content-md-end col">
+				<button type="submit" class="btn btn-success">Confirmer</button>
+			</div>
+		</div>
+	</form>
 </div>
 

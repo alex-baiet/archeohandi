@@ -1,6 +1,5 @@
 <?php
 
-use Fuel\Core\Asset;
 use Fuel\Core\View;
 
 /** @var Operation|unset */
@@ -19,10 +18,17 @@ $operation;
 		Pour plus d'informations, laissez la souris au dessus du champ pour afficher un texte d'aide.
 	</p>
 	
-	<?php
-	$data = array("action" => "/public/operations/add");
-	if (isset($operation)) $data["operation"] = $operation;
-	echo View::forge("operations/form", $data);
-	?>
-	
+	<form action="/public/operations/add" method="post" style="background-color: #F5F5F5; padding: 10px;">
+		<?php
+		$data = array();
+		if (isset($operation)) $data["operation"] = $operation;
+		echo View::forge("operations/form", $data);
+		?>
+		
+		<div class="row">
+			<div class="d-md-flex justify-content-md-end col">
+				<button type="submit" class="btn btn-success">Confirmer</button>
+			</div>
+		</div>
+	</form>	
 </div>

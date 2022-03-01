@@ -20,6 +20,14 @@ $subject = $subject;
 		Pour plus d'informations sur un champ, laissez la souris au dessus du champ pour afficher un texte d'aide.
 	</p>
 
-	<?= View::forge("sujet/form", array("subject" => $subject)); ?>
+	<form action="" method="post" style="background-color: #F5F5F5; padding: 10px;" onsubmit="prepareFormSend()">
+		<?= View::forge("sujet/form", array("subject" => $subject)); ?>
+		
+		<div class="row" style="margin-top: 10px;">
+			<div class="d-md-flex justify-content-md-end col">
+				<button type="submit" name="stayOnPage" value="0" class="btn btn-success">Confirmer</button>
+			</div>
+		</div>
+	</form>
 </div>
 
