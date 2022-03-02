@@ -51,13 +51,13 @@ class Controller_Recherche extends Controller_Template {
 	private function searchOperations(Operation $refOp): array {
 		$query = DB::select()->from("operations");
 
-		if ($refOp->getIdCommune() !== null) {
-			//$query->join("commune", "INNER")->on("commune.id", "=", "operations.id_commune");
-			$query->where("id_commune", "=", $refOp->getIdCommune());
-		}
-		if (!empty($refOp->getAdresse())) {
-			$query->where("adresse", "LIKE", "%{$refOp->getAdresse()}%");
-		}
+		// Filtre commune
+		if ($refOp->getIdCommune() !== null) $query->where("id_commune", "=", $refOp->getIdCommune());
+		// Filtre adresse
+		if (!empty($refOp->getAdresse())) $query->where("adresse", "LIKE", "%{$refOp->getAdresse()}%");
+		// Filtre année
+		if (!empty($_GET["annee_min"])) $query->where("annee", ">=", $_GET["annee_min"]);
+		if (!empty($_GET["annee_max"])) $query->where("annee", "<=", $_GET["annee_max"]);
 
 		$result = $query->execute()->as_array();
 		/** @var Operation[] */

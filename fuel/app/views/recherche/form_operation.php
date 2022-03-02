@@ -113,24 +113,27 @@ Asset::js("form.js");
 		</script>
 	</div>
 </div>
-<?php if (false) : ?>
-<div class="row my-4">
 
+<div class="row my-4">
 	<!-- Année -->
-	<div class="col-md-4">
+	<div class="col-md-3">
 		<div class="form-floating">
-			<?php
-			$opYear = $operation->getAnnee();
-			$year = $opYear < 1800 || $opYear === null ? null : $operation->getAnnee();
-			?>
-			<input name="annee" id="form_annee" value="<?= $year ?>" type="number" class="form-control" placeholder="Année de l'opération" min="1800" max="<?= date("Y") ?>" title="Mettez l'année de l'opération, ou la dernière année si l'opération s'est déroulé sur plusieurs année">
+			<input name="annee_min" id="form_annee_min" value="" type="number" class="form-control" placeholder="Année de l'opération" min="1800" max="<?= date("Y") ?>" title="Mettez l'année minimum de l'opération">
 			<div class="form-msg-error">La valeur doit être un nombre entre 1800 et <?= date("Y") ?></div>
-			<label for="form_annee">Année de l'opération</label>
+			<label for="form_annee">Année minimum de l'opération</label>
+		</div>
+	</div>
+
+	<div class="col-md-3">
+		<div class="form-floating">
+			<input name="annee_max" id="form_annee_max" value="" type="number" class="form-control" placeholder="Année de l'opération" min="1800" max="<?= date("Y") ?>" title="Mettez l'année maximum de l'opération">
+			<div class="form-msg-error">La valeur doit être un nombre entre 1800 et <?= date("Y") ?></div>
+			<label for="form_annee">Année maximum de l'opération</label>
 		</div>
 	</div>
 
 	<!-- Organisme -->
-	<div class="col-md-4">
+	<div class="col-md-3">
 		<div class="form-floating">
 			<input name="organisme" id="form_organisme" class="form-control" placeholder="Organisme" title="Entrez l'organisme attaché à l'opération" value="<?= $operation->getOrganisme()->getNom() ?>" oninput="FormOperation.checkOrganismeExist()">
 			<div class="form-msg-error">
@@ -146,7 +149,7 @@ Asset::js("form.js");
 	</div>
 
 	<!-- Type de l'opération -->
-	<div class="col-md-4">
+	<div class="col-md-3">
 		<div class="form-floating">
 			<select name="id_type_op" id="form_id_type_op" class="form-select" title="Sélectionner le type de l'opération">
 				<?= Typeoperation::fetchOptions($operation->getIdTypeOp()); ?>
@@ -155,6 +158,8 @@ Asset::js("form.js");
 		</div>
 	</div>
 </div>
+
+<?php if (false) : ?>
 
 <div class="row my-2">
 	<!-- EA -->
