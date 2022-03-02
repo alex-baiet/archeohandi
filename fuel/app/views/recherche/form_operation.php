@@ -135,9 +135,9 @@ Asset::js("form.js");
 	<!-- Organisme -->
 	<div class="col-md-3">
 		<div class="form-floating">
-			<input name="organisme" id="form_organisme" class="form-control" placeholder="Organisme" title="Entrez l'organisme attaché à l'opération" value="<?= $operation->getOrganisme()->getNom() ?>" oninput="FormOperation.checkOrganismeExist()">
+			<input name="organisme" id="form_organisme" class="form-control" placeholder="Organisme" title="Entrez l'organisme attaché à l'opération" oninput="FormOperation.checkOrganismeExist()">
 			<div class="form-msg-error">
-				L'organisme n'existe pas. <a class="link-primary" style="cursor: pointer;" onclick="FormOperation.addOrganisme()">Ajouter l'organisme</a>
+				L'organisme n'existe pas.
 			</div>
 			<label for="form_organimse">Organisme</label>
 			<script>
@@ -152,7 +152,7 @@ Asset::js("form.js");
 	<div class="col-md-3">
 		<div class="form-floating">
 			<select name="id_type_op" id="form_id_type_op" class="form-select" title="Sélectionner le type de l'opération">
-				<?= Typeoperation::fetchOptions($operation->getIdTypeOp()); ?>
+				<?= Typeoperation::fetchOptions("", "Tous"); ?>
 			</select>
 			<label for="form_id_type_op">Type d'opération</label>
 		</div>

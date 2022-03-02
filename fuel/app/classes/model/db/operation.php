@@ -20,8 +20,8 @@ class Operation extends Model {
 	private string $adresse = "";
 	private ?float $x = null;
 	private ?float $y = null;
-	private ?int $idOrganisme = -1;
-	private int $idTypeOp = -1;
+	private ?int $idOrganisme = null;
+	private ?int $idTypeOp = null;
 	private string $EA = "";
 	private string $OA = "";
 	private string $patriarche = "";
@@ -210,11 +210,13 @@ class Operation extends Model {
 	}
 
 	public function getTypeOperation(): ?Typeoperation {
+		if ($this->idTypeOp === null) return null;
 		if ($this->typeOp === null) $this->typeOp = Typeoperation::fetchSingle($this->idTypeOp);
 		return $this->typeOp;
 	}
 
 	public function getOrganisme(): ?Organisme {
+		if ($this->idOrganisme === null) return null;
 		if ($this->organisme === null) $this->organisme = Organisme::fetchSingle($this->idOrganisme);
 		return $this->organisme;
 	}

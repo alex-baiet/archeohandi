@@ -31,7 +31,7 @@ class Chronology extends Model {
 	public static function fetchOptions($idSelected = 18) {
 		$valueRecover = function ($data) { return $data["id"]; };
 		$textRecover = function ($data) { return $data["name"]; };
-		return Archeo::fetchOptions("chronology", $valueRecover, $textRecover, $idSelected, false);
+		return Archeo::fetchOptions("chronology", $valueRecover, $textRecover, $idSelected);
 	}
 
 	/**

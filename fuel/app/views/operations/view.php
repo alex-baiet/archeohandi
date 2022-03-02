@@ -5,6 +5,7 @@ use Fuel\Core\Form;
 use Fuel\Core\View;
 use Model\Db\Compte;
 use Model\Db\Operation;
+use Model\Db\Organisme;
 use Model\Db\Typedepot;
 use Model\Db\Typesepulture;
 
@@ -46,7 +47,8 @@ $sujets = $operation->getSubjects();
 				<div class="p-2">Type d'opération : <?= $operation->getTypeOperation()->getNom(); ?></div>
 			</div>
 			<div class="col">
-				<div class="p-2">Organisme : <?= $operation->getOrganisme()->getNom(); ?></div>
+				<?php $org = $operation->getOrganisme() !== null ? $operation->getOrganisme() : Organisme::fetchSingle(-1); ?>
+				<div class="p-2">Organisme : <?= $org->getNom() ?></div>
 			</div>
 		</div>
 		<div class="row">

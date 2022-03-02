@@ -35,7 +35,7 @@ class Typedepot extends Model {
 	public static function fetchOptions($idSelected = -1) {
 		$valueRecover = function (array $data) { return $data["id"]; };
 		$textRecover = function (array $data) { return $data["nom"]; };
-		return Archeo::fetchOptions("type_depot", $valueRecover, $textRecover, $idSelected, false);
+		return Archeo::fetchOptions("type_depot", $valueRecover, $textRecover, $idSelected);
 	}
 
 	public function getId() { return $this->id; }

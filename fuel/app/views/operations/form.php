@@ -4,6 +4,7 @@ use Fuel\Core\Asset;
 use Fuel\Core\View;
 use Model\Db\Compte;
 use Model\Db\Operation;
+use Model\Db\Organisme;
 use Model\Db\Typeoperation;
 
 $showError = isset($operation);
@@ -122,7 +123,10 @@ Asset::js("form.js");
 	<!-- Organisme -->
 	<div class="col-md-4">
 		<div class="form-floating">
-			<input name="organisme" id="form_organisme" class="form-control" placeholder="Organisme" title="Entrez l'organisme attaché à l'opération" value="<?= $operation->getOrganisme()->getNom() ?>" oninput="FormOperation.checkOrganismeExist()">
+			<?php
+			$org = $operation->getOrganisme() !== null ? $operation->getOrganisme() : Organisme::fetchSingle(-1);
+			?>
+			<input name="organisme" id="form_organisme" class="form-control" placeholder="Organisme" title="Entrez l'organisme attaché à l'opération" value="<?= $org->getNom() ?>" required oninput="FormOperation.checkOrganismeExist()">
 			<div class="form-msg-error">
 				L'organisme n'existe pas. <a class="link-primary" style="cursor: pointer;" onclick="FormOperation.addOrganisme()">Ajouter l'organisme</a>
 			</div>
@@ -139,7 +143,8 @@ Asset::js("form.js");
 	<div class="col-md-4">
 		<div class="form-floating">
 			<select name="id_type_op" id="form_id_type_op" class="form-select" title="Sélectionner le type de l'opération">
-				<?= Typeoperation::fetchOptions($operation->getIdTypeOp()); ?>
+				<?php $idType = $operation->getIdTypeOp() !== null ? $operation->getIdTypeOp() : -1; ?>
+				<?= Typeoperation::fetchOptions($idType); ?>
 			</select>
 			<label for="form_id_type_op">Type d'opération</label>
 		</div>

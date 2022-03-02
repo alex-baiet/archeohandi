@@ -15,7 +15,7 @@ class Controller_Recherche extends Controller_Template {
 
 		$data = array();
 
-		$this->template->title = 'Consultation du sujet';
+		$this->template->title = 'Recherche';
 		$this->template->content = View::forge('recherche/index', $data);
 	}
 
@@ -58,6 +58,8 @@ class Controller_Recherche extends Controller_Template {
 		// Filtre année
 		if (!empty($_GET["annee_min"])) $query->where("annee", ">=", $_GET["annee_min"]);
 		if (!empty($_GET["annee_max"])) $query->where("annee", "<=", $_GET["annee_max"]);
+		if ($refOp->getOrganisme() === null) echo "OUEEEEEE";
+		Helper::varDump($refOp->getOrganisme());
 
 		$result = $query->execute()->as_array();
 		/** @var Operation[] */

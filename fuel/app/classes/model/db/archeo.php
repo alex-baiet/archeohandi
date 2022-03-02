@@ -17,15 +17,15 @@ class Archeo {
 	 * @param Closure $valueRecover Lambda permettant de récupérer la "value" pour les options à partir d'une donnée.
 	 * @param Closure $valueRecover Lambda permettant de récupérer le texte à afficher pour les options à partir d'une donnée.
 	 * @param mixed $idSelected Identifiant de la valeur sélectionnée.
-	 * @param bool $addEmptyValue Ajoute une valeur "Sélectionner" avec value="".
+	 * @param ?string $emptyValue Ajoute une valeur vide avec comme value="" si non null.
 	 */
-	public static function fetchOptions(string $table, Closure $valueRecover, Closure $textRecover, $idSelected, bool $addEmptyValue = false): string {
+	public static function fetchOptions(string $table, Closure $valueRecover, Closure $textRecover, $idSelected, ?string $emptyValue = null): string {
 		// Récupération de tous les objects
 		$results = Helper::querySelect("SELECT * FROM $table;");
 
 		// Création des options
 		$options = array();
-		if ($addEmptyValue) $options[""] = "Sélectionner";
+		if ($emptyValue !== null) $options[""] = $emptyValue;
 		foreach ($results as $result) {
 			$options[$valueRecover($result)] = $textRecover($result);
 		}

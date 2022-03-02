@@ -36,7 +36,7 @@ class Organisme extends Model {
 	public static function fetchOptions($idSelected = -1): string {
 		$valueRecover = function ($data) { return $data["id"]; };
 		$textRecover = function ($data) { return $data["nom"]; };
-		return Archeo::fetchOptions("organisme", $valueRecover, $textRecover, $idSelected, false);
+		return Archeo::fetchOptions("organisme", $valueRecover, $textRecover, $idSelected);
 	}
 
 	/**
