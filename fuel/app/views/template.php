@@ -38,6 +38,7 @@ use Model\Redirect;
 	<?= Asset::js('form_operation.js') ?>
 	<?= Asset::js('form_sujet.js') ?>
 	<?= Asset::js('page_manager.js') ?>
+	<?= Asset::js('nested_table.js') ?>
 
 	<!-- Leaflet -->
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
