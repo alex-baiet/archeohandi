@@ -6,6 +6,7 @@ use Fuel\Core\View;
 use Model\Db\Compte;
 use Model\Db\Operation;
 use Model\Db\Sujethandicape;
+use Model\Helper;
 use Model\Searchresult;
 
 class Controller_Recherche extends Controller_Template {
@@ -50,8 +51,14 @@ class Controller_Recherche extends Controller_Template {
 	private function searchOperations(Operation $refOp): array {
 		$query = DB::select()->from("operations");
 
+		if ($refOp->getIdCommune() !== null) {
+			//$query->join("commune", "INNER")->on("commune.id", "=", "operations.id_commune");
+			$query->where("id_commune", "=", $refOp->getIdCommune());
+		}
+
 		$result = $query->execute()->as_array();
 		$operations = array();
+		echo $query;
 		foreach ($result as $op) {
 			$operations[] = new Operation($op);
 		}
