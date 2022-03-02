@@ -55,10 +55,12 @@ class Controller_Recherche extends Controller_Template {
 			//$query->join("commune", "INNER")->on("commune.id", "=", "operations.id_commune");
 			$query->where("id_commune", "=", $refOp->getIdCommune());
 		}
+		if (!empty($refOp->getAdresse())) {
+			$query->where("adresse", "LIKE", "%{$refOp->getAdresse()}%");
+		}
 
 		$result = $query->execute()->as_array();
 		$operations = array();
-		echo $query;
 		foreach ($result as $op) {
 			$operations[] = new Operation($op);
 		}
