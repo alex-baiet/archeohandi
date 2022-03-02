@@ -17,6 +17,8 @@ $results = $results;
 			<th>Auteur de la saisie</th>
 			<th>Nom du site</th>
 			<th>Année</th>
+			<th>Latitude</th>
+			<th>Longitude</th>
 		</thead>
 		<tbody>
 			<?php foreach ($results as $res) : $op = $res->operation ?>
@@ -33,6 +35,8 @@ $results = $results;
 					<td><?= $author ?></td>
 					<td><?= $op->getNomOp() ?></td>
 					<td><?= $op->getAnnee() ?></td>
+					<td><?= $op->getY() ?></td>
+					<td><?= $op->getX() ?></td>
 				</tr>
 				<tr id="row_subjects_<?= $op->getId() ?>" style="display:none; background-color: #ccc;">
 					<td colspan="100%">

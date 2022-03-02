@@ -60,10 +60,28 @@ class Controller_Recherche extends Controller_Template {
 		}
 
 		$result = $query->execute()->as_array();
+		/** @var Operation[] */
 		$operations = array();
 		foreach ($result as $op) {
 			$operations[] = new Operation($op);
 		}
+
+		// Tri en fonction de la position (trop compliqué a intégré directement dans SQL)
+		if ($refOp->getX() !== null && $refOp->getY() !== null && !empty($_GET["radius"])) {
+			/** @var float Rayon de recherche en mètres. */
+			$radius = floatval($_GET["radius"]) * 1000;
+			for ($i = count($operations) -1; $i >= 0; $i--) {
+				$op = $operations[$i];
+				if ($op->getX() === null || $op->getY() === null) {
+					unset($operations[$i]);
+					continue;
+				}
+				if (Helper::worldDistance($refOp->getY(), $refOp->getX(), $op->getY(), $op->getX()) > $radius) {
+					unset($operations[$i]);
+				}
+			}
+		}
+
 		return $operations;
 	}
 

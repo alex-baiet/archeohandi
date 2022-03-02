@@ -74,7 +74,7 @@ Asset::js("form.js");
 
 		<div class="row my-2">
 			<!-- Longitude -->
-			<div class="col-md-6">
+			<div class="col-md-4">
 				<div class="form-floating">
 					<input name="X" id="form_X" value="<?= $operation->getX() ?>" type="number" class="form-control" placeholder="Longitude" min="-180" max="180" step="any" title="Indiquez la position GPS horizontale" oninput="FormOperation.updateCoordinate()">
 					<div class="form-msg-error">La valeur doit être un nombre entre -180 et 180</div>
@@ -83,11 +83,20 @@ Asset::js("form.js");
 			</div>
 
 			<!-- Latitude -->
-			<div class="col-md-6">
+			<div class="col-md-4">
 				<div class="form-floating">
 					<input name="Y" id="form_Y" value="<?= $operation->getY() ?>" type="number" class="form-control" placeholder="Latitude" min="-90" max="90" step="any" title="Indiquez la position GPS verticale" oninput="FormOperation.updateCoordinate()">
 					<div class="form-msg-error">La valeur doit être un nombre entre -90 et 90</div>
 					<label for="form_Y">Latitude</label>
+				</div>
+			</div>
+
+			<!-- Rayon -->
+			<div class="col-md-4">
+				<div class="form-floating">
+					<input name="radius" id="form_radius" type="number" class="form-control" placeholder="Latitude" min="0" step="any" title="Indiquez le rayon de recherche">
+					<div class="form-msg-error">La valeur doit être supérieur à 0</div>
+					<label for="form_Y">Rayon (km)</label>
 				</div>
 			</div>
 		</div>
@@ -104,6 +113,7 @@ Asset::js("form.js");
 		</script>
 	</div>
 </div>
+<?php if (false) : ?>
 <div class="row my-4">
 
 	<!-- Année -->
@@ -234,5 +244,6 @@ View::forge("fonction/multiple_input", array(
 	)
 ));
 ?>
+<?php endif ?>
 
 <br />
