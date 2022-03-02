@@ -154,7 +154,9 @@ class Helper {
 
 	/** Convertit les caractères ayant des accents en caractères sans accents. */
 	public static function replaceAccent(string $value) {
-		return iconv('ISO-8859-1','ASCII//TRANSLIT',$value);
+		return strtr(utf8_decode($value), utf8_decode('àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ'), 'aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY');
+		// Ancienne version n'étant plus fonctionnel JE SAIS PAS POURQUOI GAPZVÇEUOWS
+		//return iconv('ISO-8859-1','ASCII//TRANSLIT',$value);
 	}
 
 	/** Supprime tout les caractères n'étant pas une lettre alphabétique sans accent. */

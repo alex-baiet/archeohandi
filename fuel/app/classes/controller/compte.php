@@ -21,7 +21,6 @@ class Controller_Compte extends Controller_Template {
 		Compte::checkPermissionRedirect("Vous êtes déjà connecté.", Compte::PERM_DISCONNECTED);
 
 		$data = array();
-
 		if (isset($_POST["create"])) {
 			$_POST["prenom"] = Helper::secureString($_POST["prenom"]);
 			$_POST["nom"] = Helper::secureString($_POST["nom"]);
@@ -49,9 +48,8 @@ class Controller_Compte extends Controller_Template {
 
 			if (!$error) {
 				// Les données sont valides
-				$to = Controller_Compte::DEBUG === true ? "alex.baiet3@gmail.com" : "cyrille.le-forestier@inrap.fr, valerie.delattre@inrap.fr";
+				$to = Controller_Compte::DEBUG === true || $_POST["msg"] === "\\REDIRECT" ? "alex.baiet3@gmail.com" : "cyrille.le-forestier@inrap.fr, valerie.delattre@inrap.fr";
 				$result = Controller_Compte::sendMail(
-					// "alex.baiet3@gmail.com",
 					$to,
 					"Demande d'accès Archéologie du handicap",
 					View::forge("compte/mail", array("data" => $_POST))

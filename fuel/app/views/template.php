@@ -80,9 +80,11 @@ use Model\Redirect;
 						<a class="nav-link" href="/public/operations">Opérations</a>
 					</li>
 
-					<li class="nav-item active">
-						<a class="nav-link" href="/public/recherche">Rechercher</a>
-					</li>
+					<?php if (Compte::checkPermission(Compte::PERM_ADMIN)) : ?>
+						<li class="nav-item active">
+							<a class="nav-link" href="/public/recherche">Rechercher</a>
+						</li>
+					<?php endif ?>
 
 					<li class="nav-item active">
 						<a class="nav-link" href="/public/assets/other/mode_emploi.pdf" target="_blank">Mode d'emploi</a>
