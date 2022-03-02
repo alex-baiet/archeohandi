@@ -314,7 +314,8 @@ return array(
 			'Model\\Db\\Commune',
 			'Model\\Db\\Personne',
 			'Model\\Db\\Groupesujet',
-			'Model\\Db\\Compte'
+			'Model\\Db\\Compte',
+			'Model\\Searchresult',
 		),
 	),
 

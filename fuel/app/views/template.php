@@ -20,9 +20,10 @@ use Model\Redirect;
 	<!-- CSS -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
 	<?= Asset::css('bootstrap/bootstrap.min.css') ?>
+	<?= Asset::css('global.css') ?>
 	<?= Asset::css('button.css') ?>
 	<?= Asset::css('form.css') ?>
-	<?= Asset::css('global.css') ?>
+	<?= Asset::css('result.css') ?>
 
 	<!-- Javascript -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
@@ -36,7 +37,7 @@ use Model\Redirect;
 	<?= Asset::js('form.js') ?>
 	<?= Asset::js('form_operation.js') ?>
 	<?= Asset::js('form_sujet.js') ?>
-	<?= Asset::js('search.js') ?>
+	<?= Asset::js('page_manager.js') ?>
 
 	<!-- Leaflet -->
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"

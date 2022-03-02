@@ -1,4 +1,7 @@
-class Search {
+/**
+ * Permet de changer de page sans en restant sur la même page web.
+ */
+class PageManager {
 	static _pageIds = [];
 	static _btnIds = [];
 
