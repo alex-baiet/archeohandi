@@ -92,7 +92,8 @@ class Controller_Recherche extends Controller_Template {
 	 * @param Operation $opParent Operation parent au sujet.
 	 */
 	private function searchSubjects(Sujethandicape $refSubject, Operation $opParent): array {
-		$query = DB::select("sujet.id", "id_sujet_handicape", "sexe", "dating_min", "dating_max", "milieu_vie", "id_type_depot", "id_sepulture", "id_groupe_sujets")
+		$query = DB::select("sujet.id", "id_sujet_handicape", "age_min", "age_max", "sexe", "dating_min", "dating_max", "milieu_vie", "contexte", "contexte_normatif",
+		                    "comment_contexte", "comment_diagnostic", "description_mobilier", "id_type_depot", "id_sepulture", "id_depot", "id_groupe_sujets")
 			->from(array("sujet_handicape", "sujet"))
 			->join(array("groupe_sujets", "groupe"))
 			->on("sujet.id_groupe_sujets", "=", "groupe.id")
@@ -101,6 +102,8 @@ class Controller_Recherche extends Controller_Template {
 		if (!empty($refSubject->getIdSujetHandicape())) $query->where("id_sujet_handicape", "=", $refSubject->getIdSujetHandicape());
 		if (!empty($refSubject->getSexe())) $query->where("sexe", "=", $refSubject->getSexe());
 		if (!empty($_GET["id_chronologie"])) $query->where("groupe.id_chronologie", "=", $_GET["id_chronologie"]);
+		if ($refSubject->getAgeMin() !== null) $query->where("age_max", ">=", $refSubject->getAgeMin());
+		if ($refSubject->getAgeMax() !== null) $query->where("age_min", "<=", $refSubject->getAgeMax());
 		
 		$result = $query->execute()->as_array();
 		$subjects = array();

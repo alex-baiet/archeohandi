@@ -55,7 +55,7 @@ $results = $results;
 									<th>Milieu de vie</th>
 									<th>Type de dépôt</th>
 									<th>Type de sépulture</th>
-									<th>Chronologie</th>
+									<th>Age</th>
 								</thead>
 								<tbody>
 									<?php foreach ($res->subjects as $subject) : ?>
@@ -68,7 +68,7 @@ $results = $results;
 											<td><?= $subject->getMilieuVie() ?></td>
 											<td><?= $subject->getTypeDepot()->getNom() ?></td>
 											<td><?= $subject->getTypeSepulture()->getNom() ?></td>
-											<td><?= $subject->getGroup()->getChronology()->getName() ?></td>
+											<td><?= $subject->getAgeMin() . " - " . $subject->getAgeMax() ?></td>
 										</tr>
 									<?php endforeach ?>
 								</tbody>

@@ -13,11 +13,11 @@ class Sujethandicape extends Model {
 	#region Values
 	private ?int $id = null;
 	private string $idSujetHandicape = "";
-	private int $ageMin = 0;
-	private int $ageMax = 0;
+	private ?int $ageMin = null;
+	private ?int $ageMax = null;
 	private string $sexe = "Indéterminé";
-	private int $datingMin = 0;
-	private int $datingMax = 0;
+	private ?int $datingMin = null;
+	private ?int $datingMax = null;
 	private ?string $milieuVie = null;
 	private ?string $contexte = null;
 	private ?string $contexteNormatif = null;
@@ -72,11 +72,11 @@ class Sujethandicape extends Model {
 		Archeo::mergeValue($this->id, $data, "id", "int");
 		if ($this->id === null) $setWithEmpty = true;
 		Archeo::mergeValue($this->idSujetHandicape, $data, "id_sujet_handicape");
-		Archeo::mergeValue($this->ageMin, $data, "age_min", "int");
-		Archeo::mergeValue($this->ageMax, $data, "age_max", "int");
+		Archeo::mergeValue($this->ageMin, $data, "age_min", "int", true);
+		Archeo::mergeValue($this->ageMax, $data, "age_max", "int", true);
 		Archeo::mergeValue($this->sexe, $data, "sexe");
-		Archeo::mergeValue($this->datingMin, $data, "dating_min", "int");
-		Archeo::mergeValue($this->datingMax, $data, "dating_max", "int");
+		Archeo::mergeValue($this->datingMin, $data, "dating_min", "int", true);
+		Archeo::mergeValue($this->datingMax, $data, "dating_max", "int", true);
 		Archeo::mergeValue($this->milieuVie, $data, "milieu_vie");
 		Archeo::mergeValue($this->contexte, $data, "contexte");
 		Archeo::mergeValue($this->contexteNormatif, $data, "contexte_normatif");

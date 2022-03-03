@@ -74,12 +74,11 @@ if (!empty($msg)) {
 	</div>
 </div>
 
-<?php if (false) : ?>
 <div class="row my-4">
 	<!-- Âge minimum estimé de décès -->
 	<div class="col-md-6">
 		<div class="form-floating">
-			<input name="age_min" id="form_age_min" value="<?= $subject->getAgeMin(); ?>" type="number" class="form-control" placeholder="Âge minimum au décès" min="0" max="130" step="1" required title="Indiquez l'âge minimum estimé du sujet">
+			<input name="age_min" id="form_age_min" value="<?= $subject->getAgeMin(); ?>" type="number" class="form-control" placeholder="Âge minimum au décès" min="0" max="130" step="1" title="Indiquez l'âge minimum estimé du sujet">
 			<div class="form-msg-error">La valeur doit être un nombre entier entre 0 et 130</div>
 			<label for="form_age_min">Âge minimum au décès</label>
 		</div>
@@ -88,7 +87,7 @@ if (!empty($msg)) {
 	<!-- Âge maximum estimé de décès -->
 	<div class="col-md-6">
 		<div class="form-floating">
-			<input name="age_max" id="form_age_max" value="<?= $subject->getAgeMax(); ?>" type="number" class="form-control" placeholder="Âge maximum au décès" min="0" max="130" step="1" required title="Indiquez l'âge maximum estimé du sujet">
+			<input name="age_max" id="form_age_max" value="<?= $subject->getAgeMax(); ?>" type="number" class="form-control" placeholder="Âge maximum au décès" min="0" max="130" step="1" title="Indiquez l'âge maximum estimé du sujet">
 			<div class="form-msg-error">La valeur doit être un nombre entier entre 0 et 130</div>
 			<label for="form_age_max">Âge maximum au décès</label>
 		</div>
@@ -99,7 +98,7 @@ if (!empty($msg)) {
 	<!-- Période minimum estimé -->
 	<div class="col-md-6">
 		<div class="form-floating">
-			<input name="dating_min" id="form_dating_min" value="<?= $subject->getDatingMin(); ?>" type="number" class="form-control" placeholder="Datation minimale" min="-20000" max="1945" step="1" required title="Indiquez la borne inférieure de datation du sujet">
+			<input name="dating_min" id="form_dating_min" value="<?= $subject->getDatingMin(); ?>" type="number" class="form-control" placeholder="Datation minimale" min="-20000" max="1945" step="1" title="Indiquez la borne inférieure de datation du sujet">
 			<div class="form-msg-error">La valeur doit être un nombre entier entre -20000 et 1945</div>
 			<label for="form_dating_min">Datation minimale</label>
 		</div>
@@ -108,7 +107,7 @@ if (!empty($msg)) {
 	<!-- Période maximum estimé -->
 	<div class="col-md-6">
 		<div class="form-floating">
-			<input name="dating_max" id="form_dating_max" value="<?= $subject->getDatingMax(); ?>" type="number" class="form-control" placeholder="Datation maximal" min="-20000" max="1945" step="1" required title="Indiquez la borne supérieure de datation du sujet">
+			<input name="dating_max" id="form_dating_max" value="<?= $subject->getDatingMax(); ?>" type="number" class="form-control" placeholder="Datation maximal" min="-20000" max="1945" step="1" title="Indiquez la borne supérieure de datation du sujet">
 			<div class="form-msg-error">La valeur doit être un nombre entier entre -20000 et 1945</div>
 			<label for="form_dating_max">Datation maximale</label>
 		</div>
@@ -116,6 +115,7 @@ if (!empty($msg)) {
 
 </div>
 
+<?php if (false) : ?>
 <div class="row my-3">
 	<!-- Type de dépôt -->
 	<div class="col-md-4">
