@@ -92,13 +92,15 @@ class Controller_Recherche extends Controller_Template {
 	 * @param Operation $opParent Operation parent au sujet.
 	 */
 	private function searchSubjects(Sujethandicape $refSubject, Operation $opParent): array {
-		$query = DB::select("sujet.id", "id_sujet_handicape", "sexe", "dating_min", "dating_max", "milieu_vie", "id_type_depot", "id_sepulture")->from(array("sujet_handicape", "sujet"))
+		$query = DB::select("sujet.id", "id_sujet_handicape", "sexe", "dating_min", "dating_max", "milieu_vie", "id_type_depot", "id_sepulture", "id_groupe_sujets")
+			->from(array("sujet_handicape", "sujet"))
 			->join(array("groupe_sujets", "groupe"))
 			->on("sujet.id_groupe_sujets", "=", "groupe.id")
 			->where("groupe.id_operation", "=", $opParent->getId());
 
 		if (!empty($refSubject->getIdSujetHandicape())) $query->where("id_sujet_handicape", "=", $refSubject->getIdSujetHandicape());
 		if (!empty($refSubject->getSexe())) $query->where("sexe", "=", $refSubject->getSexe());
+		if (!empty($_GET["id_chronologie"])) $query->where("groupe.id_chronologie", "=", $_GET["id_chronologie"]);
 		
 		$result = $query->execute()->as_array();
 		$subjects = array();
