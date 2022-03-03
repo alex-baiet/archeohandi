@@ -76,8 +76,10 @@ class Depot extends Model {
 		});
 	}
 
-	public function saveOnDB() {
+	public function saveOnDB($saveAsNew = false) {
 		if (!$this->validate()) return false;
+
+		if ($saveAsNew) $this->id = null;
 		$arr = $this->toArray();
 
 		if ($this->id === null || Depot::fetchSingle($this->id) === null) {

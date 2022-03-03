@@ -4,6 +4,7 @@ use Fuel\Core\Controller_Template;
 use Fuel\Core\DB;
 use Fuel\Core\View;
 use Model\Db\Compte;
+use Model\Db\Sujethandicape;
 use Model\Helper;
 use Model\Script\Import;
 
@@ -63,5 +64,42 @@ class Controller_Script extends Controller_Template {
 		
 		$this->template->title = 'Import CSV | Résultats';
 		$this->template->content = View::forge('script/import_csv_result', $data, false);
+	}
+
+	/** Permet de créer un depot propre a chaque sujet pour tous les sujets ayant un depot en commun avec un autre sujet. */
+	public function action_split_sujet_depot() {
+		if (!$this->checkPermission()) return;
+
+		$data = array();
+
+		// Récupération des sujets ayant un depot en commun avec au moins un autre sujet
+		$results = $query = DB::query("SELECT *
+			FROM sujet_handicape AS original
+			WHERE EXISTS(
+				SELECT id
+				FROM sujet_handicape AS copy
+				WHERE copy.id_depot = original.id_depot
+				AND copy.id != original.id
+			);"
+		)->execute()->as_array();
+
+		foreach ($results as $res) {
+			$subject = new Sujethandicape($res);
+
+			// Récupération du depot
+			$depot = $subject->getDepot();
+			
+			// Sauvegarde en tant que nouveau depot
+			$depot->saveOnDB(true);
+			
+			// Ajout du nouvel id de depot au sujet
+			$subject->setDepot($depot);
+
+			// Sauvegarde du sujet
+			$subject->saveOnDB();
+		}
+		
+		$this->template->title = 'Import CSV | Résultats';
+		$this->template->content = View::forge('script/split_sujet_depot', $data, false);
 	}
 }
