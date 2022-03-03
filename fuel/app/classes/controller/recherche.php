@@ -106,6 +106,11 @@ class Controller_Recherche extends Controller_Template {
 		if ($refSubject->getAgeMax() !== null) $query->where("age_min", "<=", $refSubject->getAgeMax());
 		if ($refSubject->getDatingMin() !== null) $query->where("dating_max", ">=", $refSubject->getDatingMin());
 		if ($refSubject->getDatingMax() !== null) $query->where("dating_min", "<=", $refSubject->getDatingMax());
+		if ($refSubject->getIdTypeDepot() !== null) $query->where("id_type_depot", "=", $refSubject->getIdTypeDepot());
+		if ($refSubject->getIdTypeSepulture() !== null) $query->where("id_sepulture", "=", $refSubject->getIdTypeSepulture());
+		if (!empty($refSubject->getContexteNormatif())) $query->where("contexte_normatif", "=", $refSubject->getContexteNormatif());
+		if (!empty($refSubject->getMilieuVie())) $query->where("milieu_vie", "=", $refSubject->getMilieuVie());
+		if (!empty($refSubject->getContexte())) $query->where("contexte", "=", $refSubject->getContexte());
 		
 		$result = $query->execute()->as_array();
 		$subjects = array();

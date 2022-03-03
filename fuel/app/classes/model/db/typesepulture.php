@@ -33,10 +33,10 @@ class Typesepulture extends Model {
 		return $obj;
 	}
 
-	public static function fetchOptions($idSelected = -1): string {
+	public static function fetchOptions($idSelected = -1, ?string $valueEmpty = null): string {
 		$valueRecover = function (array $data) { return $data["id"]; };
 		$textRecover = function (array $data) { return $data["nom"]; };
-		return Archeo::fetchOptions("type_sepulture", $valueRecover, $textRecover, $idSelected);
+		return Archeo::fetchOptions("type_sepulture", $valueRecover, $textRecover, $idSelected, $valueEmpty);
 	}
 
 	public function getId() { return $this->id; }

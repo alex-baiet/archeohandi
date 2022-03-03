@@ -24,8 +24,8 @@ class Sujethandicape extends Model {
 	private string $commentContext = "";
 	private string $commentDiagnosis = "";
 	private string $descriptionMobilier = "";
-	private int $idTypeDepot = -1;
-	private int $idSepulture = -1;
+	private ?int $idTypeDepot = -1;
+	private ?int $idSepulture = -1;
 	private ?int $idDepot = null;
 	private ?int $idGroupeSujet = null;
 
@@ -85,8 +85,8 @@ class Sujethandicape extends Model {
 		Archeo::mergeValue($this->descriptionMobilier, $data, "description_mobilier");
 		Archeo::mergeValue($this->urlImg, $data, "url_img");
 		if (empty($this->urlImg)) $this->urlImg = null;
-		Archeo::mergeValue($this->idTypeDepot, $data, "id_type_depot", "int");
-		Archeo::mergeValue($this->idSepulture, $data, "id_sepulture", "int");
+		Archeo::mergeValue($this->idTypeDepot, $data, "id_type_depot", "int", true);
+		Archeo::mergeValue($this->idSepulture, $data, "id_sepulture", "int", true);
 		Archeo::mergeValue($this->idDepot, $data, "id_depot", "int");
 		Archeo::mergeValue($this->idGroupeSujet, $data, "id_groupe_sujets", "int");
 

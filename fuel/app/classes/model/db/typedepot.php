@@ -32,10 +32,10 @@ class Typedepot extends Model {
 		return new Typedepot($res);
 	}
 
-	public static function fetchOptions($idSelected = -1) {
+	public static function fetchOptions($idSelected = -1, ?string $valueEmpty = null) {
 		$valueRecover = function (array $data) { return $data["id"]; };
 		$textRecover = function (array $data) { return $data["nom"]; };
-		return Archeo::fetchOptions("type_depot", $valueRecover, $textRecover, $idSelected);
+		return Archeo::fetchOptions("type_depot", $valueRecover, $textRecover, $idSelected, $valueEmpty);
 	}
 
 	public function getId() { return $this->id; }

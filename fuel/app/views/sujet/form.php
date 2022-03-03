@@ -195,7 +195,7 @@ if (!empty($msg)) {
 				)
 			);
 			?>
-			<?= Form::label("Milieu de vie", "milieu_vie") ?>
+			<label for="form_milieu_vie">Milieu de vie</label>
 		</div>
 	</div>
 
@@ -217,7 +217,7 @@ if (!empty($msg)) {
 				)
 			);
 			?>
-			<?= Form::label("Contexte de la tombe", "contexte") ?>
+			<label for="form_contexte">Contexte de la tombe</label>
 		</div>
 	</div>
 </div>

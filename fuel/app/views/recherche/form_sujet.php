@@ -115,13 +115,12 @@ if (!empty($msg)) {
 
 </div>
 
-<?php if (false) : ?>
 <div class="row my-3">
 	<!-- Type de dépôt -->
 	<div class="col-md-4">
 		<div class="form-floating">
 			<select name="id_type_depot" id="form_id_type_depot" class="form-select" title="Indiquez la modalité du dépôt">
-				<?= Typedepot::fetchOptions($subject->getIdTypeDepot()) ?>
+				<?= Typedepot::fetchOptions("", "Tous") ?>
 			</select>
 			<label for="form_id_type_depot">Type de dépôt</label>
 		</div>
@@ -131,7 +130,7 @@ if (!empty($msg)) {
 	<div class="col-md-4">
 		<div class="form-floating">
 			<select name="id_sepulture" id="form_id_sepulture" class="form-select" title="Indiquez le type de la sépulture">
-				<?= Typesepulture::fetchOptions($subject->getIdTypeSepulture()) ?>
+				<?= Typesepulture::fetchOptions("", "Tous") ?>
 			</select>
 			<label for="form_id_sepulture">Type de sépulture</label>
 		</div>
@@ -143,9 +142,9 @@ if (!empty($msg)) {
 			<?=
 			Form::select(
 				"contexte_normatif",
-				$subject->getContexteNormatif(),
+				"",
 				array(
-					"" => "Indéterminé",
+					"" => "Tous",
 					"Standard" => "Standard",
 					"Atypique" => "Atypique"
 				),
@@ -167,9 +166,9 @@ if (!empty($msg)) {
 			<?=
 			Form::select(
 				"milieu_vie",
-				$subject->getMilieuVie(),
+				"",
 				array(
-					"" => "Indéterminé",
+					"" => "Tous",
 					"Rural" => "Rural",
 					"Urbain" => "Urbain"
 				),
@@ -179,7 +178,7 @@ if (!empty($msg)) {
 				)
 			);
 			?>
-			<?= Form::label("Milieu de vie", "milieu_vie") ?>
+			<label for="form_milieu_vie">Milieu de vie</label>
 		</div>
 	</div>
 
@@ -188,9 +187,9 @@ if (!empty($msg)) {
 		<div class="form-floating">
 			<?= Form::select(
 				"contexte",
-				$subject->getContexte(),
+				"",
 				array(
-					"" => "Indéterminé",
+					"" => "Tous",
 					"Funeraire" => "Funéraire",
 					"Domestique" => "Domestique",
 					"Autre" => "Autre"
@@ -201,13 +200,14 @@ if (!empty($msg)) {
 				)
 			);
 			?>
-			<?= Form::label("Contexte de la tombe", "contexte") ?>
+			<label for="form_contexte">Contexte de la tombe</label>
 		</div>
 	</div>
 </div>
 
 <br />
 
+<?php if (false) : ?>
 <div class="row">
 	<div class="col-md-6">
 		<h3>Atteinte invalidante</h3>
