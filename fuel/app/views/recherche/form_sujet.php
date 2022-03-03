@@ -41,53 +41,40 @@ if (!empty($msg)) {
 	<input type="hidden" name="id_operation" value="<?= $idOperation ?>">
 <?php endif; ?>
 <?php if ($subject->getId() !== null) echo Form::hidden("id", $subject->getId()); ?>
-<h2 class="text-center">Groupe du sujet</h2>
-
-<div class="row g-2">
-	<?php $group = $subject->getGroup(); ?>
-	<?php if ($group !== null && $group->getId() !== null) echo Form::hidden("id_group", $group->getId()); ?>
-
-	<!-- NMI -->
-	<div class="col-md-6">
-		<div class="form-floating">
-			<input name="NMI" id="form_NMI" value="<?= $group !== null ? $group->getNMI() : "" ?>" type="number" class="form-control" placeholder="NMI" min="0" title="Indiquez le Nombre Minimum d'Individu que compose le groupe dont fait parti le sujet handicapé">
-			<div class="form-msg-error">La valeur doit être un nombre positif</div>
-			<label for="form_NMI">NMI</label>
-		</div>
-	</div>
-
-	<!-- Chronologie -->
-	<?php $chrono = $group !== null && $group->getChronology() !== null ? $group->getChronology()->getId() : 18; ?>
-	<div class="col-md-6">
-		<div class="form-floating">
-			<select name="id_chronologie" id="form_id_chronologie" class="form-select" required title="Indiquer la phase chronologique à laquelle appartient le sujet handicapé">
-				<?= Chronology::fetchOptions($chrono) ?>
-			</select>
-			<label for="form_id_chronologie">Chronologie</label>
-		</div>
-	</div>
-</div>
-
-<h3 class="text-center my-2">Sujet handicapé</h3>
 
 <div class="row my-4">
+
 	<!-- Identifiant -->
-	<div class="col-md-6">
+	<div class="col-md-4">
 		<div class="form-floating">
-			<input name="id_sujet_handicape" id="form_id_sujet_handicape" value="<?= $subject->getIdSujetHandicape(); ?>" type="text" class="form-control" placeholder="" maxlength="256" onclick="this.required=`required`" title="Indiquez le numéro d'enregistrement du sujet">
+			<input name="id_sujet_handicape" id="form_id_sujet_handicape" value="<?= $subject->getIdSujetHandicape(); ?>" type="text" class="form-control" placeholder="" maxlength="256" title="Indiquez le numéro d'enregistrement du sujet">
 			<div class="form-msg-error">Veuillez indiquer une valeur pour ce champ</div>
 			<label for="form_id_sujet_handicape">Identifiant du sujet</label>
 		</div>
 	</div>
 
-	<!-- Sexe -->
-	<div class="col-md-6">
+	<!-- Chronologie -->
+	<div class="col-md-4">
 		<div class="form-floating">
-			<?= Sex::generateSelect("sexe", $subject->getSexe()); ?>
+			<select name="id_chronologie" id="form_id_chronologie" class="form-select" required title="Indiquer la phase chronologique à laquelle appartient le sujet handicapé">
+				<?= Chronology::fetchOptions("", "Tous") ?>
+			</select>
+			<label for="form_id_chronologie">Chronologie</label>
+		</div>
+	</div>
+
+	<!-- Sexe -->
+	<div class="col-md-4">
+		<div class="form-floating">
+			<select name="sexe" id="form_sexe" class="form-select">
+				<?= Sex::fetchOptions("", "Tous") ?>
+			</select>
+			<label for="form_sexe">Sexe</label>
 		</div>
 	</div>
 </div>
 
+<?php if (false) : ?>
 <div class="row my-4">
 	<!-- Âge minimum estimé de décès -->
 	<div class="col-md-6">
@@ -219,17 +206,10 @@ if (!empty($msg)) {
 	</div>
 </div>
 
-<!-- Commentaire contexte -->
-<div class="col-md-12">
-	<label for="form_comment_contexte">Commentaire</label>
-	<textarea name="comment_contexte" id="form_comment_contexte" class="form-control" rows="2" maxlength="65535" title="Ecrivez ici des commentaires sur le groupe ou la sépulture en question si cela est nécessaire"><?= $subject->getCommentContext(); ?></textarea>
-</div>
 <br />
 
 <div class="row">
-
 	<div class="col-md-6">
-
 		<h3>Atteinte invalidante</h3>
 
 		<table>
@@ -372,74 +352,4 @@ if (!empty($msg)) {
 <div class="input-group">
 	<textarea class="form-control" name="comment_diagnostic" rows="2" maxlength="65535" title="Ecrivez ici des commentaires sur le diagnostic si besoin"><?= $subject->getCommentDiagnosis(); ?></textarea>
 </div>
-
-<h3>Iconographie</h3>
-<!-- Lien Nakala -->
-<div class="row my-2">
-	<div class="col-md-auto">
-		<a href="https://nakala.fr/u/collections/10.34847/nkl.2400swmp" class="btn btn-primary" target="_blank">Aller sur Nakala</a>
-	</div>
-
-	<div class="col-md-auto">
-		<button type="button" class="btn btn-primary" onclick="FormSujet.generateDescription(`fast_summary`)">Générer une résumé à copier</button>
-	</div>
-
-	<div class="col-md-auto">
-		<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#helpPopup">Aide <i class="bi bi-question-circle"></i></button>
-	</div>
-
-	<!-- Département, ville, adresse, n° de sépulture, type de pathologie -->
-	<pre id="fast_summary" style="background-color: white; margin: 10px;"></pre>
-</div>
-
-<!-- Listes URL images -->
-<?php
-$urls = $subject->getUrlsImg();
-if (empty($urls)) $urls[] = "";
-?>
-
-<?=
-View::forge("fonction/multiple_input", array(
-	"name" => "urls_img",
-	"datas" => $urls,
-	"label" => "Lien URL de l'image",
-	"imageInput" => true
-));
-?>
-
-<!-- Popup d'aide d'ajout d'image -->
-<div class="modal" id="helpPopup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="helpPopupLabel" aria-hidden="true">
-	<div class="modal-dialog" style="max-width: 800px;">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="helpPopupLabel">Aide</h5>
-			</div>
-			<div class="modal-body">
-				<p>
-					Pour ajouter une image de Nakala au sujet, allez d'abord sur l'affichage d'une image directement sur Nakala,
-					puis copiez le champ comme indiqué dans l'image ci-dessous.<br>
-					<br>
-					Collez l'url dans le champ, et si une prévisualisation de l'image s'affiche,
-					c'est que votre image a bien été ajoutée au sujet !<br>
-					<b>Note</b> : Il est possible d'ajouter des images d'autres sources que Nakala si vous le souhaitez.<br>
-					<br>
-					<b>J'ai rempli le champ, mais aucune image ne s'affiche. Pourquoi ?</b>
-				<ul>
-					<li>Le texte du champ n'est pas bon : vérifiez que vous avez bien copié l'url (il doit commencer par "https://" ou "http://".</li>
-					<li>L'image n'est pas au bon format : seul les formats <b>PNG</b> et <b>JPG</b> sont acceptés.</li>
-					<li>L'image n'existe plus : il est possible que l'image ai été supprimé de Nakala.</li>
-					<li>Avez-vous bien <b>publié</b> et non <b>déposé</b> l'image sur Nakala ?</li>
-				</ul>
-				<br>
-				<figure>
-					<figcaption style="text-align: center; font-style: italic; background-color: #0002;">Exemple d'url à copier</figcaption>
-					<?= Asset::img("help/demo_url.png", array("style" => "width: 100%;")) ?>
-				</figure>
-				</p>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#helpPopup">Retour</button>
-			</div>
-		</div>
-	</div>
-</div>
+<?php endif ?>

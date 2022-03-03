@@ -28,10 +28,10 @@ class Chronology extends Model {
 		return Archeo::fetchSingle($id, "chronology", function ($data) { return new Chronology($data); });
 	}
 
-	public static function fetchOptions($idSelected = 18) {
+	public static function fetchOptions($idSelected = 18, $emptyValue = null) {
 		$valueRecover = function ($data) { return $data["id"]; };
 		$textRecover = function ($data) { return $data["name"]; };
-		return Archeo::fetchOptions("chronology", $valueRecover, $textRecover, $idSelected);
+		return Archeo::fetchOptions("chronology", $valueRecover, $textRecover, $idSelected, $emptyValue);
 	}
 
 	/**

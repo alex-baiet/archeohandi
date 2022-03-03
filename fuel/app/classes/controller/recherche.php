@@ -58,8 +58,8 @@ class Controller_Recherche extends Controller_Template {
 		// Filtre année
 		if (!empty($_GET["annee_min"])) $query->where("annee", ">=", $_GET["annee_min"]);
 		if (!empty($_GET["annee_max"])) $query->where("annee", "<=", $_GET["annee_max"]);
-		if ($refOp->getOrganisme() === null) echo "OUEEEEEE";
-		Helper::varDump($refOp->getOrganisme());
+		// if ($refOp->getOrganisme() === null) echo "OUEEEEEE";
+		// Helper::varDump($refOp->getOrganisme());
 
 		$result = $query->execute()->as_array();
 		/** @var Operation[] */
@@ -96,6 +96,8 @@ class Controller_Recherche extends Controller_Template {
 			->join(array("groupe_sujets", "groupe"))
 			->on("sujet.id_groupe_sujets", "=", "groupe.id")
 			->where("groupe.id_operation", "=", $opParent->getId());
+
+		if (!empty($refSubject->getSexe())) $query->where("sexe", "=", $refSubject->getSexe());
 		
 		$result = $query->execute()->as_array();
 		$subjects = array();

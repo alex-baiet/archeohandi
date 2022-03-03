@@ -12,8 +12,8 @@ class Sex extends Model {
 		"Indéterminé" => "Indéterminé"
 	);
 
-	/** @param */
-	public static function generateSelect($field = "sexe", $value = "Indéterminé") {
+	/** Génère le select. */
+	public static function generateSelect($field = "sexe", $value = "Indéterminé"): string {
 		$txt = Form::select(
 			$field,
 			$value,
@@ -24,6 +24,21 @@ class Sex extends Model {
 		return $txt;
 	}
 
+	/** Génère les options du select. */
+	public static function fetchOptions($idSelected = "Indéterminé", ?string $emptyValue = null): string {
+
+		$options = Sex::$values;
+		if ($emptyValue !== null) $options[""] = $emptyValue;
+
+		$html = "";
+		foreach ($options as $value => $text) {
+			$html .= "<option value='$value'".($idSelected === $value ? " selected" : "").">$text</option>\n";
+		}
+
+		return $html;
+	}
+	
+	/** Récupère la liste des options possible de sexe. */
 	public static function getValues(): array { return Sex::$values; }
 
 	/** Test que le sexe indiqué existe bien. */
