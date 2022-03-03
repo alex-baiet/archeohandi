@@ -16,8 +16,8 @@ use Model\Helper;
 		<div class="row my-2">
 			<div class="col-md">
 				<div class="form-floating">
-					<?= Form::input("login", Helper::arrayGetString("login", $_POST), array("type" => "text", "class" => "form-control", "placeholder" => "")); ?>
-					<?= Form::label("Login", "login"); ?>
+					<input type="text" id="form_login" name="login" class="form-control" placeholder="Login" value="<?= Helper::arrayGetString("login", $_POST) ?>">
+					<label for="form_login">Login</label>
 				</div>
 			</div>
 		</div>
@@ -26,8 +26,8 @@ use Model\Helper;
 		<div class="row my-2">
 			<div class="col-md">
 				<div class="form-floating">
-					<?= Form::input("mdp", Helper::arrayGetString("mdp", $_POST), array("type" => "password", "class" => "form-control", "placeholder" => "")); ?>
-					<?= Form::label("Mot de passe", "mdp"); ?>
+					<input type="password" id="form_mdp" name="mdp" class="form-control" placeholder="Mot de passe" value="<?= Helper::arrayGetString("mdp", $_POST) ?>">
+					<label for="form_mdp">Mot de passe</label>
 				</div>
 			</div>
 		</div>
