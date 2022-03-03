@@ -104,6 +104,8 @@ class Controller_Recherche extends Controller_Template {
 		if (!empty($_GET["id_chronologie"])) $query->where("groupe.id_chronologie", "=", $_GET["id_chronologie"]);
 		if ($refSubject->getAgeMin() !== null) $query->where("age_max", ">=", $refSubject->getAgeMin());
 		if ($refSubject->getAgeMax() !== null) $query->where("age_min", "<=", $refSubject->getAgeMax());
+		if ($refSubject->getDatingMin() !== null) $query->where("dating_max", ">=", $refSubject->getDatingMin());
+		if ($refSubject->getDatingMax() !== null) $query->where("dating_min", "<=", $refSubject->getDatingMax());
 		
 		$result = $query->execute()->as_array();
 		$subjects = array();
