@@ -13,12 +13,16 @@ $results = $results;
 
 	<table class="table table-bordered sticky">
 		<thead>
-			<th>Id BDD</th>
-			<th>Auteur de la saisie</th>
-			<th>Nom du site</th>
-			<th>Année</th>
-			<th>Latitude</th>
-			<th>Longitude</th>
+			<tr class="text-center">
+				<th>#</th>
+				<th>Id BDD</th>
+				<th>Auteur de la saisie</th>
+				<th>Nom du site</th>
+				<th>Année</th>
+				<th>Latitude</th>
+				<th>Longitude</th>
+				<th>Actions</th>
+			</tr>
 		</thead>
 		<tbody>
 			<?php
@@ -27,7 +31,8 @@ $results = $results;
 					$op = $res->operation
 			?>
 					<?php /* Affichage de l'opération */ ?>
-					<tr onclick="NestedTable.switchTableView(`row_subjects_<?= $op->getId() ?>`)">
+					<tr class="text-center">
+						<td class="btn-fold" id="btn_<?= $op->getId() ?>" onclick="NestedTable.switchTableView(`row_subjects_<?= $op->getId() ?>`, `btn_<?= $op->getId() ?>`)"></td>
 						<td><?= $op->getId() ?></td>
 						<?php
 						$author = "";
@@ -41,6 +46,7 @@ $results = $results;
 						<td><?= $op->getAnnee() ?></td>
 						<td><?= $op->getY() ?></td>
 						<td><?= $op->getX() ?></td>
+						<td><a href="/public/operations/view/<?= $op->getId() ?>">Consulter</a></td>
 					</tr>
 					<tr id="row_subjects_<?= $op->getId() ?>" style="display:none; background-color: #ccc;">
 						<td colspan="100%">
@@ -48,19 +54,22 @@ $results = $results;
 							<?php /* Tableau des sujets */ ?>
 							<table class="table table-bordered" style="background-color: white;">
 								<thead>
-									<th>Numéro</th>
-									<th>Nom</th>
-									<th>Sexe</th>
-									<th>Datation</th>
-									<th>Milieu de vie</th>
-									<th>Type de dépôt</th>
-									<th>Type de sépulture</th>
-									<th>Age</th>
+									<tr class="text-center">
+										<th>Numéro</th>
+										<th>Nom</th>
+										<th>Sexe</th>
+										<th>Datation</th>
+										<th>Milieu de vie</th>
+										<th>Type de dépôt</th>
+										<th>Type de sépulture</th>
+										<th>Age</th>
+										<th>Actions</th>
+									</tr>
 								</thead>
 								<tbody>
 									<?php foreach ($res->subjects as $subject) : ?>
 										<?php /* Affichage d'un sujet */ ?>
-										<tr>
+										<tr class="text-center">
 											<td><?= $subject->getId() ?></td>
 											<td><?= $subject->getIdSujetHandicape() ?></td>
 											<td><?= $subject->getSexe() ?></td>
@@ -69,6 +78,7 @@ $results = $results;
 											<td><?= $subject->getTypeDepot()->getNom() ?></td>
 											<td><?= $subject->getTypeSepulture()->getNom() ?></td>
 											<td><?= $subject->getAgeMin() . " - " . $subject->getAgeMax() ?></td>
+											<td><a href="/public/sujet/view/<?= $subject->getId() ?>">Consulter</a></td>
 										</tr>
 									<?php endforeach ?>
 								</tbody>

@@ -29,7 +29,7 @@ class Controller_Operations extends Controller_Template {
 				if ($result === null) {
 					Messagehandler::prepareAlert("Suppression de l'opération réussi.", "success");
 				} else {
-					Messagehandler::prepareAlert("Echec de la suppression de l'opération.", "danger");
+					Messagehandler::prepareAlert($result, "danger");
 				}
 			}
 		}

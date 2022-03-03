@@ -1,1 +1,11 @@
 /* Mise en forme pour la page des résultats. */
+.btn-fold {
+	width: 40px;
+	background-image: url("/public/assets/img/icon/arrow-right.png");
+	background-size: 15px;
+	background-repeat: no-repeat;
+	background-position: 50%, 50%;
+	cursor: pointer;
+	/* background-color: #fff0;
+	border-style: none; */
+}
