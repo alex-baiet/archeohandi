@@ -15,7 +15,7 @@ $results = $results;
 		<thead>
 			<tr class="text-center">
 				<th>#</th>
-				<th>Id BDD</th>
+				<th>Id</th>
 				<th>Auteur de la saisie</th>
 				<th>Nom du site</th>
 				<th>Année</th>
@@ -55,7 +55,7 @@ $results = $results;
 							<table class="table table-bordered" style="background-color: white;">
 								<thead>
 									<tr class="text-center">
-										<th>Numéro</th>
+										<th>Id</th>
 										<th>Nom</th>
 										<th>Sexe</th>
 										<th>Datation</th>
