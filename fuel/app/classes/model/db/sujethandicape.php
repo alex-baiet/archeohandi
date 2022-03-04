@@ -199,6 +199,7 @@ class Sujethandicape extends Model {
 		DB::delete("appareil_sujet")->where("id_sujet", "=", $id)->execute();
 		DB::delete("localisation_sujet")->where("id_sujet", "=", $id)->execute();
 		DB::delete("atteinte_pathologie")->where("id_sujet", "=", $id)->execute();
+		DB::delete("sujet_image")->where("id_sujet", "=", $id)->execute();
 
 		$result = DB::delete("sujet_handicape")->where("id", "=", $id)->execute();
 		if ($result < 1) return "Le sujet n'a pas pû être supprimé";
