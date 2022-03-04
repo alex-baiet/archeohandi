@@ -88,9 +88,10 @@ class Groupesujet extends Model {
 	}
 	#endregion
 
-	public function saveOnDB(): bool {
+	public function saveOnDB(bool $saveAsNew = false): bool {
 		if (!$this->validate()) return false;
 
+		if ($saveAsNew) $this->id = null;
 		// Préparation des valeurs à envoyer à la BDD
 		$arr = $this->toArray();
 

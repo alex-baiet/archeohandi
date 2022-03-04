@@ -103,6 +103,44 @@ class Controller_Script extends Controller_Template {
 		}
 		
 		$this->template->title = 'Import CSV | Résultats';
-		$this->template->content = View::forge('script/split_sujet_depot', $data, false);
+		$this->template->content = '';
+	}
+
+	/** Permet de créer un depot propre a chaque sujet pour tous les sujets ayant un depot en commun avec un autre sujet. */
+	public function action_split_sujet_groupe() {
+		if (!$this->checkPermission()) return;
+
+		$data = array();
+
+		// Récupération des sujets ayant un depot en commun avec au moins un autre sujet
+		$results = $query = DB::query("SELECT *
+			FROM sujet_handicape AS original
+			WHERE EXISTS(
+				SELECT id
+				FROM sujet_handicape AS copy
+				WHERE copy.id_groupe_sujets = original.id_groupe_sujets
+				AND copy.id != original.id
+			);"
+		)->execute()->as_array();
+
+		foreach ($results as $res) {
+			$subject = new Sujethandicape($res);
+
+			// Récupération du depot
+			$group = $subject->getGroup();
+			
+			// Sauvegarde en tant que nouveau depot
+			$group->saveOnDB(true);
+			
+			// Ajout du nouvel id de depot au sujet
+			echo $group->getId()."<br>";
+
+			// Sauvegarde du sujet
+			echo "nbr lignes modifiées : ".DB::query("UPDATE sujet_handicape SET id_groupe_sujets={$group->getId()} WHERE id={$subject->getId()}")->execute()."<br>";
+			// $subject->saveOnDB();
+		}
+		
+		$this->template->title = 'Import CSV | Résultats';
+		$this->template->content = '';
 	}
 }
