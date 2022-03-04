@@ -69,8 +69,8 @@ class Sujethandicape extends Model {
 			return;
 		}
 
-		Archeo::mergeValue($this->id, $data, "id", "int");
-		Archeo::mergeValue($this->id, $data, "sujet_id", "int");
+		Archeo::mergeValue($this->id, $data, "id", "int", true);
+		Archeo::mergeValue($this->id, $data, "sujet_id", "int", true);
 		if ($this->id === null) $setWithEmpty = true;
 		Archeo::mergeValue($this->idSujetHandicape, $data, "id_sujet_handicape");
 		Archeo::mergeValue($this->ageMin, $data, "age_min", "int", true);
