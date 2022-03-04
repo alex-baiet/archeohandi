@@ -12,7 +12,7 @@ use Model\Searchresult;
 
 class Controller_Recherche extends Controller_Template {
 	public function action_index() {
-		Compte::checkPermissionRedirect("La page n'est pas encore disponible pour le public.", Compte::PERM_ADMIN);
+		Compte::checkPermissionRedirect("Vous devez vous connecter pour accéder à cette page.", Compte::PERM_WRITE);
 
 		$data = array();
 
@@ -21,7 +21,7 @@ class Controller_Recherche extends Controller_Template {
 	}
 
 	public function action_resultat() {
-		Compte::checkPermissionRedirect("La page n'est pas encore disponible pour le public.", Compte::PERM_ADMIN);
+		Compte::checkPermissionRedirect("Vous devez vous connecter pour accéder à cette page.", Compte::PERM_WRITE);
 
 		$data = array();
 
