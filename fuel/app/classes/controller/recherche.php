@@ -4,6 +4,7 @@ use Fuel\Core\Controller_Template;
 use Fuel\Core\DB;
 use Fuel\Core\View;
 use Model\Db\Compte;
+use Model\Db\Diagnostic;
 use Model\Db\Operation;
 use Model\Db\Sujethandicape;
 use Model\Helper;
@@ -135,32 +136,65 @@ class Controller_Recherche extends Controller_Template {
 		}
 
 		// Recherche par atteinte invalidante
-		// if (!empty($_POST["pathologies"])) {
-		// 	// $query->join(array("atteinte_pathologie", "ap"))->on("ap.id_sujet", "=", "sujet.id");
+		if (!empty($_POST["pathologies"])) {
+			// $query->join(array("atteinte_pathologie", "ap"))->on("ap.id_sujet", "=", "sujet.id");
 
-		// 	$i=0;
-		// 	$where = "";
-		// 	foreach ($_POST["pathologies"] as $pathology) {
-		// 		if ($i++ === 0) $where = "ap.id_pathologie=$pathology";
-		// 		else $where .= " OR ap.id_pathologie=$pathology";
-		// 	}
-		// 	$query->where(DB::expr(
-		// 		"(
-		// 			SELECT COUNT(copy.id)
-		// 			FROM sujet_handicape AS copy
-		// 			JOIN atteinte_pathologie AS ap
-		// 			ON ap.id_sujet=copy.id
-		// 			WHERE copy.id=sujet.id
-		// 			AND ($where)
-		// 		)=$i"
-		// 	));
-		// }
+			$i=0;
+			$where = "";
+			foreach ($_POST["pathologies"] as $pathology) {
+				if ($i++ === 0) $where = "ap.id_pathologie=$pathology";
+				else $where .= " OR ap.id_pathologie=$pathology";
+			}
+			$query->where(DB::expr(
+				"(
+					SELECT COUNT(copy.id)
+					FROM sujet_handicape AS copy
+					JOIN atteinte_pathologie AS ap
+					ON ap.id_sujet=copy.id
+					WHERE copy.id=sujet.id
+					AND ($where)
+				)=$i"
+			));
+		}
 		
 		$result = $query->execute()->as_array();
+		/** @var Sujethandicape[] */
 		$subjects = array();
 		foreach ($result as $sub) {
 			$subjects[] = new Sujethandicape($sub);
 		}
+
+		// Recherche des diagnostics sans passer par SQL pcq c trop compliqué
+		foreach (Diagnostic::fetchAll() as $dia) {
+			$diaId = $dia->getId();
+			$name = "diagnostic_$diaId";
+			if (isset($_POST[$name])) {
+				// Diagnostic coché
+				if (isset($_POST["diagnostics"][$diaId])) {
+					// Localisation coché
+					$localisations = $_POST["diagnostics"][$diaId];
+					for ($i=count($subjects)-1; $i>=0; $i--) {
+						if (!$subjects[$i]->hasDiagnosis($diaId)) {
+							unset($subjects[$i]);
+							continue;
+						}
+						$subDia = $subjects[$i]->getDiagnosis($diaId);
+						foreach ($localisations as $loc) {
+							if (!$subDia->isLocatedFromId($loc)) {
+								unset($subjects[$i]);
+								break;
+							}
+						}
+					}
+				} else {
+					// Localisation pas coché
+					for ($i=count($subjects)-1; $i>=0; $i--) {
+						if (!$subjects[$i]->hasDiagnosis($diaId)) unset($subjects[$i]);
+					}
+				}
+			}
+		}
+
 		return $subjects;
 	}
 }
