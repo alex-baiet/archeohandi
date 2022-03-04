@@ -207,10 +207,12 @@ if (!empty($msg)) {
 
 <br />
 
-<?php if (false) : ?>
 <div class="row">
 	<div class="col-md-6">
 		<h3>Atteinte invalidante</h3>
+		<p class="text-muted">
+			Sélectionner un diagnostique sans indiquer la localisation permet de rechercher les sujets touchés, quel que soit la localisation du diagnostique.
+		</p>
 
 		<table>
 			<!-- Tous les titres -->
@@ -293,6 +295,7 @@ if (!empty($msg)) {
 	</div>
 
 	<div class="col-md-6">
+	<?php if (false) : ?>
 		<!-- Dépôt -->
 		<h3>Dépôt</h3>
 		<?php
@@ -341,12 +344,13 @@ if (!empty($msg)) {
 				<input name="appareils[]" id="form_appareils_<?= $item->getId() ?>" value="<?= $item->getId() ?>" type="checkbox" class="form-check-input" <?php if ($subject->hasItemHelp($item->getId())) : ?>checked<?php endif; ?>>
 			</div>
 		<?php endforeach; ?>
-
+		<?php endif; ?>
 	</div>
 
 </div>
 <br />
 
+<?php if (false) : ?>
 <!-- Commentaire du diagnostic -->
 <label for="comment_diagnostic">Commentaire du diagnostic</label>
 <div class="input-group">
