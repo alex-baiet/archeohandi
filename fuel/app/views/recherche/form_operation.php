@@ -2,7 +2,6 @@
 
 use Fuel\Core\Asset;
 use Fuel\Core\View;
-use Model\Db\Compte;
 use Model\Db\Operation;
 use Model\Db\Typeoperation;
 

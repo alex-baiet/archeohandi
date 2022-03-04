@@ -100,6 +100,7 @@ class Controller_Recherche extends Controller_Template {
 			->on("sujet.id_groupe_sujets", "=", "groupe.id")
 			->where("groupe.id_operation", "=", $opParent->getId());
 
+		if ($refSubject->getId() !== null) $query->where("sujet.id", "=", $refSubject->getId());
 		if (!empty($refSubject->getIdSujetHandicape())) $query->where("id_sujet_handicape", "=", $refSubject->getIdSujetHandicape());
 		if (!empty($refSubject->getSexe())) $query->where("sexe", "=", $refSubject->getSexe());
 		if (!empty($_POST["id_chronologie"])) $query->where("groupe.id_chronologie", "=", $_POST["id_chronologie"]);

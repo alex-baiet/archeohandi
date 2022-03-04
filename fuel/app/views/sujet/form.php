@@ -74,10 +74,10 @@ if (!empty($msg)) {
 <h3 class="text-center my-2">Sujet handicapé</h3>
 
 <div class="row my-4">
-	<!-- Identifiant -->
+	<!-- Nom -->
 	<div class="col-md-6">
 		<div class="form-floating">
-			<input name="id_sujet_handicape" id="form_id_sujet_handicape" value="<?= $subject->getIdSujetHandicape(); ?>" type="text" class="form-control" placeholder="" maxlength="256" onclick="this.required=`required`" title="Indiquez le numéro d'enregistrement du sujet">
+			<input name="id_sujet_handicape" id="form_id_sujet_handicape" value="<?= $subject->getIdSujetHandicape(); ?>" type="text" class="form-control" placeholder="" maxlength="256" onclick="this.required=`required`" title="Indiquez le nom du sujet">
 			<div class="form-msg-error">Veuillez indiquer une valeur pour ce champ</div>
 			<label for="form_id_sujet_handicape">Identifiant du sujet</label>
 		</div>
