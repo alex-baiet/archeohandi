@@ -5,6 +5,7 @@ use Fuel\Core\DB;
 use Fuel\Core\View;
 use Model\Db\Compte;
 use Model\Db\Operation;
+use Model\Db\Pathology;
 use Model\Db\Sujethandicape;
 use Model\Helper;
 use Model\Searchresult;
@@ -111,6 +112,27 @@ class Controller_Recherche extends Controller_Template {
 		if (!empty($refSubject->getContexteNormatif())) $query->where("contexte_normatif", "=", $refSubject->getContexteNormatif());
 		if (!empty($refSubject->getMilieuVie())) $query->where("milieu_vie", "=", $refSubject->getMilieuVie());
 		if (!empty($refSubject->getContexte())) $query->where("contexte", "=", $refSubject->getContexte());
+
+		if (!empty($_GET["pathologies"])) {
+			// $query->join(array("atteinte_pathologie", "ap"))->on("ap.id_sujet", "=", "sujet.id");
+
+			$i=0;
+			$where = "";
+			foreach ($_GET["pathologies"] as $pathology) {
+				if ($i++ === 0) $where = "ap.id_pathologie=$pathology";
+				else $where .= " OR ap.id_pathologie=$pathology";
+			}
+			$query->where(DB::expr(
+				"(
+					SELECT COUNT(copy.id)
+					FROM sujet_handicape AS copy
+					JOIN atteinte_pathologie AS ap
+					ON ap.id_sujet=copy.id
+					WHERE copy.id=sujet.id
+					AND ($where)
+				)=$i"
+			));
+		}
 		
 		$result = $query->execute()->as_array();
 		$subjects = array();
