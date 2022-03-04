@@ -13,7 +13,7 @@ use Fuel\Core\View;
 		<button id="btn_sujet" type="button" class="btn btn-outline-primary" onclick="PageManager.switchPage(`form_sujet`, `btn_sujet`)">Sujet</button>
 	</div>
 
-	<form action="/public/recherche/resultat" method="get" style="background-color: #F5F5F5; padding: 10px;">
+	<form action="/public/recherche/resultat" method="post" style="background-color: #F5F5F5; padding: 10px;">
 		<div id="form_operation">
 			<?= View::forge("recherche/form_operation", array("action" => "public/search")) ?>
 		</div>

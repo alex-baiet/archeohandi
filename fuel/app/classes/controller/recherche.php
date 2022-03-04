@@ -5,7 +5,6 @@ use Fuel\Core\DB;
 use Fuel\Core\View;
 use Model\Db\Compte;
 use Model\Db\Operation;
-use Model\Db\Pathology;
 use Model\Db\Sujethandicape;
 use Model\Helper;
 use Model\Searchresult;
@@ -25,9 +24,9 @@ class Controller_Recherche extends Controller_Template {
 
 		$data = array();
 
-		if (isset($_GET["search"])) {
-			$refOp = new Operation($_GET);
-			$refSubject = new Sujethandicape($_GET);
+		if (isset($_POST["search"])) {
+			$refOp = new Operation($_POST);
+			$refSubject = new Sujethandicape($_POST);
 			$results = array();
 
 			$resOp = $this->searchOperations($refOp);
@@ -57,8 +56,8 @@ class Controller_Recherche extends Controller_Template {
 		// Filtre adresse
 		if (!empty($refOp->getAdresse())) $query->where("adresse", "LIKE", "%{$refOp->getAdresse()}%");
 		// Filtre année
-		if (!empty($_GET["annee_min"])) $query->where("annee", ">=", $_GET["annee_min"]);
-		if (!empty($_GET["annee_max"])) $query->where("annee", "<=", $_GET["annee_max"]);
+		if (!empty($_POST["annee_min"])) $query->where("annee", ">=", $_POST["annee_min"]);
+		if (!empty($_POST["annee_max"])) $query->where("annee", "<=", $_POST["annee_max"]);
 		// if ($refOp->getOrganisme() === null) echo "OUEEEEEE";
 		// Helper::varDump($refOp->getOrganisme());
 
@@ -70,9 +69,9 @@ class Controller_Recherche extends Controller_Template {
 		}
 
 		// Tri en fonction de la position (trop compliqué a intégré directement dans SQL)
-		if ($refOp->getX() !== null && $refOp->getY() !== null && !empty($_GET["radius"])) {
+		if ($refOp->getX() !== null && $refOp->getY() !== null && !empty($_POST["radius"])) {
 			/** @var float Rayon de recherche en mètres. */
-			$radius = floatval($_GET["radius"]) * 1000;
+			$radius = floatval($_POST["radius"]) * 1000;
 			for ($i = count($operations) -1; $i >= 0; $i--) {
 				$op = $operations[$i];
 				if ($op->getX() === null || $op->getY() === null) {
@@ -102,7 +101,7 @@ class Controller_Recherche extends Controller_Template {
 
 		if (!empty($refSubject->getIdSujetHandicape())) $query->where("id_sujet_handicape", "=", $refSubject->getIdSujetHandicape());
 		if (!empty($refSubject->getSexe())) $query->where("sexe", "=", $refSubject->getSexe());
-		if (!empty($_GET["id_chronologie"])) $query->where("groupe.id_chronologie", "=", $_GET["id_chronologie"]);
+		if (!empty($_POST["id_chronologie"])) $query->where("groupe.id_chronologie", "=", $_POST["id_chronologie"]);
 		if ($refSubject->getAgeMin() !== null) $query->where("age_max", ">=", $refSubject->getAgeMin());
 		if ($refSubject->getAgeMax() !== null) $query->where("age_min", "<=", $refSubject->getAgeMax());
 		if ($refSubject->getDatingMin() !== null) $query->where("dating_max", ">=", $refSubject->getDatingMin());
@@ -113,12 +112,13 @@ class Controller_Recherche extends Controller_Template {
 		if (!empty($refSubject->getMilieuVie())) $query->where("milieu_vie", "=", $refSubject->getMilieuVie());
 		if (!empty($refSubject->getContexte())) $query->where("contexte", "=", $refSubject->getContexte());
 
-		if (!empty($_GET["pathologies"])) {
+		// Recherche par pathologie
+		if (!empty($_POST["pathologies"])) {
 			// $query->join(array("atteinte_pathologie", "ap"))->on("ap.id_sujet", "=", "sujet.id");
 
 			$i=0;
 			$where = "";
-			foreach ($_GET["pathologies"] as $pathology) {
+			foreach ($_POST["pathologies"] as $pathology) {
 				if ($i++ === 0) $where = "ap.id_pathologie=$pathology";
 				else $where .= " OR ap.id_pathologie=$pathology";
 			}
@@ -133,6 +133,28 @@ class Controller_Recherche extends Controller_Template {
 				)=$i"
 			));
 		}
+
+		// Recherche par atteinte invalidante
+		// if (!empty($_POST["pathologies"])) {
+		// 	// $query->join(array("atteinte_pathologie", "ap"))->on("ap.id_sujet", "=", "sujet.id");
+
+		// 	$i=0;
+		// 	$where = "";
+		// 	foreach ($_POST["pathologies"] as $pathology) {
+		// 		if ($i++ === 0) $where = "ap.id_pathologie=$pathology";
+		// 		else $where .= " OR ap.id_pathologie=$pathology";
+		// 	}
+		// 	$query->where(DB::expr(
+		// 		"(
+		// 			SELECT COUNT(copy.id)
+		// 			FROM sujet_handicape AS copy
+		// 			JOIN atteinte_pathologie AS ap
+		// 			ON ap.id_sujet=copy.id
+		// 			WHERE copy.id=sujet.id
+		// 			AND ($where)
+		// 		)=$i"
+		// 	));
+		// }
 		
 		$result = $query->execute()->as_array();
 		$subjects = array();
