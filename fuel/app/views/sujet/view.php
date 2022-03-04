@@ -1,5 +1,6 @@
 <?php
 
+use Model\Db\Compte;
 use Model\Db\Sujethandicape;
 
 /** @var Sujethandicape */
@@ -18,7 +19,14 @@ $subject = $subject;
 <div class="container-xl">
 	<a class="btn btn-secondary mt-2" href="/public/operations/view/<?= $subject->getGroup()->getIdOperation() ?>" role="button">Retour</a>
 
-	<h1 class="m-2">Sujet n°<?= $subject->getId(); ?> <em>"<?= $subject->getIdSujetHandicape() ?>"</em></h1>
+	<h1 class="m-2">Sujet n°<?= $subject->getId(); ?> <em>"<?= $subject->getIdSujetHandicape() ?>"</em>
+		<?php if (Compte::checkPermission(Compte::PERM_WRITE, $subject->getGroup()->getIdOperation())) : ?>
+			<a class="btn btn-success btn-sm" href="/public/sujet/edit/<?= $subject->getId() ?>">
+				Modifier le sujet <i class="bi bi-arrow-up-right-circle-fill"></i>
+			</a>
+		<?php endif; ?>
+	</h1>
+
 	<p class="text-muted">
 		Ici vous retrouvez toutes les informations du sujet <strong><?= $subject->getIdSujetHandicape(); ?></strong>.
 	</p>

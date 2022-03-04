@@ -32,6 +32,11 @@ $sujets = $operation->getSubjects();
 				Ajouter des sujets <i class="bi bi-plus-circle-fill"></i>
 			</a>
 		<?php endif; ?>
+		<?php if (Compte::checkPermission(Compte::PERM_ADMIN, $operation->getId())) : ?>
+			<a class="btn btn-success btn-sm" href="/public/operations/edit/<?= $operation->getId(); ?>">
+				Modifier l'opération <i class="bi bi-arrow-up-right-circle-fill"></i>
+			</a>
+		<?php endif; ?>
 	</h1>
 	<p class="text-muted">Ici vous retrouvez toutes les informations de l'opération <strong><?= $operation->getNomOp(); ?></strong>.
 	</p>
