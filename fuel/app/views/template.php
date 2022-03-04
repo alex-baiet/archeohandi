@@ -130,7 +130,7 @@ use Model\Redirect;
 	<footer class="footer mt-3 pt-5 sticky-bottom">
 		<div class="container">
 			<div class="text-center">
-				<div class="text-ccenter">Un soucis ? Envoyez un mail à <em>alex.baiet3@gmail.com</em></div>
+				<div class="text-ccenter">Un souci ? Envoyez un mail à <em>alex.baiet3@gmail.com</em></div>
 				<div class="footer-copyright text-center">&copy;archeohandi | 2021-2022</div>
 			</div>
 		</div>
