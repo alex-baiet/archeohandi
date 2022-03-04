@@ -26,7 +26,7 @@ $sujets = $operation->getSubjects();
 </script>
 
 <div class="container">
-	<h1 class="m-2">Opération <?= $operation->getNomOp(); ?>
+	<h1 class="m-2">Opération n°<?= $operation->getId() ?> <em>"<?= $operation->getNomOp(); ?>"</em>
 		<?php if (Compte::checkPermission(Compte::PERM_WRITE, $operation->getId())) : ?>
 			<a class="btn btn-primary btn-sm" href="/public/sujet/add/<?= $operation->getId(); ?>">
 				Ajouter des sujets <i class="bi bi-plus-circle-fill"></i>

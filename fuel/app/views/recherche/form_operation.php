@@ -73,6 +73,9 @@ Asset::js("form.js");
 		</div>
 
 		<div class="row my-2">
+			<p class="text-muted">
+				Si un seul des trois champs de positionnement suivants manque, aucun des trois champs ne sera pris en compte.
+			</p>
 			<!-- Longitude -->
 			<div class="col-md-4">
 				<div class="form-floating">
@@ -94,7 +97,7 @@ Asset::js("form.js");
 			<!-- Rayon -->
 			<div class="col-md-4">
 				<div class="form-floating">
-					<input name="radius" id="form_radius" type="number" class="form-control" placeholder="Latitude" min="0" step="any" title="Indiquez le rayon de recherche">
+					<input name="radius" id="form_radius" type="number" class="form-control" value="100" placeholder="Latitude" min="0" step="any" title="Indiquez le rayon de recherche">
 					<div class="form-msg-error">La valeur doit être supérieur à 0</div>
 					<label for="form_Y">Rayon (km)</label>
 				</div>
