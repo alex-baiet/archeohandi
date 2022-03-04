@@ -439,7 +439,7 @@ class Sujethandicape extends Model {
 			$validation = $this->validation;
 			$this->idSujetHandicape = Helper::secureString($this->idSujetHandicape);
 			if (strlen($this->idSujetHandicape) === 0) $validation->invalidate("Indiquez un identifiant pour le sujet.");
-			if ($this->group === null || $this->group->getChronology() === null) $validation->invalidate("Choisissez une valeur pour la chronologie.");
+			if ($this->getGroup() === null || $this->getGroup()->getChronology() === null) $validation->invalidate("Choisissez une valeur pour la chronologie.");
 			if ($this->ageMin > $this->ageMax) $validation->invalidate("L'âge minimum doit être inférieur à l'âge maximum.");
 			if ($this->datingMin > $this->datingMax) $validation->invalidate("La datation minimum doit être inférieur à la datation maximum.");
 			if ($this->milieuVie === "") $this->milieuVie = null;
@@ -449,7 +449,7 @@ class Sujethandicape extends Model {
 			if (Typesepulture::fetchSingle($this->idSepulture) === null) $validation->invalidate("Choisissez une valeur pour le type de sepulture.");
 			if (empty($this->getPathologies()) && empty($this->getAllDiagnosis())) $validation->invalidate("Le sujet doit avoir au moins un diagnostic ou une pathologie.");
 
-			if (!$this->group->validate()) $validation->invalidate();
+			if ($this->getGroup() !== null && !$this->getGroup()->validate()) $validation->invalidate();
 		});
 	}
 

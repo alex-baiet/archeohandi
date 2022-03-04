@@ -94,9 +94,12 @@ class Controller_Script extends Controller_Template {
 			
 			// Ajout du nouvel id de depot au sujet
 			$subject->setDepot($depot);
+			echo $depot->getId()."<br>";
+			echo $subject->getDepot()."<br>";
 
 			// Sauvegarde du sujet
-			$subject->saveOnDB();
+			echo "nbr lignes modifiées : ".DB::query("UPDATE sujet_handicape SET id_depot={$depot->getId()} WHERE id={$subject->getId()}")->execute()."<br>";
+			// $subject->saveOnDB();
 		}
 		
 		$this->template->title = 'Import CSV | Résultats';

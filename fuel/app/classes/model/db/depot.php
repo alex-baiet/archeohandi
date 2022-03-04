@@ -106,4 +106,7 @@ class Depot extends Model {
 
 	public function echoErrors() { $this->validation->echoErrors(); }
 
+	public function __toString(): string {
+		return "Depot {$this->id}";
+	}
 }
