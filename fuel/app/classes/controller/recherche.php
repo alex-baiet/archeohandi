@@ -2,6 +2,7 @@
 
 use Fuel\Core\Controller_Template;
 use Fuel\Core\DB;
+use Fuel\Core\Response;
 use Fuel\Core\View;
 use Model\Db\Compte;
 use Model\Db\Diagnostic;
@@ -22,27 +23,24 @@ class Controller_Recherche extends Controller_Template {
 
 	public function action_resultat() {
 		Compte::checkPermissionRedirect("Vous devez vous connecter pour accéder à cette page.", Compte::PERM_WRITE);
+		if (!isset($_POST["search"])) Response::redirect("/recherche");
 
 		$data = array();
 
-		if (isset($_POST["search"])) {
-			$refOp = new Operation($_POST);
-			$refSubject = new Sujethandicape($_POST);
-			$results = array();
+		$refOp = new Operation($_POST);
+		$refSubject = new Sujethandicape($_POST);
+		$results = array();
 
-			$resOp = $this->searchOperations($refOp);
-			foreach ($resOp as $op) {
-				$searchRes = new Searchresult();
-				$searchRes->operation = $op;
-				$resSu = $this->searchSubjects($refSubject, $op);
-				$searchRes->subjects = $resSu;
-				$results[] = $searchRes;
-			}
-
-			$data["results"] = $results;
-			$data["operation"] = $refOp;
-			$data["subject"] = $refSubject;
+		$resOp = $this->searchOperations($refOp);
+		foreach ($resOp as $op) {
+			$searchRes = new Searchresult();
+			$searchRes->operation = $op;
+			$resSu = $this->searchSubjects($refSubject, $op);
+			$searchRes->subjects = $resSu;
+			$results[] = $searchRes;
 		}
+
+		$data["results"] = $results;
 
 		$this->template->title = 'Résultat recherche';
 		$this->template->content = View::forge('recherche/resultat', $data);
