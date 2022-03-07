@@ -273,8 +273,39 @@ View::forge("fonction/multiple_input", array(
 ));
 ?>
 
-<div class="col-md-auto">
-	<a href="https://nakala.fr/u/collections/shared" class="btn btn-primary" target="_blank">Aller sur Nakala</a>
+<h3>Iconographie</h3>
+<!-- Lien Nakala -->
+<div class="row my-2">
+	<div class="col-md-auto">
+		<a href="https://nakala.fr/u/collections/shared" class="btn btn-primary" target="_blank">Aller sur Nakala</a>
+	</div>
+
+	<!-- Bouton résumé à copier -->
+	<!-- <div class="col-md-auto">
+		<button type="button" class="btn btn-primary" onclick="FormSujet.generateDescription(`fast_summary`)">Générer une résumé à copier</button>
+	</div> -->
+
+	<div class="col-md-auto">
+		<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#helpPopup">Aide <i class="bi bi-question-circle"></i></button>
+	</div>
+
+	<!-- Texte à copier -->
+	<!-- <pre id="fast_summary" style="background-color: white; margin: 10px;"></pre> -->
 </div>
 
-	<br />
+<!-- Listes URL images -->
+<?php
+$urls = $operation->getUrlsImg();
+if (empty($urls)) $urls[] = "";
+?>
+
+<?=
+View::forge("fonction/multiple_input", array(
+	"name" => "urls_img",
+	"datas" => $urls,
+	"label" => "Lien URL de l'image",
+	"imageInput" => true
+));
+?>
+
+<br />

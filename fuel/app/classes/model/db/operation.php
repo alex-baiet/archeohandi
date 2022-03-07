@@ -450,16 +450,16 @@ class Operation extends Model {
 			}
 		}
 
-		// // Maj des images
-		// $this->updateOnDB(
-		// 	"sujet_image",
-		// 	"id_sujet",
-		// 	$this->getUrlsImg(),
-		// 	function (string $url) { return array(
-		// 		"id_sujet" => $this->id,
-		// 		"url_img" => $url
-		// 	); }
-		// );
+		// Maj des images
+		Archeo::updateOnDB(
+			"operation_image",
+			"id_operation={$this->getId()}",
+			$this->getUrlsImg(),
+			function (string $url) { return array(
+				"id_operation" => $this->getId(),
+				"url_img" => $url
+			); }
+		);
 
 		// Tout s'est bien passé.
 		return true;

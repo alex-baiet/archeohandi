@@ -162,15 +162,14 @@ class Archeo {
 
 	/**
 	 * @param string $table Table cible dans la BDD
-	 * @param string $field Nom du champ où faire la vérification
-	 * @param $value Valeur que doit avoir le champ.
+	 * @param string $where Expression du where pour la suppression des anciennes données.
 	 * @param array $toInsert Liste des données à intégrer dans la table.
 	 * @param Closure $valueTransform Transforme chaque valeur de $toInsert en un array pour permettre l'insertion.
 	 */
-	public static function updateOnDB(string $table, string $field, $value, array $toInsert, Closure $valueTransform) {
+	public static function updateOnDB(string $table, string $where, array $toInsert, Closure $valueTransform) {
 		// Deletion des anciennes valeurs de la BDD
 		DB::delete($table)
-			->where($field, "=", $value)
+			->where(DB::expr($where))
 			->execute();
 		// Ajout des nouvelles valeurs dans la BDD
 		foreach ($toInsert as $obj) {

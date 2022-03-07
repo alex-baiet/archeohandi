@@ -500,9 +500,9 @@ class Sujethandicape extends Model {
 		}
 
 		// Maj des accessoires/mobiliers
-		$this->updateOnDB(
+		Archeo::updateOnDB(
 			"accessoire_sujet",
-			"id_sujet",
+			"id_sujet={$this->getId()}",
 			$this->getFurnitures(),
 			function (Mobilier $furniture) { return array(
 				"id_sujet" => $this->id,
@@ -511,9 +511,9 @@ class Sujethandicape extends Model {
 		);
 
 		// Maj des appareils compensatoires
-		$this->updateOnDB(
+		Archeo::updateOnDB(
 			"appareil_sujet",
-			"id_sujet",
+			"id_sujet={$this->getId()}",
 			$this->getItemsHelp(),
 			function (Appareil $item) { return array(
 				"id_sujet" => $this->id,
@@ -522,9 +522,9 @@ class Sujethandicape extends Model {
 		);
 
 		// Maj des pathologies
-		$this->updateOnDB(
+		Archeo::updateOnDB(
 			"atteinte_pathologie",
-			"id_sujet",
+			"id_sujet={$this->getId()}",
 			$this->getPathologies(),
 			function (Pathology $pathology) { return array(
 				"id_sujet" => $this->id,
@@ -533,9 +533,9 @@ class Sujethandicape extends Model {
 		);
 
 		// Maj des images
-		$this->updateOnDB(
+		Archeo::updateOnDB(
 			"sujet_image",
-			"id_sujet",
+			"id_sujet={$this->getId()}",
 			$this->getUrlsImg(),
 			function (string $url) { return array(
 				"id_sujet" => $this->id,
@@ -551,9 +551,9 @@ class Sujethandicape extends Model {
 				$values[] = array("diagnosis" => $diagnosis->getDiagnosis()->getId(), "spot" => $spot->getId());
 			}
 		}
-		$this->updateOnDB(
+		Archeo::updateOnDB(
 			"localisation_sujet",
-			"id_sujet",
+			"id_sujet={$this->getId()}",
 			$values,
 			function (array $value) { return array(
 				"id_sujet" => $this->id,
@@ -564,20 +564,6 @@ class Sujethandicape extends Model {
 
 		// Tout s'est bien passé.
 		return true;
-	}
-
-	/** @param Closure $valueTransform Permet de transformer chaque valeur de $toInsert en un array pour permettre l'insertion. */
-	private function updateOnDB(string $table, string $idSujetName, array $toInsert, Closure $valueTransform) {
-		// Deletion des anciennes valeurs de la BDD
-		DB::delete($table)
-			->where($idSujetName, "=", $this->getId())
-			->execute();
-		// Ajout des nouvelles valeurs dans la BDD
-		foreach ($toInsert as $obj) {
-			DB::insert($table)
-				->set($valueTransform($obj))
-				->execute();
-		}
 	}
 
 	/** Affiche une alert bootstrap seulement si des erreurs existent. */
