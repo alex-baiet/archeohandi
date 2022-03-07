@@ -383,7 +383,7 @@ if (!empty($msg)) {
 <!-- Lien Nakala -->
 <div class="row my-2">
 	<div class="col-md-auto">
-		<a href="https://nakala.fr/u/collections/10.34847/nkl.2400swmp" class="btn btn-primary" target="_blank">Aller sur Nakala</a>
+		<a href="https://nakala.fr/u/collections/shared" class="btn btn-primary" target="_blank">Aller sur Nakala</a>
 	</div>
 
 	<div class="col-md-auto">

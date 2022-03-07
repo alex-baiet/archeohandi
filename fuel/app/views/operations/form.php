@@ -273,4 +273,8 @@ View::forge("fonction/multiple_input", array(
 ));
 ?>
 
-<br />
+<div class="col-md-auto">
+	<a href="https://nakala.fr/u/collections/shared" class="btn btn-primary" target="_blank">Aller sur Nakala</a>
+</div>
+
+	<br />
