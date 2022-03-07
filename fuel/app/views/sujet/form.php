@@ -247,7 +247,14 @@ if (!empty($msg)) {
 					<td style="width: 300px;"></td>
 					<?php $i = 0;
 					foreach ($localisations as $locali) : ?>
-						<td><?= Asset::img($locali->getUrlImg(), array("style" => "width: 50 px; height: 25px; margin-right: 10px;", "alt" => $locali->getNom())); ?></td>
+						<td style="vertical-align: bottom;">
+							<?php if (strpos($locali->getUrlImg(), "right") !== false) : ?>
+								<div style="text-align: center;">D</div>
+							<?php elseif (strpos($locali->getUrlImg(), "left") !== false) : ?>
+								<div style="text-align: center;">G</div>
+							<?php endif; ?>
+							<?= Asset::img($locali->getUrlImg(), array("style" => "width: 50 px; height: 25px; margin-right: 5px; margin-left: 5px;", "alt" => $locali->getNom())); ?>
+						</td>
 					<?php $i++;
 					endforeach; ?>
 				</tr>
@@ -268,7 +275,7 @@ if (!empty($msg)) {
 						</td>
 						<!-- Checkbox des zones atteintes -->
 						<?php foreach ($localisations as $locali) : ?>
-							<td>
+							<td style="text-align: center;">
 								<?php
 								$classes = "form-check-input";
 								$hidden = false;

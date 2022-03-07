@@ -355,6 +355,7 @@ class Sujethandicape extends Model {
 		return $this->getItemsHelp()[$idItem];
 	}
 
+	/** @return string[] */
 	public function getUrlsImg() : array {
 		if (!isset($this->urlsImg)) {
 			if ($this->getId() === null) return array();

@@ -3,6 +3,7 @@
 namespace Model\Db;
 
 use Closure;
+use Fuel\Core\DB;
 use Fuel\Core\Form;
 use Fuel\Core\FuelException;
 use Model\Helper;
@@ -158,4 +159,25 @@ class Archeo {
 			}
 		}
 	}
+
+	/**
+	 * @param string $table Table cible dans la BDD
+	 * @param string $field Nom du champ où faire la vérification
+	 * @param $value Valeur que doit avoir le champ.
+	 * @param array $toInsert Liste des données à intégrer dans la table.
+	 * @param Closure $valueTransform Transforme chaque valeur de $toInsert en un array pour permettre l'insertion.
+	 */
+	public static function updateOnDB(string $table, string $field, $value, array $toInsert, Closure $valueTransform) {
+		// Deletion des anciennes valeurs de la BDD
+		DB::delete($table)
+			->where($field, "=", $value)
+			->execute();
+		// Ajout des nouvelles valeurs dans la BDD
+		foreach ($toInsert as $obj) {
+			DB::insert($table)
+				->set($valueTransform($obj))
+				->execute();
+		}
+	}
+
 }

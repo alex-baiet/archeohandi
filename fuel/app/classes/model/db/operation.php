@@ -48,6 +48,8 @@ class Operation extends Model {
 	private ?Compte $accountAdmin;
 	/** @var Compte[]|unset */
 	private array $accounts;
+	/** @var string[]|unset */
+	private $urlsImg;
 
 	private Validation $validation;
 	#endregion
@@ -120,6 +122,11 @@ class Operation extends Model {
 		if (isset($data["commune"]) && isset($data["departement"])) {
 			$this->idCommune = Commune::nameToId($data["commune"].', '.$data["departement"]);
 		}
+
+		// Récupération des urls d'images
+		if (isset($data["urls_img"])) {
+			$this->setUrlsImg($data["urls_img"]);
+		}
 	}
 
 	/**
@@ -164,6 +171,7 @@ class Operation extends Model {
 		if ($result < 1) return "L'opération n'a pas pû être supprimé";
 
 		DB::delete("droit_compte")->where("id_operation", "=", $id)->execute();
+		DB::delete("operation_image")->where("id_operation", "=", $id)->execute();
 
 		// Tous s'est bien passé
 		return null;
@@ -303,6 +311,15 @@ class Operation extends Model {
 		}
 		return $this->accounts;
 	}
+
+	public function getUrlsImg() : array {
+		if (!isset($this->urlsImg)) {
+			if ($this->getId() === null) return array();
+			$this->urlsImg = Helper::querySelectList("SELECT url_img FROM operation_image WHERE id_operation={$this->getId()}");
+		}
+		return $this->urlsImg;
+	}
+
 	#endregion
 
 	#region Setters
@@ -336,6 +353,10 @@ class Operation extends Model {
 	public function setIdTypeOperation(int $value) {
 		$this->idTypeOp = $value;
 		$this->typeOp = null;
+	}
+
+	private function setUrlsImg(array $urls) {
+		$this->urlsImg = array_unique(array_filter($urls));
 	}
 
 	#endregion
@@ -428,6 +449,17 @@ class Operation extends Model {
 				$this->addAccount($acc->getLogin(), Compte::PERM_WRITE);
 			}
 		}
+
+		// // Maj des images
+		// $this->updateOnDB(
+		// 	"sujet_image",
+		// 	"id_sujet",
+		// 	$this->getUrlsImg(),
+		// 	function (string $url) { return array(
+		// 		"id_sujet" => $this->id,
+		// 		"url_img" => $url
+		// 	); }
+		// );
 
 		// Tout s'est bien passé.
 		return true;
