@@ -18,8 +18,9 @@ class Controller_Compte extends Controller_Template {
 
 	/** Création d'un compte. */
 	public function action_creation() {
-		Compte::checkPermissionRedirect("Vous êtes déjà connecté.", Compte::PERM_DISCONNECTED);
+		Compte::checkTestRedirect("Vous êtes déjà connecté.", Compte::checkPermission(Compte::PERM_DISCONNECTED) || Compte::checkPermission(Compte::PERM_ADMIN));
 
+		$this->template->title = 'Créer un compte';
 		$data = array();
 		if (isset($_POST["create"])) {
 			$_POST["prenom"] = Helper::secureString($_POST["prenom"]);
@@ -48,24 +49,37 @@ class Controller_Compte extends Controller_Template {
 
 			if (!$error) {
 				// Les données sont valides
-				$to = Controller_Compte::DEBUG === true || $_POST["msg"] === "\\REDIRECT" ? "alex.baiet3@gmail.com" : "cyrille.le-forestier@inrap.fr, valerie.delattre@inrap.fr";
-				$result = Controller_Compte::sendMail(
-					$to,
-					"Demande d'accès Archéologie du handicap",
-					View::forge("compte/mail", array("data" => $_POST))
-				);
+				if (isset($_POST["immediate"])) {
+					// Creation immediate (pour les admins)
+					if (Compte::create($_POST["prenom"], $_POST["nom"], $_POST["email"], $login, $pw, $_POST["organisme"])) {
+						Messagehandler::prepareAlert("Le compte a bien été créé.", "success");
+						$data["login"] = $login;
+						$data["pw"] = $pw;
+						$this->template->content = View::forge('compte/creation_admin', $data);
+						return;
+					} else {
+						Messagehandler::prepareAlert("Une erreur est survenu lors de la création du compte.", "danger");
+					}
 
-				if ($result) {
-					Messagehandler::prepareAlert("La demande de création de compte a été envoyé. Vous recevrez un mail de confirmation avec vos identifiants une fois la création validée par un administrateur.", "success");
-					Response::redirect("/accueil");
 				} else {
-					Messagehandler::prepareAlert("La demande de création de compte n'a pas pu être envoyé.", "danger");
+					// Creation par mail
+					$to = Controller_Compte::DEBUG === true || $_POST["msg"] === "\\REDIRECT" ? "alex.baiet3@gmail.com" : "cyrille.le-forestier@inrap.fr, valerie.delattre@inrap.fr";
+					$result = Controller_Compte::sendMail(
+						$to,
+						"Demande d'accès Archéologie du handicap",
+						View::forge("compte/mail", array("data" => $_POST))
+					);
+
+					if ($result) {
+						Messagehandler::prepareAlert("La demande de création de compte a été envoyé. Vous recevrez un mail de confirmation avec vos identifiants une fois la création validée par un administrateur.", "success");
+						Response::redirect("/accueil");
+					} else {
+						Messagehandler::prepareAlert("La demande de création de compte n'a pas pu être envoyé.", "danger");
+					}
 				}
 			}
-
 		}
 
-		$this->template->title = 'Accueil';
 		$this->template->content = View::forge('compte/creation', $data);
 	}
 

@@ -1,6 +1,7 @@
 <?php
 
 use Fuel\Core\Form;
+use Model\Db\Compte;
 use Model\Helper;
 
 $defaultAttr = array("type" => "text", "class" => "form-control", "placeholder" => "", "autocomplete" => "off");
@@ -77,6 +78,19 @@ $defaultAttr = array("type" => "text", "class" => "form-control", "placeholder" 
 					placeholder="Entrez un message (optionnel)" autocomplete="off"></textarea>
 			</div>
 		</div>
+		
+		<!-- Création immédiat -->
+		<?php if (Compte::checkPermission(Compte::PERM_ADMIN)) : ?>
+			<div class="row my-2">
+				<p class="text-muted" style="margin-bottom: 0;">
+					Ce bouton n'est visible que par les administrateurs et permet de créer immédiatement un compte sans passer par les mails.
+				</p>
+				<div class="col-md">
+					<input type="checkbox" class="form-checkbox" name="immediate" class="form_immediate" value="1">
+					<label for="form_immediate">Création immédiate</label>
+				</div>
+			</div>
+		<?php endif; ?>
 		
 		<!-- Boutons de confirmation -->
 		<div class="row">

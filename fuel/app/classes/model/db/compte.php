@@ -170,7 +170,14 @@ class Compte {
 	 * Vérifie que l'utilisateur a les permissions indiqués, et redirige vers la page précédente si les droits sont insuffisant.
 	 */
 	public static function checkPermissionRedirect(string $errorMsg, string $permission, ?int $idOperation = null) {
-		if (!Compte::checkPermission($permission, $idOperation)) {
+		Compte::checkTestRedirect($errorMsg, Compte::checkPermission($permission, $idOperation));
+	}
+
+	/**
+	 * Redirige vers la page précédente si le test est négatif.
+	 */
+	public static function checkTestRedirect(string $errorMsg, string $bool) {
+		if (!$bool) {
 			if (Compte::getInstance() === null) {
 				// Redirection vers la page de connexion
 				Messagehandler::prepareAlert($errorMsg, "danger");
@@ -197,7 +204,7 @@ class Compte {
 		// Aucune contrainte demandé
 		if ($permission === null) return true;
 		$account = Compte::getInstance();
-		if ($account !== null && $account->getPermission() === Compte::PERM_ADMIN) return true;
+		// if ($account !== null && $account->getPermission() === Compte::PERM_ADMIN) return true;
 
 		$op = $idOperation !== null ? Operation::fetchSingle($idOperation) : null;
 
@@ -208,6 +215,7 @@ class Compte {
 
 			case Compte::PERM_WRITE:
 				if ($account === null) return false;
+				if ($account->getPermission() === Compte::PERM_ADMIN) return true;
 				if ($op !== null
 					&& $account->getPermission() === Compte::PERM_WRITE
 					&& $op->accountRights($account->getLogin()) === null
@@ -218,6 +226,7 @@ class Compte {
 
 			case Compte::PERM_ADMIN:
 				if ($account === null) return false;
+				if ($account->getPermission() === Compte::PERM_ADMIN) return true;
 				if ($op === null && $account->getPermission() !== Compte::PERM_ADMIN) return false;
 
 				if ($op !== null) {

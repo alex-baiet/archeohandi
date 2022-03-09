@@ -113,13 +113,29 @@ $sujets = $operation->getSubjects();
 		</div>
 	</div>
 	<br />
+
 	<div class="container" style="background-color: #F5F5F5;">
 		<h4>Autre</h4>
 		<p>Bibliographie : <?= $operation->getBibliographie(); ?></p>
 	</div>
+
+	<div class="container" style="background-color: #F5F5F5;">
+		<h4>Iconographie</h4>
+		<?php
+		$urls = $operation->getUrlsImg();
+		if (empty($urls)) $urls[] = "";
+		for ($i = 0; $i < count($urls); $i++) :
+			$url = $urls[$i];
+		?>
+			<a href="<?= $url ?>" target="_blank">
+				<img src="<?= $url ?>" alt="" style="height: 300px;">
+			</a>
+		<?php endfor; ?>
+	</div>
 </div>
 <br />
 
+<!-- Tableau des sujets -->
 <?php if (!empty($sujets)) : // Vérifie si l'opération sélectionnée possède des sujets et si oui les affiches et si non affiche aucun sujet ?>
 	<div class="container">
 		<div class="row">

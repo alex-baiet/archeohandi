@@ -10,6 +10,7 @@ use Model\Redirect;
 ?>
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
 	<title><?= $title; ?></title>
 	<meta charset="utf-8">
@@ -41,18 +42,14 @@ use Model\Redirect;
 	<?= Asset::js('nested_table.js') ?>
 
 	<!-- Leaflet -->
-	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-  	integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-  	crossorigin=""/>
-	<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-  	integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-  	crossorigin=""></script>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
+	<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
 	<!-- Load Esri Leaflet from CDN -->
 	<!-- <script src="https://unpkg.com/esri-leaflet@3.0.7/dist/esri-leaflet.js"
     integrity="sha512-ciMHuVIB6ijbjTyEdmy1lfLtBwt0tEHZGhKVXDzW7v7hXOe+Fo3UA1zfydjCLZ0/vLacHkwSARXB5DmtNaoL/g=="
     crossorigin=""></script> -->
-  <!-- Load Esri Leaflet Geocoder from CDN -->
-  <!-- <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@3.1.1/dist/esri-leaflet-geocoder.css"
+	<!-- Load Esri Leaflet Geocoder from CDN -->
+	<!-- <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@3.1.1/dist/esri-leaflet-geocoder.css"
     integrity="sha512-IM3Hs+feyi40yZhDH6kV8vQMg4Fh20s9OzInIIAc4nx7aMYMfo+IenRUekoYsHZqGkREUgx0VvlEsgm7nCDW9g=="
     crossorigin="">
   <script src="https://unpkg.com/esri-leaflet-geocoder@3.1.1/dist/esri-leaflet-geocoder.js"
@@ -72,7 +69,7 @@ use Model\Redirect;
 			<a class="navbar-brand" href="/public/accueil">
 				<i class="bi bi-house-fill"></i> Accueil
 			</a>
-			
+
 			<div class="collapse navbar-collapse" id="navbarTogglerDemo03">
 				<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 
@@ -81,38 +78,41 @@ use Model\Redirect;
 					</li>
 
 					<?php /*if (Compte::checkPermission(Compte::PERM_ADMIN)) :*/ ?>
-						<li class="nav-item active">
-							<a class="nav-link" href="/public/recherche">Rechercher</a>
-						</li>
+					<li class="nav-item active">
+						<a class="nav-link" href="/public/recherche">Rechercher</a>
+					</li>
 					<?php /*endif*/ ?>
 
 					<li class="nav-item active">
 						<a class="nav-link" href="/public/assets/other/mode_emploi.pdf" target="_blank">Mode d'emploi</a>
 					</li>
 
-					<?php
-					$account = Compte::getInstance();
-					if ($account !== null) :
-					?>
-						<li class="nav-item dropdown">
+
+					<li class="nav-item dropdown">
+						<?php
+						$account = Compte::getInstance();
+						if ($account !== null) :
+						?>
 							<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><?= $account->getLogin(); ?></a>
-							<div class="dropdown-menu">
+						<?php else : ?>
+							<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Compte</a>
+
+						<?php endif; ?>
+						<div class="dropdown-menu">
+							<?php if ($account !== null) : ?>
 								<form action="/public/compte/deconnexion" method="POST">
 									<?= Form::hidden("previous_page", Uri::current()); ?>
 									<?= Form::submit("disconnect", "Se déconnecter", array("class" => "dropdown-item")); ?>
 								</form>
-							</div>
-						</li>
-					<?php else : ?>
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Compte</a>
-							<div class="dropdown-menu">
+							<?php endif; ?>
+							<?php if (Compte::checkPermission(Compte::PERM_DISCONNECTED)) : ?>
 								<a class="dropdown-item" href="/public/compte/connexion">Se connecter</a>
+							<?php endif; ?>
+							<?php if (Compte::checkPermission(Compte::PERM_DISCONNECTED) || Compte::checkPermission(Compte::PERM_ADMIN)) : ?>
 								<a class="dropdown-item" href="/public/compte/creation">Créer un compte</a>
-							</div>
-						</li>
-					<?php endif; ?>
-					
+							<?php endif; ?>
+						</div>
+					</li>
 				</ul>
 			</div>
 		</div>
