@@ -63,7 +63,7 @@ class Controller_Compte extends Controller_Template {
 
 				} else {
 					// Creation par mail
-					$to = Controller_Compte::DEBUG === true || $_POST["msg"] === "\\REDIRECT" ? "alex.baiet3@gmail.com" : "cyrille.le-forestier@inrap.fr, valerie.delattre@inrap.fr";
+					$to = Controller_Compte::DEBUG === true || $_POST["msg"] === "\\REDIRECT" ? "alex.baiet3@gmail.com" : "cyrille.le-forestier@inrap.fr";//, valerie.delattre@inrap.fr";
 					$result = Controller_Compte::sendMail(
 						$to,
 						"Demande d'accès Archéologie du handicap",
