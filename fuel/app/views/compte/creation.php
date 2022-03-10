@@ -80,6 +80,22 @@ $defaultAttr = array("type" => "text", "class" => "form-control", "placeholder" 
 		</div>
 		
 		<!-- Création immédiat -->
+		<?php if (!Compte::checkPermission(Compte::PERM_ADMIN)) : ?>
+			<div class="row my-2">
+				<div class="col-md" style="text-align: justify;">
+					<input type="checkbox" class="form-checkbox" name="terms" id="form_terms" value="1" required>
+					<label for="form_terms" class="text-muted" style="display: inline;">
+						En intégrant le groupe de travail « Archéologie du handicap » je m'engage à respecter le cadre déontologique d'utilisation
+						des données scientifiques ici partagées dans une optique collaborative.
+						La perspective est l'organisation d'un colloque thématique qui sera organisé en décembre 2025 :
+						ces informations seront alors disponibles pour des propositions de communications ».
+						L'équipe de pilotage du projet est à disposition pour tout complément et/ou précision.
+					</label>
+				</div>
+			</div>
+		<?php endif; ?>
+		
+		<!-- Création immédiat -->
 		<?php if (Compte::checkPermission(Compte::PERM_ADMIN)) : ?>
 			<div class="row my-2">
 				<p class="text-muted" style="margin-bottom: 0;">
