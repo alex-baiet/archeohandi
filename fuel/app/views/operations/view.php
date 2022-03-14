@@ -129,14 +129,19 @@ $sujets = $operation->getSubjects();
 		<h4>Iconographie</h4>
 		<?php
 		$urls = $operation->getUrlsImg();
-		if (empty($urls)) $urls[] = "";
-		for ($i = 0; $i < count($urls); $i++) :
-			$url = $urls[$i];
+		if (empty($urls)) :
 		?>
-			<a href="<?= $url ?>" target="_blank">
-				<img src="<?= $url ?>" alt="" style="height: 300px;">
-			</a>
-		<?php endfor; ?>
+			<p>Aucune image.</p>
+		<?php else : ?>
+			<?php
+			for ($i = 0; $i < count($urls); $i++) :
+				$url = $urls[$i];
+			?>
+				<a href="<?= $url ?>" target="_blank">
+					<img src="<?= $url ?>" alt="" style="height: 300px;">
+				</a>
+			<?php endfor; ?>
+		<?php endif; ?>
 	</div>
 </div>
 <br />
