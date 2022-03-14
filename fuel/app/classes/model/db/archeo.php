@@ -149,6 +149,9 @@ class Archeo {
 						break;
 					case 'float':
 						$value = floatval($data[$k]);
+						break;	
+					case 'bool':
+						$value = $data[$k] == true;
 						break;			
 					default:
 						throw new FuelException("Le type \"$type\" n'est pas un type valide.");

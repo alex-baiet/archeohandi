@@ -310,4 +310,8 @@ View::forge("fonction/multiple_input", array(
 ));
 ?>
 
+<input type="hidden" name="complet" value="0">
+<input type="checkbox" name="complet" value="1" id="form_complet" class="form-check-input" <?php if ($operation->getComplet()) : ?>checked<?php endif; ?>>
+<label for="form_complet">Les informations de l'opération sont complètes. <span class="text-muted">(vous pourrez toujours modifier l'opération)</span></label>
+
 <br />

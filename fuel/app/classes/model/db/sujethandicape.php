@@ -31,6 +31,7 @@ class Sujethandicape extends Model {
 	private ?int $idDepot = null;
 	private ?int $idGroupeSujet = null;
 	private ?string $dateAjout = null;
+	private bool $complet = false;
 
 	/** @var Groupesujet|null|unset */
 	private $group;
@@ -96,6 +97,7 @@ class Sujethandicape extends Model {
 		Archeo::mergeValue($this->idDepot, $data, "id_depot", "int");
 		Archeo::mergeValue($this->idGroupeSujet, $data, "id_groupe_sujets", "int");
 		Archeo::mergeValue($this->dateAjout, $data, "date_ajout", "string", true);
+		Archeo::mergeValue($this->complet, $data, "complet", "bool");
 
 		// Recréation du groupe du sujet
 		$groupData = array();
@@ -248,6 +250,7 @@ class Sujethandicape extends Model {
 	public function getIdDepot() { return $this->idDepot; }
 	public function getIdGroupeSujet() { return $this->idGroupeSujet; }
 	public function getDateAjout() { return $this->dateAjout; }
+	public function getComplet() { return $this->complet; }
 
 	public function getGroup() {
 		if (!isset($this->group)){
@@ -605,6 +608,7 @@ class Sujethandicape extends Model {
 			"id_sepulture" => $this->idSepulture,
 			"id_depot" => $this->idDepot,
 			"id_groupe_sujets" => $this->idGroupeSujet,
+			"complet" => $this->complet,
 		);
 	}
 

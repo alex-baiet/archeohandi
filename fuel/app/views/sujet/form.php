@@ -446,6 +446,10 @@ View::forge("fonction/multiple_input", array(
 ));
 ?>
 
+<input type="hidden" name="complet" value="0">
+<input type="checkbox" name="complet" value="1" id="form_complet" class="form-check-input" <?php if ($subject->getComplet()) : ?>checked<?php endif; ?>>
+<label for="form_complet">Les informations du sujet sont complètes. <span class="text-muted">(vous pourrez toujours modifier le sujet)</span></label>
+
 <!-- Popup d'aide d'ajout d'image -->
 <div class="modal" id="helpPopup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="helpPopupLabel" aria-hidden="true">
 	<div class="modal-dialog" style="max-width: 800px;">
