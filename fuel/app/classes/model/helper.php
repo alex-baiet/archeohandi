@@ -5,6 +5,7 @@ namespace Model;
 use Fuel\Core\Database_Exception;
 use Fuel\Core\Database_Result;
 use Fuel\Core\DB;
+use InvalidArgumentException;
 
 /** Classe proposant des fonctions statiques divers, juste pour faciliter la vie. */
 class Helper {
@@ -188,5 +189,18 @@ class Helper {
 
 		$angle = atan2(sqrt($a), $b);
 		return $angle * $earthRadius;
+	}
+
+	/**
+	 * Convertit une date de la BDD en une date au format français.
+	 * @param string $date Date au format yyyy-mm-dd
+	 * @return string Date au format dd/mm/yyyy
+	 */
+	public static function dateDBToFrench(string $date): string {
+		$arr = explode("-", $date);
+		if (count($arr) !== 3) throw new InvalidArgumentException("\"$date\" n'est pas au format yyyy-mm-dd.");
+		$result = "{$arr[2]}/{$arr[1]}/{$arr[0]}";
+
+		return $result;
 	}
 }
