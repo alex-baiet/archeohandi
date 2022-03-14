@@ -156,6 +156,7 @@ $sujets = $operation->getSubjects();
 					<table class="table table-striped table-hover table-bordered sticky" data-toggle="table" data-search="true">
 						<thead>
 							<tr class="text-center">
+								<th scope="col">État</th>
 								<th scope="col">Numéro</th>
 								<th scope="col">Nom</th>
 								<th scope="col">Sexe</th>
@@ -176,6 +177,13 @@ $sujets = $operation->getSubjects();
 								$typeSepulture = Typesepulture::fetchSingle($sujet->getIdTypeSepulture());
 							?>
 								<tr class="text-center">
+									<td>
+										<?php if ($sujet->getComplet()) : ?>
+											<i class="bi bi-check-circle-fill" title="La fiche est complète"></i>
+										<?php else : ?>
+											<i class="bi bi-exclamation-diamond-fill" title="La fiche n'est pas complète"></i>
+										<?php endif; ?>
+									</td>
 									<td><?= $sujet->getId()?></td>
 									<td><?= $sujet->getIdSujetHandicape()?></td>
 									<td><?= $sujet->getSexe() ?></td>

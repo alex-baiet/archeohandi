@@ -2,3 +2,19 @@
 	height: 50px;
 	margin: 15px;
 }
+
+td {
+	vertical-align: middle;
+}
+
+/* Icone de validation */
+.bi-check-circle-fill::before {
+	color: #070;
+	font-size: 24px;
+}
+
+/* Icone de danger */
+.bi-exclamation-diamond-fill::before {
+	color: #c70;
+	font-size: 24px;
+}
