@@ -454,6 +454,7 @@ return array(
 	'always_load' => array(
 	    'packages' => array(
 	        'orm',
+	        'email',
 	    ),
 	),
 );
