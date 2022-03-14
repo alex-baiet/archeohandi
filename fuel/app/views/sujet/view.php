@@ -211,14 +211,19 @@ $subject = $subject;
 		<h4>Iconographie</h4>
 		<?php
 		$urls = $subject->getUrlsImg();
-		if (empty($urls)) $urls[] = "";
-		for ($i = 0; $i < count($urls); $i++) :
-			$url = $urls[$i];
+		if (empty($urls)) :
 		?>
-			<a href="<?= $url ?>" target="_blank">
-				<img src="<?= $url ?>" alt="" style="height: 300px;">
-			</a>
-		<?php endfor; ?>
+			Aucune image.
+		<?php else : ?>
+			<?php
+			for ($i = 0; $i < count($urls); $i++) :
+				$url = $urls[$i];
+			?>
+				<a href="<?= $url ?>" target="_blank">
+					<img src="<?= $url ?>" alt="" style="height: 300px;">
+				</a>
+			<?php endfor; ?>
+		<?php endif; ?>
 	</section>
 </div>
 
