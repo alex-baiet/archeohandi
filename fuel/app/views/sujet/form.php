@@ -75,25 +75,35 @@ if (!empty($msg)) {
 
 <div class="row my-4">
 	<!-- Nom -->
-	<div class="col-md-6">
+	<div class="col-md-12">
 		<div class="form-floating">
-			<input name="id_sujet_handicape" id="form_id_sujet_handicape" value="<?= $subject->getIdSujetHandicape(); ?>" type="text" class="form-control" placeholder="" maxlength="256" onclick="this.required=`required`" title="Indiquez le nom du sujet">
+			<input name="id_sujet_handicape" id="form_id_sujet_handicape" value="<?= $subject->getIdSujetHandicape(); ?>" type="text" class="form-control" placeholder="Identifiant du sujet" maxlength="256" onclick="this.required=`required`" title="Indiquez le nom du sujet">
 			<div class="form-msg-error">Veuillez indiquer une valeur pour ce champ</div>
 			<label for="form_id_sujet_handicape">Identifiant du sujet</label>
 		</div>
 	</div>
+</div>
 
+<div class="row my-4">
 	<!-- Sexe -->
 	<div class="col-md-6">
 		<div class="form-floating">
 			<?= Sex::generateSelect("sexe", $subject->getSexe()); ?>
 		</div>
 	</div>
+
+	<!-- Methode sexe -->
+	<div class="col-md-6">
+		<div class="form-floating">
+			<input name="sexe_methode" id="form_sexe_methode" value="<?= $subject->getSexeMethode(); ?>" type="text" class="form-control" placeholder="Méthode de détermination du sexe" maxlength="256" title="Indiquez la méthode utilisé pour déterminé le sexe">
+			<label for="form_sexe_methode">Méthode de détermination du sexe</label>
+		</div>
+	</div>
 </div>
 
 <div class="row my-4">
 	<!-- Âge minimum estimé de décès -->
-	<div class="col-md-6">
+	<div class="col-md-3">
 		<div class="form-floating">
 			<input name="age_min" id="form_age_min" value="<?= $subject->getAgeMin(); ?>" type="number" class="form-control" placeholder="Âge minimum au décès" min="0" max="130" step="1" title="Indiquez l'âge minimum estimé du sujet">
 			<div class="form-msg-error">La valeur doit être un nombre entier entre 0 et 130</div>
@@ -102,11 +112,19 @@ if (!empty($msg)) {
 	</div>
 
 	<!-- Âge maximum estimé de décès -->
-	<div class="col-md-6">
+	<div class="col-md-3">
 		<div class="form-floating">
 			<input name="age_max" id="form_age_max" value="<?= $subject->getAgeMax(); ?>" type="number" class="form-control" placeholder="Âge maximum au décès" min="0" max="130" step="1" title="Indiquez l'âge maximum estimé du sujet">
 			<div class="form-msg-error">La valeur doit être un nombre entier entre 0 et 130</div>
 			<label for="form_age_max">Âge maximum au décès</label>
+		</div>
+	</div>
+
+	<!-- Méthode âge -->
+	<div class="col-md-6">
+		<div class="form-floating">
+			<input name="age_methode" id="form_age_methode" value="<?= $subject->getAgeMethode(); ?>" type="text" class="form-control" placeholder="Méthode de détermination de l'âge" title="Indiquez la méthode utilisé pour déterminer l'âge">
+			<label for="form_age_methode">Méthode de détermination de l'âge</label>
 		</div>
 	</div>
 </div>

@@ -41,6 +41,7 @@ $subject = $subject;
 				<div class="p-2">Date de saisie : <?= $subject->getDateAjout() !== null ? Helper::dateDBToFrench($subject->getDateAjout()) : "inconnu" ?></div>
 			</div>
 		</div>
+
 		<div class="row">
 			<div class="col">
 				<div class="p-2">Âge minimum : <?= $subject->getAgeMin(); ?></div>
@@ -49,9 +50,19 @@ $subject = $subject;
 				<div class="p-2">Âge maximum : <?= $subject->getAgeMax(); ?></div>
 			</div>
 			<div class="col">
-				<div class="p-2">Sexe : <?= $subject->getSexe(); ?></div>
+				<div class="p-2">Méthode âge : <?= $subject->getAgeMethode(); ?></div>
 			</div>
 		</div>
+
+		<div class="row">
+			<div class="col-4">
+				<div class="p-2">Sexe : <?= $subject->getSexe(); ?></div>
+			</div>
+			<div class="col-8">
+				<div class="p-2">Méthode sexe : <?= $subject->getSexeMethode(); ?></div>
+			</div>
+		</div>
+
 		<div class="row">
 			<div class="col">
 				<div class="p-2">
@@ -70,6 +81,7 @@ $subject = $subject;
 				<div class="p-2">Milieu de vie : <?= $subject->getMilieuVie(); ?></div>
 			</div>
 		</div>
+
 		<div class="row">
 			<div class="col">
 				<div class="p-2">Contexte normatif : <?= $subject->getContexteNormatif(); ?></div>
@@ -81,6 +93,7 @@ $subject = $subject;
 				<div class="p-2">Commentaire du contexte : <?= $subject->getCommentContext(); ?></div>
 			</div>
 		</div>
+
 		<div class="row">
 			<div class="col-md-4">
 				<div class="p-2">Type de dépôt : <?= $subject->getTypeDepot()->getNom(); ?></div>

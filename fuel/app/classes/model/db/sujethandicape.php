@@ -15,7 +15,9 @@ class Sujethandicape extends Model {
 	private string $idSujetHandicape = "";
 	private ?int $ageMin = null;
 	private ?int $ageMax = null;
+	private string $ageMethode = "";
 	private string $sexe = "Indéterminé";
+	private string $sexeMethode = "";
 	private ?int $datingMin = null;
 	private ?int $datingMax = null;
 	private ?string $milieuVie = null;
@@ -76,7 +78,9 @@ class Sujethandicape extends Model {
 		Archeo::mergeValue($this->idSujetHandicape, $data, "id_sujet_handicape");
 		Archeo::mergeValue($this->ageMin, $data, "age_min", "int", true);
 		Archeo::mergeValue($this->ageMax, $data, "age_max", "int", true);
+		Archeo::mergeValue($this->ageMethode, $data, "age_methode");
 		Archeo::mergeValue($this->sexe, $data, "sexe");
+		Archeo::mergeValue($this->sexeMethode, $data, "sexe_methode");
 		Archeo::mergeValue($this->datingMin, $data, "dating_min", "int", true);
 		Archeo::mergeValue($this->datingMax, $data, "dating_max", "int", true);
 		Archeo::mergeValue($this->milieuVie, $data, "milieu_vie");
@@ -228,7 +232,9 @@ class Sujethandicape extends Model {
 	public function getIdSujetHandicape() { return $this->idSujetHandicape; }
 	public function getAgeMin() { return $this->ageMin; }
 	public function getAgeMax() { return $this->ageMax; }
+	public function getAgeMethode() { return $this->ageMethode; }
 	public function getSexe() { return $this->sexe; }
+	public function getSexeMethode() { return $this->sexeMethode; }
 	public function getDatingMin() { return $this->datingMin; }
 	public function getDatingMax() { return $this->datingMax; }
 	public function getMilieuVie() { return $this->milieuVie; }
@@ -584,7 +590,9 @@ class Sujethandicape extends Model {
 			"id_sujet_handicape" => $this->idSujetHandicape,
 			"age_min" => $this->ageMin,
 			"age_max" => $this->ageMax,
+			"age_methode" => $this->ageMethode,
 			"sexe" => $this->sexe,
+			"sexe_methode" => $this->sexeMethode,
 			"dating_min" => $this->datingMin,
 			"dating_max" => $this->datingMax,
 			"milieu_vie" => $this->milieuVie,
