@@ -423,6 +423,7 @@ class Operation extends Model {
 
 			// L'opération n'existe pas : on la rajoute à la BDD
 			$arr["id"] = null;
+			$arr["date_ajout"] = DB::expr("CURRENT_DATE()");
 			list($insertId, $rowAffected) = DB::insert("operations")
 				->set($arr)
 				->execute();

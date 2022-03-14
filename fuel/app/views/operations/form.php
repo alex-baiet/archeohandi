@@ -73,6 +73,8 @@ Asset::js("form.js");
 			</div>
 		</div>
 
+		<a href="https://twcc.fr" target="_blank" class="btn btn-secondary">Conversion coordonnées GPS <i class="bi bi-box-arrow-up-right"></i></a>
+
 		<div class="row my-2">
 			<!-- Longitude -->
 			<div class="col-md-6">

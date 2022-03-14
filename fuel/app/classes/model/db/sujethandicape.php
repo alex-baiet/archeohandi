@@ -482,6 +482,7 @@ class Sujethandicape extends Model {
 
 		if ($this->id === null || Sujethandicape::fetchSingle($this->id) === null) {
 			// Le sujet n'existe pas : on la rajoute à la BDD
+			$arr["date_ajout"] = DB::expr("CURRENT_DATE()");
 			list($insertId, $rowAffected) = DB::insert("sujet_handicape")
 				->set($arr)
 				->execute();
