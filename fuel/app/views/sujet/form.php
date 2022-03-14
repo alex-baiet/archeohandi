@@ -347,7 +347,7 @@ if (!empty($msg)) {
 		<?php
 		$depot = $subject->getDepot();
 		if ($depot !== null && $depot->getId() !== null) :
-			?>
+		?>
 			<input type="hidden" name="id_depot" value="<?= $depot->getId() ?>">
 		<?php endif; ?>
 		<!-- Numéro de dépôt -->
@@ -374,14 +374,21 @@ if (!empty($msg)) {
 		<h3 class="mt-4">Accessoire</h3>
 		<?php $subFurnituresId = $subject->getFurnituresId(); ?>
 		<?php foreach (Mobilier::fetchAll() as $mobilier) : ?>
-			<div class="form-check form-switch">
-				<label for="form_id_mobiliers_<?= $mobilier->getId() ?>" class="form-check-label"><?= $mobilier->getNom() ?></label>
-				<input name="id_mobiliers[]" id="form_id_mobiliers_<?= $mobilier->getId() ?>" value="<?= $mobilier->getId() ?>" type="checkbox" class="form-check-input" <?php if (in_array($mobilier->getId(), $subFurnituresId)) : ?>checked<?php endif; ?>>
-			</div>
+			<?php if ($mobilier->getId() !== 5) : ?>
+				<div class="form-check form-switch">
+					<label for="form_id_mobiliers_<?= $mobilier->getId() ?>" class="form-check-label"><?= $mobilier->getNom() ?></label>
+					<input name="id_mobiliers[]" id="form_id_mobiliers_<?= $mobilier->getId() ?>" value="<?= $mobilier->getId() ?>" type="checkbox" class="form-check-input" <?php if (in_array($mobilier->getId(), $subFurnituresId)) : ?>checked<?php endif; ?>>
+				</div>
+			<?php endif; ?>
 		<?php endforeach; ?>
 		<div>
 			<label class="form-check-label" for="form_description_mobilier">Description du mobilier</label>
 			<textarea class="form-control" name="description_mobilier" id="form_description_mobilier" rows="2"><?= $subject->getDescriptionMobilier() ?></textarea>
+		</div>
+		<?php $mobilier = Mobilier::fetchSingle(5); ?>
+		<div class="form-check form-switch">
+			<label for="form_id_mobiliers_<?= $mobilier->getId() ?>" class="form-check-label"><?= $mobilier->getNom() ?></label>
+			<input name="id_mobiliers[]" id="form_id_mobiliers_<?= $mobilier->getId() ?>" value="<?= $mobilier->getId() ?>" type="checkbox" class="form-check-input" <?php if (in_array($mobilier->getId(), $subFurnituresId)) : ?>checked<?php endif; ?>>
 		</div>
 
 		<!-- Appareils de compensation -->
