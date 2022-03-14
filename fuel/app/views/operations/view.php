@@ -8,6 +8,7 @@ use Model\Db\Operation;
 use Model\Db\Organisme;
 use Model\Db\Typedepot;
 use Model\Db\Typesepulture;
+use Model\Helper;
 
 /** @var Operation Operation actuelle. */
 $operation = $operation;
@@ -44,6 +45,11 @@ $sujets = $operation->getSubjects();
 	<!-- Contenu de la page. Affichage des informations de l'opération -->
 	<div class="container" style="background-color: #F5F5F5;">
 		<h4>Informations</h4>
+		<div class="row">
+			<div class="col">
+				<div class="p-2">Date de saisie : <?= $operation->getDateAjout() !== null ? Helper::dateDBToFrench($operation->getDateAjout()) : "inconnu" ?></div>
+			</div>
+		</div>
 		<div class="row">
 			<div class="col">
 				<div class="p-2">Année de l'opération : <?= $operation->getAnnee(); ?></div>

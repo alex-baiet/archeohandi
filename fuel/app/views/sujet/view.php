@@ -2,6 +2,7 @@
 
 use Model\Db\Compte;
 use Model\Db\Sujethandicape;
+use Model\Helper;
 
 /** @var Sujethandicape */
 $subject = $subject;
@@ -34,60 +35,60 @@ $subject = $subject;
 	<!-- Contenu de la page -->
 	<section>
 		<h4>Informations générales</h4>
-
+		
 		<div class="row">
 			<div class="col">
-				<div class="row">
-					<div class="col">
-						<div class="p-2">Âge minimum : <?= $subject->getAgeMin(); ?></div>
-					</div>
-					<div class="col">
-						<div class="p-2">Âge maximum : <?= $subject->getAgeMax(); ?></div>
-					</div>
-					<div class="col">
-						<div class="p-2">Sexe : <?= $subject->getSexe(); ?></div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col">
-						<div class="p-2">
-							<?php if ($subject->getDatingMin() === $subject->getDatingMax()) : ?>
-								Datation : <?= $subject->getDatingMin(); ?>
-							<?php else : ?>
-								Datation : entre <?= $subject->getDatingMin(); ?> et <?= $subject->getDatingMax(); ?>
-							<?php endif; ?>
-						</div>
-					</div>
-					<div class="col">
-						<!-- Ce n'est pas vraiment l'écart type qui est calculé mais bon... -->
-						<div class="p-2">Écart type de la datation : <?= $subject->getDatingMax() - $subject->getDatingMin(); ?> années</div>
-					</div>
-					<div class="col">
-						<div class="p-2">Milieu de vie : <?= $subject->getMilieuVie(); ?></div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col">
-						<div class="p-2">Contexte normatif : <?= $subject->getContexteNormatif(); ?></div>
-					</div>
-					<div class="col">
-						<div class="p-2">Contexte : <?= $subject->getContexte(); ?></div>
-					</div>
-					<div class="col">
-						<div class="p-2">Commentaire du contexte : <?= $subject->getCommentContext(); ?></div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-4">
-						<div class="p-2">Type de dépôt : <?= $subject->getTypeDepot()->getNom(); ?></div>
-					</div>
-					<div class="col-md-4">
-						<div class="p-2">Type de sépulture : <?= $subject->getTypeSepulture()->getNom(); ?></div>
-					</div>
-				</div>
+				<div class="p-2">Date de saisie : <?= $subject->getDateAjout() !== null ? Helper::dateDBToFrench($subject->getDateAjout()) : "inconnu" ?></div>
 			</div>
 		</div>
-
+		<div class="row">
+			<div class="col">
+				<div class="p-2">Âge minimum : <?= $subject->getAgeMin(); ?></div>
+			</div>
+			<div class="col">
+				<div class="p-2">Âge maximum : <?= $subject->getAgeMax(); ?></div>
+			</div>
+			<div class="col">
+				<div class="p-2">Sexe : <?= $subject->getSexe(); ?></div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<div class="p-2">
+					<?php if ($subject->getDatingMin() === $subject->getDatingMax()) : ?>
+						Datation : <?= $subject->getDatingMin(); ?>
+					<?php else : ?>
+						Datation : entre <?= $subject->getDatingMin(); ?> et <?= $subject->getDatingMax(); ?>
+					<?php endif; ?>
+				</div>
+			</div>
+			<div class="col">
+				<!-- Ce n'est pas vraiment l'écart type qui est calculé mais bon... -->
+				<div class="p-2">Écart type de la datation : <?= $subject->getDatingMax() - $subject->getDatingMin(); ?> années</div>
+			</div>
+			<div class="col">
+				<div class="p-2">Milieu de vie : <?= $subject->getMilieuVie(); ?></div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<div class="p-2">Contexte normatif : <?= $subject->getContexteNormatif(); ?></div>
+			</div>
+			<div class="col">
+				<div class="p-2">Contexte : <?= $subject->getContexte(); ?></div>
+			</div>
+			<div class="col">
+				<div class="p-2">Commentaire du contexte : <?= $subject->getCommentContext(); ?></div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="p-2">Type de dépôt : <?= $subject->getTypeDepot()->getNom(); ?></div>
+			</div>
+			<div class="col-md-4">
+				<div class="p-2">Type de sépulture : <?= $subject->getTypeSepulture()->getNom(); ?></div>
+			</div>
+		</div>
 	</section>
 	<br />
 

@@ -135,21 +135,20 @@ class Archeo {
 		if (!is_array($key)) $key = array($key);
 		foreach ($key as $k) {
 			if (isset($data[$k])) {
+				if ($nullable && ($data[$k] === "" || $data[$k] === null)) {
+					// Assignation d'un null
+					$value = null;
+					break;
+				}
 				switch ($type) {
 					case 'string':
 						$value = $data[$k];
 						break;
 					case 'int':
-						// Tentative d'assignation d'un null
-						if ($nullable && ($data[$k] === "" || $data[$k] === null)) $value = null;
-						// Assignation d'une vrai valeur
-						else $value = intval($data[$k]);
+						$value = intval($data[$k]);
 						break;
 					case 'float':
-						// Tentative d'assignation d'un null
-						if ($nullable && ($data[$k] === "" || $data[$k] === null)) $value = null;
-						// Assignation d'une vrai valeur
-						else $value = floatval($data[$k]);
+						$value = floatval($data[$k]);
 						break;			
 					default:
 						throw new FuelException("Le type \"$type\" n'est pas un type valide.");

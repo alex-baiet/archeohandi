@@ -31,6 +31,7 @@ class Operation extends Model {
 	private string $anthropologues = "";
 	private string $paleopathologistes = "";
 	private string $bibliographie = "";
+	private ?string $dateAjout = null;
 
 	/** @var Commune|null */
 	private $commune = null;
@@ -89,6 +90,7 @@ class Operation extends Model {
 		Archeo::mergeValue($this->arretePrescription, $data, "arrete_prescription");
 		Archeo::mergeValue($this->responsable, $data, "responsable");
 		Archeo::mergeValue($this->bibliographie, $data, "bibliographie");
+		Archeo::mergeValue($this->dateAjout, $data, "date_ajout", "string", true);
 
 		if (isset($data["anthropologues"])) {
 			if (is_array($data["anthropologues"])) {
@@ -204,6 +206,7 @@ class Operation extends Model {
 	public function getArretePrescription() { return $this->arretePrescription; }
 	public function getIdResponsableOp() { return $this->idResponsableOp; }
 	public function getBibliographie() { return $this->bibliographie; }
+	public function getDateAjout() { return $this->dateAjout; }
 
 	/** Créer un nom pour l'opération */
 	public function getNomOp(): string {
