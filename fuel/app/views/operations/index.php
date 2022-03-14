@@ -23,6 +23,12 @@ $countOp = $countOp;
 
 ?>
 
+<style>
+	td {
+		vertical-align: middle;
+	}
+</style>
+
 <script type="text/javascript">
 	function deleteOperation(idSubject) {
 		let btnElem = document.getElementById("form_delete_op");
@@ -115,6 +121,7 @@ $countOp = $countOp;
 					<thead>
 						<tr class="text-center">
 							<!-- <th scope="col">#</th> -->
+							<th scope="col">Etat</th>
 							<th scope="col">Auteur de la saisie</th>
 							<th scope="col">Nom du site</th>
 							<th scope="col">Année</th>
@@ -126,6 +133,13 @@ $countOp = $countOp;
 					<tbody>
 						<?php foreach ($operations as $op) :  ?>
 							<tr class="text-center">
+								<td>
+									<?php if ($op->getComplet()) : ?>
+										<i class="bi bi-check-circle-fill" style="color: #070; font-size: 24px;" title="La fiche est complète"></i>
+									<?php else : ?>
+										<i class="bi bi-exclamation-diamond-fill" style="color: #c70; font-size: 24px;" title="La fiche n'est pas complète"></i>
+									<?php endif; ?>
+								</td>
 								<?php $author = $op->getAccountAdmin() ?>
 								<td><?= $author !== null ? "{$author->getPrenom()} {$author->getNom()}" : null ?></td>
 								<td><?= $op->getNomOp() ?></td>

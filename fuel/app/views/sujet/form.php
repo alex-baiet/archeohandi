@@ -467,17 +467,17 @@ View::forge("fonction/multiple_input", array(
 					<b>Note</b> : Il est possible d'ajouter des images d'autres sources que Nakala si vous le souhaitez.<br>
 					<br>
 					<b>J'ai rempli le champ, mais aucune image ne s'affiche. Pourquoi ?</b>
-				<ul>
-					<li>Le texte du champ n'est pas bon : vérifiez que vous avez bien copié l'url (il doit commencer par "https://" ou "http://".</li>
-					<li>L'image n'est pas au bon format : seul les formats <b>PNG</b> et <b>JPG</b> sont acceptés.</li>
-					<li>L'image n'existe plus : il est possible que l'image ai été supprimé de Nakala.</li>
-					<li>Avez-vous bien <b>publié</b> et non <b>déposé</b> l'image sur Nakala ?</li>
-				</ul>
-				<br>
-				<figure>
-					<figcaption style="text-align: center; font-style: italic; background-color: #0002;">Exemple d'url à copier</figcaption>
-					<?= Asset::img("help/demo_url.png", array("style" => "width: 100%;")) ?>
-				</figure>
+					<ul>
+						<li>Le texte du champ n'est pas bon : vérifiez que vous avez bien copié l'url (il doit commencer par "https://" ou "http://".</li>
+						<li>L'image n'est pas au bon format : seul les formats <b>PNG</b> et <b>JPG</b> sont acceptés.</li>
+						<li>L'image n'existe plus : il est possible que l'image ai été supprimé de Nakala.</li>
+						<li>Avez-vous bien <b>publié</b> et non <b>déposé</b> l'image sur Nakala ?</li>
+					</ul>
+					<br>
+					<figure>
+						<figcaption style="text-align: center; font-style: italic; background-color: #0002;">Exemple d'url à copier</figcaption>
+						<?= Asset::img("help/demo_url.png", array("style" => "width: 100%;")) ?>
+					</figure>
 				</p>
 			</div>
 			<div class="modal-footer">
