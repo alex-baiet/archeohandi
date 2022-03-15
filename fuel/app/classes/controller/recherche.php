@@ -50,11 +50,9 @@ class Controller_Recherche extends Controller_Template {
 	private function searchOperations(Operation $refOp): array {
 		$query = DB::select()->from("operations");
 
-		// Filtre commune
+		if ($refOp->getId() !== null) $query->where("id", "=", $refOp->getId());
 		if ($refOp->getIdCommune() !== null) $query->where("id_commune", "=", $refOp->getIdCommune());
-		// Filtre adresse
 		if (!empty($refOp->getAdresse())) $query->where("adresse", "LIKE", "%{$refOp->getAdresse()}%");
-		// Filtre année
 		if (!empty($_POST["annee_min"])) $query->where("annee", ">=", $_POST["annee_min"]);
 		if (!empty($_POST["annee_max"])) $query->where("annee", "<=", $_POST["annee_max"]);
 		// if ($refOp->getOrganisme() === null) echo "OUEEEEEE";

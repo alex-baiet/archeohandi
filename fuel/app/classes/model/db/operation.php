@@ -12,7 +12,7 @@ use Model\Validation;
 /** Représentation d'une opération dans la base de données. */
 class Operation extends Model {
 	#region Values
-	private int $id = -1;
+	private ?int $id = null;
 	private string $idUser = "";
 	private string $aRevoir = "";
 	private ?int $annee = null;
@@ -74,7 +74,8 @@ class Operation extends Model {
 		unset($this->paleoArray);
 
 		// Fusion des valeurs
-		Archeo::mergeValue($this->id, $data, "id");
+		Archeo::mergeValue($this->id, $data, "id", "int", true);
+		Archeo::mergeValue($this->id, $data, "id_operation", "int", true);
 		Archeo::mergeValue($this->idUser, $data, "id_user");
 		Archeo::mergeValue($this->aRevoir, $data, "a_revoir");
 		Archeo::mergeValue($this->annee, $data, "annee", "int", true);
@@ -421,7 +422,7 @@ class Operation extends Model {
 		// Préparation des valeurs à envoyer à la BDD
 		$arr = $this->toArray();
 
-		if ($this->id === -1 || Operation::fetchSingle($this->id) === null) {
+		if ($this->id === null || Operation::fetchSingle($this->id) === null) {
 			if (Compte::getInstance() === null) {
 				Messagehandler::prepareAlert("Pour créer une opération, vous devez être connecter à un compte.", "danger");
 				return false;

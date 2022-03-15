@@ -18,9 +18,8 @@ use Model\Db\Typesepulture;
 	<!-- Id -->
 	<div class="col-md-6">
 		<div class="form-floating">
-			<input name="sujet_id" id="form_sujet_id" type="number" class="form-control" placeholder="" maxlength="256" title="Indiquez l'identifiant du sujet">
-			<div class="form-msg-error">Veuillez indiquer une valeur pour ce champ</div>
-			<label for="form_id">Numéro</label>
+			<input name="id_sujet" id="form_id_sujet" type="number" class="form-control" placeholder="" maxlength="256" title="Indiquez l'identifiant du sujet">
+			<label for="form_id_sujet">Numéro</label>
 		</div>
 	</div>
 
@@ -28,7 +27,6 @@ use Model\Db\Typesepulture;
 	<div class="col-md-6">
 		<div class="form-floating">
 			<input name="id_sujet_handicape" id="form_id_sujet_handicape" type="text" class="form-control" placeholder="" maxlength="256" title="Indiquez le nom du sujet">
-			<div class="form-msg-error">Veuillez indiquer une valeur pour ce champ</div>
 			<label for="form_id_sujet_handicape">Nom du sujet</label>
 		</div>
 	</div>

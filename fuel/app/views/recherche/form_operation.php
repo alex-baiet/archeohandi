@@ -28,6 +28,16 @@ Asset::js("form.js");
 
 <!-- Affichage des champs -->
 <?php $nameCom = "commune" ?>
+
+<div class="row my-2">
+	<div class="col-md-6">
+		<div class="form-floating">
+			<input name="id_operation" id="form_id_operation" type="number" class="form-control" placeholder="" maxlength="256" title="Indiquez l'identifiant de l'opération">
+			<label for="form_id_operation">Numéro</label>
+		</div>
+	</div>
+</div>
+
 <div class="row my-2">
 
 	<div class="col-md-6 mt-4">
