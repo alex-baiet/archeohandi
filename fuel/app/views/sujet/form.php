@@ -259,7 +259,7 @@ if (!empty($msg)) {
 			<?php
 			$localisations = Localisation::fetchAll();
 			$appareils = Appareil::fetchAll();
-			$countSubject = count($subject->getGroup()->getOperation()->getSubjects());
+			//$countSubject = count($subject->getGroup()->getOperation()->getSubjects());
 			?>
 			<thead>
 				<tr>
