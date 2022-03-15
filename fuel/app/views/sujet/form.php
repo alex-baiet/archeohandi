@@ -411,6 +411,12 @@ if (!empty($msg)) {
 	<textarea class="form-control" name="comment_diagnostic" rows="2" maxlength="65535" title="Ecrivez ici des commentaires sur le diagnostic si besoin"><?= $subject->getCommentDiagnosis(); ?></textarea>
 </div>
 
+<!-- Commentaire du diagnostic -->
+<label for="donnees_genetiques">Données génétiques</label>
+<div class="input-group">
+	<textarea class="form-control" name="donnees_genetiques" rows="2" maxlength="65535" title="Ecrivez ici les informations sur les données génétiques"><?= $subject->getDonneesGenetiques(); ?></textarea>
+</div>
+
 <h3>Iconographie</h3>
 <!-- Lien Nakala -->
 <div class="row my-2">

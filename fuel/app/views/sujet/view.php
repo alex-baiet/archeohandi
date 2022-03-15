@@ -203,6 +203,7 @@ $subject = $subject;
 		</div>
 		<div class="row">
 			<div class="col m-2">Commentaire du diagnostic : <?= $subject->getCommentDiagnosis(); ?></div>
+			<div class="col m-2">Données génétiques : <?= $subject->getDonneesGenetiques(); ?></div>
 		</div>
 	</section>
 	<br />
