@@ -489,6 +489,9 @@ class Operation extends Model {
 	public function echoErrors() { $this->validation->echoErrors(); }
 	#endregion
 
+	/**
+	 * @deprecated La valeur calculé ne correspond pas à la prévalence
+	 */
 	public function prevalence(int $idDiagnosis): int {
 		$subjects = $this->getSubjects();
 		$counter = 0;

@@ -254,11 +254,12 @@ if (!empty($msg)) {
 		<h3>Atteinte invalidante</h3>
 		<p class="text-muted"><em>D : Partie droite, G : Partie gauche</em></p>
 
-		<table>
+		<table class="table table-bordered">
 			<!-- Tous les titres -->
 			<?php
 			$localisations = Localisation::fetchAll();
 			$appareils = Appareil::fetchAll();
+			$countSubject = count($subject->getGroup()->getOperation()->getSubjects());
 			?>
 			<thead>
 				<tr>
@@ -275,6 +276,7 @@ if (!empty($msg)) {
 						</td>
 					<?php $i++;
 					endforeach; ?>
+					<!-- <th>Prévalence</th> -->
 				</tr>
 			</thead>
 			<tbody>
@@ -323,6 +325,12 @@ if (!empty($msg)) {
 								<input name="diagnostics[<?= $diagnostic->getId() ?>][]" id="form_diagnostic_<?= $diagnostic->getId() ?>" value="<?= $locali->getId() ?>" type="checkbox" class="form-check-input <?= $classes ?>" <?= $hidden ? "hidden" : null ?> <?= $disabled ? "disabled" : null ?> <?= $checked ? "checked" : null ?>>
 							</td>
 						<?php endforeach; ?>
+						
+						<?php /* Affichage prévalence */ ?>
+						<!-- <td style="text-align: center; padding: 0px;">
+							<input type="text" class="form-control" style="padding: 3px 12px 3px 12px;">
+						</td> -->
+
 						<script>
 							updateCheckboxOnSwitch(<?= $diagnostic->getId(); ?>);
 						</script>
