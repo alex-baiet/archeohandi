@@ -117,6 +117,7 @@ $countOp = $countOp;
 							<!-- <th scope="col">#</th> -->
 							<th scope="col">Etat</th>
 							<th scope="col">Auteur de la saisie</th>
+							<th scope="col">Date de saisie</th>
 							<th scope="col">Nom du site</th>
 							<th scope="col">Année</th>
 							<?php if (Compte::checkPermission(Compte::PERM_WRITE)) : ?>
@@ -136,6 +137,7 @@ $countOp = $countOp;
 								</td>
 								<?php $author = $op->getAccountAdmin() ?>
 								<td><?= $author !== null ? "{$author->getPrenom()} {$author->getNom()}" : null ?></td>
+								<td><?= $op->getDateAjout() ?></td>
 								<td><?= $op->getNomOp() ?></td>
 								<td><?= $op->getAnnee() ?></td>
 	
