@@ -298,9 +298,9 @@ View::forge("fonction/multiple_input", array(
 		<button type="button" class="btn btn-primary" onclick="FormSujet.generateDescription(`fast_summary`)">Générer une résumé à copier</button>
 	</div> -->
 
-	<div class="col-md-auto">
+	<!-- <div class="col-md-auto">
 		<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#helpPopup">Aide <i class="bi bi-question-circle"></i></button>
-	</div>
+	</div> -->
 
 	<!-- Texte à copier -->
 	<!-- <pre id="fast_summary" style="background-color: white; margin: 10px;"></pre> -->

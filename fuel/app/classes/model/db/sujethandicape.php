@@ -99,7 +99,7 @@ class Sujethandicape extends Model {
 		Archeo::mergeValue($this->idGroupeSujet, $data, "id_groupe_sujets", "int");
 		Archeo::mergeValue($this->dateAjout, $data, "date_ajout", "string", true);
 		Archeo::mergeValue($this->complet, $data, "complet", "bool");
-		if ((isset($data["genetiques_actif"]) && $data["genetiques_actif"] == false) || $data["donnees_genetiques"] === null) {
+		if ((isset($data["genetiques_actif"]) && $data["genetiques_actif"] == false) || !isset($data["donnees_genetiques"]) || $data["donnees_genetiques"] === null) {
 			$this->donneesGenetiques = null;
 		} else {
 			Archeo::mergeValue($this->donneesGenetiques, $data, "donnees_genetiques");
