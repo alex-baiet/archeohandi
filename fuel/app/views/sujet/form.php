@@ -85,6 +85,26 @@ if (!empty($msg)) {
 </div>
 
 <div class="row my-4">
+	<!-- Période minimum estimé -->
+	<div class="col-md-6">
+		<div class="form-floating">
+			<input name="dating_min" id="form_dating_min" value="<?= $subject->getDatingMin(); ?>" type="number" class="form-control" placeholder="Datation minimale" min="-20000" max="1945" step="1" title="Indiquez la borne inférieure de datation du sujet">
+			<div class="form-msg-error">La valeur doit être un nombre entier entre -20000 et 1945</div>
+			<label for="form_dating_min">Datation minimale</label>
+		</div>
+	</div>
+
+	<!-- Période maximum estimé -->
+	<div class="col-md-6">
+		<div class="form-floating">
+			<input name="dating_max" id="form_dating_max" value="<?= $subject->getDatingMax(); ?>" type="number" class="form-control" placeholder="Datation maximal" min="-20000" max="1945" step="1" title="Indiquez la borne supérieure de datation du sujet">
+			<div class="form-msg-error">La valeur doit être un nombre entier entre -20000 et 1945</div>
+			<label for="form_dating_max">Datation maximale</label>
+		</div>
+	</div>
+</div>
+
+<div class="row my-4">
 	<!-- Sexe -->
 	<div class="col-md-6">
 		<div class="form-floating">
@@ -127,27 +147,6 @@ if (!empty($msg)) {
 			<label for="form_age_methode">Méthode de détermination de l'âge</label>
 		</div>
 	</div>
-</div>
-
-<div class="row my-4">
-	<!-- Période minimum estimé -->
-	<div class="col-md-6">
-		<div class="form-floating">
-			<input name="dating_min" id="form_dating_min" value="<?= $subject->getDatingMin(); ?>" type="number" class="form-control" placeholder="Datation minimale" min="-20000" max="1945" step="1" title="Indiquez la borne inférieure de datation du sujet">
-			<div class="form-msg-error">La valeur doit être un nombre entier entre -20000 et 1945</div>
-			<label for="form_dating_min">Datation minimale</label>
-		</div>
-	</div>
-
-	<!-- Période maximum estimé -->
-	<div class="col-md-6">
-		<div class="form-floating">
-			<input name="dating_max" id="form_dating_max" value="<?= $subject->getDatingMax(); ?>" type="number" class="form-control" placeholder="Datation maximal" min="-20000" max="1945" step="1" title="Indiquez la borne supérieure de datation du sujet">
-			<div class="form-msg-error">La valeur doit être un nombre entier entre -20000 et 1945</div>
-			<label for="form_dating_max">Datation maximale</label>
-		</div>
-	</div>
-
 </div>
 
 <div class="row my-3">
@@ -416,7 +415,9 @@ if (!empty($msg)) {
 </div>
 
 <!-- Commentaire du diagnostic -->
-<label for="donnees_genetiques">Données génétiques</label>
+<!-- <input type="checkbox" name="genetiques_actif" id="form_genetiques_actif" class="form-check-input">
+<label for="form_genetiques_actif">Données génétiques</label> -->
+
 <div class="input-group">
 	<textarea class="form-control" name="donnees_genetiques" rows="2" maxlength="65535" title="Ecrivez ici les informations sur les données génétiques"><?= $subject->getDonneesGenetiques(); ?></textarea>
 </div>
