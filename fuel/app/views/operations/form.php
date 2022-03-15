@@ -63,12 +63,13 @@ Asset::js("form.js");
 			</div>
 		</div>
 
-		<!-- Adresse -->
+		<!-- INSEE -->
 		<div class="row my-4">
 			<div class="col md-12">
 				<div class="form-floating">
-					<input name="adresse" id="form_adresse" value="<?= $operation->getAdresse() ?>" type="text" class="form-control" placeholder="Adresse" maxlength="256" title="Indiquez l'adresse de l'opération">
-					<label for="form_adresse">Adresse ou nom du site</label>
+					<input name="insee" id="form_insee" value="<?= $operation->getInsee() ?>" type="number" class="form-control" placeholder="Insee" min="0" max="99999" title="Indiquez le numéro INSEE de la commune">
+					<div class="form-msg-error">Le numéro doit être un nombre entier à 5 chiffres maximum</div>
+					<label for="form_insee">Numéro INSEE</label>
 				</div>
 			</div>
 		</div>
@@ -77,9 +78,8 @@ Asset::js("form.js");
 		<div class="row my-4">
 			<div class="col md-12">
 				<div class="form-floating">
-					<input name="insee" id="form_insee" value="<?= $operation->getInsee() ?>" type="number" class="form-control" placeholder="Insee" min="0" max="99999" title="Indiquez le numéro INSEE de la commune">
-					<div class="form-msg-error">Le numéro doit être un nombre entier à 5 chiffres maximum</div>
-					<label for="form_insee">Numéro INSEE</label>
+					<input name="adresse" id="form_adresse" value="<?= $operation->getAdresse() ?>" type="text" class="form-control" placeholder="Adresse" maxlength="256" title="Indiquez l'adresse de l'opération">
+					<label for="form_adresse">Adresse ou nom du site</label>
 				</div>
 			</div>
 		</div>
