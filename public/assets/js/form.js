@@ -401,6 +401,20 @@ function checkValueExist(table, where, onExist, onNotExist) {
 }
 //#endregion
 
+/**
+ * Permet d'activer un élément en fonction de l'état du checkbox donné.
+ * @param {string} checkboxId Checkbox concerné
+ * @param {string} targetId Elément à activer/désactiver
+ */
+function checkboxActivator(checkboxId, targetId) {
+	/** @type {HTMLInputElement} */
+	const checkbox = document.getElementById(checkboxId);
+	const target = document.getElementById(targetId);
+
+	target.style.display = checkbox.checked ? "block" : "none";
+	// console.log(`ouee ! ${checkbox.checked}`);
+}
+
 // Prépare le document pour pouvoir fermer les autocomplétions automatiquement.
 $(document).ready(function () {
 	$(document).on("click", function () { emptyAutocompletes(); });

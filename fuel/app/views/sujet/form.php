@@ -415,12 +415,18 @@ if (!empty($msg)) {
 </div>
 
 <!-- Commentaire du diagnostic -->
-<!-- <input type="checkbox" name="genetiques_actif" id="form_genetiques_actif" class="form-check-input">
-<label for="form_genetiques_actif">Données génétiques</label> -->
-
-<div class="input-group">
-	<textarea class="form-control" name="donnees_genetiques" rows="2" maxlength="65535" title="Ecrivez ici les informations sur les données génétiques"><?= $subject->getDonneesGenetiques(); ?></textarea>
+<div class="form-check form-switch">
+	<input type="hidden" name="genetiques_actif" value="0">
+	<input type="checkbox" name="genetiques_actif" value="1" id="form_genetiques_actif" class="form-check-input" 
+	<?php if ($subject->getDonneesGenetiques() !== null) : ?>checked<?php endif; ?> onclick="checkboxActivator(`form_genetiques_actif` ,`donnees_genetiques_parent`)">
+	<label for="form_genetiques_actif">Données génétiques</label>
 </div>
+<div class="input-group" id="donnees_genetiques_parent">
+	<textarea class="form-control" name="donnees_genetiques" rows="2" maxlength="65535" title="Ecrivez ici les informations sur les données génétiques"
+	style="width: 100%;"
+	><?= $subject->getDonneesGenetiques(); ?></textarea>
+</div>
+<script>checkboxActivator(`form_genetiques_actif` ,`donnees_genetiques_parent`);</script>
 
 <h3>Iconographie</h3>
 <!-- Lien Nakala -->

@@ -32,7 +32,7 @@ class Sujethandicape extends Model {
 	private ?int $idGroupeSujet = null;
 	private ?string $dateAjout = null;
 	private bool $complet = false;
-	private string $donneesGenetiques = "";
+	private ?string $donneesGenetiques = null;
 
 	/** @var Groupesujet|null|unset */
 	private $group;
@@ -99,7 +99,11 @@ class Sujethandicape extends Model {
 		Archeo::mergeValue($this->idGroupeSujet, $data, "id_groupe_sujets", "int");
 		Archeo::mergeValue($this->dateAjout, $data, "date_ajout", "string", true);
 		Archeo::mergeValue($this->complet, $data, "complet", "bool");
-		Archeo::mergeValue($this->donneesGenetiques, $data, "donnees_genetiques");
+		if ((isset($data["genetiques_actif"]) && $data["genetiques_actif"] == false) || $data["donnees_genetiques"] === null) {
+			$this->donneesGenetiques = null;
+		} else {
+			Archeo::mergeValue($this->donneesGenetiques, $data, "donnees_genetiques");
+		}
 
 		// Recréation du groupe du sujet
 		$groupData = array();
