@@ -489,6 +489,15 @@ class Operation extends Model {
 	public function echoErrors() { $this->validation->echoErrors(); }
 	#endregion
 
+	public function prevalence(int $idDiagnosis): int {
+		$subjects = $this->getSubjects();
+		$counter = 0;
+		foreach ($subjects as $sub) {
+			if ($sub->hasDiagnosis($idDiagnosis)) $counter++;
+		}
+		return $counter;
+	}
+
 	/** Renvoie l'array des données représentant l'objet. */
 	public function toArray(): array {
 		return array(
