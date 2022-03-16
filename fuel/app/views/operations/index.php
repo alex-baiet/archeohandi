@@ -14,6 +14,13 @@ $countOp = $countOp;
 
 ?>
 
+<script>
+	function deleteOperation(idSubject) {
+		let btnElem = document.getElementById("form_delete_op");
+		btnElem.value = idSubject;
+	}
+</script>
+
 <!-- Entête de la page -->
 <div class="container">
 
