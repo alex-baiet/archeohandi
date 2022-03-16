@@ -46,7 +46,7 @@ class Controller_Sujet extends Controller_Template {
 			$subject = new Sujethandicape($_POST, true);
 			if ($subject->saveOnDB() && Controller_Sujet::DEBUG === false) {
 				Messagehandler::prepareAlert("Modification du sujet réussi.", "success");
-				Response::redirect("operations/view/".$subject->getGroup()->getIdOperation());
+				Response::redirect("operations/sujets/".$subject->getGroup()->getIdOperation());
 			} else if (Controller_Sujet::DEBUG === true) {
 				echo "POST";
 				Helper::varDump($_POST);

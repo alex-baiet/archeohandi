@@ -633,7 +633,7 @@ class Sujethandicape extends Model {
 		);
 
 		// Maj des prevalences
-		DB::delete("prevalence")->where("id_sujet", "=", $this->getId());
+		DB::delete("prevalence")->where("id_sujet", "=", $this->getId())->execute();
 		$prevalences = null;
 		try { $prevalences = $this->getPrevalences(); }
 		catch (Exception $e) { }

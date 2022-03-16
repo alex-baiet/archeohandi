@@ -11,7 +11,7 @@ $subject = $subject;
 
 <!-- Entête de la page -->
 <div class="container">
-	<a class="btn btn-secondary mt-2" href="/public/operations/view/<?= $subject->getGroup()->getIdOperation() ?>" role="button">Retour</a>
+	<a class="btn btn-secondary mt-2" href="/public/operations/sujets/<?= $subject->getGroup()->getIdOperation() ?>" role="button">Retour</a>
 
 	<h1 class="m-2">Modifier le sujet N°<?= $subject->getId(); ?>
 		<a class="btn btn-success btn-sm" href="/public/sujet/view/<?= $subject->getId() ?>">
