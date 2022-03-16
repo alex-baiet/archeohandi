@@ -298,9 +298,9 @@ View::forge("fonction/multiple_input", array(
 		<button type="button" class="btn btn-primary" onclick="FormSujet.generateDescription(`fast_summary`)">Générer une résumé à copier</button>
 	</div> -->
 
-	<!-- <div class="col-md-auto">
+	<div class="col-md-auto">
 		<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#helpPopup">Aide <i class="bi bi-question-circle"></i></button>
-	</div> -->
+	</div>
 
 	<!-- Texte à copier -->
 	<!-- <pre id="fast_summary" style="background-color: white; margin: 10px;"></pre> -->
@@ -324,5 +324,7 @@ View::forge("fonction/multiple_input", array(
 <input type="hidden" name="complet" value="0">
 <input type="checkbox" name="complet" value="1" id="form_complet" class="form-check-input" <?php if ($operation->getComplet()) : ?>checked<?php endif; ?>>
 <label for="form_complet">Les informations de l'opération sont complètes. <span class="text-muted">(vous pourrez toujours modifier l'opération)</span></label>
+
+<?= View::forge("global/help_img"); ?>
 
 <br />
