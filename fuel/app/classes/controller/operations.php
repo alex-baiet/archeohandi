@@ -37,45 +37,6 @@ class Controller_Operations extends Controller_Template {
 		// Récupération des opérations
 		$operations = Operation::fetchAll();
 
-		// Préparation des valeurs de recherches
-		$all_site = array();
-		foreach ($operations as $op) { $all_site[$op->getId()] = $op->getId(); }
-		$all_user = array();
-		foreach ($operations as $op) { $all_user[$op->getIdUser()] = $op->getIdUser(); }
-		$all_nom_op = array();
-		foreach ($operations as $op) { $all_nom_op[$op->getNomOp()] = $op->getNomOp(); }
-		$all_annee = array();
-		foreach ($operations as $op) { $all_annee[$op->getAnnee()] = $op->getAnnee(); }
-
-		$all_site[""] = "";
-		$all_user[""] = "";
-		$all_nom_op[""] = "";
-		$all_annee[""] = "";
-
-		asort($all_site);
-		asort($all_user);
-		asort($all_nom_op);
-		asort($all_annee);
-
-		// Tri selon la recherche
-		if (Input::method() === "GET") {
-			
-			$filterId = Input::get("filter_id");
-			$filterUser = Input::get("filter_user");
-			$filterOp = Input::get("filter_op");
-			$filterYear = Input::get("filter_year");
-
-			for ($i=count($operations) -1; $i >= 0; $i--) { 
-				$op = $operations[$i];
-				$toRemove = false;
-				if (!empty($filterId) && $op->getId() != $filterId) $toRemove = true;
-				if (!empty($filterUser) && $op->getIdUser() != $filterUser) $toRemove = true;
-				if (!empty($filterOp) && $op->getNomOp() != $filterOp) $toRemove = true;
-				if ((!empty($filterYear) || $filterYear === "0") && $op->getAnnee() != $filterYear) $toRemove = true;
-				if ($toRemove) unset($operations[$i]);
-			}
-		}
-
 		// Calcul nombre de sujets enregistrés
 		$countSubject = intval(Helper::querySelectSingle("SELECT COUNT(id) AS total FROM sujet_handicape")["total"]);
 		$countOp = intval(Helper::querySelectSingle("SELECT COUNT(id) AS total FROM operations")["total"]);
@@ -83,10 +44,6 @@ class Controller_Operations extends Controller_Template {
 		// Ajout des valeurs à la view.
 		krsort($operations);
 		$data['operations'] = $operations;
-		$data['all_site'] = $all_site;
-		$data['all_user'] = $all_user;
-		$data['all_nom_op'] = $all_nom_op;
-		$data['all_annee'] = $all_annee;
 		$data['countSubject'] = $countSubject;
 		$data['countOp'] = $countOp;
 		$this->template->title = 'Opérations';

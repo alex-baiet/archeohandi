@@ -1,45 +1,18 @@
 <?php
 
 use Fuel\Core\Asset;
-use Fuel\Core\Form;
 use Fuel\Core\View;
 use Model\Db\Compte;
 use Model\Db\Operation;
 
 /** @var Operation[] */
 $operations = $operations;
-/** @var array */
-$all_site = $all_site;
-/** @var array */
-$all_user = $all_user;
-/** @var array */
-$all_nom_op = $all_nom_op;
-/** @var array */
-$all_annee = $all_annee;
 /** @var int */
 $countSubject = $countSubject;
 /** @var int */
 $countOp = $countOp;
 
 ?>
-
-<script type="text/javascript">
-	function deleteOperation(idSubject) {
-		let btnElem = document.getElementById("form_delete_op");
-		btnElem.value = idSubject;
-	}
-
-	/** Permet d'afficher ou non les options du filtre */
-	function switchFilterView() {
-		if ($("#filtres_recherche").hasClass("d-none")) {
-			$("#id_bouton_filtre").text("Masquer les options de recherche");
-			$("#filtres_recherche").removeClass("d-none");
-		} else {
-			$("#id_bouton_filtre").text("Afficher les options de recherche");
-			$("#filtres_recherche").addClass("d-none");
-		}
-	}
-</script>
 
 <!-- Entête de la page -->
 <div class="container">
@@ -58,56 +31,8 @@ $countOp = $countOp;
 		Pour éditer les sujets d'une opération, veuillez d'abord <b>consulter</b> l'opération en question puis vous pourrez éditer ses sujets.
 	</p>
 
-	<div class="ml-3">
-		<button type="button" id="id_bouton_filtre" class="btn btn-danger" onclick="switchFilterView()">Afficher les options de recherche</button>
-
-		<!-- Système de recherche (filtre) -->
-		<?php
-			/** @var array Tous les attributs communs des select. */
-			$selectAttr = array(
-				"class" => "form-select custom-select my-1 mr-2",
-				"style" => "width:15em"
-			);
-		?>
-
-		<div name="filtres_recherche" id="filtres_recherche" class="d-none mt-3">
-			<?= Form::open(array("action" => "/operations", "method" => "GET")); ?>
-			<div class="form-group ml-3">
-
-				<!-- Champ ID de l'operation -->
-				<div class="form-check form-check-inline">
-					<?= Form::label("Id de l'opération", 'filter_id'); ?>
-					<?= Form::select("filter_id", "", $all_site, $selectAttr); ?>
-				</div>
-
-				<!-- Champ recherche par utilisateur -->
-				<div class="form-check form-check-inline">
-					<?= Form::label('Créateur', 'filter_user'); ?>
-					<?= Form::select("filter_user", "", $all_user, $selectAttr); ?>
-				</div>
-
-				<!-- champ nom de l'opération -->
-				<div class="form-check form-check-inline">
-					<?= Form::label("Nom de l'opération", 'filter_op'); ?>
-					<?= Form::select("filter_op", "", $all_nom_op, $selectAttr); ?>
-				</div>
-
-				<!-- Champ année -->
-				<div class="form-check form-check-inline">
-					<?= Form::label('Année', 'filter_year'); ?>
-					<?= Form::select("filter_year", "", $all_annee, $selectAttr); ?>
-				</div>
-
-				<?= Form::submit(null, 'Rechercher', array('class' => 'btn btn-success btn-sm')); ?>
-			</div>
-		</div>
-		<?= Form::close(); ?>
-	</div>
-
-</div>
-<br />
-<!-- Contenu de la page -->
-<div class="container">
+	<br />
+	<!-- Contenu de la page -->
 	<div class="row">
 		<div class="table-responsive">
 			<div class="scrollbar_index">
