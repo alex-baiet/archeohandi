@@ -347,7 +347,7 @@ if (!empty($msg)) {
 		<?php endforeach; ?>
 
 		<br>
-		<div class="text-muted">*La prévalence est ici une estimation minimale de la prévalence réelle</div>
+		<div class="text-muted">*La prévalence est ici une estimation minimale de la prévalence réelle.</div>
 
 	</div>
 
