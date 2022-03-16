@@ -76,7 +76,7 @@ class Controller_Sujet extends Controller_Template {
 			$subject = new Sujethandicape($_POST);
 			if ($subject->saveOnDB()) {
 				Messagehandler::prepareAlert("Ajout du sujet réussi.", "success");
-				if (!$_POST["stayOnPage"]) Response::redirect("/operations/view/$id");
+				if (!$_POST["stayOnPage"]) Response::redirect("/operations/sujets/$id");
 
 				$copy = new Sujethandicape($_POST);
 				$copy->setIdSujetHandicape("");
