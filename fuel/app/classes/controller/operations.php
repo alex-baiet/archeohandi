@@ -91,6 +91,27 @@ class Controller_Operations extends Controller_Template {
 			Response::redirect("accueil");
 		}
 
+		// Ajout des données à la view
+		$data["operation"] = $operation;
+		$this->template->title = 'Consultation de l\'opération '.$operation->getNomOp();
+		$this->template->content = View::forge(
+			'operations/template',
+			array("content" => View::forge("operations/zview", $data))
+		);
+	}
+
+	//L'action view sert pour la page view de opération qui affiche les détails d'une opération
+	public function action_sujets($id) {
+		Compte::checkPermissionRedirect("Vous devez être connecté pour pouvoir consulter une opération.", Compte::PERM_WRITE);
+
+		$data = array();
+
+		$operation = Operation::fetchSingle($id);
+		if ($operation === null) {
+			Messagehandler::prepareAlert("L'opération n'existe pas (quelqu'un vient peut-être de le supprimer).", "danger");
+			Response::redirect("accueil");
+		}
+
 		// Suppression d'un sujet (si l'utilisateur le demande)
 		if (isset($_POST['delete_sujet'])) {
 			$idSubject = $_POST['delete_sujet'];
@@ -109,7 +130,10 @@ class Controller_Operations extends Controller_Template {
 		// Ajout des données à la view
 		$data["operation"] = $operation;
 		$this->template->title = 'Consultation de l\'opération '.$operation->getNomOp();
-		$this->template->content=View::forge('operations/view', $data);
+		$this->template->content = View::forge(
+			'operations/template',
+			array("content" => View::forge("operations/zsujets", $data))
+		);
 	}
 
 	//L'action edit sert pour la page edit de opération qui affiche les informations d'une opération pour les modifier
@@ -149,6 +173,9 @@ class Controller_Operations extends Controller_Template {
 
 		$data = array('operation'=> $operation, 'errors' => $errors);
 		$this->template->title = 'Modification de l\'opération '.$id;
-		$this->template->content=View::forge('operations/edit',$data);
+		$this->template->content = View::forge(
+			'operations/template',
+			array("content" => View::forge("operations/zedit", $data))
+		);
 	}
 }
