@@ -253,7 +253,7 @@ if (!empty($msg)) {
 		<h3>Atteinte invalidante</h3>
 		<p class="text-muted"><em>D : Partie droite, G : Partie gauche</em></p>
 
-		<table class="table table-bordered">
+		<table class="table table-bordered table-no-padding">
 			<!-- Tous les titres -->
 			<?php
 			$localisations = Localisation::fetchAll();

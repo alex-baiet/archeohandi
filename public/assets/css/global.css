@@ -18,3 +18,7 @@ td {
 	color: #c70;
 	font-size: 24px;
 }
+
+.table-no-padding td, .table-no-padding tr {
+	padding: 0;
+}
