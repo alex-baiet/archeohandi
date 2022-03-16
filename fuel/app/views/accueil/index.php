@@ -12,8 +12,8 @@ use Fuel\Core\Asset;
 			<i class="bi bi-server"></i>
 		</h1>
 		<p class="lead">
-			Pour accéder à la base, cliquer sur le bouton ci-dessous<br>
-			Avant la saisie, <b>lire absolument</b> le mode d'emploi disponible dans la barre de navigation
+			Pour accéder à la base, cliquer sur le bouton ci-dessous.<br>
+			Avant la saisie, <b>lire absolument</b> le mode d'emploi.
 		</p>
 
 		<a href="/public/operations" class="btn btn-primary">Opérations</a>
