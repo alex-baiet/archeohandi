@@ -3,6 +3,7 @@
 namespace Model\Db;
 
 use Closure;
+use Exception;
 use Fuel\Core\DB;
 use Fuel\Core\Model;
 use Model\Helper;
@@ -52,6 +53,8 @@ class Sujethandicape extends Model {
 	private $itemsHelp;
 	/** @var string[]|unset */
 	private $urlsImg;
+	/** @var Prevalence[] */
+	private $prevalences;
 
 	private bool $empty = false;
 	private Validation $validation;
@@ -169,6 +172,16 @@ class Sujethandicape extends Model {
 		if (isset($data["urls_img"])) {
 			$this->setUrlsImg($data["urls_img"]);
 		}
+
+		if (isset($data["prevalences"])) {
+			$this->prevalences = array();
+			foreach ($data["prevalences"] as $idDiagnosis => $value) {
+				$value = intval($value);
+				if ($value > 0) {
+					$this->prevalences[$idDiagnosis] = Prevalence::create($this->getId(), $idDiagnosis, $value);
+				}
+			}
+		}
 	}
 
 	/**
@@ -215,6 +228,7 @@ class Sujethandicape extends Model {
 		DB::delete("localisation_sujet")->where("id_sujet", "=", $id)->execute();
 		DB::delete("atteinte_pathologie")->where("id_sujet", "=", $id)->execute();
 		DB::delete("sujet_image")->where("id_sujet", "=", $id)->execute();
+		DB::delete("prevalence")->where("id_sujet", "=", $id)->execute();
 
 		$result = DB::delete("sujet_handicape")->where("id", "=", $id)->execute();
 		if ($result < 1) return "Le sujet n'a pas pû être supprimé";
@@ -383,6 +397,35 @@ class Sujethandicape extends Model {
 		return $this->urlsImg;
 	}
 
+	/** @return Prevalence[] */
+	public function getPrevalences(): array {
+		if (!isset($this->prevalences)) {
+			$this->prevalences = array();
+			if ($this->id !== null) {
+				$results = Helper::querySelect("SELECT * 
+					FROM prevalence 
+					WHERE prevalence.id_sujet={$this->id};");
+				$this->prevalences = array();
+				
+				foreach ($results as $res) {
+					$prevalence = new Prevalence($res);
+					$this->prevalences[$prevalence->getIdDiagnostic()] = $prevalence;
+				}
+			}
+			else $this->prevalences = array();
+		}
+		return $this->prevalences;
+	}
+
+	public function getPrevalence(int $idDiagnostic): Prevalence {
+		$prevalences = $this->getPrevalences();
+		if (isset($prevalences[$idDiagnostic])) {
+			return $prevalences[$idDiagnostic];
+		} else {
+			return Prevalence::create($this->getId(), $idDiagnostic, 0);
+		}
+	}
+
 	public function hasDiagnosis(int $idDiagnosis) {
 		return isset($this->getAllDiagnosis()[$idDiagnosis]);
 	}
@@ -446,6 +489,12 @@ class Sujethandicape extends Model {
 	private function setUrlsImg(array $urls) {
 		$this->urlsImg = array_unique(array_filter($urls));
 	}
+
+	/** Met à jour la prévalence concerné. */
+	public function setPrevalence(Prevalence $prevalence): void {
+		if (isset($this->prevalences)) $this->getPrevalences();
+		$this->prevalences[$prevalence->getIdDiagnostic()] = $prevalence;
+	} 
 
 	/** Réinitialise l'id pour permettre de dupliquer les données dans la BDD. */
 	public function resetId() {
@@ -517,6 +566,7 @@ class Sujethandicape extends Model {
 				->set($arr)
 				->where("id", "=", $this->id)
 				->execute();
+
 		}
 
 		// Maj des accessoires/mobiliers
@@ -581,6 +631,20 @@ class Sujethandicape extends Model {
 				"id_localisation" => $value["spot"]
 			); }
 		);
+
+		// Maj des prevalences
+		DB::delete("prevalence")->where("id_sujet", "=", $this->getId());
+		$prevalences = null;
+		try { $prevalences = $this->getPrevalences(); }
+		catch (Exception $e) { }
+		if ($prevalences !== null) {
+			foreach ($prevalences as $p) {
+				if ($p->getValeur() > 0) {
+					$p->setIdSujet($this->getId());
+					$p->saveOnDb();
+				}
+			}
+		}
 
 		// Tout s'est bien passé.
 		return true;

@@ -275,7 +275,7 @@ if (!empty($msg)) {
 						</td>
 					<?php $i++;
 					endforeach; ?>
-					<!-- <th>Prévalence</th> -->
+					<th>Prévalence*</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -326,9 +326,9 @@ if (!empty($msg)) {
 						<?php endforeach; ?>
 						
 						<?php /* Affichage prévalence */ ?>
-						<!-- <td style="text-align: center; padding: 0px;">
-							<input type="text" class="form-control" style="padding: 3px 12px 3px 12px;">
-						</td> -->
+						<td style="text-align: center; padding: 0px;">
+							<input type="text" name="prevalences[<?= $diagnostic->getId() ?>]" value="<?= $subject->getPrevalence($diagnostic->getId())->getValeur() ?>" class="form-control" style="padding: 3px 12px 3px 12px;">
+						</td>
 
 						<script>
 							updateCheckboxOnSwitch(<?= $diagnostic->getId(); ?>);
