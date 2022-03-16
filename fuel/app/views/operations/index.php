@@ -77,21 +77,13 @@ $countOp = $countOp;
 									<td class="col-auto">
 										<a title="Consulter #<?= $op->getId(); ?>" href="/public/operations/view/<?= $op->getId() ?>">
 											Consulter
-											<?= ""//Asset::img("reply.svg", array("class"=>"icon see", "width" => "30px", "alt" => "Consulter")) ?>
 										</a>
 
 										<?php if (Compte::checkPermission(Compte::PERM_ADMIN, $op->getId())) : ?>
-											<br>
-											<a class="" title="Editer #<?= $op->getId(); ?>" href="/public/operations/edit/<?= $op->getId() ?>">
-												Editer
-												<?= ""//Asset::img("pen.svg", array("class"=>"icon edit", "width" => "24px", "alt" => "Éditer")) ?>
-											</a>
-
 											<form action="" method="post" id="form_suppr_<?= $op->getId() ?>">
 												<a href="" data-bs-toggle="modal" data-bs-target="#validationPopup"
 													onclick="deleteOperation(<?= $op->getId() ?>)">
 													Supprimer
-													<?= ""//Asset::img("trash.svg", array("class"=>"icon del", "width" => "25px", "alt" => "Supprimer")) ?>
 												</a>
 											</form>
 										<?php endif; ?>
