@@ -24,8 +24,6 @@ Asset::js("form.js");
 
 <?php if ($showError) $operation->echoErrors(); ?>
 
-<h3 class="text-center">Opération</h3>
-
 <!-- Affichage des champs -->
 <?php $nameCom = "commune" ?>
 
