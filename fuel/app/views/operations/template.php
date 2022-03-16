@@ -25,14 +25,14 @@ $idOperation = Uri::segment(3);
 	<!-- Navigation dans l'opération -->
 	<ul class="nav nav-tabs justify-content-center mt-4">
 		<li class="nav-item">
-			<a class="nav-link" id="tabView" href="/public/operations/view/<?= $idOperation ?>">Informations</a>
+			<a class="nav-link" id="view" href="/public/operations/view/<?= $idOperation ?>">Informations</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link" id="tabSubjects" href="/public/operations/sujets/<?= $idOperation ?>">Sujets</a>
+			<a class="nav-link" id="sujets" href="/public/operations/sujets/<?= $idOperation ?>">Sujets</a>
 		</li>
 		<?php if (Compte::checkPermission(Compte::PERM_WRITE, $idOperation)) : ?>
 			<li class="nav-item">
-				<a class="nav-link" id="tabEdit" href="/public/operations/edit/<?= $idOperation ?>">Editer</a>
+				<a class="nav-link" id="edit" href="/public/operations/edit/<?= $idOperation ?>">Editer</a>
 			</li>
 		<?php endif; ?>
 	</ul>
