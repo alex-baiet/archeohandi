@@ -1,7 +1,10 @@
 <?php
 
 use Fuel\Core\Asset;
+
 ?>
+
+<!-- Accueil principal -->
 <main class="jumbotron m-3">
 	<div class="bg-light p-5 rounded mt-3 text-center">
 		<h1>
@@ -12,9 +15,17 @@ use Fuel\Core\Asset;
 			Pour accéder à la base, cliquer sur le bouton ci-dessous<br>
 			Avant la saisie, <b>lire absolument</b> le mode d'emploi disponible dans la barre de navigation
 		</p>
-		<a class="btn btn-lg btn-primary" href="./operations" role="button">&raquo; Cliquer</a>
+
+		<a href="/public/operations" class="btn btn-primary">Opérations</a>
+		<a href="/public/recherche" class="btn btn-primary">Recherche</a>
+		<a href="/public/assets/other/mode_emploi.pdf" target="_blank" class="btn btn-primary">Mode d'emploi</a>
+		<div class="btn-group" role="group" aria-label="Basic example">
+		</div>
+
 	</div>
 </main>
+
+<!-- Informations complémentaires -->
 <div class="container">
 	<div class="row center">
 		<div class="col-6" style="text-align: justify;">

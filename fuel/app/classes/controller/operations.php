@@ -21,7 +21,8 @@ class Controller_Operations extends Controller_Template {
 
 		// Suppression d'une opération
 		if (isset($_POST["delete_op"])) {
-			$idOp = $_POST["delete_op"];
+			//Helper::varDump($_POST["delete_op"]);
+			$idOp = intval($_POST["delete_op"]);
 			if (!Compte::checkPermission(Compte::PERM_ADMIN, $idOp)) {
 				Messagehandler::prepareAlert("Seul le créateur de l'opération à le droit de supprimer l'opération", "danger");
 			} else {

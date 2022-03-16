@@ -7,6 +7,13 @@ use Model\Db\Compte;
 use Model\Messagehandler;
 use Model\Redirect;
 
+/** @var string */
+$content = $content;
+/** @var string */
+$title = $title;
+/** @var bool */
+$navActive = isset($navActive) ? $navActive : true;
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -73,19 +80,21 @@ use Model\Redirect;
 			<div class="collapse navbar-collapse" id="navbarTogglerDemo03">
 				<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 
-					<li class="nav-item active">
-						<a class="nav-link" href="/public/operations">Opérations</a>
-					</li>
+					<?php if ($navActive) : ?>
+						<li class="nav-item active">
+							<a class="nav-link" href="/public/operations">Opérations</a>
+						</li>
 
-					<?php /*if (Compte::checkPermission(Compte::PERM_ADMIN)) :*/ ?>
-					<li class="nav-item active">
-						<a class="nav-link" href="/public/recherche">Rechercher</a>
-					</li>
-					<?php /*endif*/ ?>
+						<?php /*if (Compte::checkPermission(Compte::PERM_ADMIN)) :*/ ?>
+						<li class="nav-item active">
+							<a class="nav-link" href="/public/recherche">Rechercher</a>
+						</li>
+						<?php /*endif*/ ?>
 
-					<li class="nav-item active">
-						<a class="nav-link" href="/public/assets/other/mode_emploi.pdf" target="_blank">Mode d'emploi</a>
-					</li>
+						<li class="nav-item active">
+							<a class="nav-link" href="/public/assets/other/mode_emploi.pdf" target="_blank">Mode d'emploi</a>
+						</li>
+					<?php endif; ?>
 
 					<li class="nav-item dropdown">
 						<?php
