@@ -81,26 +81,14 @@ $sujets = $operation->getSubjects();
 								<td><?= $typeSepulture->getNom() ?></td>
 								<td class="col-auto">
 
-									<a title="Consulter #<?= $sujet->getId(); ?>" href="/public/sujet/view/<?= $sujet->getId(); ?>">
-										Consulter
-										<?= "" //Asset::img("reply.svg", array("class"=>"icon see", "width" => "30px", "alt" => "Consulter")) 
-										?>
-									</a>
+									<a title="Consulter #<?= $sujet->getId(); ?>" href="/public/sujet/view/<?= $sujet->getId(); ?>">Consulter</a>
 
 									<?php if (Compte::checkPermission(Compte::PERM_WRITE, $operation->getId())) : ?>
 										<br>
-										<a title="Editer #<?= $sujet->getId(); ?>" href="/public/sujet/edit/<?= $sujet->getId(); ?>">
-											Editer
-											<?= "" //Asset::img("pen.svg", array("class"=>"icon edit", "width" => "24px", "alt" => "Éditer")) 
-											?>
-										</a>
+										<a title="Editer #<?= $sujet->getId(); ?>" href="/public/sujet/edit/<?= $sujet->getId(); ?>">Modifier</a>
 
 										<?= Form::open(array("method" => "POST")); ?>
-										<a href="" data-bs-toggle="modal" data-bs-target="#validationPopup" onclick="deleteSubject(<?= $sujet->getId(); ?>)">
-											Supprimer
-											<?= "" //Asset::img("trash.svg", array("class"=>"icon del", "width" => "25px", "alt" => "Supprimer")) 
-											?>
-										</a>
+										<a href="" data-bs-toggle="modal" data-bs-target="#validationPopup" onclick="deleteSubject(<?= $sujet->getId(); ?>)">Supprimer</a>
 										<?= Form::close(); ?>
 									<?php endif; ?>
 

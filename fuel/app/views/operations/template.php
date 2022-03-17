@@ -32,7 +32,7 @@ $idOperation = Uri::segment(3);
 		</li>
 		<?php if (Compte::checkPermission(Compte::PERM_WRITE, $idOperation)) : ?>
 			<li class="nav-item">
-				<a class="nav-link" id="edit" href="/public/operations/edit/<?= $idOperation ?>">Editer</a>
+				<a class="nav-link" id="edit" href="/public/operations/edit/<?= $idOperation ?>">Modifier</a>
 			</li>
 		<?php endif; ?>
 	</ul>
