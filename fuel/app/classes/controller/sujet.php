@@ -25,7 +25,13 @@ class Controller_Sujet extends Controller_Template {
 		$data = array("subject" => $subject);
 		if (Controller_Sujet::DEBUG === true) Helper::varDump($subject);
 		$this->template->title = 'Consultation du sujet';
-		$this->template->content = View::forge('sujet/view', $data);
+		$this->template->content = View::forge(
+			'sujet/template',
+			array(
+				"content" => View::forge("sujet/zview", $data),
+				"subject" => $subject
+			)
+		);
 	}
 
 	public function action_edit($id) {
@@ -58,7 +64,13 @@ class Controller_Sujet extends Controller_Template {
 		$data = array("subject" => $subject);
 
 		$this->template->title = 'Modification du sujet';
-		$this->template->content = View::forge('sujet/edit', $data);
+		$this->template->content = View::forge(
+			'sujet/template',
+			array(
+				"content" => View::forge("sujet/zedit", $data),
+				"subject" => $subject
+			)
+		);
 	}
 
 	public function action_add($id) {

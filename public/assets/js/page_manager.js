@@ -37,4 +37,8 @@ class PageManager {
 		but.classList.add("active");
 	}
 
+	/** Rend "actif" l'onglet de navigation correspondant. */
+	static selectNav(idTab) {
+		document.getElementById(idTab).classList.add("active");
+	}
 }
