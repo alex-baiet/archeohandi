@@ -19,6 +19,10 @@ td {
 	font-size: 24px;
 }
 
-.table-no-padding td, .table-no-padding tr {
+.table-no-padding td {
 	padding: 0;
+}
+
+.table-no-padding th {
+	padding: 4px;
 }

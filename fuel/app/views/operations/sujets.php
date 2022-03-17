@@ -26,19 +26,24 @@ $sujets = $operation->getSubjects();
 	}
 </script>
 
+<h2>
+	<?php if (!empty($sujets)) : ?>
+		Sujets handicapés (<?= count($sujets); ?>)
+	<?php else : ?>
+		Aucun sujet handicapé
+	<?php endif; ?>
+
+	<?php if (Compte::checkPermission(Compte::PERM_WRITE, $operation->getId())) : ?>
+		<a class="btn btn-primary btn-sm" href="/public/sujet/add/<?= $operation->getId(); ?>">
+			Ajouter des sujets <i class="bi bi-plus-circle-fill"></i>
+		</a>
+	<?php endif; ?>
+</h2>
+
 <!-- Tableau des sujets -->
-<?php if (!empty($sujets)) : // Vérifie si l'opération sélectionnée possède des sujets et si oui les affiches et si non affiche aucun sujet 
-?>
+<?php if (!empty($sujets)) : ?>
 	<div class="row">
-		<h2>
-			Sujets handicapés (<?= count($sujets); ?>)
-			<?php if (Compte::checkPermission(Compte::PERM_WRITE, $operation->getId())) : ?>
-				<a class="btn btn-primary btn-sm" href="/public/sujet/add/<?= $operation->getId(); ?>">
-					Ajouter des sujets <i class="bi bi-plus-circle-fill"></i>
-				</a>
-			<?php endif; ?>
-		</h2>
-		
+
 		<div class="table-responsive">
 			<div class="scrollbar_view" style="height: auto; max-height: 600px;">
 				<table class="table table-striped table-hover table-bordered sticky" data-toggle="table" data-search="true">
@@ -108,13 +113,6 @@ $sujets = $operation->getSubjects();
 		"infoText" => "La suppression est irréversible.",
 		"btnName" => "delete_sujet"
 	)); ?>
-
-<?php else : ?>
-
-	<div class="container">
-		<h2>Aucun sujet handicapé</h2>
-	</div>
-
 <?php endif; ?>
 
 <?= Asset::css('scrollbar.css'); ?>

@@ -541,16 +541,25 @@ class Operation extends Model {
 	public function echoErrors() { $this->validation->echoErrors(); }
 	#endregion
 
-	/**
-	 * @deprecated La valeur calculé ne correspond pas à la prévalence
-	 */
-	public function prevalence(int $idDiagnosis): int {
+	/** Renvoie le nombre de sujet ayant le diangostic donné. */
+	public function countConcernedSubject(int $idDiagnosis): int {
 		$subjects = $this->getSubjects();
 		$counter = 0;
 		foreach ($subjects as $sub) {
 			if ($sub->hasDiagnosis($idDiagnosis)) $counter++;
 		}
 		return $counter;
+	}
+
+	/** Calcul le ration de personne concerné par le diagnostic */
+	public function prevalence(int $idDiagnosis): float {
+		$count = $this->countConcernedSubject($idDiagnosis);
+		if ($count === 0) return 0;
+		$total = $this->getObservable($idDiagnosis);
+		if ($total === 0) return 1;
+		$result = $count / $total;
+		if ($result > 1) return 1;
+		return $result;
 	}
 
 	/** Renvoie l'array des données représentant l'objet. */
