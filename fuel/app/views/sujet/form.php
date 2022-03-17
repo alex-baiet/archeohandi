@@ -280,7 +280,7 @@ if (!empty($msg)) {
 					endforeach; ?>
 					<th>Nb cas concerné</th>
 					<th>Nb cas observable</th>
-					<th>Prévalence</th>
+					<th>Prévalence <span style="font-weight: normal;">(sur 1000 personnes)</span></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -335,7 +335,7 @@ if (!empty($msg)) {
 						<td style="text-align:center;">
 							<input type="text" name="observables[<?= $diagnostic->getId() ?>]" value="<?= $operation->getObservable($diagnostic->getId()) ?>" class="form-control" style="padding: 3px 12px 3px 12px;">
 						</td>
-						<td style="text-align:center;"><?= $operation->prevalence($diagnostic->getId()) * 100.0 ?>%</td>
+						<td style="text-align:center;"><?= $operation->prevalence($diagnostic->getId()) * 1000.0 ?></td>
 
 						<script>
 							updateCheckboxOnSwitch(<?= $diagnostic->getId(); ?>);

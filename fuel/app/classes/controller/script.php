@@ -143,4 +143,18 @@ class Controller_Script extends Controller_Template {
 		$this->template->title = 'Import CSV | Résultats';
 		$this->template->content = '';
 	}
+
+	public function action_add_insee() {
+		if (!$this->checkPermission()) return;
+		
+		if (isset($_FILES["file"]) && $_FILES["file"]["error"] === 0) {
+			// Récupération du contenu fichier passé en POST
+			$file = file_get_contents($_FILES["file"]["tmp_name"]);
+
+
+		}
+
+		$this->template->title = 'Import CSV | Résultats';
+		$this->template->content = View::forge('script/import_csv_result', $data, false);
+	}
 }
