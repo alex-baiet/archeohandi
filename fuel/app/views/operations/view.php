@@ -1,7 +1,6 @@
 <?php
 
 use Fuel\Core\Asset;
-use Model\Db\Compte;
 use Model\Db\Operation;
 use Model\Db\Organisme;
 use Model\Helper;
@@ -21,7 +20,7 @@ $sujets = $operation->getSubjects();
 </p>
 
 <!-- Contenu de la page. Affichage des informations de l'opération -->
-<div class="container" style="background-color: #F5F5F5;">
+<section class="form-sheet">
 	<h4>Informations</h4>
 	<div class="row">
 		<div class="col">
@@ -69,9 +68,9 @@ $sujets = $operation->getSubjects();
 			<div class="p-2">OA : <?= $operation->getOA(); ?></div>
 		</div>
 	</div>
-</div>
+</section>
 <br />
-<div class="container" style="background-color: #F5F5F5;">
+<section class="form-sheet">
 	<h4>Personnes</h4>
 	<div class="row">
 		<div class="col">
@@ -96,15 +95,15 @@ $sujets = $operation->getSubjects();
 			</div>
 		</div>
 	</div>
-</div>
+</section>
 <br />
 
-<div class="container" style="background-color: #F5F5F5;">
+<section class="form-sheet">
 	<h4>Autre</h4>
 	<p>Bibliographie : <?= $operation->getBibliographie(); ?></p>
-</div>
+</section>
 
-<div class="container" style="background-color: #F5F5F5;">
+<section class="form-sheet">
 	<h4>Iconographie</h4>
 	<?php
 	$urls = $operation->getUrlsImg();
@@ -121,7 +120,7 @@ $sujets = $operation->getSubjects();
 			</a>
 		<?php endfor; ?>
 	<?php endif; ?>
-</div>
+</section>
 <br />
 
 <?= Asset::css('scrollbar.css'); ?>

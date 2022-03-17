@@ -28,7 +28,7 @@ class Controller_Sujet extends Controller_Template {
 		$this->template->content = View::forge(
 			'sujet/template',
 			array(
-				"content" => View::forge("sujet/zview", $data),
+				"content" => View::forge("sujet/view", $data),
 				"subject" => $subject
 			)
 		);
@@ -37,7 +37,7 @@ class Controller_Sujet extends Controller_Template {
 	public function action_edit($id) {
 		$subject = Sujethandicape::fetchSingle($id);
 		Compte::checkPermissionRedirect(
-			"Vous n'êtes pas autorisés à éditer un sujet de l'opération.",
+			"Vous n'êtes pas autorisés à modifier un sujet de l'opération.",
 			Compte::PERM_WRITE,
 			$subject->getGroup()->getOperation()->getId()
 		);
@@ -67,7 +67,7 @@ class Controller_Sujet extends Controller_Template {
 		$this->template->content = View::forge(
 			'sujet/template',
 			array(
-				"content" => View::forge("sujet/zedit", $data),
+				"content" => View::forge("sujet/edit", $data),
 				"subject" => $subject
 			)
 		);

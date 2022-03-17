@@ -35,7 +35,6 @@ $countOp = $countOp;
 	<p class="text-muted">
 		Ici vous pouvez retrouver toutes les informations sur les opérations.<br>
 		<b><?= $countOp ?></b> opérations existantes pour un total de <b><?= $countSubject ?></b> sujets enregistrés.<br>
-		Pour éditer les sujets d'une opération, veuillez d'abord <b>consulter</b> l'opération en question puis vous pourrez éditer ses sujets.
 	</p>
 
 	<br />

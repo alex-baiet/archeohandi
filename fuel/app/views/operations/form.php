@@ -281,7 +281,7 @@ View::forge("fonction/multiple_input", array(
 	"autocompletion" => "compte",
 	"inputAttributes" => array(
 		"maxlength" => "256",
-		"title" => "Indiquez le nom d'un compte autorisé à éditer les sujets de l'opération"
+		"title" => "Indiquez le nom d'un compte autorisé à modifier les sujets de l'opération"
 	)
 ));
 ?>

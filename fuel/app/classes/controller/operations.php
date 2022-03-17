@@ -96,7 +96,7 @@ class Controller_Operations extends Controller_Template {
 		$this->template->title = 'Consultation de l\'opération '.$operation->getNomOp();
 		$this->template->content = View::forge(
 			'operations/template',
-			array("content" => View::forge("operations/zview", $data))
+			array("content" => View::forge("operations/view", $data))
 		);
 	}
 
@@ -132,13 +132,13 @@ class Controller_Operations extends Controller_Template {
 		$this->template->title = 'Consultation de l\'opération '.$operation->getNomOp();
 		$this->template->content = View::forge(
 			'operations/template',
-			array("content" => View::forge("operations/zsujets", $data))
+			array("content" => View::forge("operations/sujets", $data))
 		);
 	}
 
 	//L'action edit sert pour la page edit de opération qui affiche les informations d'une opération pour les modifier
 	public function action_edit($id){
-		Compte::checkPermissionRedirect("Seul le créateur de l'opération peut éditer les informations de l'opération.", Compte::PERM_WRITE, $id);
+		Compte::checkPermissionRedirect("Seul le créateur de l'opération peut modifier les informations de l'opération.", Compte::PERM_WRITE, $id);
 
 		// Récupération des informations de l'opération
 		$operation = Operation::fetchSingle($id);		
@@ -175,7 +175,7 @@ class Controller_Operations extends Controller_Template {
 		$this->template->title = 'Modification de l\'opération '.$id;
 		$this->template->content = View::forge(
 			'operations/template',
-			array("content" => View::forge("operations/zedit", $data))
+			array("content" => View::forge("operations/edit", $data))
 		);
 	}
 }
