@@ -16,7 +16,7 @@ $subject = $subject;
 	Pour plus d'informations sur un champ, laissez la souris au dessus du champ pour afficher un texte d'aide.
 </p>
 
-<form action="" method="post" style="background-color: #F5F5F5; padding: 10px;" onsubmit="prepareFormSend()">
+<form action="" method="post" class="form-sheet" onsubmit="prepareFormSend()">
 	<?= View::forge("sujet/form", array("subject" => $subject)); ?>
 
 	<div class="row" style="margin-top: 10px;">

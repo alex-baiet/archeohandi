@@ -30,7 +30,7 @@ Asset::js("form.js");
 	$data = array("idOperation" => $idOperation, "btnStay" => true);
 	if (isset($subject)) $data["subject"] = $subject;
 	?>
-	<form action="" method="post" style="background-color: #F5F5F5; padding: 10px;" onsubmit="prepareFormSend()">
+	<form action="" method="post" class="form-sheet" onsubmit="prepareFormSend()">
 		<?= View::forge("sujet/form", $data); ?>
 
 		<div class="row" style="margin-top: 10px;">
