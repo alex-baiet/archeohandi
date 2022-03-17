@@ -4,6 +4,7 @@ namespace Model\Db;
 
 use Fuel\Core\DB;
 use Fuel\Core\Model;
+use InvalidArgumentException;
 use Model\Db\Compte;
 use Model\Helper;
 use Model\Messagehandler;
@@ -53,6 +54,8 @@ class Operation extends Model {
 	private array $accounts;
 	/** @var string[]|unset */
 	private $urlsImg;
+	/** @var int[]|null Nombre de cas observables pour chaque diagnostics. */
+	private $observables = null;
 
 	private Validation $validation;
 	#endregion
@@ -179,6 +182,7 @@ class Operation extends Model {
 
 		DB::delete("droit_compte")->where("id_operation", "=", $id)->execute();
 		DB::delete("operation_image")->where("id_operation", "=", $id)->execute();
+		DB::delete("observable")->where("id_operation", "=", $id)->execute();
 
 		// Tous s'est bien passé
 		return null;
@@ -322,7 +326,7 @@ class Operation extends Model {
 		return $this->accounts;
 	}
 
-	public function getUrlsImg() : array {
+	public function getUrlsImg(): array {
 		if (!isset($this->urlsImg)) {
 			if ($this->getId() === null) return array();
 			$this->urlsImg = Helper::querySelectList("SELECT url_img FROM operation_image WHERE id_operation={$this->getId()}");
@@ -330,6 +334,26 @@ class Operation extends Model {
 		return $this->urlsImg;
 	}
 
+	/** Liste des nombre de cas observables pour chaque diagnostic. */
+	public function getObservables(): array {
+		if ($this->observables === null) {
+			$this->observables = array();
+			if ($this->getId() !== null) {
+				$results = DB::select()->from("observable")->where("id_operation", "=", $this->getId())->execute()->as_array();
+				foreach ($results as $res) {
+					$this->observables[intval($res["id_diagnostic"])] = $res["nb_cas"];
+				}
+			}
+		}
+		return $this->observables;
+	}
+
+	/** Nombre de cas observables pour le diagnostic donné. */
+	public function getObservable(int $idDiagnostic): int {
+		$observables = $this->getObservables();
+		if (!isset($observables[$idDiagnostic])) return 0;
+		return $observables[$idDiagnostic];
+	}
 	#endregion
 
 	#region Setters
@@ -369,6 +393,22 @@ class Operation extends Model {
 		$this->urlsImg = array_unique(array_filter($urls));
 	}
 
+	/**
+	 * Change le nombre de cas observable pour chaque diagnostic.
+	 * @param int[] $data Au format "id diagnostic" => "nombre".
+	 */
+	public function setObservables(array $data) {
+		foreach ($data as $idDia => $count) {
+			$this->setObservable($idDia, $count);
+		}
+	}
+
+	/** Change le nombre de cas observable pour un diagnostic. */
+	public function setObservable(int $idDiagnostic, int $number) {
+		if ($number < 0) throw new InvalidArgumentException("\"number\" doit être positif (valeur actuel : $number).");
+		if ($this->observables === null) $this->getObservables();
+		$this->observables[$idDiagnostic] = $number;
+	}
 	#endregion
 
 	/**
@@ -471,6 +511,18 @@ class Operation extends Model {
 				"url_img" => $url
 			); }
 		);
+
+		// Maj nombres cas observable
+		DB::delete("observable")->where("id_operation", "=", $this->getId())->execute();
+		foreach ($this->getObservables() as $idDiagnostic => $count) {
+			if ($count > 0) {
+				DB::insert("observable")->set(array(
+					"id_operation" => $this->getId(),
+					"id_diagnostic" => $idDiagnostic,
+					"nb_cas" => $count
+				))->execute();
+			}
+		}
 
 		// Tout s'est bien passé.
 		return true;

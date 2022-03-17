@@ -273,6 +273,11 @@ class Sujethandicape extends Model {
 	public function getComplet() { return $this->complet; }
 	public function getDonneesGenetiques() { return $this->donneesGenetiques; }
 
+	public function getOperation() {
+		if ($this->getGroup() === null) return null;
+		return $this->getGroup()->getOperation();
+	}
+
 	public function getGroup() {
 		if (!isset($this->group)){
 			if ($this->idGroupeSujet === null) $this->group = null;

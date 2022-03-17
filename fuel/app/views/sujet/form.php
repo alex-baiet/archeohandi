@@ -8,6 +8,7 @@ use Model\Db\Chronology;
 use Model\Db\Diagnostic;
 use Model\Db\Localisation;
 use Model\Db\Mobilier;
+use Model\Db\Operation;
 use Model\Db\Pathology;
 use Model\Db\Sex;
 use Model\Db\Sujethandicape;
@@ -29,6 +30,8 @@ if ($subject->getGroup() !== null) $idOperation = $subject->getGroup()->getIdOpe
 
 /** @var bool Ajoute un bouton pour rester sur la page. */
 $btnStay = isset($btnStay) ? $btnStay : false;
+
+$operation = Operation::fetchSingle($idOperation);
 
 if (!empty($msg)) {
 	Helper::alertBootstrap($msg, $msgType);
@@ -275,7 +278,7 @@ if (!empty($msg)) {
 						</td>
 					<?php $i++;
 					endforeach; ?>
-					<th>Prévalence*</th>
+					<th>Nb cas observable</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -327,7 +330,7 @@ if (!empty($msg)) {
 						
 						<?php /* Affichage prévalence */ ?>
 						<td style="text-align: center; padding: 0px;">
-							<input type="text" name="prevalences[<?= $diagnostic->getId() ?>]" value="<?= $subject->getPrevalence($diagnostic->getId())->getValeur() ?>" class="form-control" style="padding: 3px 12px 3px 12px;">
+							<input type="text" name="observables[<?= $diagnostic->getId() ?>]" value="<?= $operation->getObservable($diagnostic->getId()) ?>" class="form-control" style="padding: 3px 12px 3px 12px;">
 						</td>
 
 						<script>
@@ -348,7 +351,6 @@ if (!empty($msg)) {
 
 		<br>
 		<div class="text-muted">*La prévalence est ici une estimation minimale de la prévalence réelle.</div>
-
 	</div>
 
 	<div class="col-md-6">

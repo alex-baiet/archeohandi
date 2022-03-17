@@ -36,10 +36,12 @@ class Controller_Sujet extends Controller_Template {
 
 	public function action_edit($id) {
 		$subject = Sujethandicape::fetchSingle($id);
+		$operation = $subject->getOperation();
+		
 		Compte::checkPermissionRedirect(
 			"Vous n'êtes pas autorisés à modifier un sujet de l'opération.",
 			Compte::PERM_WRITE,
-			$subject->getGroup()->getOperation()->getId()
+			$operation->getId()
 		);
 
 		if ($subject === null) {
@@ -48,6 +50,10 @@ class Controller_Sujet extends Controller_Template {
 		}
 
 		if (Input::method() === "POST") {
+			// Maj nombre cas observable
+			$operation->setObservables($_POST["observables"]);
+			$operation->saveOnDB();
+
 			// Maj du sujet
 			$subject = new Sujethandicape($_POST, true);
 			if ($subject->saveOnDB() && Controller_Sujet::DEBUG === false) {
@@ -77,8 +83,9 @@ class Controller_Sujet extends Controller_Template {
 		Compte::checkPermissionRedirect("Vous n'êtes pas autorisés à ajouter un sujet sur cette opération.", Compte::PERM_WRITE, $id);
 
 		$data = array('idOperation' => $id);
+		$operation = Operation::fetchSingle($id);
 
-		if (Operation::fetchSingle($id) === null) {
+		if ($operation === null) {
 			Messagehandler::prepareAlert("L'opération n'existe pas (quelqu'un vient peut-être de le supprimer).", "danger");
 			Response::redirect("accueil");
 		}
@@ -87,6 +94,10 @@ class Controller_Sujet extends Controller_Template {
 			// Recréation du sujet à partir des valeurs entrées
 			$subject = new Sujethandicape($_POST);
 			if ($subject->saveOnDB()) {
+				// Maj nombre cas observable
+				$operation->setObservables($_POST["observables"]);
+				$operation->saveOnDB();
+
 				Messagehandler::prepareAlert("Ajout du sujet réussi.", "success");
 				if (!$_POST["stayOnPage"]) Response::redirect("/operations/sujets/$id");
 
