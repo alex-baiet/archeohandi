@@ -146,15 +146,38 @@ class Controller_Script extends Controller_Template {
 
 	public function action_add_insee() {
 		if (!$this->checkPermission()) return;
-		
+
+		$iinsee = 0;
+		$iname = 13;
+
+		$data = array();
+
 		if (isset($_FILES["file"]) && $_FILES["file"]["error"] === 0) {
 			// Récupération du contenu fichier passé en POST
 			$file = file_get_contents($_FILES["file"]["tmp_name"]);
 
+			$results = array();
 
+			$lines = explode("\n", $file);
+
+			foreach ($lines as $line) {
+				$columns = explode(";", $line);
+				$insee = $columns[$iinsee];
+				$name = $columns[$iname];
+
+				$res = DB::update("commune")->set(array("insee" => $insee))->where("nom", "=", $name)->execute();
+				if ($res > 0) {
+					$results[$name] = "#0f08";
+				} else {
+					$results[$name] = "#f008";
+				}
+			}
+
+			$data["results"] = $results;
+			$data["file"] = $file;
 		}
 
 		$this->template->title = 'Import CSV | Résultats';
-		$this->template->content = View::forge('script/import_csv_result', $data, false);
+		$this->template->content = View::forge('script/add_insee', $data, false);
 	}
 }
