@@ -27,8 +27,9 @@ Asset::js("form.js");
 <!-- Affichage des champs -->
 <?php $nameCom = "commune" ?>
 
+<!-- Id operation -->
 <div class="row my-2">
-	<div class="col-md-6">
+	<div class="col-md-12">
 		<div class="form-floating">
 			<input name="id_operation" id="form_id_operation" type="number" class="form-control" placeholder="" maxlength="256" title="Indiquez l'identifiant de l'opération">
 			<label for="form_id_operation">Numéro</label>
@@ -65,6 +66,16 @@ Asset::js("form.js");
 					<script>
 						addAutocompleteCommune();
 					</script>
+				</div>
+			</div>
+		</div>
+
+		<!-- INSEE -->
+		<div class="row my-4">
+			<div class="col md-12">
+				<div class="form-floating">
+					<input name="insee" id="form_insee" type="text" class="form-control" placeholder="INSEE" maxlength="5" title="Indiquez le numéro INSEE de la commune">
+					<label for="form_insee">Numéro INSEE</label>
 				</div>
 			</div>
 		</div>
@@ -117,7 +128,7 @@ Asset::js("form.js");
 		<p style="text-align: center; margin-bottom: 6px;">
 			Sélectionner une position sur la carte pour récupérer les coordonnées.
 		</p>
-		<div id="map" style="height: 250px"></div>
+		<div id="map" style="height: 350px"></div>
 		<script>
 			FormOperation.prepareMap();
 		</script>

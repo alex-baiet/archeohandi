@@ -48,10 +48,16 @@ class Controller_Recherche extends Controller_Template {
 
 	/** Récupère toutes les opérations correspondant à l'opération de recherche donné. */
 	private function searchOperations(Operation $refOp): array {
-		$query = DB::select()->from("operations");
+		$query = DB::select(
+			"operations.id", "annee", "id_commune", "adresse", "operations.X", "operations.Y", "id_organisme", "id_type_op", "EA", "OA", "patriarche",
+			"numero_operation", "arrete_prescription", "responsable", "anthropologues", "paleopathologistes", "bibliographie", "date_ajout", "complet"
+		)->from("operations");
 
 		if ($refOp->getId() !== null) $query->where("id", "=", $refOp->getId());
 		if ($refOp->getIdCommune() !== null) $query->where("id_commune", "=", $refOp->getIdCommune());
+		if (!empty($_POST["insee"])) {
+			$query->join("commune")->on("commune.id", "=", "id_commune")->where("insee", "=", $_POST["insee"]);
+		}
 		if (!empty($refOp->getAdresse())) $query->where("adresse", "LIKE", "%{$refOp->getAdresse()}%");
 		if (!empty($_POST["annee_min"])) $query->where("annee", ">=", $_POST["annee_min"]);
 		if (!empty($_POST["annee_max"])) $query->where("annee", "<=", $_POST["annee_max"]);
