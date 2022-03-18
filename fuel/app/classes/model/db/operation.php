@@ -34,7 +34,6 @@ class Operation extends Model {
 	private string $bibliographie = "";
 	private ?string $dateAjout = null;
 	private bool $complet = false;
-	private ?int $insee = null;
 
 	/** @var Commune|null */
 	private $commune = null;
@@ -100,7 +99,6 @@ class Operation extends Model {
 		Archeo::mergeValue($this->bibliographie, $data, "bibliographie");
 		Archeo::mergeValue($this->dateAjout, $data, "date_ajout", "string", true);
 		Archeo::mergeValue($this->complet, $data, "complet", "bool");
-		Archeo::mergeValue($this->insee, $data, "insee", "int", true);
 
 		if (isset($data["anthropologues"])) {
 			if (is_array($data["anthropologues"])) {
@@ -617,8 +615,7 @@ class Operation extends Model {
 			"anthropologues" => $this->anthropologues,
 			"paleopathologistes" => $this->paleopathologistes,
 			"bibliographie" => $this->bibliographie,
-			"complet" => $this->complet,
-			"insee" => $this->insee,
+			"complet" => $this->complet
 		);
 	}
 

@@ -42,10 +42,10 @@ $sujets = $operation->getSubjects();
 	<div class="row">
 		<?php $commune = $operation->getCommune(); ?>
 		<div class="col">
-			<div class="p-2">Département : <?php if ($commune !== null) echo $commune->getDepartement(); ?></div>
+			<div class="p-2">Département : <?= $commune !== null ? $commune->getDepartement() : null ?></div>
 		</div>
 		<div class="col">
-			<div class="p-2">Commune : <?php if ($commune !== null) echo $commune->getNom(); ?></div>
+			<div class="p-2">Commune : <?= $commune !== null ? $commune->getNom() : null ?></div>
 		</div>
 		<div class="col">
 			<div class="p-2">Adresse : <?= $operation->getAdresse(); ?></div>
@@ -53,7 +53,7 @@ $sujets = $operation->getSubjects();
 	</div>
 	<div class="row">
 		<div class="col">
-			<div class="p-2">Numéro INSEE : <?= $operation->getInsee(); ?></div>
+			<div class="p-2">Numéro INSEE : <?= $commune !== null ? $commune->getInsee() : null ?></div>
 		</div>
 		<div class="col">
 			<div class="p-2">Type d'opération : <?= $operation->getTypeOperation()->getNom(); ?></div>

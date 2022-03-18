@@ -17,6 +17,7 @@ class Commune extends Model {
 	private $pays;
 	private $superficie;
 	private $population;
+	private string $insee = "";
 
 	public function __construct(array $values) {
 		$this->id = Helper::arrayGetString("id", $values);
@@ -30,6 +31,7 @@ class Commune extends Model {
 		$this->pays = Helper::arrayGetString("pays", $values);
 		$this->superficie = Helper::arrayGetString("superficie", $values);
 		$this->population = Helper::arrayGetString("population", $values);
+		Archeo::mergeValue($this->insee, $values, "insee");
 	}
 
 	/** Retourne la commune correspondant à l'id donné. */
@@ -68,6 +70,7 @@ class Commune extends Model {
 	public function getPays() { return $this->pays; }
 	public function getSuperficie() { return $this->superficie; }
 	public function getPopulation() { return $this->population; }
+	public function getInsee() { return $this->insee; }
 
 	public function fullName(): string { return "{$this->nom}, {$this->departement}"; }
 }
