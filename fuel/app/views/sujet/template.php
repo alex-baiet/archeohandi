@@ -18,7 +18,7 @@ $currentTab = Uri::segment(2);
 <div class="container">
 	<!-- Navigation dans l'opération -->
 	<a class="btn btn-secondary" href="/public/operations/sujets/<?= $subject->getGroup()->getIdOperation() ?>" role="button"
-		style="position: absolute">Retour</a>
+		style="position: absolute">Retour vers l'opération</a>
 	
 	<ul class="nav nav-tabs justify-content-center mt-4">
 		<li class="nav-item">
