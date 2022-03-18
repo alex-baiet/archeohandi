@@ -1,6 +1,7 @@
 <?php
 
 use Fuel\Core\Controller_Template;
+use Fuel\Core\DB;
 use Fuel\Core\Input;
 use Fuel\Core\Response;
 use Fuel\Core\View;
@@ -9,6 +10,7 @@ use Model\Db\Operation;
 use Model\Db\Sujethandicape;
 use Model\Helper;
 use Model\Messagehandler;
+use Model\Searchresult;
 
 class Controller_Operations extends Controller_Template {
 	private const DEBUG = false;
@@ -49,6 +51,35 @@ class Controller_Operations extends Controller_Template {
 		$data['countOp'] = $countOp;
 		$this->template->title = 'Opérations';
 		$this->template->content = View::forge('operations/index', $data, false);
+	}
+
+	public function action_personnel() {
+		Compte::checkPermissionRedirect("Vous devez avoir un compte pour voir les opérations.", Compte::PERM_WRITE);
+		$data = array();
+
+		$lines = array();
+
+		// Récupération des opérations
+		$results = DB::select()
+			->from("operations")
+			->join("droit_compte")
+			->on("id_operation", "=", "id")
+			->where("login_compte", "=", Compte::getInstance()->getLogin())
+			->execute()
+			->as_array();
+
+		foreach ($results as $res) {
+			$operation = new Operation($res);
+			$line = new Searchresult();
+			$line->operation = $operation;
+			$line->subjects = $operation->getSubjects();
+
+			$lines[] = $line;
+		}
+
+		$data["lines"] = $lines;
+		$this->template->title = 'Opérations';
+		$this->template->content = View::forge('operations/personnel', $data, false);
 	}
 
 	/** Page d'ajout d'une opération. */
@@ -179,4 +210,5 @@ class Controller_Operations extends Controller_Template {
 			array("content" => View::forge("operations/edit", $data))
 		);
 	}
+
 }
