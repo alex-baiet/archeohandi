@@ -202,7 +202,7 @@ Asset::js("form.js");
 <div class="row my-2">
 	<div class="col-md-6">
 		<div class="form-floating">
-			<input name="responsable" id="form_responsable" value="<?= $operation->getResponsable() ?>" type="text" class="form-control" placeholder="Responsable de l'opération" maxlength="256" autocomplete="off" title="Indiquez le responsable de l'opération, de préférence au format Prénom NOM">
+			<input name="responsable" id="form_responsable" value="<?= $operation->getResponsable() ?>" type="text" class="form-control" placeholder="Responsable de l'opération" maxlength="256" title="Indiquez le responsable de l'opération, de préférence au format Prénom NOM">
 			<label for="form_responsable">Responsable de l'opération</label>
 		</div>
 	</div>
