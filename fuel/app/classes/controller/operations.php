@@ -51,6 +51,7 @@ class Controller_Operations extends Controller_Template {
 		$this->template->content = View::forge('operations/index', $data, false);
 	}
 
+	/** Page d'ajout d'une opération. */
 	public function action_add() {
 		Compte::checkPermissionRedirect("Vous devez avoir un compte pour pouvoir créer une opération.", Compte::PERM_WRITE);
 
@@ -79,7 +80,7 @@ class Controller_Operations extends Controller_Template {
 		$this->template->content = View::forge('operations/add', $data);
 	}
 
-	//L'action view sert pour la page view de opération qui affiche les détails d'une opération
+	/** Page affichant les informations d'une opération. */
 	public function action_view($id) {
 		Compte::checkPermissionRedirect("Vous devez être connecté pour pouvoir consulter une opération.", Compte::PERM_WRITE);
 
@@ -100,7 +101,7 @@ class Controller_Operations extends Controller_Template {
 		);
 	}
 
-	//L'action view sert pour la page view de opération qui affiche les détails d'une opération
+	/** Page des sujets d'une opération. */
 	public function action_sujets($id) {
 		Compte::checkPermissionRedirect("Vous devez être connecté pour pouvoir consulter une opération.", Compte::PERM_WRITE);
 
@@ -136,7 +137,7 @@ class Controller_Operations extends Controller_Template {
 		);
 	}
 
-	//L'action edit sert pour la page edit de opération qui affiche les informations d'une opération pour les modifier
+	/** Page d'édition d'une opération. */
 	public function action_edit($id){
 		Compte::checkPermissionRedirect("Seul le créateur de l'opération peut modifier les informations de l'opération.", Compte::PERM_WRITE, $id);
 
