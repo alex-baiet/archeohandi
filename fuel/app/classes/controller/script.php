@@ -144,7 +144,7 @@ class Controller_Script extends Controller_Template {
 		$this->template->content = '';
 	}
 
-	public function action_add_insee() {
+	public function action_add_insee_1() {
 		if (!$this->checkPermission()) return;
 
 		$iinsee = 0;
@@ -181,5 +181,70 @@ class Controller_Script extends Controller_Template {
 
 		$this->template->title = 'Import CSV | Résultats';
 		$this->template->content = View::forge('script/add_insee', $data, false);
+	}
+
+	private const I_INSEE = 0;
+	private const I_NAME = 13;
+
+	public function action_add_insee_2() {
+		if (!$this->checkPermission()) return;
+
+		$data = array();
+
+		if (isset($_FILES["file"]) && $_FILES["file"]["error"] === 0) {
+			// Récupération du contenu fichier passé en POST
+			$file = file_get_contents($_FILES["file"]["tmp_name"]);
+			// Lignes non traités (on recupère tout pour éviter des aller-retour nombreux et coûteux)
+			$towns = DB::select()->from("commune")->where("insee", "=", "0")->or_where("insee", "=", "2")->execute()->as_array();
+
+			$lines = explode("\n", $file);
+			$columns = array();
+			foreach ($lines as $line) {
+				$columns[] = explode(";", $line);
+			}
+
+			$countReplaced = 0;
+			$i = -1;
+			// Début remplacement
+			foreach ($towns as $town) {
+				$i++;
+				$column = $this->findLine($town["nom"], $columns);
+				if ($column != null) {
+					$countReplaced++;
+					$insee = $column[Controller_Script::I_INSEE];
+
+					$res = DB::update("commune")->set(array("insee" => $insee))->where("nom", "=", $town["nom"])->execute();
+				}
+			}
+			echo "Nombre total de commune à changer : $i<br>";
+			echo "Nombre total de remplacement : $countReplaced<br>";
+		}
+
+		$this->template->title = 'Import CSV | Résultats';
+		$this->template->content = View::forge('script/add_insee', $data, false);
+	}
+
+	/** Retourne la colonne correspondant. */
+	public function findLine(string $townName, array &$columns): ?array {
+		$searchName = $townName;
+		$searchName = Helper::replaceAccent($searchName);
+		$searchName = str_replace("ŒŒ", "Oe", $searchName);
+		$searchName = str_replace("œœ", "oe", $searchName);
+		$search2 = str_replace("-", " ", $searchName);
+		foreach ($columns as $col) {
+			try {
+				$name = $col[Controller_Script::I_NAME];
+				if ($searchName === $name
+					|| "Les $searchName" === $name
+					|| "La $searchName" === $name
+					|| "Le $searchName" === $name
+					|| "{$searchName}s" === $name
+					|| $search2 === $name
+				) return $col;
+			}
+			catch (Exception $e) { }
+		}
+
+		return null;
 	}
 }
