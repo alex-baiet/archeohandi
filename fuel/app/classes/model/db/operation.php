@@ -296,6 +296,8 @@ class Operation extends Model {
 		return $this->subjects;
 	}
 
+	public function getSubjectsCount(): int { return count($this->getSubjects()); }
+
 	public function getAccountAdmin(): ?Compte {
 		if (!isset($this->accountAdmin)) {
 			$results = DB::select("login_compte")

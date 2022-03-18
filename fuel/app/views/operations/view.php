@@ -16,7 +16,13 @@ $sujets = $operation->getSubjects();
 
 <h1 class="m-2">Opération n°<?= $operation->getId() ?> <em>"<?= $operation->getNomOp(); ?>"</em></h1>
 
-<p class="text-muted">Ici vous retrouvez toutes les informations de l'opération <strong><?= $operation->getNomOp(); ?></strong>.
+<p class="text-muted">
+	Ici vous retrouvez toutes les informations de l'opération <strong><?= $operation->getNomOp(); ?></strong>.<br>
+	<?php if ($operation->getSubjectsCount() === 0) : ?>
+		Cette opération ne contient aucun sujet pour le moment.
+	<?php else : ?>
+		Un total de <b><?= $operation->getSubjectsCount() ?></b> sujets sont enregistrés sur cette opération.
+	<?php endif; ?>
 </p>
 
 <!-- Contenu de la page. Affichage des informations de l'opération -->
