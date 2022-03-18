@@ -280,7 +280,7 @@ if (!empty($msg)) {
 					endforeach; ?>
 					<th>Nb cas concerné</th>
 					<th>Nb cas observable</th>
-					<th>Prévalence <span style="font-weight: normal;">(sur 1000 personnes)</span></th>
+					<th>Prévalence</th>
 				</tr>
 			</thead>
 			<tbody>
