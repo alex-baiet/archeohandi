@@ -254,13 +254,23 @@ View::forge("fonction/multiple_input", array(
 ?>
 
 <!-- Bibliographie -->
-<div class="col-md-12">
-	<label for="form_bibliographie">
-		Bibliographie
-		(<a href="https://gallia.cnrs.fr/guide-auteurs/recommandations/" target="_blank">recommandations sur le format de GALLIA</a>)
-	</label>
-	<textarea name="bibliographie" id="form_bibliographie" class="form-control" maxlength="65535" title="Indiquez les références bibliographiques où sont mentionnés les détails du cas (selon les normes GALLIA/CNRS)"><?= $operation->getBibliographie() ?></textarea>
-</div>
+<label for="form_bibliographie">
+	Bibliographie
+	(<a href="https://gallia.cnrs.fr/guide-auteurs/recommandations/" target="_blank">recommandations sur le format de GALLIA</a>)
+</label>
+<textarea name="bibliographie" id="form_bibliographie" class="form-control" maxlength="65535" title="Indiquez les références bibliographiques où sont mentionnés les détails du cas (selon les normes GALLIA/CNRS)"><?= $operation->getBibliographie() ?></textarea>
+
+<?=
+View::forge("fonction/multiple_input", array(
+	"name" => "urls",
+	"datas" => $operation->getUrls(),
+	"label" => "URL",
+	"inputAttributes" => array(
+		"maxlength" => "256",
+		"title" => "Indiquez un url pour compléter la bibliographie"
+	)
+));
+?>
 
 <!-- Comptes -->
 <h3 class="text-center mt-4">Comptes autorisés</h3>

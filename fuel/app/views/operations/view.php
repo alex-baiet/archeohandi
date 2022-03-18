@@ -101,6 +101,11 @@ $sujets = $operation->getSubjects();
 <section class="form-sheet">
 	<h4>Autre</h4>
 	<p>Bibliographie : <?= $operation->getBibliographie(); ?></p>
+	<ul>
+		<?php foreach ($operation->getUrls() as $url) : ?>
+			<li><a href="<?= $url ?>" target="_blank"><?= $url ?></a></li>
+		<?php endforeach; ?>
+	</ul>
 </section>
 
 <section class="form-sheet">

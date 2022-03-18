@@ -165,16 +165,18 @@ class Controller_Script extends Controller_Template {
 				$insee = $columns[$iinsee];
 				$name = $columns[$iname];
 
-				$res = DB::update("commune")->set(array("insee" => $insee))->where("nom", "=", $name)->execute();
-				if ($res > 0) {
-					$results[$name] = "#0f08";
-				} else {
-					$results[$name] = "#f008";
-				}
+				// DB::select()->from("commune")->where("nom", "=", $name)->where("insee" =>)
+
+				$res = DB::update("commune")->set(array("insee" => $insee))->where("nom", "=", $name)->where("insee", "=", 0)->execute();
+				// if ($res > 0) {
+				// 	$results[$name] = "#0f08";
+				// } else {
+				// 	$results[$name] = "#f008";
+				// }
 			}
 
 			$data["results"] = $results;
-			$data["file"] = $file;
+			$data["file"] = "";
 		}
 
 		$this->template->title = 'Import CSV | Résultats';

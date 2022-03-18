@@ -17,6 +17,8 @@ $imageInput = isset($imageInput) ? $imageInput : false;
 /** @var array */
 $inputAttributes = isset($inputAttributes) ? $inputAttributes : array();
 
+if (empty($datas)) $datas[] = "";
+
 ?>
 
 <script>

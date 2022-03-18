@@ -53,9 +53,11 @@ class Operation extends Model {
 	/** @var Compte[]|unset */
 	private array $accounts;
 	/** @var string[]|unset */
-	private $urlsImg;
+	private array $urlsImg;
 	/** @var int[]|null Nombre de cas observables pour chaque diagnostics. */
-	private $observables = null;
+	private ?array $observables = null;
+	/** @var string[]|null */
+	private ?array $urls = null;
 
 	private Validation $validation;
 	#endregion
@@ -137,6 +139,8 @@ class Operation extends Model {
 		if (isset($data["urls_img"])) {
 			$this->setUrlsImg($data["urls_img"]);
 		}
+
+		if (isset($data["urls"])) $this->urls = array_filter($data["urls"]);
 	}
 
 	/**
@@ -183,6 +187,7 @@ class Operation extends Model {
 		DB::delete("droit_compte")->where("id_operation", "=", $id)->execute();
 		DB::delete("operation_image")->where("id_operation", "=", $id)->execute();
 		DB::delete("observable")->where("id_operation", "=", $id)->execute();
+		DB::delete("url_operation")->where("id_operation", "=", $id)->execute();
 
 		// Tous s'est bien passé
 		return null;
@@ -326,6 +331,7 @@ class Operation extends Model {
 		return $this->accounts;
 	}
 
+	/** Liste des liens d'image attaché à l'opération. */
 	public function getUrlsImg(): array {
 		if (!isset($this->urlsImg)) {
 			if ($this->getId() === null) return array();
@@ -353,6 +359,20 @@ class Operation extends Model {
 		$observables = $this->getObservables();
 		if (!isset($observables[$idDiagnostic])) return 0;
 		return $observables[$idDiagnostic];
+	}
+
+	/** Liste des liens de site pour compléter la bibliographie. */
+	public function getUrls() {
+		if ($this->urls === null) {
+			$this->urls = array();
+			if ($this->getId() !== null) {
+				$results = DB::select()->from("url_operation")->where("id_operation", "=", $this->getId())->execute()->as_array();
+				foreach ($results as $res) {
+					$this->urls[] = $res["url"];
+				}
+			}
+		}
+		return $this->urls;
 	}
 	#endregion
 
@@ -523,6 +543,17 @@ class Operation extends Model {
 				))->execute();
 			}
 		}
+
+		// Maj des urls
+		Archeo::updateOnDB(
+			"url_operation",
+			"id_operation={$this->getId()}",
+			$this->getUrls(),
+			function (string $url) { return array(
+				"id_operation" => $this->getId(),
+				"url" => $url
+			); }
+		);
 
 		// Tout s'est bien passé.
 		return true;

@@ -22,7 +22,7 @@ use Fuel\Core\Asset;
 					<b>J'ai rempli le champ, mais aucune image ne s'affiche. Pourquoi ?</b>
 					<ul>
 						<li>Le texte du champ n'est pas bon : vérifiez que vous avez bien copié l'url (il doit commencer par "https://" ou "http://".</li>
-						<li>L'image n'est pas au bon format : seul les formats <b>PNG</b> et <b>JPG</b> sont acceptés.</li>
+						<li>L'image n'est pas au bon format : seul les formats <b>PNG</b> et <b>JPG</b> peuvent être prévisualisés.</li>
 						<li>L'image n'existe plus : il est possible que l'image ai été supprimé de Nakala.</li>
 						<li>Avez-vous bien <b>publié</b> et non <b>déposé</b> l'image sur Nakala ?</li>
 					</ul>
