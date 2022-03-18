@@ -39,7 +39,7 @@ Asset::js("form.js");
 			<!-- Departement -->
 			<div class="col-md-6">
 				<div class="form-floating">
-					<input name="departement" id="form_departement" value="<?= $commune !== null ? $commune->getDepartement() : null ?>" type="text" class="form-control" placeholder="Département" autocomplete="off" title="Indiquez le département de l'opération" oninput="FormOperation.checkDepartementExist()">
+					<input name="departement" id="form_departement" value="<?= $commune !== null ? $commune->getDepartement() : null ?>" type="text" class="form-control" placeholder="Département" autocomplete="chrome-off" title="Indiquez le département de l'opération" oninput="FormOperation.checkDepartementExist()">
 					<div class="form-msg-error">Le département n'existe pas.</div>
 					<label for="form_departement">Nom du département</label>
 					<script>
@@ -67,7 +67,7 @@ Asset::js("form.js");
 		<div class="row my-4">
 			<div class="col md-12">
 				<div class="form-floating">
-					<input name="adresse" id="form_adresse" value="<?= $operation->getAdresse() ?>" type="text" class="form-control" placeholder="Adresse" maxlength="256" title="Indiquez l'adresse de l'opération">
+					<input name="adresse" id="form_adresse" value="<?= $operation->getAdresse() ?>" type="text" class="form-control" placeholder="Adresse" autocomplete="chrome-off" maxlength="256" title="Indiquez l'adresse de l'opération">
 					<label for="form_adresse">Adresse ou nom du site</label>
 				</div>
 			</div>
