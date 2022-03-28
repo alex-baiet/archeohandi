@@ -8,16 +8,14 @@ $lines = $lines;
 
 ?>
 
-<table class="table table-bordered sticky">
+<table class="table table-bordered sticky text-center">
 	<thead>
-		<tr class="text-center">
+		<tr>
 			<th>#</th>
 			<th>Id</th>
 			<th>Auteur de la saisie</th>
 			<th>Nom du site</th>
 			<th>Année</th>
-			<th>Latitude</th>
-			<th>Longitude</th>
 			<th>Actions</th>
 		</tr>
 	</thead>
@@ -28,7 +26,7 @@ $lines = $lines;
 				$op = $data->operation
 		?>
 				<?php /* Affichage de l'opération */ ?>
-				<tr class="text-center">
+				<tr>
 					<td class="btn-fold" id="btn_<?= $op->getId() ?>" onclick="NestedTable.switchTableView(`row_subjects_<?= $op->getId() ?>`, `btn_<?= $op->getId() ?>`)"></td>
 					<td><?= $op->getId() ?></td>
 					<?php
@@ -41,8 +39,6 @@ $lines = $lines;
 					<td><?= $author ?></td>
 					<td><?= $op->getNomOp() ?></td>
 					<td><?= $op->getAnnee() ?></td>
-					<td><?= $op->getY() ?></td>
-					<td><?= $op->getX() ?></td>
 					<td><a href="/public/operations/view/<?= $op->getId() ?>">Consulter</a></td>
 				</tr>
 				<tr id="row_subjects_<?= $op->getId() ?>" style="display:none; background-color: #ccc;">
@@ -51,7 +47,10 @@ $lines = $lines;
 						<?php /* Tableau des sujets */ ?>
 						<table class="table table-bordered" style="background-color: white;">
 							<thead>
-								<tr class="text-center">
+								<tr>
+									<th colspan="100%">Sujets handicapés de l'opération</th>
+								</tr>
+								<tr>
 									<th>Id</th>
 									<th>Nom</th>
 									<th>Sexe</th>
@@ -59,14 +58,13 @@ $lines = $lines;
 									<th>Milieu de vie</th>
 									<th>Type de dépôt</th>
 									<th>Type de sépulture</th>
-									<th>Age</th>
+									<th>Âge</th>
 									<th>Actions</th>
 								</tr>
 							</thead>
 							<tbody>
 								<?php foreach ($data->subjects as $subject) : ?>
-									<?php /* Affichage d'un sujet */ ?>
-									<tr class="text-center">
+									<tr><?php /* Affichage d'un sujet */ ?>
 										<td><?= $subject->getId() ?></td>
 										<td><?= $subject->getIdSujetHandicape() ?></td>
 										<td><?= $subject->getSexe() ?></td>
