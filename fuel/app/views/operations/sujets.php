@@ -45,7 +45,7 @@ $sujets = $operation->getSubjects();
 	<div class="row">
 
 		<div class="table-responsive">
-			<div class="scrollbar_view" style="height: auto; max-height: 600px;">
+			<div class="table-scroll" style="height: auto; max-height: 600px;">
 				<table class="table table-striped table-hover table-bordered sticky" data-toggle="table" data-search="true">
 					<thead>
 						<tr class="text-center">
@@ -130,5 +130,3 @@ $sujets = $operation->getSubjects();
 		</div>
 	</div>
 <?php endif; ?>
-
-<?= Asset::css('scrollbar.css'); ?>

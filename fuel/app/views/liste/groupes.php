@@ -85,7 +85,6 @@ $groups = $groups;
 		</div>
 	</div>
 </div>
-<?= Asset::css('scrollbar.css'); ?>
 <!-- Script permet d'afficher ou non les options du filtre -->
 <script>
 	$("#id_bouton_filtre").click(function() {

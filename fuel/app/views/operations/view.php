@@ -164,6 +164,3 @@ $sujets = $operation->getSubjects();
 		</div>
 	</div>
 <?php endif; ?>
-
-
-<?= Asset::css('scrollbar.css'); ?>

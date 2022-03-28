@@ -25,6 +25,8 @@ foreach ($results as $data) {
 		<b><?= $countOperation ?></b> opérations et <b><?= $countSubject ?></b> sujets handicapés correspondent à votre recherche.
 	</p>
 
-	<?= View::forge("operations/table", array("lines" => $results)) ?>
-
+	<div class="table-scroll">
+		<?= View::forge("operations/table", array("lines" => $results)) ?>
+	</div>
+		
 </div>

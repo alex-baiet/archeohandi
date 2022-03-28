@@ -26,3 +26,9 @@ td {
 .table-no-padding th {
 	padding: 4px;
 }
+
+/* Tableau scrollable */
+.table-scroll {
+  height: 600px;
+  overflow-y: scroll;
+}
