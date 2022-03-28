@@ -4,14 +4,10 @@ use Fuel\Core\Asset;
 use Fuel\Core\View;
 use Model\Db\Operation;
 use Model\Db\Typeoperation;
+use Model\Helper;
 
-$showError = isset($operation);
-/** @var Operation Operation sur lequel construire le formulaire. */
-$operation = isset($operation) ? $operation : new Operation(array());
-/** @var bool */
-$displayOnlyFields = isset($displayOnlyFields) ? $displayOnlyFields : false;
-/** @var bool Indique que le formulaire est utilisé pour la recherche ou non. */
-$search = isset($search) ? $search : false;
+/** @var array Valeurs entré pour la recherche précédente. */
+$options = $options;
 
 /** Array des attributs les plus communs. */
 $defaultAttr = array("type" => "text", "class" => "form-control", "placeholder" => "");
@@ -22,8 +18,6 @@ $defaultAttr = array("type" => "text", "class" => "form-control", "placeholder" 
 Asset::js("form.js");
 ?>
 
-<?php if ($showError) $operation->echoErrors(); ?>
-
 <!-- Affichage des champs -->
 <?php $nameCom = "commune" ?>
 
@@ -31,7 +25,7 @@ Asset::js("form.js");
 <div class="row my-2">
 	<div class="col-md-12">
 		<div class="form-floating">
-			<input name="id_operation" id="form_id_operation" type="number" class="form-control" placeholder="" maxlength="256" title="Indiquez l'identifiant de l'opération">
+			<input name="id_operation" id="form_id_operation" value="<?= Helper::arrayGetValue("id_operation", $options) ?>" type="number" class="form-control" placeholder="" maxlength="256" title="Indiquez l'identifiant de l'opération">
 			<label for="form_id_operation">Numéro</label>
 		</div>
 	</div>
@@ -42,11 +36,10 @@ Asset::js("form.js");
 	<div class="col-md-6 mt-4">
 
 		<div class="row mb-4 mt-2">
-			<?php $commune = $operation->getCommune(); ?>
 			<!-- Departement -->
 			<div class="col-md-6">
 				<div class="form-floating">
-					<input name="departement" id="form_departement" value="<?= $commune !== null ? $commune->getDepartement() : null ?>" type="text" class="form-control" placeholder="Département" autocomplete="off" title="Indiquez le département de l'opération" oninput="FormOperation.checkDepartementExist()">
+					<input name="departement" id="form_departement" value="<?= Helper::arrayGetValue("departement", $options) ?>" type="text" class="form-control" placeholder="Département" autocomplete="off" title="Indiquez le département de l'opération" oninput="FormOperation.checkDepartementExist()">
 					<div class="form-msg-error">Le département n'existe pas.</div>
 					<label for="form_departement">Nom du département</label>
 					<script>
@@ -60,7 +53,7 @@ Asset::js("form.js");
 			<!-- Commune -->
 			<div class="col-md-6">
 				<div class="form-floating">
-					<input name="<?= $nameCom ?>" id="form_<?= $nameCom ?>" value="<?= $commune !== null ? $commune->getNom() : null ?>" type="text" class="form-control" placeholder="Commune" autocomplete="chrome-off" title="Indiquez la commune de l'opération" oninput="FormOperation.checkCommuneExist()">
+					<input name="<?= $nameCom ?>" id="form_<?= $nameCom ?>" value="<?= Helper::arrayGetValue("commune", $options) ?>" type="text" class="form-control" placeholder="Commune" autocomplete="chrome-off" title="Indiquez la commune de l'opération" oninput="FormOperation.checkCommuneExist()">
 					<div class="form-msg-error">La commune n'existe pas.</div>
 					<label for="form_<?= $nameCom ?>">Commune</label>
 					<script>
@@ -74,7 +67,7 @@ Asset::js("form.js");
 		<div class="row my-4">
 			<div class="col md-12">
 				<div class="form-floating">
-					<input name="insee" id="form_insee" type="text" class="form-control" placeholder="INSEE" maxlength="5" title="Indiquez le numéro INSEE de la commune">
+					<input name="insee" id="form_insee" value="<?= Helper::arrayGetValue("insee", $options) ?>" type="text" class="form-control" placeholder="INSEE" maxlength="5" title="Indiquez le numéro INSEE de la commune">
 					<label for="form_insee">Numéro INSEE</label>
 				</div>
 			</div>
@@ -84,7 +77,7 @@ Asset::js("form.js");
 		<div class="row my-4">
 			<div class="col md-12">
 				<div class="form-floating">
-					<input name="adresse" id="form_adresse" value="<?= $operation->getAdresse() ?>" type="text" class="form-control" placeholder="Adresse" maxlength="256" title="Indiquez l'adresse de l'opération">
+					<input name="adresse" id="form_adresse" value="<?= Helper::arrayGetValue("adresse", $options) ?>" type="text" class="form-control" placeholder="Adresse" maxlength="256" title="Indiquez l'adresse de l'opération">
 					<label for="form_adresse">Adresse ou nom du site</label>
 				</div>
 			</div>
@@ -97,7 +90,7 @@ Asset::js("form.js");
 			<!-- Longitude -->
 			<div class="col-md-4">
 				<div class="form-floating">
-					<input name="X" id="form_X" value="<?= $operation->getX() ?>" type="number" class="form-control" placeholder="Longitude" min="-180" max="180" step="any" title="Indiquez la position GPS horizontale" oninput="FormOperation.updateCoordinate()">
+					<input name="X" id="form_X" value="<?= Helper::arrayGetValue("X", $options) ?>" type="number" class="form-control" placeholder="Longitude" min="-180" max="180" step="any" title="Indiquez la position GPS horizontale" oninput="FormOperation.updateCoordinate()">
 					<div class="form-msg-error">La valeur doit être un nombre entre -180 et 180</div>
 					<label for="form_X">Longitude</label>
 				</div>
@@ -106,7 +99,7 @@ Asset::js("form.js");
 			<!-- Latitude -->
 			<div class="col-md-4">
 				<div class="form-floating">
-					<input name="Y" id="form_Y" value="<?= $operation->getY() ?>" type="number" class="form-control" placeholder="Latitude" min="-90" max="90" step="any" title="Indiquez la position GPS verticale" oninput="FormOperation.updateCoordinate()">
+					<input name="Y" id="form_Y" value="<?= Helper::arrayGetValue("Y", $options) ?>" type="number" class="form-control" placeholder="Latitude" min="-90" max="90" step="any" title="Indiquez la position GPS verticale" oninput="FormOperation.updateCoordinate()">
 					<div class="form-msg-error">La valeur doit être un nombre entre -90 et 90</div>
 					<label for="form_Y">Latitude</label>
 				</div>
@@ -115,9 +108,9 @@ Asset::js("form.js");
 			<!-- Rayon -->
 			<div class="col-md-4">
 				<div class="form-floating">
-					<input name="radius" id="form_radius" type="number" class="form-control" value="100" placeholder="Latitude" min="0" step="any" title="Indiquez le rayon de recherche">
+					<input name="radius" id="form_radius" type="number" class="form-control" value="<?= Helper::arrayGetValue("radius", $options, 100) ?>" placeholder="Latitude" min="0" step="any" title="Indiquez le rayon de recherche">
 					<div class="form-msg-error">La valeur doit être supérieur à 0</div>
-					<label for="form_Y">Rayon (km)</label>
+					<label for="form_radius">Rayon (km)</label>
 				</div>
 			</div>
 		</div>
@@ -139,7 +132,7 @@ Asset::js("form.js");
 	<!-- Année -->
 	<div class="col-md-3">
 		<div class="form-floating">
-			<input name="annee_min" id="form_annee_min" value="" type="number" class="form-control" placeholder="Année de l'opération" min="1800" max="<?= date("Y") ?>" title="Mettez l'année minimum de l'opération">
+			<input name="annee_min" id="form_annee_min" value="<?= Helper::arrayGetValue("annee_min", $options) ?>" type="number" class="form-control" placeholder="Année de l'opération" min="1800" max="<?= date("Y") ?>" title="Mettez l'année minimum de l'opération">
 			<div class="form-msg-error">La valeur doit être un nombre entre 1800 et <?= date("Y") ?></div>
 			<label for="form_annee">Année minimum de l'opération</label>
 		</div>
@@ -147,7 +140,7 @@ Asset::js("form.js");
 
 	<div class="col-md-3">
 		<div class="form-floating">
-			<input name="annee_max" id="form_annee_max" value="" type="number" class="form-control" placeholder="Année de l'opération" min="1800" max="<?= date("Y") ?>" title="Mettez l'année maximum de l'opération">
+			<input name="annee_max" id="form_annee_max" value="<?= Helper::arrayGetValue("annee_max", $options) ?>" type="number" class="form-control" placeholder="Année de l'opération" min="1800" max="<?= date("Y") ?>" title="Mettez l'année maximum de l'opération">
 			<div class="form-msg-error">La valeur doit être un nombre entre 1800 et <?= date("Y") ?></div>
 			<label for="form_annee">Année maximum de l'opération</label>
 		</div>
@@ -156,7 +149,7 @@ Asset::js("form.js");
 	<!-- Organisme -->
 	<div class="col-md-3">
 		<div class="form-floating">
-			<input name="organisme" id="form_organisme" class="form-control" placeholder="Organisme" title="Entrez l'organisme attaché à l'opération" oninput="FormOperation.checkOrganismeExist()">
+			<input name="organisme" id="form_organisme" value="<?= Helper::arrayGetValue("organisme", $options) ?>" class="form-control" placeholder="Organisme" title="Entrez l'organisme attaché à l'opération" oninput="FormOperation.checkOrganismeExist()">
 			<div class="form-msg-error">
 				L'organisme n'existe pas.
 			</div>
@@ -173,7 +166,7 @@ Asset::js("form.js");
 	<div class="col-md-3">
 		<div class="form-floating">
 			<select name="id_type_op" id="form_id_type_op" class="form-select" title="Sélectionner le type de l'opération">
-				<?= Typeoperation::fetchOptions("", "Tous"); ?>
+				<?= Typeoperation::fetchOptions("2", "Tous"); ?>
 			</select>
 			<label for="form_id_type_op">Type d'opération</label>
 		</div>
@@ -186,7 +179,7 @@ Asset::js("form.js");
 	<!-- EA -->
 	<div class="col-md-4">
 		<div class="form-floating">
-			<input name="EA" id="form_EA" value="<?= $operation->getEA() ?>" type="text" class="form-control" placeholder="EA" maxlength="256" title="Indiquez le numéro de l'entité archéologique">
+			<input name="EA" id="form_EA" value="<?= Helper::arrayGetValue("EA", $options) ?>" type="text" class="form-control" placeholder="EA" maxlength="256" title="Indiquez le numéro de l'entité archéologique">
 			<label for="form_EA">EA</label>
 		</div>
 	</div>
@@ -194,7 +187,7 @@ Asset::js("form.js");
 	<!-- OA -->
 	<div class="col-md-4">
 		<div class="form-floating">
-			<input name="OA" id="form_OA" value="<?= $operation->getOA() ?>" type="text" class="form-control" placeholder="OA" maxlength="256" title="Indiquez le numéro d'opération archéologique">
+			<input name="OA" id="form_OA" value="<?= Helper::arrayGetValue("OA", $options) ?>" type="text" class="form-control" placeholder="OA" maxlength="256" title="Indiquez le numéro d'opération archéologique">
 			<label for="form_OA">OA</label>
 		</div>
 	</div>
@@ -202,7 +195,7 @@ Asset::js("form.js");
 	<!-- Numéro de l'opération -->
 	<div class="col-md-4">
 		<div class="form-floating">
-			<input name="numero_operation" id="form_numero_operation" value="<?= $operation->getNumeroOperation() ?>" type="text" class="form-control" placeholder="Numéro d'opération" maxlength="256" title="Indiquez le numéro de l'opération (propre à l'opérateur)">
+			<input name="numero_operation" id="form_numero_operation" value="<?= Helper::arrayGetValue("numero_operation", $options) ?>" type="text" class="form-control" placeholder="Numéro d'opération" maxlength="256" title="Indiquez le numéro de l'opération (propre à l'opérateur)">
 			<label for="form_numero_operation">Numéro de l'opération</label>
 		</div>
 	</div>
@@ -213,7 +206,7 @@ Asset::js("form.js");
 	<!-- Patriarche -->
 	<div class="col-md-6">
 		<div class="form-floating">
-			<input name="patriarche" id="form_patriarche" value="<?= $operation->getPatriarche() ?>" type="text" class="form-control" placeholder="Patriarche" maxlength="256" title="Indiquez le patriarche de l'opération">
+			<input name="patriarche" id="form_patriarche" value="<?= Helper::arrayGetValue("patriarche", $options) ?>" type="text" class="form-control" placeholder="Patriarche" maxlength="256" title="Indiquez le patriarche de l'opération">
 			<label for="form_patriarche">Patriarche</label>
 		</div>
 	</div>
@@ -221,7 +214,7 @@ Asset::js("form.js");
 	<!-- Arrêté de prescription -->
 	<div class="col-md-6">
 		<div class="form-floating">
-			<input name="arrete_prescription" id="form_arrete_prescription" value="<?= $operation->getArretePrescription() ?>" type="text" class="form-control" placeholder="Arrêté de prescription" maxlength="256" title="Indiquez le numéro de l'arrêté de prescription">
+			<input name="arrete_prescription" id="form_arrete_prescription" value="<?= Helper::arrayGetValue("arrete_prescription", $options) ?>" type="text" class="form-control" placeholder="Arrêté de prescription" maxlength="256" title="Indiquez le numéro de l'arrêté de prescription">
 			<label for="form_arrete_prescription">Arrêté de prescription</label>
 		</div>
 	</div>
@@ -231,7 +224,7 @@ Asset::js("form.js");
 <div class="row my-2">
 	<div class="col-md-6">
 		<div class="form-floating">
-			<input name="responsable" id="form_responsable" value="<?= $operation->getResponsable() ?>" type="text" class="form-control" placeholder="Responsable de l'opération" maxlength="256" autocomplete="off" title="Indiquez le responsable de l'opération, de préférence au format Prénom NOM">
+			<input name="responsable" id="form_responsable" value="<?= Helper::arrayGetValue("responsable", $options) ?>" type="text" class="form-control" placeholder="Responsable de l'opération" maxlength="256" autocomplete="off" title="Indiquez le responsable de l'opération, de préférence au format Prénom NOM">
 			<label for="form_responsable">Responsable de l'opération</label>
 		</div>
 	</div>
@@ -239,7 +232,7 @@ Asset::js("form.js");
 
 <!-- Anthropologues -->
 <?php
-$anthropologues = $operation->getAnthropologues();
+$anthropologues = Helper::arrayGetValue("anthropologues", $options);
 if (empty($anthropologues)) $anthropologues[] = "";
 ?>
 <?=
@@ -256,7 +249,7 @@ View::forge("fonction/multiple_input", array(
 
 <!-- Paleopathologistes -->
 <?php
-$paleos = $operation->getPaleopathologistes();
+$paleos = Helper::arrayGetValue("paleopathologistes", $options);
 if (empty($paleos)) $paleos[] = "";
 ?>
 <?=

@@ -35,7 +35,7 @@ class Archeo {
 		// Ecriture en html des options
 		$html = "";
 		foreach ($options as $value => $text) {
-			$html .= "<option value='$value'".($idSelected === $value ? " selected" : "").">$text</option>\n";
+			$html .= "<option value='$value'".($idSelected == $value ? " selected" : "").">$text</option>\n";
 		}
 
 		return $html;

@@ -12,6 +12,9 @@ use Model\Db\Sex;
 use Model\Db\Typedepot;
 use Model\Db\Typesepulture;
 
+/** @var array Valeurs entré pour la recherche précédente. */
+$options = $options;
+
 ?>
 
 <div class="row my-4">

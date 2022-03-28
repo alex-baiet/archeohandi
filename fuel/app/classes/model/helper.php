@@ -49,8 +49,9 @@ class Helper {
 	/**
 	 * Renvoie une valeur de l'array, ou null si la valeur n'existe pas.
 	 * @return string La valeur est retourné si elle existe, sinon un string vide est retourné.
+	 * @deprecated Utilisez Helper::arrayGetValue qui est plus général à la place.
 	 */
-	static function arrayGetString($key, array $array): string {
+	static function arrayGetString($key, array &$array): string {
 		if (array_key_exists($key, $array)) return $array[$key] !== null ? $array[$key] : "";
 		return "";
 	}
@@ -58,19 +59,17 @@ class Helper {
 	/**
 	 * Renvoie une valeur de l'array, ou null si la valeur n'existe pas.
 	 * @return int La valeur est retourné si elle existe, sinon un int vide est retourné.
+	 * @deprecated Utilisez Helper::arrayGetValue qui est plus général à la place.
 	 */
-	static function arrayGetInt($key, array $array): int {
+	static function arrayGetInt($key, array &$array): int {
 		if (array_key_exists($key, $array)) return $array[$key] !== null ? intval($array[$key]) : 0;
 		return 0;
 	}
 
-	/**
-	 * Renvoie une valeur de l'array, ou null si la valeur n'existe pas.
-	 * @return array|null La valeur est retourné si elle existe, sinon un null est retourné.
-	 */
-	static function arrayGetArray($key, array $array) {
+	/** Récupère une valeur depuis l'array, ou $default si la clé n'existe pas. */
+	static function arrayGetValue($key, &$array, $default=null) {
 		if (array_key_exists($key, $array)) return $array[$key];
-		return null;
+		return $default;
 	}
 
 	/**

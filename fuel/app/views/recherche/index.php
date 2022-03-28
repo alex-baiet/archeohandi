@@ -11,14 +11,14 @@ use Fuel\Core\View;
 	<form action="/public/recherche/resultat" method="post">
 		<div id="form_operation" class="form-sheet">
 			<h3 class="text-center">Opération</h3>
-			<?= View::forge("recherche/form_operation", array("action" => "public/search")) ?>
+			<?= View::forge("recherche/form_operation", array("options" => $options)) ?>
 		</div>
 
 		<hr>
 
 		<div id="form_sujet" class="form-sheet">
 			<h3 class="text-center">Sujet handicapé</h3>
-			<?= View::forge("recherche/form_sujet", array()) ?>
+			<?= View::forge("recherche/form_sujet", array("options" => $options)) ?>
 		</div>
 
 		<div class="row">

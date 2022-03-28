@@ -12,25 +12,36 @@ use Model\Helper;
 use Model\Searchresult;
 
 class Controller_Recherche extends Controller_Template {
+	/** Page de recherche */
 	public function action_index() {
 		Compte::checkPermissionRedirect("Vous devez vous connecter pour accéder à cette page.", Compte::PERM_WRITE);
 
 		$data = array();
 
+		if (isset($_POST["keepOptions"])) {
+			// Récupération de la recherche précédente
+			Helper::startSession();
+			$options = $_SESSION["searchOptions"];
+			$data["options"] = $options;
+		}
+
 		$this->template->title = 'Recherche';
 		$this->template->content = View::forge('recherche/index', $data);
 	}
 
+	/** Page d'affichage des résultats de recherche */
 	public function action_resultat() {
 		Compte::checkPermissionRedirect("Vous devez vous connecter pour accéder à cette page.", Compte::PERM_WRITE);
 		if (!isset($_POST["search"])) Response::redirect("/recherche");
 
 		$data = array();
 
+		// Définition des modèles de recherche
 		$refOp = new Operation($_POST);
 		$refSubject = new Sujethandicape($_POST);
 		$results = array();
 
+		// Récupération des infos selon la recherche
 		$resOp = $this->searchOperations($refOp);
 		foreach ($resOp as $op) {
 			$searchRes = new Searchresult();
@@ -39,6 +50,10 @@ class Controller_Recherche extends Controller_Template {
 			$searchRes->subjects = $resSu;
 			$results[] = $searchRes;
 		}
+
+		// Stockage des options de recherche en cas de retour à la page de choix de la recherche
+		Helper::startSession();
+		$_SESSION["searchOptions"] = $_POST;
 
 		$data["results"] = $results;
 
@@ -53,7 +68,7 @@ class Controller_Recherche extends Controller_Template {
 			"numero_operation", "arrete_prescription", "responsable", "anthropologues", "paleopathologistes", "bibliographie", "date_ajout", "complet"
 		)->from("operations");
 
-		if ($refOp->getId() !== null) $query->where("id", "=", $refOp->getId());
+		if ($refOp->getId() !== null) $query->where("operations.id", "=", $refOp->getId());
 		if ($refOp->getIdCommune() !== null) $query->where("id_commune", "=", $refOp->getIdCommune());
 		if (!empty($_POST["insee"])) {
 			$query->join("commune")->on("commune.id", "=", "id_commune")->where("insee", "=", $_POST["insee"]);

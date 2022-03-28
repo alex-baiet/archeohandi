@@ -9,7 +9,11 @@ $results = $results;
 
 <div class="container">
 
-	<h1 class="my-4">Résultats de la recherche</h1>
+	<form action="/public/recherche" method="post" class="mt-4">
+		<button type="submit" name="keepOptions" value="1" class="btn btn-secondary">Modifier la recherche</button>
+	</form>
+
+	<h1 class="mb-4">Résultats de la recherche</h1>
 
 	<table class="table table-bordered sticky">
 		<thead>
