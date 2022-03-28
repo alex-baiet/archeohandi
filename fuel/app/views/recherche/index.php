@@ -2,6 +2,8 @@
 
 use Fuel\Core\View;
 
+$options = isset($options) ? $options : array();
+
 ?>
 
 <div class="container" style="position: relative;">

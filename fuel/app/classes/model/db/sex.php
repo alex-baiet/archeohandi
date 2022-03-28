@@ -4,6 +4,7 @@ namespace Model\Db;
 
 use Fuel\Core\Form;
 use Fuel\Core\Model;
+use Model\Helper;
 
 class Sex extends Model {
 	private static array $values = array(
@@ -32,7 +33,7 @@ class Sex extends Model {
 
 		$html = "";
 		foreach ($options as $value => $text) {
-			$html .= "<option value='$value'".($idSelected === $value ? " selected" : "").">$text</option>\n";
+			$html .= "<option value='$value'".($idSelected == $value ? " selected" : "").">$text</option>\n";
 		}
 
 		return $html;

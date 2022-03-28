@@ -166,7 +166,7 @@ Asset::js("form.js");
 	<div class="col-md-3">
 		<div class="form-floating">
 			<select name="id_type_op" id="form_id_type_op" class="form-select" title="Sélectionner le type de l'opération">
-				<?= Typeoperation::fetchOptions("2", "Tous"); ?>
+				<?= Typeoperation::fetchOptions(Helper::arrayGetValue("id_type_op", $options, ""), "Tous"); ?>
 			</select>
 			<label for="form_id_type_op">Type d'opération</label>
 		</div>

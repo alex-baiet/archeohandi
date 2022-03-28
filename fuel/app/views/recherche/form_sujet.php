@@ -11,6 +11,7 @@ use Model\Db\Pathology;
 use Model\Db\Sex;
 use Model\Db\Typedepot;
 use Model\Db\Typesepulture;
+use Model\Helper;
 
 /** @var array Valeurs entré pour la recherche précédente. */
 $options = $options;
@@ -21,7 +22,7 @@ $options = $options;
 	<!-- Id -->
 	<div class="col-md-6">
 		<div class="form-floating">
-			<input name="id_sujet" id="form_id_sujet" type="number" class="form-control" placeholder="" maxlength="256" title="Indiquez l'identifiant du sujet">
+			<input name="id_sujet" id="form_id_sujet" value="<?= Helper::arrayGetValue("id_sujet", $options) ?>" type="number" class="form-control" placeholder="" maxlength="256" title="Indiquez l'identifiant du sujet">
 			<label for="form_id_sujet">Numéro</label>
 		</div>
 	</div>
@@ -29,7 +30,7 @@ $options = $options;
 	<!-- Nom -->
 	<div class="col-md-6">
 		<div class="form-floating">
-			<input name="id_sujet_handicape" id="form_id_sujet_handicape" type="text" class="form-control" placeholder="" maxlength="256" title="Indiquez le nom du sujet">
+			<input name="id_sujet_handicape" id="form_id_sujet_handicape" value="<?= Helper::arrayGetValue("id_sujet_handicape", $options) ?>" type="text" class="form-control" placeholder="" maxlength="256" title="Indiquez le nom du sujet">
 			<label for="form_id_sujet_handicape">Nom du sujet</label>
 		</div>
 	</div>
@@ -40,7 +41,7 @@ $options = $options;
 	<div class="col-md-6">
 		<div class="form-floating">
 			<select name="id_chronologie" id="form_id_chronologie" class="form-select" required title="Indiquer la phase chronologique à laquelle appartient le sujet handicapé">
-				<?= Chronology::fetchOptions("", "Tous") ?>
+				<?= Chronology::fetchOptions(Helper::arrayGetValue("id_chronologie", $options, ""), "Tous") ?>
 			</select>
 			<label for="form_id_chronologie">Chronologie</label>
 		</div>
@@ -61,7 +62,7 @@ $options = $options;
 	<!-- Âge minimum estimé de décès -->
 	<div class="col-md-3">
 		<div class="form-floating">
-			<input name="age_min" id="form_age_min" type="number" class="form-control" placeholder="Âge minimum au décès" min="0" max="130" step="1" title="Indiquez l'âge minimum estimé du sujet">
+			<input name="age_min" id="form_age_min" value="<?= Helper::arrayGetValue("age_min", $options) ?>" type="number" class="form-control" placeholder="Âge minimum au décès" min="0" max="130" step="1" title="Indiquez l'âge minimum estimé du sujet">
 			<div class="form-msg-error">La valeur doit être un nombre entier entre 0 et 130</div>
 			<label for="form_age_min">Âge minimum au décès</label>
 		</div>
@@ -70,7 +71,7 @@ $options = $options;
 	<!-- Âge maximum estimé de décès -->
 	<div class="col-md-3">
 		<div class="form-floating">
-			<input name="age_max" id="form_age_max" type="number" class="form-control" placeholder="Âge maximum au décès" min="0" max="130" step="1" title="Indiquez l'âge maximum estimé du sujet">
+			<input name="age_max" id="form_age_max" value="<?= Helper::arrayGetValue("age_max", $options) ?>" type="number" class="form-control" placeholder="Âge maximum au décès" min="0" max="130" step="1" title="Indiquez l'âge maximum estimé du sujet">
 			<div class="form-msg-error">La valeur doit être un nombre entier entre 0 et 130</div>
 			<label for="form_age_max">Âge maximum au décès</label>
 		</div>
@@ -79,7 +80,7 @@ $options = $options;
 	<!-- Période minimum estimé -->
 	<div class="col-md-3">
 		<div class="form-floating">
-			<input name="dating_min" id="form_dating_min" type="number" class="form-control" placeholder="Datation minimale" min="-20000" max="1945" step="1" title="Indiquez la borne inférieure de datation du sujet">
+			<input name="dating_min" id="form_dating_min" value="<?= Helper::arrayGetValue("dating_min", $options) ?>" type="number" class="form-control" placeholder="Datation minimale" min="-20000" max="1945" step="1" title="Indiquez la borne inférieure de datation du sujet">
 			<div class="form-msg-error">La valeur doit être un nombre entier entre -20000 et 1945</div>
 			<label for="form_dating_min">Datation minimale</label>
 		</div>
@@ -88,7 +89,7 @@ $options = $options;
 	<!-- Période maximum estimé -->
 	<div class="col-md-3">
 		<div class="form-floating">
-			<input name="dating_max" id="form_dating_max" type="number" class="form-control" placeholder="Datation maximal" min="-20000" max="1945" step="1" title="Indiquez la borne supérieure de datation du sujet">
+			<input name="dating_max" id="form_dating_max" value="<?= Helper::arrayGetValue("dating_max", $options) ?>" type="number" class="form-control" placeholder="Datation maximal" min="-20000" max="1945" step="1" title="Indiquez la borne supérieure de datation du sujet">
 			<div class="form-msg-error">La valeur doit être un nombre entier entre -20000 et 1945</div>
 			<label for="form_dating_max">Datation maximale</label>
 		</div>
@@ -101,7 +102,7 @@ $options = $options;
 	<div class="col-md-4">
 		<div class="form-floating">
 			<select name="id_type_depot" id="form_id_type_depot" class="form-select" title="Indiquez la modalité du dépôt">
-				<?= Typedepot::fetchOptions("", "Tous") ?>
+				<?= Typedepot::fetchOptions(Helper::arrayGetValue("id_type_depot", $options, ""), "Tous") ?>
 			</select>
 			<label for="form_id_type_depot">Type de dépôt</label>
 		</div>
@@ -111,7 +112,7 @@ $options = $options;
 	<div class="col-md-4">
 		<div class="form-floating">
 			<select name="id_sepulture" id="form_id_sepulture" class="form-select" title="Indiquez le type de la sépulture">
-				<?= Typesepulture::fetchOptions("", "Tous") ?>
+				<?= Typesepulture::fetchOptions(Helper::arrayGetValue("id_sepulture", $options, ""), "Tous") ?>
 			</select>
 			<label for="form_id_sepulture">Type de sépulture</label>
 		</div>
@@ -123,7 +124,7 @@ $options = $options;
 			<?=
 			Form::select(
 				"contexte_normatif",
-				"",
+				Helper::arrayGetValue("contexte_normatif", $options, ""),
 				array(
 					"" => "Tous",
 					"Standard" => "Standard",
@@ -147,7 +148,7 @@ $options = $options;
 			<?=
 			Form::select(
 				"milieu_vie",
-				"",
+				Helper::arrayGetValue("milieu_vie", $options, ""),
 				array(
 					"" => "Tous",
 					"Rural" => "Rural",
@@ -168,7 +169,7 @@ $options = $options;
 		<div class="form-floating">
 			<?= Form::select(
 				"contexte",
-				"",
+				Helper::arrayGetValue("contexte", $options, ""),
 				array(
 					"" => "Tous",
 					"Funeraire" => "Funéraire",
@@ -264,12 +265,12 @@ $options = $options;
 		<h3>Dépôt</h3>
 		<!-- Numéro de dépôt -->
 		<div class="form-floating my-2">
-			<input name="num_inventaire" id="form_num_inventaire" type="text" class="form-control" placeholder="Numéro de dépôt" maxlength="256" title="Indiquez le numéro du dépôt">
+			<input name="num_inventaire" id="form_num_inventaire" value="<?= Helper::arrayGetValue("num_inventaire", $options) ?>" type="text" class="form-control" placeholder="Numéro de dépôt" maxlength="256" title="Indiquez le numéro du dépôt">
 			<label for="form_num_inventaire">Numéro de dépôt</label>
 		</div>
 		<!-- Commune du dépôt -->
 		<div class="form-floating my-2">
-			<input name="depot_commune" id="form_depot_commune" type="text" class="form-control" placeholder="Commune" maxlength="256" autocomplete="off" title="Indiquez la commune du dépôt du sujet">
+			<input name="depot_commune" id="form_depot_commune" value="<?= Helper::arrayGetValue("depot_commune", $options) ?>" type="text" class="form-control" placeholder="Commune" maxlength="256" autocomplete="off" title="Indiquez la commune du dépôt du sujet">
 			<label for="form_depot_commune">Commune</label>
 		</div>
 		<script>
@@ -277,7 +278,7 @@ $options = $options;
 		</script>
 		<!-- Adresse du dépôt -->
 		<div class="form-floating my-2">
-			<input name="depot_adresse" id="form_depot_adresse" type="text" class="form-control" placeholder="Adresse du dépôt" maxlength="256" title="Indiquez l'adresse du dépôt du sujet">
+			<input name="depot_adresse" id="form_depot_adresse" value="<?= Helper::arrayGetValue("depot_adresse", $options) ?>" type="text" class="form-control" placeholder="Adresse du dépôt" maxlength="256" title="Indiquez l'adresse du dépôt du sujet">
 			<label for="form_depot_adresse">Adresse du dépôt</label>
 		</div>
 
@@ -312,6 +313,6 @@ $options = $options;
 <!-- Commentaire du diagnostic -->
 <label for="comment_diagnostic">Commentaire du diagnostic</label>
 <div class="input-group">
-	<textarea class="form-control" name="comment_diagnostic" rows="2" maxlength="65535" title="Ecrivez ici des commentaires sur le diagnostic si besoin"></textarea>
+	<textarea class="form-control" name="comment_diagnostic" value="<?= Helper::arrayGetValue("comment_diagnostic", $options) ?>" rows="2" maxlength="65535" title="Ecrivez ici des commentaires sur le diagnostic si besoin"></textarea>
 </div>
 <?php endif ?>
