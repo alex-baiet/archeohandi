@@ -209,6 +209,38 @@ $subject = $subject;
 		<?php endfor; ?>
 	<?php endif; ?>
 </section>
+<br>
+
+<?php if (Compte::checkPermission(Compte::PERM_WRITE, $subject->getOperation()->getId())) : ?>
+	<!-- Suppression du sujet handicapé -->
+	<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#validationPopup">Supprimer le sujet</button>
+
+	<div class="modal" id="validationPopup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="validationPopupLabel" aria-hidden="true" style="z-index: 100000;">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="validationPopupLabel">Suppression du sujet</h5>
+				</div>
+				<div class="modal-body">
+					<p>
+						Êtes-vous sûr de vouloir supprimer le sujet n°<?= $subject->getId() ?> <em>"<?= $subject->getIdSujetHandicape() ?>"</em> ?
+						<br><br>
+						<?php if (isset($infoText)) : ?>
+							<i class='bi bi-info-circle-fill'></i> La suppression est irréversible.
+						<?php endif; ?>
+					</p>
+				</div>
+				<div class="modal-footer">
+					<form method="post" action="/public/sujet/delete">
+						<input type="hidden" name="redirect" value="/operations/sujets/<?= $subject->getOperation()->getId() ?>">
+						<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#validationPopup">Retour</button>
+						<button type="submit" name="id" id="form_id" value="<?= $subject->getId() ?>" class="btn btn-danger">Supprimer</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+<?php endif; ?>
 
 <script type="text/javascript">
 	// Permet d'afficher un message d'alert avant la confirmation d'une suppression -->

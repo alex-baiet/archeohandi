@@ -21,7 +21,7 @@ $sujets = $operation->getSubjects();
 
 <script type="text/javascript">
 	function deleteSubject(idSubject) {
-		let btnElem = document.getElementById("form_delete_sujet");
+		let btnElem = document.getElementById("form_id");
 		btnElem.value = idSubject;
 	}
 </script>
@@ -106,13 +106,31 @@ $sujets = $operation->getSubjects();
 		</div>
 	</div>
 
-	<!-- Popup de confirmation de suppression -->
-	<?= View::forge("fonction/popup_confirm", array(
-		"title" => "Voulez-vous continuer ?",
-		"bodyText" => "Êtes-vous sûr de vouloir supprimer le sujet ?",
-		"infoText" => "La suppression est irréversible.",
-		"btnName" => "delete_sujet"
-	)); ?>
+	<!-- Popup suppression du sujet handicapé -->
+	<div class="modal" id="validationPopup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="validationPopupLabel" aria-hidden="true" style="z-index: 100000;">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="validationPopupLabel">Suppression du sujet</h5>
+				</div>
+				<div class="modal-body">
+					<p>
+						Êtes-vous sûr de vouloir supprimer le sujet ?
+						<br><br>
+						<?php if (isset($infoText)) : ?>
+							<i class='bi bi-info-circle-fill'></i> La suppression est irréversible.
+						<?php endif; ?>
+					</p>
+				</div>
+				<div class="modal-footer">
+					<form method="post" action="/public/sujet/delete">
+						<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#validationPopup">Retour</button>
+						<button type="submit" name="id" id="form_id" value="" class="btn btn-danger">Supprimer</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 <?php endif; ?>
 
 <?= Asset::css('scrollbar.css'); ?>

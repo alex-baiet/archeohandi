@@ -9,6 +9,7 @@ use Model\Db\Operation;
 use Model\Db\Sujethandicape;
 use Model\Helper;
 use Model\Messagehandler;
+use Model\Redirect;
 
 class Controller_Sujet extends Controller_Template {
 	private const DEBUG = false;
@@ -112,5 +113,46 @@ class Controller_Sujet extends Controller_Template {
 
 		$this->template->title = "Ajouter des sujets";
 		$this->template->content = View::forge('sujet/add', $data);
+	}
+
+	/**
+	 * Supprime un sujet.
+	 * @param int $_POST["id"] Contient l'id du sujet à supprimer.
+	 * @param string $_POST["redirect"] Contient l'url de destination après la suppression du sujet.
+	 */
+	public function action_delete() {
+		if (!isset($_POST["id"])) Redirect::redirectBack();
+
+		$id = $_POST["id"];
+
+		$subject = Sujethandicape::fetchSingle($id);
+		if ($subject === null) {
+			Messagehandler::prepareAlert("Le sujet n'existe pas (quelqu'un vient peut-être de le supprimer).", "danger");
+			Redirect::redirectBack();
+		}
+
+		$operation = $subject->getOperation();
+		
+		Compte::checkPermissionRedirect(
+			"Vous n'êtes pas autorisés à modifier un sujet de l'opération.",
+			Compte::PERM_WRITE,
+			$operation->getId()
+		);
+
+		// Suppression du sujet
+		$error = Sujethandicape::deleteOnDB($id);
+		if ($error === null) {
+			Messagehandler::prepareAlert("Le sujet n°$id a bien été supprimé.", "success");
+		} else {
+			Messagehandler::prepareAlert($error, "danger");
+		}
+
+		// Redirection vers la page choisi
+		if (isset($_POST["redirect"])) {
+			Response::redirect($_POST["redirect"]);
+		}
+
+		// Redirection vers la page précédente
+		Redirect::redirectBack();
 	}
 }
