@@ -146,7 +146,3 @@ $navActive = isset($navActive) ? $navActive : true;
 </body>
 
 </html>
-
-<?php
-Redirect::setPreviousPage();
-?>

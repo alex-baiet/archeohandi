@@ -181,7 +181,6 @@ class Compte {
 			if (Compte::getInstance() === null) {
 				// Redirection vers la page de connexion
 				Messagehandler::prepareAlert($errorMsg, "danger");
-				Redirect::setPreviousPage();
 				Response::redirect("/compte/connexion");
 			} else {
 				// Redirection vers la page précédente
