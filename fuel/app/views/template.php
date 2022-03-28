@@ -108,16 +108,23 @@ $navActive = isset($navActive) ? $navActive : true;
 						<?php endif; ?>
 						<div class="dropdown-menu">
 							<?php if ($account !== null) : ?>
-								<form action="/public/compte/deconnexion" method="POST">
-									<?= Form::hidden("previous_page", Uri::current()); ?>
-									<?= Form::submit("disconnect", "Se déconnecter", array("class" => "dropdown-item")); ?>
-								</form>
+								<!-- Operations personnelles -->
+								<a class="dropdown-item" href="/public/operations/personnel">Mes opérations</a>
 							<?php endif; ?>
 							<?php if (Compte::checkPermission(Compte::PERM_DISCONNECTED)) : ?>
+								<!-- Connexion -->
 								<a class="dropdown-item" href="/public/compte/connexion">Se connecter</a>
 							<?php endif; ?>
 							<?php if (Compte::checkPermission(Compte::PERM_DISCONNECTED) || Compte::checkPermission(Compte::PERM_ADMIN)) : ?>
+								<!-- Création d'un nouveau compte -->
 								<a class="dropdown-item" href="/public/compte/creation">Créer un compte</a>
+							<?php endif; ?>
+							<?php if ($account !== null) : ?>
+								<!-- Déconnexion -->
+								<form action="/public/compte/deconnexion" method="POST">
+									<input type="hidden" name="previous_page" value="<?= Uri::current() ?>">
+									<button type="submit" name="disconnect" value="1" class="dropdown-item">Se déconnecter</button>
+								</form>
 							<?php endif; ?>
 						</div>
 					</li>

@@ -22,22 +22,6 @@ class Controller_Operations extends Controller_Template {
 
 		$data = array();
 
-		// Suppression d'une opération
-		if (isset($_POST["delete_op"])) {
-			//Helper::varDump($_POST["delete_op"]);
-			$idOp = intval($_POST["delete_op"]);
-			if (!Compte::checkPermission(Compte::PERM_ADMIN, $idOp)) {
-				Messagehandler::prepareAlert("Seul le créateur de l'opération à le droit de supprimer l'opération", "danger");
-			} else {
-				$result = Operation::deleteOnDB($idOp);
-				if ($result === null) {
-					Messagehandler::prepareAlert("Suppression de l'opération réussi.", "success");
-				} else {
-					Messagehandler::prepareAlert($result, "danger");
-				}
-			}
-		}
-
 		// Récupération des opérations
 		$operations = Operation::fetchAll();
 
@@ -145,21 +129,6 @@ class Controller_Operations extends Controller_Template {
 			Response::redirect("accueil");
 		}
 
-		// Suppression d'un sujet (si l'utilisateur le demande)
-		if (isset($_POST['delete_sujet'])) {
-			$idSubject = $_POST['delete_sujet'];
-			if (!Compte::checkPermission(Compte::PERM_WRITE, $id)) {
-				Messagehandler::prepareAlert("Vous n'avez pas les permissions nécessaires sur l'opération pour pouvoir supprimer un sujet.", "danger");
-			} else {
-				$result = Sujethandicape::deleteOnDB($idSubject);
-				if ($result === null) {
-					Messagehandler::prepareAlert("Suppression du sujet réussi.", "success");
-				} else {
-					Messagehandler::prepareAlert("Echec de la suppression du sujet.", "danger");
-				}
-			}
-		}
-
 		// Ajout des données à la view
 		$data["operation"] = $operation;
 		$this->template->title = 'Consultation de l\'opération '.$operation->getNomOp();
@@ -182,7 +151,7 @@ class Controller_Operations extends Controller_Template {
 
 		/** @var null|string */
 		$errors = null;
-		
+
 		// Tentative de mise à jour de l'opération
 		if (Input::method() === "POST") {
 			$operation->mergeValues($_POST);
