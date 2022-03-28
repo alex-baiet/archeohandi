@@ -223,11 +223,9 @@ $subject = $subject;
 				</div>
 				<div class="modal-body">
 					<p>
-						Êtes-vous sûr de vouloir supprimer le sujet n°<?= $subject->getId() ?> <em>"<?= $subject->getIdSujetHandicape() ?>"</em> ?
-						<br><br>
-						<?php if (isset($infoText)) : ?>
-							<i class='bi bi-info-circle-fill'></i> La suppression est irréversible.
-						<?php endif; ?>
+						Êtes-vous sûr de vouloir supprimer le sujet n°<?= $subject->getId() ?> <em>"<?= $subject->getIdSujetHandicape() ?>"</em> ?<br>
+						<br>
+						<i class='bi bi-info-circle-fill'></i> La suppression est irréversible.
 					</p>
 				</div>
 				<div class="modal-footer">

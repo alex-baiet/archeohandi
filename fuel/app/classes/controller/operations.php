@@ -10,6 +10,7 @@ use Model\Db\Operation;
 use Model\Db\Sujethandicape;
 use Model\Helper;
 use Model\Messagehandler;
+use Model\Redirect;
 use Model\Searchresult;
 
 class Controller_Operations extends Controller_Template {
@@ -209,6 +210,45 @@ class Controller_Operations extends Controller_Template {
 			'operations/template',
 			array("content" => View::forge("operations/edit", $data))
 		);
+	}
+
+	/**
+	 * Supprime une opération.
+	 * @param int $_POST["id"] Contient l'id de l'opération à supprimer.
+	 * @param string $_POST["redirect"] Contient l'url de destination après la suppression.
+	 */
+	public function action_delete() {
+		if (!isset($_POST["id"])) Redirect::redirectBack();
+
+		$id = $_POST["id"];
+
+		$operation = Operation::fetchSingle($id);
+		if ($operation === null) {
+			Messagehandler::prepareAlert("L'opération n'existe pas (quelqu'un vient peut-être de le supprimer).", "danger");
+			Redirect::redirectBack();
+		}
+
+		Compte::checkPermissionRedirect(
+			"Vous n'êtes pas autorisés à modifier l'opération.",
+			Compte::PERM_ADMIN,
+			$operation->getId()
+		);
+
+		// Suppression de l'opération
+		$error = Operation::deleteOnDB($id);
+		if ($error === null) {
+			Messagehandler::prepareAlert("L'opération n°$id a bien été supprimé.", "success");
+		} else {
+			Messagehandler::prepareAlert($error, "danger");
+		}
+
+		// Redirection vers la page choisi
+		if (isset($_POST["redirect"])) {
+			Response::redirect($_POST["redirect"]);
+		}
+
+		// Redirection vers la page précédente
+		Redirect::redirectBack();
 	}
 
 }

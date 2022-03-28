@@ -169,6 +169,12 @@ class Operation extends Model {
 		return $operations;
 	}
 
+	/**
+	 * Supprime une opération.
+	 * @param int $id Identifiant de l'opération à supprimer.
+	 * @return string Message d'erreur en cas d'échec de la suppression.
+	 * @return null Si tout s'est bien passé.
+	 */
 	public static function deleteOnDB(int $id): ?string {
 		$op = Operation::fetchSingle($id);
 		if ($op === null) return "L'opération à supprimer n'existe pas";

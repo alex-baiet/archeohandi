@@ -1,6 +1,7 @@
 <?php
 
 use Fuel\Core\Asset;
+use Model\Db\Compte;
 use Model\Db\Operation;
 use Model\Db\Organisme;
 use Model\Helper;
@@ -113,6 +114,7 @@ $sujets = $operation->getSubjects();
 		<?php endforeach; ?>
 	</ul>
 </section>
+<br>
 
 <section class="form-sheet">
 	<h4>Iconographie</h4>
@@ -133,5 +135,35 @@ $sujets = $operation->getSubjects();
 	<?php endif; ?>
 </section>
 <br />
+
+<?php if (Compte::checkPermission(Compte::PERM_ADMIN, $operation->getId())) : ?>
+	<!-- Suppression de l'opération -->
+	<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#validationPopup">Supprimer l'opération</button>
+
+	<div class="modal" id="validationPopup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="validationPopupLabel" aria-hidden="true" style="z-index: 100000;">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="validationPopupLabel">Suppression de l'opération</h5>
+				</div>
+				<div class="modal-body">
+					<p>
+						Êtes-vous sûr de vouloir supprimer l'opération n°<?= $operation->getId() ?> <em>"<?= $operation->getNomOp() ?>"</em> ?
+						<br><br>
+						<i class='bi bi-info-circle-fill'></i> La suppression est irréversible.
+					</p>
+				</div>
+				<div class="modal-footer">
+					<form method="post" action="/public/operations/delete">
+						<input type="hidden" name="redirect" value="/operations">
+						<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#validationPopup">Retour</button>
+						<button type="submit" name="id" id="form_id" value="<?= $operation->getId() ?>" class="btn btn-danger">Supprimer</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+<?php endif; ?>
+
 
 <?= Asset::css('scrollbar.css'); ?>
