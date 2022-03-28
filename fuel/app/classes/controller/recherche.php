@@ -191,12 +191,12 @@ class Controller_Recherche extends Controller_Template {
 				if (isset($_POST["diagnostics"][$diaId])) {
 					// Localisation coché
 					$localisations = $_POST["diagnostics"][$diaId];
-					for ($i=count($subjects)-1; $i>=0; $i--) {
-						if (!$subjects[$i]->hasDiagnosis($diaId)) {
+					foreach ($subjects as $i => $sub) {
+						if (!$sub->hasDiagnosis($diaId)) {
 							unset($subjects[$i]);
 							continue;
 						}
-						$subDia = $subjects[$i]->getDiagnosis($diaId);
+						$subDia = $sub->getDiagnosis($diaId);
 						foreach ($localisations as $loc) {
 							if (!$subDia->isLocatedFromId($loc)) {
 								unset($subjects[$i]);
@@ -206,8 +206,8 @@ class Controller_Recherche extends Controller_Template {
 					}
 				} else {
 					// Localisation pas coché
-					for ($i=count($subjects)-1; $i>=0; $i--) {
-						if (!$subjects[$i]->hasDiagnosis($diaId)) unset($subjects[$i]);
+					foreach ($subjects as $i => $sub) {
+						if (!$sub->hasDiagnosis($diaId)) unset($subjects[$i]);
 					}
 				}
 			}

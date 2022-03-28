@@ -10,7 +10,7 @@ $options = isset($options) ? $options : array();
 
 	<h1 class="mt-4">Recherche d'opération et de sujet</h1>
 
-	<form action="/public/recherche/resultat" method="post">
+	<form action="/public/recherche/resultat" method="post" onsubmit="prepareFormSend()">
 		<div id="form_operation" class="form-sheet">
 			<h3 class="text-center">Opération</h3>
 			<?= View::forge("recherche/form_operation", array("options" => $options)) ?>

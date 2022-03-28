@@ -9,6 +9,7 @@ use Model\Db\Localisation;
 use Model\Db\Mobilier;
 use Model\Db\Pathology;
 use Model\Db\Sex;
+use Model\Db\Subjectdiagnosis;
 use Model\Db\Typedepot;
 use Model\Db\Typesepulture;
 use Model\Helper;
@@ -196,33 +197,43 @@ $options = $options;
 			Sélectionner un diagnostique sans indiquer la localisation permet de rechercher les sujets touchés, quel que soit la localisation du diagnostique.
 		</p>
 
-		<table>
+		<table class="table table-bordered table-no-padding table-diagnostic">
 			<!-- Tous les titres -->
 			<?php
 			$localisations = Localisation::fetchAll();
 			$appareils = Appareil::fetchAll();
+			//$countSubject = count($subject->getGroup()->getOperation()->getSubjects());
 			?>
 			<thead>
 				<tr>
 					<td style="width: 300px;"></td>
 					<?php $i = 0;
 					foreach ($localisations as $locali) : ?>
-						<td><?= Asset::img($locali->getUrlImg(), array("style" => "width: 50 px; height: 25px; margin-right: 10px;", "alt" => $locali->getNom())); ?></td>
+						<td style="vertical-align: bottom;">
+							<?php if (strpos($locali->getUrlImg(), "right") !== false) : ?>
+								<div style="text-align: center;">D</div>
+							<?php elseif (strpos($locali->getUrlImg(), "left") !== false) : ?>
+								<div style="text-align: center;">G</div>
+							<?php endif; ?>
+							<?= Asset::img($locali->getUrlImg(), array("style" => "width: 50 px; height: 25px; margin-right: 5px; margin-left: 5px;", "alt" => $locali->getNom())); ?>
+						</td>
 					<?php $i++;
 					endforeach; ?>
 				</tr>
 			</thead>
 			<tbody>
 				<?php foreach (Diagnostic::fetchAll() as $diagnostic) : ?>
+					<?php
+					$hasDiagnosis = isset($options["diagnostics"][$diagnostic->getId()]);
+					?>
 					<tr>
 						<!-- Titre des diagnostics -->
-						<td>
+						<th>
 							<div class="form-check form-switch">
 								<label id="form_diagnostic_label_<?= $diagnostic->getId(); ?>" for="form_diagnostic_<?= $diagnostic->getId() ?>" class="form-check-label"><?= $diagnostic->getNom() ?></label>
-								<input name="diagnostic_<?= $diagnostic->getId() ?>" id="form_diagnostic_<?= $diagnostic->getId() ?>" type="checkbox" class="form-check-input">
-
+								<input name="diagnostic_<?= $diagnostic->getId() ?>" id="form_diagnostic_<?= $diagnostic->getId() ?>" type="checkbox" class="form-check-input" <?php if ($hasDiagnosis) : ?>checked<?php endif; ?>>
 							</div>
-						</td>
+						</th>
 						<!-- Checkbox des zones atteintes -->
 						<?php foreach ($localisations as $locali) : ?>
 							<td>
@@ -237,10 +248,30 @@ $options = $options;
 									$classes .= " always-disabled";
 									$hidden = true;
 								}
+
+								// Maj affichage du checkbox de la localisation si le diagnostic est coché par défaut
+								if ($hasDiagnosis) {
+									$spotIds = $options["diagnostics"][$diagnostic->getId()];
+									$spots = array();
+									foreach ($spotIds as $value) {
+										$spots[] = Localisation::fetchSingle($value);
+									}
+									$subjectDia = new Subjectdiagnosis($diagnostic, $spots);
+									if ($subjectDia->isLocatedFromId($locali->getId())) $checked = true;
+									if (
+										!$diagnostic->isLocated($locali->getId())
+										|| $diagnostic->isSpotMandatory($locali->getId())
+									) {
+										$disabled = true;
+									}
+								} else {
+									$disabled = true;
+								}
 								?>
-								<input name="diagnostics[<?= $diagnostic->getId() ?>][]" id="form_diagnostic_<?= $diagnostic->getId() ?>" value="<?= $locali->getId() ?>" type="checkbox" class="form-check-input <?= $classes ?>" <?= $hidden ? "hidden" : null ?> disabled <?= $checked ? "checked" : null ?>>
+								<input name="diagnostics[<?= $diagnostic->getId() ?>][]" id="form_diagnostic_<?= $diagnostic->getId() ?>" value="<?= $locali->getId() ?>" type="checkbox" class="form-check-input <?= $classes ?>" <?= $hidden ? "hidden" : null ?> <?= $disabled ? "disabled" : null ?> <?= $checked ? "checked" : null ?>>
 							</td>
 						<?php endforeach; ?>
+
 						<script>
 							updateCheckboxOnSwitch(<?= $diagnostic->getId(); ?>);
 						</script>

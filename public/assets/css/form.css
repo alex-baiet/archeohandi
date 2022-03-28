@@ -38,3 +38,11 @@
 	background-color: #F5F5F5;
 	padding: 10px;
 }
+
+.table-diagnostic td {
+	text-align: center;
+}
+
+.table-diagnostic th {
+	font-weight: normal;
+}

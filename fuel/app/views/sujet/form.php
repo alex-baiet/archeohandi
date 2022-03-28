@@ -256,7 +256,7 @@ if (!empty($msg)) {
 		<h3>Atteinte invalidante</h3>
 		<p class="text-muted"><em>D : Partie droite, G : Partie gauche</em></p>
 
-		<table class="table table-bordered table-no-padding">
+		<table class="table table-bordered table-no-padding table-diagnostic">
 			<!-- Tous les titres -->
 			<?php
 			$localisations = Localisation::fetchAll();
@@ -290,16 +290,15 @@ if (!empty($msg)) {
 					?>
 					<tr>
 						<!-- Titre des diagnostics -->
-						<td>
+						<th>
 							<div class="form-check form-switch">
 								<label id="form_diagnostic_label_<?= $diagnostic->getId(); ?>" for="form_diagnostic_<?= $diagnostic->getId() ?>" class="form-check-label"><?= $diagnostic->getNom() ?></label>
 								<input name="diagnostic_<?= $diagnostic->getId() ?>" id="form_diagnostic_<?= $diagnostic->getId() ?>" type="checkbox" class="form-check-input" <?php if ($hasDiagnosis) : ?>checked<?php endif; ?>>
-
 							</div>
-						</td>
+						</th>
 						<!-- Checkbox des zones atteintes -->
 						<?php foreach ($localisations as $locali) : ?>
-							<td style="text-align: center;">
+							<td>
 								<?php
 								$classes = "form-check-input";
 								$hidden = false;
