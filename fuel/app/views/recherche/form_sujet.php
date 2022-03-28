@@ -283,8 +283,12 @@ $options = $options;
 		<!-- Pathologies -->
 		<?php foreach (Pathology::fetchAll() as $pathology) : ?>
 			<div class="form-check form-switch">
+				<?php
+				$checked = "";
+				if (isset($options["pathologies"]) && in_array($pathology->getId(), $options["pathologies"])) $checked = " checked";
+				?>
 				<label id="form_pathologies_label_<?= $pathology->getId() ?>" for="form_pathologies_<?= $pathology->getId() ?>" class="form-check-label"><?= $pathology->getName() ?></label>
-				<input name="pathologies[]" id="form_pathologies_<?= $pathology->getId() ?>" value="<?= $pathology->getId() ?>" type="checkbox" class="form-check-input">
+				<input name="pathologies[]" id="form_pathologies_<?= $pathology->getId() ?>" value="<?= $pathology->getId() ?>" type="checkbox" class="form-check-input"<?= $checked ?>>
 			</div>
 		<?php endforeach; ?>
 
