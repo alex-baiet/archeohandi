@@ -77,15 +77,6 @@ $countOp = $countOp;
 										<a title="Consulter #<?= $op->getId(); ?>" href="/public/operations/view/<?= $op->getId() ?>">
 											Consulter
 										</a>
-
-										<?php if (Compte::checkPermission(Compte::PERM_ADMIN, $op->getId())) : ?>
-											<form action="" method="post" id="form_suppr_<?= $op->getId() ?>">
-												<a href="" data-bs-toggle="modal" data-bs-target="#validationPopup"
-													onclick="deleteOperation(<?= $op->getId() ?>)">
-													Supprimer
-												</a>
-											</form>
-										<?php endif; ?>
 									</td>
 								<?php endif; ?>
 							</tr>
@@ -96,12 +87,5 @@ $countOp = $countOp;
 		</div>
 	</div>
 </div>
-
-<?= View::forge("fonction/popup_confirm", array(
-	"title" => "Voulez-vous continuer ?",
-	"bodyText" => "Êtes-vous sûr de vouloir supprimer l'opération ?",
-	"infoText" => "La suppression est irréversible.",
-	"btnName" => "delete_op"
-)); ?>
 
 <?= Asset::css('scrollbar.css'); ?>
