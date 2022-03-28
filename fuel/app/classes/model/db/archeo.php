@@ -181,4 +181,12 @@ class Archeo {
 		}
 	}
 
+	/**
+	 * Renvoie le code html pour afficher l'icone correspondant à l'état.
+	 */
+	public static function getCompleteIcon(bool $isComplete): string {
+		if ($isComplete) return '<i class="bi bi-check-circle-fill" title="La fiche est complète"></i>';
+		else return '<i class="bi bi-exclamation-diamond-fill" title="La fiche n\'est pas complète"></i>';
+	}
+
 }

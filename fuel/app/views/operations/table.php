@@ -1,6 +1,7 @@
 <?php
 // View d'une liste d'opération et de leurs sujets.
 
+use Model\Db\Archeo;
 use Model\Searchresult;
 
 /** @var Searchresult[] Liste des opérations à afficher. */
@@ -12,6 +13,7 @@ $lines = $lines;
 	<thead>
 		<tr>
 			<th>#</th>
+			<th>État</th>
 			<th>Id</th>
 			<th>Auteur de la saisie</th>
 			<th>Nom du site</th>
@@ -28,6 +30,7 @@ $lines = $lines;
 				<?php /* Affichage de l'opération */ ?>
 				<tr>
 					<td class="btn-fold" id="btn_<?= $op->getId() ?>" onclick="NestedTable.switchTableView(`row_subjects_<?= $op->getId() ?>`, `btn_<?= $op->getId() ?>`)"></td>
+					<td><?= Archeo::getCompleteIcon($op->getComplet()) ?></td>
 					<td><?= $op->getId() ?></td>
 					<?php
 					$author = "";
@@ -51,6 +54,7 @@ $lines = $lines;
 									<th colspan="100%">Sujets handicapés de l'opération</th>
 								</tr>
 								<tr>
+									<th>État</th>
 									<th>Id</th>
 									<th>Nom</th>
 									<th>Sexe</th>
@@ -65,6 +69,7 @@ $lines = $lines;
 							<tbody>
 								<?php foreach ($data->subjects as $subject) : ?>
 									<tr><?php /* Affichage d'un sujet */ ?>
+										<td><?= Archeo::getCompleteIcon($subject->getComplet()) ?></td>
 										<td><?= $subject->getId() ?></td>
 										<td><?= $subject->getIdSujetHandicape() ?></td>
 										<td><?= $subject->getSexe() ?></td>
