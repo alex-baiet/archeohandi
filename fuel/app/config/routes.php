@@ -2,7 +2,7 @@
 
 return array(
 
-	'_root_' => '',
+	'_root_' => 'accueil',
 
 	'_404_' => 'welcome/404',
 
