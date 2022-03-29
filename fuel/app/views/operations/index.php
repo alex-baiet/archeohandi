@@ -7,19 +7,11 @@ use Model\Db\Operation;
 use Model\Searchresult;
 
 /** @var Operation[] */
-$operations = $operations;
+$lines = $lines;
 /** @var int */
 $countSubject = $countSubject;
 /** @var int */
 $countOp = $countOp;
-
-$lines = array();
-foreach ($operations as $op) {
-	$line = new Searchresult();
-	$line->operation = $op;
-	$line->subjects = $op->getSubjects();
-	$lines[] = $line;
-}
 
 ?>
 

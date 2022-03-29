@@ -24,16 +24,22 @@ class Controller_Operations extends Controller_Template {
 
 		// Récupération des opérations
 		$operations = Operation::fetchAll();
+		$lines = array();
+		foreach ($operations as $op) {
+			$line = new Searchresult();
+			$line->operation = $op;
+			$line->subjects = $op->getSubjects();
+			$lines[$op->getId()] = $line;
+		}
+		krsort($lines);
+		$data['lines'] = $lines;
 
 		// Calcul nombre de sujets enregistrés
 		$countSubject = intval(Helper::querySelectSingle("SELECT COUNT(id) AS total FROM sujet_handicape")["total"]);
-		$countOp = intval(Helper::querySelectSingle("SELECT COUNT(id) AS total FROM operations")["total"]);
-
-		// Ajout des valeurs à la view.
-		krsort($operations);
-		$data['operations'] = $operations;
 		$data['countSubject'] = $countSubject;
+		$countOp = intval(Helper::querySelectSingle("SELECT COUNT(id) AS total FROM operations")["total"]);
 		$data['countOp'] = $countOp;
+
 		$this->template->title = 'Opérations';
 		$this->template->content = View::forge('operations/index', $data, false);
 	}

@@ -167,6 +167,7 @@ class Operation extends Model {
 			$newOp = new Operation($res);
 			$operations[$newOp->getId()] = $newOp;
 		}
+		// Helper::varDump($operations, true);
 		return $operations;
 	}
 

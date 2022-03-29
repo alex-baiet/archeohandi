@@ -1,7 +1,7 @@
 <?php
 
 use Fuel\Core\Asset;
-use Fuel\Core\Form;
+use Fuel\Core\Response;
 use Fuel\Core\Uri;
 use Model\Db\Compte;
 use Model\Messagehandler;
@@ -13,6 +13,11 @@ $content = $content;
 $title = $title;
 /** @var bool */
 $navActive = isset($navActive) ? $navActive : true;
+
+// if (Uri::current() !== "https://archeohandi.huma-num.fr/public/accueil") {
+// 	Messagehandler::prepareAlert("Le site est actuellement en maintenance.");
+// 	Response::redirect("/accueil");
+// }
 
 ?>
 <!DOCTYPE html>
