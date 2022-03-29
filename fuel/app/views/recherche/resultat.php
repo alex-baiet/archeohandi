@@ -1,6 +1,7 @@
 <?php
 
 use Fuel\Core\View;
+use Model\Db\Compte;
 use Model\Helper;
 use Model\Searchresult;
 
@@ -15,7 +16,11 @@ foreach ($results as $data) {
 
 ?>
 
-<pre style="display: none;">
+<script>
+	Search.setDataId("data");
+</script>
+
+<pre id="data" style="display: none;">
 <?=
 Helper::postQuery("https://archeohandi.huma-num.fr/public/recherche/api", $_POST);
 ?>
@@ -27,7 +32,12 @@ Helper::postQuery("https://archeohandi.huma-num.fr/public/recherche/api", $_POST
 		<button type="submit" name="keepOptions" value="1" class="btn btn-secondary">Modifier la recherche</button>
 	</form>
 
-	<h1>Résultats de la recherche</h1>
+	<h1>
+		Résultats de la recherche
+		<?php if (Compte::checkPermission(Compte::PERM_ADMIN)) : ?>
+			<button class="btn btn-primary" onclick="Search.exportToCSV()">Exporter en CSV</button>
+		<?php endif; ?>
+	</h1>
 	<p class="text-muted mb-4">
 		<b><?= $countOperation ?></b> opérations et <b><?= $countSubject ?></b> sujets handicapés correspondent à votre recherche.
 	</p>
