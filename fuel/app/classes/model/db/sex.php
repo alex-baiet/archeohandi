@@ -4,7 +4,6 @@ namespace Model\Db;
 
 use Fuel\Core\Form;
 use Fuel\Core\Model;
-use Model\Helper;
 
 class Sex extends Model {
 	private static array $values = array(
@@ -46,5 +45,7 @@ class Sex extends Model {
 	public static function exist(string $value): bool {
 		return isset(Sex::$values[$value]);
 	}
+
+	public static function idToName(int $id): string { return Sex::$values[$id]; }
 
 }
