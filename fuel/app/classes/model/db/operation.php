@@ -163,8 +163,9 @@ class Operation extends Model {
 	public static function fetchAll() {
 		$results = Helper::querySelect("SELECT * FROM operations");
 		$operations = array();
-		foreach ($results as $res) {
-			$operations[] = new Operation($res);
+		foreach ($results as $res) {			
+			$newOp = new Operation($res);
+			$operations[$newOp->getId()] = $newOp;
 		}
 		return $operations;
 	}
