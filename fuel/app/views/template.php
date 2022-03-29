@@ -86,9 +86,9 @@ $navActive = isset($navActive) ? $navActive : true;
 						</li>
 
 						<?php /*if (Compte::checkPermission(Compte::PERM_ADMIN)) :*/ ?>
-						<li class="nav-item active">
+						<!-- <li class="nav-item active">
 							<a class="nav-link" href="/public/recherche">Rechercher</a>
-						</li>
+						</li> -->
 						<?php /*endif*/ ?>
 
 						<li class="nav-item active">

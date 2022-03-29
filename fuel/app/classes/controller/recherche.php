@@ -9,6 +9,7 @@ use Model\Db\Diagnostic;
 use Model\Db\Operation;
 use Model\Db\Sujethandicape;
 use Model\Helper;
+use Model\Messagehandler;
 use Model\Searchresult;
 
 class Controller_Recherche extends Controller_Template {
@@ -36,6 +37,33 @@ class Controller_Recherche extends Controller_Template {
 
 		$data = array();
 
+		// Récupération des infos selon la recherche
+		$json = Helper::postQuery("https://archeohandi.huma-num.fr/public/recherche/api", $_POST);
+		$results = array();
+		if ($json == false) {
+			Messagehandler::prepareAlert("Un problème est survenu lors de la recherche des résultats.", "danger");
+		} else {
+			$jsonArray = json_decode($json, true);
+			foreach ($jsonArray as $key => $searchResultArray) {
+				$results[$key] = Searchresult::fromArray($searchResultArray);
+			}
+		}
+		
+		// Stockage des options de recherche en cas de retour à la page de choix de la recherche
+		Helper::startSession();
+		$_SESSION["searchOptions"] = $_POST;
+
+		$data["results"] = $results;
+
+		$this->template->title = 'Résultat recherche';
+		$this->template->content = View::forge('recherche/resultat', $data);
+	}
+
+	/** Page d'affichage des résultats de recherche */
+	public function action_api() {
+		// if (!Compte::checkPermission(Compte::PERM_WRITE)) return Response::forge("401", 401);
+		if (empty($_POST)) return Response::forge("403", 0);
+
 		// Définition des modèles de recherche
 		$refOp = new Operation($_POST);
 		$refSubject = new Sujethandicape($_POST);
@@ -47,21 +75,20 @@ class Controller_Recherche extends Controller_Template {
 			$searchRes = new Searchresult();
 			$searchRes->operation = $op;
 			$resSu = $this->searchSubjects($refSubject, $op);
-			$searchRes->subjects = $resSu;
-			$results[] = $searchRes;
+			if (!empty($resSu)) {
+				$searchRes->subjects = $resSu;
+				$results[$op->getId()] = $searchRes->toArray();
+			}
 		}
 
-		// Stockage des options de recherche en cas de retour à la page de choix de la recherche
-		Helper::startSession();
-		$_SESSION["searchOptions"] = $_POST;
-
-		$data["results"] = $results;
-
-		$this->template->title = 'Résultat recherche';
-		$this->template->content = View::forge('recherche/resultat', $data);
+		$json = json_encode($results, JSON_PRETTY_PRINT);
+		return Response::forge($json);
 	}
 
-	/** Récupère toutes les opérations correspondant à l'opération de recherche donné. */
+	/** 
+	 * Récupère toutes les opérations correspondant à l'opération de recherche donné.
+	 * @return Operation[]
+	 */
 	private function searchOperations(Operation $refOp): array {
 		$query = DB::select(
 			"operations.id", "annee", "id_commune", "adresse", "operations.X", "operations.Y", "id_organisme", "id_type_op", "EA", "OA", "patriarche",
@@ -108,6 +135,7 @@ class Controller_Recherche extends Controller_Template {
 	/**
 	 * Récupère tous les sujets correspondant au sujet de recherche donné.
 	 * @param Operation $opParent Operation parent au sujet.
+	 * @return Sujethandicape[]
 	 */
 	private function searchSubjects(Sujethandicape $refSubject, Operation $opParent): array {
 		$query = DB::select("sujet.id", "id_sujet_handicape", "age_min", "age_max", "sexe", "dating_min", "dating_max", "milieu_vie", "contexte", "contexte_normatif",

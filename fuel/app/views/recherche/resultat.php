@@ -1,6 +1,7 @@
 <?php
 
 use Fuel\Core\View;
+use Model\Helper;
 use Model\Searchresult;
 
 /** @var Searchresult[] */
@@ -13,6 +14,12 @@ foreach ($results as $data) {
 }
 
 ?>
+
+<pre style="display: none;">
+<?=
+Helper::postQuery("https://archeohandi.huma-num.fr/public/recherche/api", $_POST);
+?>
+</pre>
 
 <div class="container">
 

@@ -203,4 +203,24 @@ class Helper {
 
 		return $result;
 	}
+
+	/** Récupère le contenu d'une page a l'aide d'une requête POST. */
+	public static function postQuery(string $url, array $postFields): string {
+		// url-ify the data for the POST
+		$fieldsString = http_build_query($postFields);
+
+		// open connection
+		$ch = curl_init();
+
+		// set the url, number of POST vars, POST data
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_POST, true);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $fieldsString);
+
+		// So that curl_exec returns the contents of the cURL; rather than echoing it
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
+
+		// execute post
+		return curl_exec($ch);
+	}
 }
