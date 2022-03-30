@@ -15,12 +15,13 @@ class Subject extends Archeo {
 		"contexte_normatif",
 		"comment_contexte",
 		"comment_diagnostic",
+		"mobiliers",
 		"description_mobilier",
 		"type_depot",
 		"type_sepulture",
 		"num_inventaire",
 		"adresse",
-		"id_groupe_sujets",
+		"chronologie",
 		"date_ajout",
 		"donnees_genetiques",
 		"pathologies_sujet",
@@ -43,6 +44,7 @@ class Subject extends Archeo {
 	contexte_normatif = null;
 	comment_contexte = null;
 	comment_diagnostic = null;
+	mobiliers = null;
 	description_mobilier = null;
 	id_type_depot = null;
 	type_depot = null;
@@ -52,6 +54,7 @@ class Subject extends Archeo {
 	adresse = null;
 	num_inventaire = null;
 	id_groupe_sujets = null;
+	chronologie = null;
 	date_ajout = null;
 	donnees_genetiques = null;
 	pathologies_sujet = null;
@@ -80,6 +83,7 @@ class Subject extends Archeo {
 		this.mergeValue(data, "contexte_normatif", "contexte_normatif", Archeo.STRING);
 		this.mergeValue(data, "comment_contexte", "comment_contexte", Archeo.STRING);
 		this.mergeValue(data, "comment_diagnostic", "comment_diagnostic", Archeo.STRING);
+		this.mergeValue(data, "mobiliers", "mobiliers", Archeo.STRING);
 		this.mergeValue(data, "description_mobilier", "description_mobilier", Archeo.STRING);
 		this.mergeValue(data, "id_type_depot", "id_type_depot", Archeo.NUMBER);
 		this.mergeValue(data, "type_depot", "type_depot", Archeo.NUMBER);
@@ -89,6 +93,7 @@ class Subject extends Archeo {
 		this.mergeValue(data, "adresse", "adresse", Archeo.NUMBER);
 		this.mergeValue(data, "num_inventaire", "num_inventaire", Archeo.NUMBER);
 		this.mergeValue(data, "id_groupe_sujets", "id_groupe_sujets", Archeo.NUMBER);
+		this.mergeValue(data, "chronologie", "chronologie", Archeo.STRING);
 		this.mergeValue(data, "date_ajout", "date_ajout", Archeo.STRING);
 		this.mergeValue(data, "donnees_genetiques", "donnees_genetiques", Archeo.STRING);
 		this.mergeValue(data, "pathologies_sujet", "pathologies_sujet", Archeo.STRING);

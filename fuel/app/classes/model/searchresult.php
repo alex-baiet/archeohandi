@@ -32,6 +32,14 @@ class Searchresult {
 			$subArray["type_sepulture"] = $sub->getTypeSepulture()->getNom();
 			$subArray["adresse"] = $sub->getDepot()->getAdresse();
 			$subArray["num_inventaire"] = $sub->getDepot()->getNumInventaire();
+			$subArray["chronologie"] = $sub->getGroup()->getChronology()->getName();
+
+			// Ajout mobilier
+			$furnitures = array();
+			foreach ($sub->getFurnitures() as $fur) {
+				$furnitures[] = $fur->getNom();
+			}
+			$subArray["mobiliers"] = implode(", ", $furnitures);
 
 			// Ajout pathologies
 			$pathologies = array();
