@@ -1,7 +1,7 @@
 class SearchResult {
 	/** @type {Operation} */
 	operation = null;
-	/** @type {Subject[]} */
+	/** @type {Map<number, any[]>} */
 	subjects = [];
 
 	constructor(operation, subjects) {

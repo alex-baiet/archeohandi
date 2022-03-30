@@ -14,7 +14,14 @@ class Searchresult {
 	/** Renvoie l'array des données sans les classes englobantes. */
 	public function toArray(): array {
 		$arr = array();
-		$arr["operation"] = $this->operation->toArray();
+
+		// Transformation opération
+		$opArray = $this->operation->toArray();
+		$opArray["organisme"] = $this->operation->getOrganisme()->getNom();
+		$opArray["type_operation"] = $this->operation->getTypeOperation()->getNom();
+		$arr["operation"] = $opArray;
+
+		// Transformation sujets
 		$arr["subjects"] = array();
 		foreach($this->subjects as $sub) {
 			$arr["subjects"][$sub->getId()] = $sub->toArray();
@@ -33,6 +40,7 @@ class Searchresult {
 			$subject = new Sujethandicape($sub);
 			$res->subjects[$subject->getId()] = $subject;
 		}
+		krsort($res->subjects);
 
 		return $res;
 	}

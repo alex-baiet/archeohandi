@@ -48,7 +48,8 @@ class Controller_Recherche extends Controller_Template {
 				$results[$key] = Searchresult::fromArray($searchResultArray);
 			}
 		}
-		
+		krsort($results);
+
 		// Stockage des options de recherche en cas de retour à la page de choix de la recherche
 		Helper::startSession();
 		$_SESSION["searchOptions"] = $_POST;
@@ -92,8 +93,8 @@ class Controller_Recherche extends Controller_Template {
 	private function searchOperations(Operation $refOp): array {
 		$query = DB::select(
 			"operations.id", "annee", "id_commune", "adresse", "operations.X", "operations.Y", "id_organisme", "id_type_op", "EA", "OA", "patriarche",
-			"numero_operation", "arrete_prescription", "responsable", "anthropologues", "paleopathologistes", "bibliographie", "date_ajout", "complet"
-		)->from("operations");
+			"numero_operation", "arrete_prescription", "responsable", "anthropologues", "paleopathologistes", "bibliographie", "date_ajout", "complet",)
+			->from("operations");
 
 		if ($refOp->getId() !== null) $query->where("operations.id", "=", $refOp->getId());
 		if ($refOp->getIdCommune() !== null) $query->where("id_commune", "=", $refOp->getIdCommune());

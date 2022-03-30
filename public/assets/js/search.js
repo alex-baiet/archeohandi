@@ -97,7 +97,6 @@ class Search {
 		this._data = new Map();
 		for (let [idOp, pair] of Object.entries(json)) {
 			idOp = Number(idOp);
-			console.log(idOp);
 
 			// Chargement operation
 			const operation = new Operation(pair["operation"]);
