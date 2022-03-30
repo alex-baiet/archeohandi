@@ -8,7 +8,7 @@ var lastPersonNum = new Map();
 /** @type {HTMLElement[]} Contient tous les champs d'autocomplétion. */
 var autocompleteField = [];
 
-//#region CopyInput
+//#region CopyInput (Gestion des champs multiples)
 /** @type {Map<string, number>} Contient le dernier numéro ajouté pour chaque nom. */
 var numCounter = new Map();
 /** @type {Map<string, HTMLElement} Contient les elements original */
@@ -95,14 +95,21 @@ function addCopy(name, autoComplete = null) {
 function removeCopy(name, num) {
 	const parent = document.getElementById(`form_${name}_parent`);
 	const id = `form_${name}_copy_${num}`;
+	/** @type {HTMLInputElement} */
 	let elem = document.getElementById(id);
 	if (parent.childElementCount > 1) {
+		// Suppression de l'élément
 		let isOriginal = getOriginalCopy(name).id == id;
 		elem.remove();
 		// Remplacement de la node original de copie.
 		if (isOriginal) {
 			originals.set(name, parent.children[0]);
 		}
+	} else {
+		// Suppression impossible, deja plus qu'un seul élément
+		// Suppression contenu du champ à la place
+		const input = document.getElementById(`form_${name}_${num}`);
+		input.value = null;
 	}
 }
 

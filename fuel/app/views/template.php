@@ -6,7 +6,6 @@ use Fuel\Core\Uri;
 use Model\Constants;
 use Model\Db\Compte;
 use Model\Messagehandler;
-use Model\Redirect;
 
 /** @var string */
 $content = $content;
