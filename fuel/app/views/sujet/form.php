@@ -293,7 +293,8 @@ if (!empty($msg)) {
 						<th>
 							<div class="form-check form-switch">
 								<label id="form_diagnostic_label_<?= $diagnostic->getId(); ?>" for="form_diagnostic_<?= $diagnostic->getId() ?>" class="form-check-label"><?= $diagnostic->getNom() ?></label>
-								<input name="diagnostic_<?= $diagnostic->getId() ?>" id="form_diagnostic_<?= $diagnostic->getId() ?>" type="checkbox" class="form-check-input" <?php if ($hasDiagnosis) : ?>checked<?php endif; ?>>
+								<input name="diagnostic_<?= $diagnostic->getId() ?>" id="form_diagnostic_<?= $diagnostic->getId() ?>" type="checkbox" class="form-check-input" <?php if ($hasDiagnosis) : ?>checked<?php endif; ?>
+									onchange="FormSujet.updatePrevalence(<?= $diagnostic->getId() ?>, this.checked ? 1 : -1)">
 							</div>
 						</th>
 						<!-- Checkbox des zones atteintes -->
@@ -330,11 +331,12 @@ if (!empty($msg)) {
 						<?php endforeach; ?>
 						
 						<?php /* Prévalence */ ?>
-						<td style="text-align:center;"><?= $operation->countConcernedSubject($diagnostic->getId()) ?></td>
+						<td style="text-align:center;" id="count_concerned_<?= $diagnostic->getId() ?>"><?= $operation->countConcernedSubject($diagnostic->getId()) ?></td>
 						<td style="text-align:center;">
-							<input type="text" name="observables[<?= $diagnostic->getId() ?>]" value="<?= $operation->getObservable($diagnostic->getId()) ?>" class="form-control" style="padding: 3px 12px 3px 12px;">
+							<input type="text" id="count_observable_<?= $diagnostic->getId() ?>" name="observables[<?= $diagnostic->getId() ?>]" value="<?= $operation->getObservable($diagnostic->getId()) ?>" class="form-control" style="padding: 3px 12px 3px 12px;"
+								onchange="FormSujet.updatePrevalence(<?= $diagnostic->getId() ?>)">
 						</td>
-						<td style="text-align:center;"><?= $operation->prevalence($diagnostic->getId()) * 1000.0 ?></td>
+						<td style="text-align:center;" id="prevalence_<?= $diagnostic->getId() ?>"><?= round($operation->prevalence($diagnostic->getId()) * 1000.0) ?></td>
 
 						<script>
 							updateCheckboxOnSwitch(<?= $diagnostic->getId(); ?>);

@@ -49,4 +49,29 @@ class FormSujet {
 
 		out.innerText = txt;
 	}
+
+	/** Met à jour la prévalence et données attachés en direct. */
+	static updatePrevalence(numDiagnostic, toAdd=0) {
+
+		const concerned = document.getElementById(`count_concerned_${numDiagnostic}`);
+		const observables = document.getElementById(`count_observable_${numDiagnostic}`);
+		const prevalence = document.getElementById(`prevalence_${numDiagnostic}`);
+
+		if (toAdd !== 0) {
+			// Maj nombre de cas
+			concerned.innerHTML = Number(concerned.innerHTML) + toAdd;
+		}
+
+		// Maj prévalence
+		let valuePreva = null;
+		if (observables.value == 0) valuePreva = 1000;
+		else {
+			valuePreva = 1000 * Number(concerned.innerHTML) / Number(observables.value); 
+			if (valuePreva > 1000) valuePreva = 1000
+		}
+
+		console.log(valuePreva);
+		prevalence.innerHTML = Math.round(valuePreva);
+
+	}
 }
