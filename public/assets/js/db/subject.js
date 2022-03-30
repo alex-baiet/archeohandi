@@ -22,8 +22,10 @@ class Subject extends Archeo {
 		"adresse",
 		"id_groupe_sujets",
 		"date_ajout",
-		"complet",
 		"donnees_genetiques",
+		"pathologies_sujet",
+		"appareils_compensatoires",
+		"complet",
 	];
 
 	id = null;
@@ -50,8 +52,10 @@ class Subject extends Archeo {
 	num_inventaire = null;
 	id_groupe_sujets = null;
 	date_ajout = null;
-	complet = null;
 	donnees_genetiques = null;
+	pathologies_sujet = null;
+	appareils_compensatoires = null;
+	complet = null;
 
 	/**
 	 * Construit un sujet handicapé en fonction des données indiqués.
@@ -84,8 +88,10 @@ class Subject extends Archeo {
 		this.mergeValue(data, "num_inventaire", "num_inventaire", Archeo.NUMBER);
 		this.mergeValue(data, "id_groupe_sujets", "id_groupe_sujets", Archeo.NUMBER);
 		this.mergeValue(data, "date_ajout", "date_ajout", Archeo.STRING);
-		this.mergeValue(data, "complet", "complet", Archeo.NUMBER);
 		this.mergeValue(data, "donnees_genetiques", "donnees_genetiques", Archeo.STRING);
+		this.mergeValue(data, "pathologies_sujet", "pathologies_sujet", Archeo.STRING);
+		this.mergeValue(data, "appareils_compensatoires", "appareils_compensatoires", Archeo.STRING);
+		this.mergeValue(data, "complet", "complet", Archeo.NUMBER);
 	}
 
 	/** Renvoie la liste des champs ordonnés disponible. */

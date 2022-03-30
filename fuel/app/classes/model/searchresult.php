@@ -32,6 +32,19 @@ class Searchresult {
 			$subArray["type_sepulture"] = $sub->getTypeSepulture()->getNom();
 			$subArray["adresse"] = $sub->getDepot()->getAdresse();
 			$subArray["num_inventaire"] = $sub->getDepot()->getNumInventaire();
+
+			$pathologies = array();
+			foreach ($sub->getPathologies() as $pat) {
+				$pathologies[] = $pat->getName();
+			}
+			$subArray["pathologies_sujet"] = implode(", ", $pathologies);
+
+			$items = array();
+			foreach ($sub->getItemsHelp() as $item) {
+				$items[] = $item->getName();
+			}
+			$subArray["appareils_compensatoires"] = implode(", ", $items);
+
 			$arr["subjects"][$sub->getId()] = $subArray;
 		}
 		return $arr;
