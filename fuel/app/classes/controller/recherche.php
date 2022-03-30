@@ -44,7 +44,11 @@ class Controller_Recherche extends Controller_Template {
 			Messagehandler::prepareAlert("Un problème est survenu lors de la recherche des résultats.", "danger");
 		} else {
 			$jsonArray = json_decode($json, true);
+			if ($jsonArray == null) {
+				return Response::forge($json, 500);
+			}
 			foreach ($jsonArray as $key => $searchResultArray) {
+				// echo $searchResultArray["test"];
 				$results[$key] = Searchresult::fromArray($searchResultArray);
 			}
 		}

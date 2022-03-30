@@ -25,6 +25,7 @@ class Subject extends Archeo {
 		"donnees_genetiques",
 		"pathologies_sujet",
 		"appareils_compensatoires",
+		"diagnostics_sujet",
 		"complet",
 	];
 
@@ -55,6 +56,7 @@ class Subject extends Archeo {
 	donnees_genetiques = null;
 	pathologies_sujet = null;
 	appareils_compensatoires = null;
+	diagnostics_sujet = null;
 	complet = null;
 
 	/**
@@ -91,6 +93,7 @@ class Subject extends Archeo {
 		this.mergeValue(data, "donnees_genetiques", "donnees_genetiques", Archeo.STRING);
 		this.mergeValue(data, "pathologies_sujet", "pathologies_sujet", Archeo.STRING);
 		this.mergeValue(data, "appareils_compensatoires", "appareils_compensatoires", Archeo.STRING);
+		this.mergeValue(data, "diagnostics_sujet", "diagnostics_sujet", Archeo.STRING);
 		this.mergeValue(data, "complet", "complet", Archeo.NUMBER);
 	}
 

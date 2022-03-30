@@ -33,17 +33,31 @@ class Searchresult {
 			$subArray["adresse"] = $sub->getDepot()->getAdresse();
 			$subArray["num_inventaire"] = $sub->getDepot()->getNumInventaire();
 
+			// Ajout pathologies
 			$pathologies = array();
 			foreach ($sub->getPathologies() as $pat) {
 				$pathologies[] = $pat->getName();
 			}
 			$subArray["pathologies_sujet"] = implode(", ", $pathologies);
 
+			// Ajout appareils compensatoires
 			$items = array();
 			foreach ($sub->getItemsHelp() as $item) {
 				$items[] = $item->getName();
 			}
 			$subArray["appareils_compensatoires"] = implode(", ", $items);
+
+			// Ajout diagnostics
+			$diagnostics = array();
+			// $arr["test"] = 0;
+			foreach ($sub->getAllDiagnosis() as $dia) {
+				$spots = array();
+				foreach ($dia->getSpots() as $spot) {
+					$spots[] = $spot->getNom();
+				}
+				$diagnostics[] = $dia->getDiagnosis()->getNom()." (".implode(", ", $spots).")";
+			}
+			$subArray["diagnostics_sujet"] = implode(", ", $diagnostics);
 
 			$arr["subjects"][$sub->getId()] = $subArray;
 		}
