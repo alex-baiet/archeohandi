@@ -27,7 +27,12 @@ class Searchresult {
 		// Transformation sujets
 		$arr["subjects"] = array();
 		foreach($this->subjects as $sub) {
-			$arr["subjects"][$sub->getId()] = $sub->toArray();
+			$subArray = $sub->toArray();
+			$subArray["type_depot"] = $sub->getTypeDepot()->getNom();
+			$subArray["type_sepulture"] = $sub->getTypeSepulture()->getNom();
+			$subArray["adresse"] = $sub->getDepot()->getAdresse();
+			$subArray["num_inventaire"] = $sub->getDepot()->getNumInventaire();
+			$arr["subjects"][$sub->getId()] = $subArray;
 		}
 		return $arr;
 	}
