@@ -1,6 +1,7 @@
 class Archeo {
 	static STRING=0;
 	static NUMBER=1;
+	static BOOLEAN=2;
 
 	/**
 	 * Assigne à la valeur indiqué la valeur de data si elle existe, sinon ne fait rien.
@@ -20,6 +21,9 @@ class Archeo {
 					break;
 				case Archeo.NUMBER:
 					this[destination] = Number(data[key]);
+					break;
+				case Archeo.BOOLEAN:
+					this[destination] = Boolean(data[key]);
 					break;
 				default:
 					console.error(`Le type "${type}" n'est pas permis`)

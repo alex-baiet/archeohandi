@@ -34,9 +34,7 @@ Helper::postQuery("https://archeohandi.huma-num.fr/public/recherche/api", $_POST
 
 	<h1>
 		Résultats de la recherche
-		<?php if (Compte::checkPermission(Compte::PERM_ADMIN)) : ?>
-			<button class="btn btn-primary" onclick="Search.exportToCSV()">Exporter en CSV</button>
-		<?php endif; ?>
+		<button class="btn btn-primary" onclick="Search.exportToCSV()">Exporter en CSV</button>
 	</h1>
 	<p class="text-muted mb-4">
 		<b><?= $countOperation ?></b> opérations et <b><?= $countSubject ?></b> sujets handicapés correspondent à votre recherche.

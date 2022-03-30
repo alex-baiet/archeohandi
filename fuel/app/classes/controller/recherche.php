@@ -62,7 +62,7 @@ class Controller_Recherche extends Controller_Template {
 	/** Page d'affichage des résultats de recherche */
 	public function action_api() {
 		// if (!Compte::checkPermission(Compte::PERM_WRITE)) return Response::forge("401", 401);
-		if (empty($_POST)) return Response::forge("403", 0);
+		if (empty($_POST)) return Response::forge("0", 403);
 
 		// Définition des modèles de recherche
 		$refOp = new Operation($_POST);

@@ -3,6 +3,7 @@
 use Fuel\Core\Asset;
 use Fuel\Core\Response;
 use Fuel\Core\Uri;
+use Model\Constants;
 use Model\Db\Compte;
 use Model\Messagehandler;
 use Model\Redirect;
@@ -14,10 +15,12 @@ $title = $title;
 /** @var bool */
 $navActive = isset($navActive) ? $navActive : true;
 
-// if (Uri::current() !== "https://archeohandi.huma-num.fr/public/accueil") {
-// 	Messagehandler::prepareAlert("Le site est actuellement en maintenance.");
-// 	Response::redirect("/accueil");
-// }
+if (Constants::MAINTENANCE === true) {
+	if (Uri::current() !== "https://archeohandi.huma-num.fr/public/accueil") {
+		Messagehandler::prepareAlert("Le site est actuellement en maintenance.");
+		Response::redirect("/accueil");
+	}
+}
 
 ?>
 <!DOCTYPE html>
