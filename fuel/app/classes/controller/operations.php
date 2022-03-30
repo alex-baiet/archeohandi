@@ -171,7 +171,7 @@ class Controller_Operations extends Controller_Template {
 				if (Controller_Operations::DEBUG === true) {
 					Helper::varDump($operation);
 				} else {
-					Response::redirect("/operations");
+					Response::redirect("/operations/view/$id");
 				}
 			} else {
 				// Les données ne sont pas valides : on affiche les problèmes
