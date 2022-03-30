@@ -62,8 +62,6 @@ class Search {
 			csv += "\n";
 		}
 
-		console.log(`CSV actuel :`);
-		console.log(csv)
 		Helper.exportCSV(csv, "resultat_recherche.csv");
 	}
 
@@ -91,7 +89,6 @@ class Search {
 		const container = document.getElementById(this._dataId);
 		const content = container.innerHTML;
 		const json = JSON.parse(content);
-		console.log(json);
 
 		// Transformation en objets
 		this._data = new Map();
@@ -111,6 +108,5 @@ class Search {
 			this._data.set(idOp, result);
 		}
 
-		console.log(this._data);
 	}
 }

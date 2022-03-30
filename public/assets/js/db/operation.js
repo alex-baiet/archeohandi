@@ -3,7 +3,9 @@ class Operation extends Archeo {
 	static _fields = [
 		"id",
 		"annee",
-		"id_commune",
+		"commune",
+		"departement",
+		"region",
 		"adresse",
 		"X",
 		"Y",
@@ -20,11 +22,14 @@ class Operation extends Archeo {
 		"bibliographie",
 		"date_ajout",
 		"complet",
-	]
+	];
 
 	id = null;
 	annee = null;
 	id_commune = null;
+	commune = null;
+	departement = null;
+	region = null;
 	adresse = null;
 	X = null;
 	Y = null;
@@ -53,6 +58,9 @@ class Operation extends Archeo {
 		this.mergeValue(data, "id", "id", Archeo.NUMBER);
 		this.mergeValue(data, "annee", "annee", Archeo.NUMBER);
 		this.mergeValue(data, "id_commune", "id_commune", Archeo.NUMBER);
+		this.mergeValue(data, "commune", "commune", Archeo.NUMBER);
+		this.mergeValue(data, "departement", "departement", Archeo.NUMBER);
+		this.mergeValue(data, "region", "region", Archeo.NUMBER);
 		this.mergeValue(data, "adresse", "adresse", Archeo.STRING);
 		this.mergeValue(data, "X", "X", Archeo.NUMBER);
 		this.mergeValue(data, "Y", "Y", Archeo.NUMBER);

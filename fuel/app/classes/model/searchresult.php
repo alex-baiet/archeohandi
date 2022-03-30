@@ -19,6 +19,9 @@ class Searchresult {
 		$opArray = $this->operation->toArray();
 		$opArray["organisme"] = $this->operation->getOrganisme()->getNom();
 		$opArray["type_operation"] = $this->operation->getTypeOperation()->getNom();
+		$opArray["commune"] = $this->operation->getCommune()->getNom();
+		$opArray["departement"] = $this->operation->getCommune()->getDepartement();
+		$opArray["region"] = $this->operation->getCommune()->getRegion();
 		$arr["operation"] = $opArray;
 
 		// Transformation sujets
