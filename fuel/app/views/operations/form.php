@@ -202,8 +202,16 @@ Asset::js("form.js");
 <div class="row my-2">
 	<div class="col-md-6">
 		<div class="form-floating">
-			<input name="responsable" id="form_responsable" value="<?= $operation->getResponsable() ?>" type="text" class="form-control" placeholder="Responsable de l'opération" maxlength="256" title="Indiquez le responsable de l'opération, de préférence au format Prénom NOM">
+			<input name="responsable" id="form_responsable" value="<?= $operation->getResponsable() ?>" type="text" class="form-control" placeholder="Responsable de l'opération" maxlength="256" title="Indiquez le responsable de l'opération, de préférence au format Prénom NOM" autocomplete="off">
 			<label for="form_responsable">Responsable de l'opération</label>
+			<script>
+				addAutocomplete(
+					"form_responsable",
+					"nom",
+					"personne",
+					[["nom", "LIKE", "%?%", "or"]]
+				);
+			</script>
 		</div>
 	</div>
 </div>
@@ -218,6 +226,13 @@ View::forge("fonction/multiple_input", array(
 	"name" => "anthropologues",
 	"datas" => $anthropologues,
 	"label" => "Anthropologue",
+	"autocompletion" => array(
+		"select" => "nom",
+		"table" => "personne",
+		"where" => array(
+			array("nom", "LIKE", "%?%", "or"),
+		)
+	),
 	"inputAttributes" => array(
 		"maxlength" => "256",
 		"title" => "Indiquez le nom de l'anthropologue au format Prénom NOM"
@@ -235,6 +250,13 @@ View::forge("fonction/multiple_input", array(
 	"name" => "paleopathologistes",
 	"datas" => $paleos,
 	"label" => "Paleopathologiste",
+	"autocompletion" => array(
+		"select" => "nom",
+		"table" => "personne",
+		"where" => array(
+			array("nom", "LIKE", "%?%", "or"),
+		)
+	),
 	"inputAttributes" => array(
 		"maxlength" => "256",
 		"title" => "Indiquez le nom du paléopathologiste au format Prénom NOM"
