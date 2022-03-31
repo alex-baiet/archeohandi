@@ -36,7 +36,6 @@ if (Constants::MAINTENANCE === true) {
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
 	<?= Asset::css('bootstrap/bootstrap.min.css') ?>
 	<?= Asset::css('global.css') ?>
-	<?= Asset::css('button.css') ?>
 	<?= Asset::css('form.css') ?>
 	<?= Asset::css('result.css') ?>
 
@@ -49,7 +48,6 @@ if (Constants::MAINTENANCE === true) {
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	<?= Asset::js('helper.js') ?>
-	<?= Asset::js('button.js') ?>
 	<?= Asset::js('form.js') ?>
 	<?= Asset::js('form_operation.js') ?>
 	<?= Asset::js('form_sujet.js') ?>
@@ -80,7 +78,6 @@ if (Constants::MAINTENANCE === true) {
 </head>
 
 <body>
-	<div class="cRetour"></div>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="position: sticky; top: 0; z-index: 1000;">
 		<div class="container-fluid">
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
