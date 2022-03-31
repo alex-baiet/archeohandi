@@ -97,7 +97,7 @@ class Controller_Recherche extends Controller_Template {
 	private function searchOperations(Operation $refOp): array {
 		$query = DB::select(
 			"operations.id", "annee", "id_commune", "adresse", "operations.X", "operations.Y", "id_organisme", "id_type_op", "EA", "OA", "patriarche",
-			"numero_operation", "arrete_prescription", "responsable", "anthropologues", "paleopathologistes", "bibliographie", "date_ajout", "complet",)
+			"numero_operation", "arrete_prescription", "bibliographie", "date_ajout", "complet",)
 			->from("operations");
 
 		if ($refOp->getId() !== null) $query->where("operations.id", "=", $refOp->getId());

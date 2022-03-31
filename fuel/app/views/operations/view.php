@@ -82,7 +82,7 @@ $sujets = $operation->getSubjects();
 	<div class="row">
 		<div class="col">
 			<div class="p-2">
-				Responsable de l'opération :<?= $operation->getResponsable(); ?>
+				Responsable de l'opération : <?= $operation->getResponsable(); ?>
 			</div>
 		</div>
 		<div class="col">

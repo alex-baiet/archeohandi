@@ -15,7 +15,7 @@ $title = $title;
 $navActive = isset($navActive) ? $navActive : true;
 
 if (Constants::MAINTENANCE === true) {
-	if (Uri::current() !== "https://archeohandi.huma-num.fr/public/accueil") {
+	if (Uri::current() !== "https://archeohandi.huma-num.fr/public/accueil" && !Compte::checkPermission(Compte::PERM_ADMIN)) {
 		Messagehandler::prepareAlert("Le site est actuellement en maintenance.");
 		Response::redirect("/accueil");
 	}

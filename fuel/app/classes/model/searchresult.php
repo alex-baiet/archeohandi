@@ -22,6 +22,9 @@ class Searchresult {
 		$opArray["commune"] = $this->operation->getCommune()->getNom();
 		$opArray["departement"] = $this->operation->getCommune()->getDepartement();
 		$opArray["region"] = $this->operation->getCommune()->getRegion();
+		$opArray["responsable"] = implode(", ", $this->operation->getResponsables());
+		$opArray["anthropologues"] = implode(", ", $this->operation->getAnthropologues());
+		$opArray["paleopathologistes"] = implode(", ", $this->operation->getPaleopathologistes());
 		$arr["operation"] = $opArray;
 
 		// Transformation sujets

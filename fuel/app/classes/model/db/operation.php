@@ -28,23 +28,22 @@ class Operation extends Model {
 	private string $patriarche = "";
 	private string $numeroOperation = "";
 	private string $arretePrescription = "";
-	private string $responsable = "";
-	private string $anthropologues = "";
-	private string $paleopathologistes = "";
 	private string $bibliographie = "";
 	private ?string $dateAjout = null;
 	private bool $complet = false;
 
+	/** @var string[]|null */
+	private ?array $responsables = null;
+	/** @var string[]|null */
+	private ?array $anthropologues = null;
+	/** @var string[]|null */
+	private ?array $paleopathologistes = null;
 	/** @var Commune|null */
 	private $commune = null;
 	/** @var Typeoperation|null */
 	private $typeOp = null;
 	/** @var Organisme|null */
 	private $organisme = null;
-	/** @var string[]|unset */
-	private array $anthroArray;
-	/** @var string[]|unset */
-	private array $paleoArray;
 	/** @var Sujethandicape[]|unset */
 	private array $subjects;
 	/** @var Compte|null|unset */
@@ -75,8 +74,8 @@ class Operation extends Model {
 		$this->commune = null;
 		$this->typeOp = null;
 		$this->organisme = null;
-		unset($this->anthroArray);
-		unset($this->paleoArray);
+		unset($this->anthropologues);
+		unset($this->paleopathologistes);
 
 		// Fusion des valeurs
 		Archeo::mergeValue($this->id, $data, "id", "int", true);
@@ -95,27 +94,14 @@ class Operation extends Model {
 		Archeo::mergeValue($this->patriarche, $data, "patriarche");
 		Archeo::mergeValue($this->numeroOperation, $data, "numero_operation");
 		Archeo::mergeValue($this->arretePrescription, $data, "arrete_prescription");
-		Archeo::mergeValue($this->responsable, $data, "responsable");
 		Archeo::mergeValue($this->bibliographie, $data, "bibliographie");
 		Archeo::mergeValue($this->dateAjout, $data, "date_ajout", "string", true);
 		Archeo::mergeValue($this->complet, $data, "complet", "bool");
+		if (isset($data["responsable"])) $this->responsables = array($data["responsable"]);
+		Archeo::mergeValue($this->responsables, $data, "responsables", "array");
+		Archeo::mergeValue($this->anthropologues, $data, "anthropologues", "array");
+		Archeo::mergeValue($this->paleopathologistes, $data, "paleopathologistes", "array");
 
-		if (isset($data["anthropologues"])) {
-			if (is_array($data["anthropologues"])) {
-				$this->anthroArray = array_filter($data["anthropologues"]);
-				$this->anthropologues = implode(',', $this->anthroArray);
-			} else {
-				$this->anthropologues = $data["anthropologues"];
-			}
-		}
-		if (isset($data["paleopathologistes"])) {
-			if (is_array($data["paleopathologistes"])) {
-				$this->paleoArray = array_filter($data["paleopathologistes"]);
-				$this->paleopathologistes = implode(',', $this->paleoArray);
-			} else {
-				$this->paleopathologistes = $data["paleopathologistes"];
-			}
-		}
 		if (isset($data["compte"])) {
 			$this->accounts = array();
 			foreach ($data["compte"] as $login) {
@@ -163,7 +149,7 @@ class Operation extends Model {
 	public static function fetchAll() {
 		$results = Helper::querySelect("SELECT * FROM operations");
 		$operations = array();
-		foreach ($results as $res) {			
+		foreach ($results as $res) {
 			$newOp = new Operation($res);
 			$operations[$newOp->getId()] = $newOp;
 		}
@@ -189,6 +175,8 @@ class Operation extends Model {
 
 		$result = DB::delete("operations")->where("id", "=", $id)->execute();
 		if ($result < 1) return "L'opération n'a pas pû être supprimé";
+
+		Personne::deleteOperationNames($id);
 
 		DB::delete("droit_compte")->where("id_operation", "=", $id)->execute();
 		DB::delete("operation_image")->where("id_operation", "=", $id)->execute();
@@ -224,7 +212,6 @@ class Operation extends Model {
 	public function getPatriarche() { return $this->patriarche; }
 	public function getNumeroOperation() { return $this->numeroOperation; }
 	public function getArretePrescription() { return $this->arretePrescription; }
-	public function getIdResponsableOp() { return $this->idResponsableOp; }
 	public function getBibliographie() { return $this->bibliographie; }
 	public function getDateAjout() { return $this->dateAjout; }
 	public function getComplet() { return $this->complet; }
@@ -254,32 +241,35 @@ class Operation extends Model {
 		return $this->organisme;
 	}
 
-	public function getResponsable(): string {
-		return $this->responsable;
+	public function getResponsables(): array {
+		if ($this->responsables === null) {
+			if ($this->getId() === null) $this->responsables = array();
+			else $this->responsables = Personne::fetchAllOperation($this->getId(), "etre_responsable");
+		}
+		return $this->responsables;
+	}
+
+	public function getResponsable(): ?string {
+		$arr = $this->getResponsables();
+		return !empty($arr[0]) ? $arr[0] : null;
 	}
 
 	/** @return string[] */
 	public function getAnthropologues(): array {
-		if (!isset($this->anthroArray)) {
-			if (empty($this->anthropologues)) {
-				$this->anthroArray = array();
-			} else {
-				$this->anthroArray = explode(',', $this->anthropologues);
-			}
+		if ($this->anthropologues === null) {
+			if ($this->getId() === null) $this->anthropologues = array();
+			else $this->anthropologues = Personne::fetchAllOperation($this->getId(), "etre_anthropologue");
 		}
-		return $this->anthroArray;
+		return $this->anthropologues;
 	}
 
 	/** @return string[] */
 	public function getPaleopathologistes(): array {
-		if (!isset($this->paleoArray)) {
-			if (empty($this->paleopathologistes)) {
-				$this->paleoArray = array();
-			} else {
-				$this->paleoArray = explode(',', $this->paleopathologistes);
-			}
+		if ($this->paleopathologistes === null) {
+			if ($this->getId() === null) $this->paleopathologistes = array();
+			else $this->paleopathologistes = Personne::fetchAllOperation($this->getId(), "etre_paleopathologiste");
 		}
-		return $this->paleoArray;
+		return $this->paleopathologistes;
 	}
 
 	/** @return Sujethandicape[] Liste de tous les sujets de l'opération. */
@@ -397,9 +387,6 @@ class Operation extends Model {
 	public function setPatriarche(string $value) { $this->patriarche = $value; }
 	public function setNumeroOperation(string $value) { $this->numeroOperation = $value; }
 	public function setArretePrescription(string $value) { $this->arretePrescription = $value; }
-	public function setResponsable(string $value) { $this->responsable = $value; }
-	public function setAnthropologues(string $value) { $this->anthropologues = $value; }
-	public function setPaleopathologistes(string $value) { $this->paleopathologistes = $value; }
 	public function setBibliographie(string $value) { $this->bibliographie = $value; }
 
 	public function setIdCommune(int $value) {
@@ -521,6 +508,12 @@ class Operation extends Model {
 				->execute();
 		}
 
+		// Maj des personnes
+		Personne::deleteOperationNames($this->getId());
+		Personne::saveOperationNames($this->getId(), "etre_responsable", $this->getResponsables());
+		Personne::saveOperationNames($this->getId(), "etre_paleopathologiste", $this->getPaleopathologistes());
+		Personne::saveOperationNames($this->getId(), "etre_anthropologue", $this->getAnthropologues());
+
 		// Maj droits des comptes
 		if (isset($this->accounts)) {
 			DB::delete("droit_compte")->where("id_operation", "=", $this->id)->where("droit", "!=", Compte::PERM_ADMIN)->execute();
@@ -619,9 +612,6 @@ class Operation extends Model {
 			"patriarche" => $this->patriarche,
 			"numero_operation" => $this->numeroOperation,
 			"arrete_prescription" => $this->arretePrescription,
-			"responsable" => $this->responsable,
-			"anthropologues" => $this->anthropologues,
-			"paleopathologistes" => $this->paleopathologistes,
 			"bibliographie" => $this->bibliographie,
 			"complet" => $this->complet
 		);

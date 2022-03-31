@@ -4,6 +4,8 @@ use Fuel\Core\Controller_Template;
 use Fuel\Core\DB;
 use Fuel\Core\View;
 use Model\Db\Compte;
+use Model\Db\Operation;
+use Model\Db\Personne;
 use Model\Db\Sujethandicape;
 use Model\Helper;
 use Model\Script\Import;
@@ -247,4 +249,35 @@ class Controller_Script extends Controller_Template {
 
 		return null;
 	}
+
+	/** Copie toutes les informations des personnes contenus dans les operations vers les tables personnes, anthropo, etc. */
+	public function action_reformat_personne() {
+		if (!$this->checkPermission()) return;
+		echo "<pre>";
+
+		$operations = Helper::querySelect("SELECT * FROM operations");
+
+		foreach ($operations as $op) {
+			// Récupération des noms
+			$responsable = $op["responsable"];
+			$anthropologues = explode(",", $op["anthropologues"]);
+			$paleopathologistes = explode(",", $op["paleopathologistes"]);
+
+			// Ajout dans "personne"
+			$this->addPersonne($op["id"], "etre_responsable", $responsable);
+			foreach ($anthropologues as $anthr) $this->addPersonne($op["id"], "etre_anthropologue", $anthr);
+			foreach ($paleopathologistes as $paleo) $this->addPersonne($op["id"], "etre_paleopathologiste", $paleo);
+		}
+
+		echo "</pre>";
+		return "";
+	}
+
+	public function addPersonne(int $idOp, string $tableLink, string $name) {
+		$person = new Personne(null, $idOp, $name, $tableLink);
+		echo "Resultat ajout : ";
+		var_dump($person->saveOnDB());
+		echo "\n";
+	}
+
 }
