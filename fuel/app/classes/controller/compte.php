@@ -3,6 +3,7 @@
 use Fuel\Core\Controller_Template;
 use Fuel\Core\Response;
 use Fuel\Core\View;
+use Model\Constants;
 use Model\Db\Compte;
 use Model\Helper;
 use Model\Messagehandler;
@@ -20,7 +21,6 @@ class Controller_Compte extends Controller_Template {
 	public function action_creation() {
 		Compte::checkTestRedirect("Vous êtes déjà connecté.", Compte::checkPermission(Compte::PERM_DISCONNECTED) || Compte::checkPermission(Compte::PERM_ADMIN));
 
-		$this->template->title = 'Créer un compte';
 		$data = array();
 		if (isset($_POST["create"])) {
 			$_POST["prenom"] = Helper::secureString($_POST["prenom"]);
@@ -80,6 +80,7 @@ class Controller_Compte extends Controller_Template {
 			}
 		}
 
+		$this->template->title = 'Créer un compte';
 		$this->template->content = View::forge('compte/creation', $data);
 	}
 
@@ -99,7 +100,7 @@ class Controller_Compte extends Controller_Template {
 		}
 
 		$data = array();
-		$this->template->title = 'Accueil';
+		$this->template->title = 'Connexion';
 		$this->template->content = View::forge('compte/connexion', $data);
 	}
 

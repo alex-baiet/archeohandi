@@ -104,7 +104,7 @@ class Controller_Script extends Controller_Template {
 			// $subject->saveOnDB();
 		}
 		
-		$this->template->title = 'Import CSV | Résultats';
+		$this->template->title = 'Script';
 		$this->template->content = '';
 	}
 
@@ -142,7 +142,7 @@ class Controller_Script extends Controller_Template {
 			// $subject->saveOnDB();
 		}
 		
-		$this->template->title = 'Import CSV | Résultats';
+		$this->template->title = 'Script';
 		$this->template->content = '';
 	}
 
@@ -181,7 +181,7 @@ class Controller_Script extends Controller_Template {
 			$data["file"] = "";
 		}
 
-		$this->template->title = 'Import CSV | Résultats';
+		$this->template->title = 'Script';
 		$this->template->content = View::forge('script/add_insee', $data, false);
 	}
 
@@ -222,7 +222,7 @@ class Controller_Script extends Controller_Template {
 			echo "Nombre total de remplacement : $countReplaced<br>";
 		}
 
-		$this->template->title = 'Import CSV | Résultats';
+		$this->template->title = 'Script';
 		$this->template->content = View::forge('script/add_insee', $data, false);
 	}
 

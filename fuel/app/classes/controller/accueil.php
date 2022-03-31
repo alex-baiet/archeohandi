@@ -2,6 +2,7 @@
 
 use Fuel\Core\Controller_Template;
 use Fuel\Core\View;
+use Model\Constants;
 
 class Controller_Accueil extends Controller_Template {
   public function action_index(){

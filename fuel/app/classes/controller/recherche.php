@@ -60,7 +60,7 @@ class Controller_Recherche extends Controller_Template {
 
 		$data["results"] = $results;
 
-		$this->template->title = 'Résultat recherche';
+		$this->template->title = 'Résultat de recherche';
 		$this->template->content = View::forge('recherche/resultat', $data);
 	}
 

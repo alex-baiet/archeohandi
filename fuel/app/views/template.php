@@ -26,7 +26,7 @@ if (Constants::MAINTENANCE === true) {
 <html lang="fr">
 
 <head>
-	<title><?= $title; ?></title>
+	<title>Archeohandi | <?= $title; ?></title>
 	<meta charset="utf-8">
 	<meta name="author" content="Virgile Louin">
 	<meta name="author" content="Alex BAIET">

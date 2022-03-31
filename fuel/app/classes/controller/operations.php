@@ -69,7 +69,7 @@ class Controller_Operations extends Controller_Template {
 		}
 
 		$data["lines"] = $lines;
-		$this->template->title = 'Opérations';
+		$this->template->title = 'Opérations personnelles';
 		$this->template->content = View::forge('operations/personnel', $data, false);
 	}
 
@@ -96,7 +96,7 @@ class Controller_Operations extends Controller_Template {
 			}
 		}
 
-		$this->template->title = 'Ajouter une opération';
+		$this->template->title = 'Nouvelle opération';
 		$data = array();
 		if (isset($operation)) $data["operation"] = $operation;
 		$this->template->content = View::forge('operations/add', $data);
@@ -116,7 +116,7 @@ class Controller_Operations extends Controller_Template {
 
 		// Ajout des données à la view
 		$data["operation"] = $operation;
-		$this->template->title = 'Consultation de l\'opération '.$operation->getNomOp();
+		$this->template->title = 'Consultation de l\'opération '.$id;
 		$this->template->content = View::forge(
 			'operations/template',
 			array("content" => View::forge("operations/view", $data))
@@ -137,7 +137,7 @@ class Controller_Operations extends Controller_Template {
 
 		// Ajout des données à la view
 		$data["operation"] = $operation;
-		$this->template->title = 'Consultation de l\'opération '.$operation->getNomOp();
+		$this->template->title = 'Sujets de l\'opération '.$id;
 		$this->template->content = View::forge(
 			'operations/template',
 			array("content" => View::forge("operations/sujets", $data))
