@@ -45,7 +45,7 @@ function getNumNewCopy(name) {
 /**
  * Copy un champ input.
  * @param {string} name Nom de l'input. L'id du parent à copier doit être au format `form_${name}`.
- * @param {string} autoComplete Type de l'autocomplétion à ajouter. Laissez null pour ne pas ajouter d'autocomplétion.
+ * @param {string[]} autoComplete Type de l'autocomplétion à ajouter. Laissez null pour ne pas ajouter d'autocomplétion.
  * @returns {number} Numéro de la nouvelle copy.
  */
 function addCopy(name, autoComplete = null) {
@@ -80,7 +80,7 @@ function addCopy(name, autoComplete = null) {
 		if (listCopy !== null) listCopy[0].remove();
 
 		// Ajout nouvelle auto complétion
-		addAutocompleteOld(`${id}_${num}`, autoComplete);
+		addAutocomplete(`${id}_${num}`, autoComplete["select"], autoComplete["table"], autoComplete["where"]);
 	}
 
 	return num;
@@ -268,6 +268,7 @@ function autocomplete(id, select, table, where, onResult) {
  * Les "?" sont remplacé par la valeur du champ input appartenant à l'id.
  */
 function addAutocomplete(id, select, table, where) {
+	console.log(where);
 	// Récupération du champ
 	/** @type {HTMLFormElement} */
 	let input = document.getElementById(id);

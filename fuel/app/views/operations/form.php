@@ -277,7 +277,15 @@ View::forge("fonction/multiple_input", array(
 	"name" => "compte",
 	"datas" => $logins,
 	"label" => "Nom du compte",
-	"autocompletion" => "compte",
+	"autocompletion" => array(
+		"select" => "login",
+		"table" => "compte",
+		"where" => array(
+			array("login", "LIKE", "?%", "or"),
+			array("prenom", "LIKE", "?%", "or"),
+			array("nom", "LIKE", "?%", "or"),
+		)
+	),
 	"inputAttributes" => array(
 		"maxlength" => "256",
 		"title" => "Indiquez le nom d'un compte autorisé à modifier les sujets de l'opération"

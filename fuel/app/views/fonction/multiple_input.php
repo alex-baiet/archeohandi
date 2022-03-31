@@ -10,7 +10,7 @@ $name = $name;
 $datas = $datas;
 /** @var string */
 $label = $label;
-/** @var string|unset */
+/** @var array|unset Array au format {"select": select, "table": table, "where": conditions}. Voir description addAutocomplete dans form.js */
 if (isset($autocompletion)) $autocompletion = $autocompletion;
 /** @var bool */
 $imageInput = isset($imageInput) ? $imageInput : false;
@@ -18,6 +18,19 @@ $imageInput = isset($imageInput) ? $imageInput : false;
 $inputAttributes = isset($inputAttributes) ? $inputAttributes : array();
 
 if (empty($datas)) $datas[] = "";
+
+if (isset($autocompletion)) {
+	// Création de l'array en js équivalent
+	$completionParams = "{
+		'select': `{$autocompletion['select']}`,
+		'table': `{$autocompletion['table']}`,
+		'where': [";
+	$wheres = array();
+	foreach ($autocompletion["where"] as $w) {
+		$wheres[] = "[`{$w[0]}`, `{$w[1]}`, `{$w[2]}`, `{$w[3]}`]";
+	}
+	$completionParams .= implode(", ", $wheres)."]}";
+}
 
 ?>
 
@@ -64,7 +77,13 @@ if (empty($datas)) $datas[] = "";
 							>
 						<label for="<?= "form_{$name}_$i" ?>" id="form_<?= $name ?>_label_<?= $i ?>"><?= $label ?></label>
 						<?php if (isset($autocompletion)) : ?>
-							<script>addAutocompleteOld("form_<?= $name ?>_<?= $i; ?>", "<?= $autocompletion ?>");</script>
+							<script>
+								function prepareField() {
+									const autocomplete = <?= $completionParams ?>;
+									addAutocomplete("form_<?= $name ?>_<?= $i; ?>", autocomplete["select"], autocomplete["table"], autocomplete["where"]);
+								}
+								prepareField();
+							</script>
 						<?php endif; ?>
 					</div>
 				</div>
@@ -95,7 +114,7 @@ if (empty($datas)) $datas[] = "";
 			<?php if ($imageInput) : ?>
 				onclick="addCopyImg('<?= $name; ?>');"
 			<?php else : ?>
-				onclick="addCopy('<?= $name; ?>', <?= isset($autocompletion) ? '\''.$autocompletion.'\'' : 'null' ?>);"
+				onclick='addCopy(`<?= $name; ?>`, <?= isset($autocompletion) ? $completionParams : `null` ?>);'
 			<?php endif; ?>
 			>
 				<i class="bi bi-plus"></i>

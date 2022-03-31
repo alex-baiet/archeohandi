@@ -43,6 +43,7 @@ class Controller_Fonction extends Controller {
 		}
 		return $arr;
 	}
+
 	/**
 	 * Affiche une page de tous les mots permettant de compléter le début de mot passé en POST.
 	 */
