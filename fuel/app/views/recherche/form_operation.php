@@ -40,8 +40,8 @@ Asset::js("form.js");
 			<!-- Departement -->
 			<div class="col-md-6">
 				<div class="form-floating">
-					<input name="departement" id="form_departement" value="<?= Helper::arrayGetValue("departement", $options) ?>" type="search" class="form-control"
-						placeholder="Département" autocomplete="off" title="Indiquez le département de l'opération" oninput="FormOperation.checkDepartementExist()">
+					<input name="departement" id="form_departement" value="<?= Helper::arrayGetValue("departement", $options) ?>" type="text" class="form-control"
+						placeholder="Département" autocomplete="chrome-caca" title="Indiquez le département de l'opération" oninput="FormOperation.checkDepartementExist()">
 					<div class="form-msg-error">Le département n'existe pas.</div>
 					<label for="form_departement">Nom du département</label>
 					<script>
@@ -55,8 +55,8 @@ Asset::js("form.js");
 			<!-- Commune -->
 			<div class="col-md-6">
 				<div class="form-floating">
-					<input name="<?= $nameCom ?>" id="form_<?= $nameCom ?>" value="<?= Helper::arrayGetValue("commune", $options) ?>" type="search" class="form-control"
-						placeholder="Commune" autocomplete="off" title="Indiquez la commune de l'opération" oninput="FormOperation.checkCommuneExist()">
+					<input name="<?= $nameCom ?>" id="form_<?= $nameCom ?>" value="<?= Helper::arrayGetValue("commune", $options) ?>" type="text" class="form-control"
+						placeholder="Commune" autocomplete="caca-chrome" title="Indiquez la commune de l'opération" oninput="FormOperation.checkCommuneExist()">
 					<div class="form-msg-error">La commune n'existe pas.</div>
 					<label for="form_<?= $nameCom ?>">Commune</label>
 					<script>
@@ -82,7 +82,7 @@ Asset::js("form.js");
 			<div class="col md-12">
 				<div class="form-floating">
 					<input name="adresse" id="form_adresse" value="<?= Helper::arrayGetValue("adresse", $options) ?>" type="search" class="form-control"
-						placeholder="Adresse" autocomplete="off" maxlength="256" title="Indiquez l'adresse de l'opération">
+						placeholder="Adresse" autocomplete="utilisez-firefox-ou-autre-mais-pas-chrome" maxlength="256" title="Indiquez l'adresse de l'opération">
 					<label for="form_adresse">Adresse ou nom du site</label>
 				</div>
 			</div>
