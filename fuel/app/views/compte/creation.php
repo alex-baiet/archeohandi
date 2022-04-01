@@ -60,17 +60,6 @@ $defaultAttr = array("type" => "text", "class" => "form-control", "placeholder" 
 		</div>
 
 		<!-- Organisme -->
-		<!-- <div class="row mt-4" >
-			<div class="col-md">
-				<div class="form-floating">
-					<input type="text" class="form-control" name="organisme" class="form_organisme" value="<?= Helper::arrayGetString("organisme", $_POST) ?>"
-						placeholder="Organisme">
-					<label for="form_organisme">Organisme</label>
-				</div>
-			</div>
-		</div> -->
-
-		<!-- Organisme -->
 		<div class="row mt-4">
 			<div class="col-md">
 				<div class="form-floating">
