@@ -9,3 +9,14 @@
 	/* background-color: #fff0;
 	border-style: none; */
 }
+
+.table-child-parent {
+	border-color: black;
+	border-width: 1px;
+	padding: 0;
+}
+
+.table-child {
+	background-color: #f4f4f4;
+	margin: 0;
+}
