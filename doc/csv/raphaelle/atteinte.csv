@@ -1,0 +1,102 @@
+ID;Commune;ID sujet handicapé;Trépanation;Édentement complet ;Atteinte neurale;Scoliose sévère;Maladie de Paget ou Ostéite déformante;DISH;Rachitisme;Nanisme;Pathologies infectieuses (lèpre, syphilis, variole, etc.);Fracture non réduite ;Amputation;Pathologie dégénérative sévère;Autres;Description autre
+#RC_001;RENNES;SP 170;non;non;non;non;non;non;non;non;oui;non;non;non;non;
+#RL_001;Sées;SP 5;non;non;non;non;non;non;non;non;non;non;oui;non;oui;arthrose vertèbres lombaires
+#RL_002;Sées;SP 10;non;non;non;non;non;non;non;non;non;oui;non;non;oui;ostéome sur le crâne
+#RL_003;Sées;SP 26;non;non;non;non;non;non;non;non;non;non;non;non;oui;traumatisme + complications infectieuses/hypoplasies de l'émail dentaire/cribra fémori/nodules de Schmorl
+#RL_004;Sées;SP 40;non;non;oui;non;non;non;non;non;non;non;non;non;oui;arthrose+enthésopathie
+#RL_005;Sées;SP 56;non;non;oui;non;non;non;non;non;non;non;non;non;oui;enthésopathie+appositions périostées+arthrose + violence interpersonnelle (traces de coup)
+#RL_006;Sées;SP 7;non;non;non;non;non;non;non;non;oui;non;non;non;oui;hypoplasies de l'émail dentaire/cribra orbitalia
+#RL_007;Sées;SP 11;non;non;non;non;non;non;non;non;non;non;non;non;oui;ostéome sur le crâne/arthrose rachidienne
+#RL_008;Sées;SP 13;non;non;non;non;non;non;non;non;non;non;non;oui;oui;séquelle d'entorse sur les deux chevilles/cribra orbitalia
+#RL_009;Sées;SP 14;non;non;non;non;non;non;non;non;non;non;non;non;oui;Ostéochondrite talus gauche /arthrose du pied
+#RL_010;Sées;SP 17;non;non;non;non;non;non;non;non;oui;non;non;non;oui;cribra fémori
+#RL_011;Sées;SP 21;non;non;non;non;non;non;non;non;oui;non;non;non;oui;cribra fémori
+#RL_012;Sées;SP 25;non;non;non;non;non;non;non;non;non;non;non;oui;oui;enthésopathie des genoux, des fibulas (entorse?), cribra femoris
+#RL_013;Sées;SP 27;non;non;non;non;non;non;non;non;oui;non;non;non;oui;cribra fémori/cribra orbitalia
+#RL_014;Sées;SP 28;non;non;non;non;non;non;non;non;non;non;non;non;oui;arthrose/cribra orbitalia
+#RL_015;Sées;SP 29;non;non;non;non;non;non;non;non;oui;non;non;non;oui;cribra fémori/cribra orbitalia
+#RL_016;Sées;SP 32;non;non;non;non;non;non;non;non;non;non;non;non;oui;arthrose pieds/VC/VT, fracture VS ?, hypoplasie de l'émail dentaire, nodules de schmorl VL
+#RL_017;Sées;SP 34;non;non;non;non;non;non;non;non;oui;non;non;non;oui;hypoplasies de l'émail dentaire/cribra orbitalia/cribra fémori
+#RL_018;Sées;SP 35;non;non;non;non;non;non;non;non;oui;non;non;non;oui;Cribra orbitalia/cribra fémori
+#RL_019;Sées;Sp 36;non;non;non;non;non;non;non;non;oui;non;non;non;oui;Cribra femori/réactions périostées tibias
+#RL_020;Sées;SP 39;non;non;non;non;non;non;non;non;non;non;non;oui;oui;arthrose généralisée/nodules de Schmorl/ enthésopathie genoux/hypoplasies de l'émail dentaire/cribra fémori
+#RL_021;Sées;SP 41;non;non;non;non;non;non;non;non;non;non;non;non;oui;arthrose rachis/enthésopathie/hypoplasie de l'émail dentaire/cribra orbitalia
+#RL_022;Sées;SP 44;non;non;non;non;non;non;non;non;oui;non;non;oui;oui;arthrose généralisée/nodules de Schmorl/ enthésopathie genoux, chevilles
+#RL_023;Sées;SP 45;non;non;non;non;non;non;non;non;oui;non;non;non;oui;arthrose rachidienne/enthésopathie/cribra orbitalia
+#RL_024;Sées;SP 46;non;non;non;non;non;non;non;non;non;oui;non;non;oui;arthrose VT/VL, apposition périsotée sur la mandibule
+#RL_025;Sées;SP 48;non;non;non;non;non;non;non;non;non;non;non;oui;oui;arthrose généralisée/appositions périostée tibia/nodules de Scmorl VT
+#RL_026;Sées;SP 54;non;non;non;non;non;non;non;non;non;oui;non;non;oui;arthrose, rachis, côtes, cribra orbitalia, nodules de Schmorl VT
+#RL_027;Sées;SP 55;non;non;non;non;non;non;non;non;non;oui;non;non;oui;arthrose généralisée, enthésopathies genoux, calcaneus, appositions périostées jambes
+#RL_028;Sées;SP 63;non;non;non;non;non;non;non;non;oui;non;non;non;oui;cribra fémori
+#RL_029;Sées;SP 64;non;non;non;non;non;non;non;non;non;oui;non;non;oui;arthrose VC/VT, appositions périostées fibula G
+#RL_030;Sées;SP 65;non;non;non;non;non;non;non;non;oui;non;non;non;non;
+#RL_031;Sées;SP 100;non;non;non;non;non;non;non;non;non;non;non;non;oui;arthrose VT/VL, hanche, côtes
+#RL_032;Alizay;SP 16404;non;non;oui;non;non;non;non;non;non;non;non;non;oui;nodules de Schmorl VT/hypoplasies de l'émail dentaire
+#RL_033;Alizay;SP 16117;non;non;non;non;non;non;non;non;non;non;non;non;oui;nodules de Schmorl VT/VL, fusion atlanto-occipitale
+#RL_034;Alizay;SP 16095;non;non;non;non;non;non;non;non;non;non;non;non;oui;luxation atlas, fusion C3/C4
+#RL_035;Flers;SP 4019;oui;non;non;non;non;non;non;non;non;non;non;oui;oui;
+#RL_036;Flers;SP 4018;non;non;non;non;non;non;non;non;non;oui;non;non;oui;
+#RL_037;Flers;SP R4019;non;non;non;non;oui;non;non;non;non;non;non;non;non;
+#RL_038;Flers;SP 1016;non;non;non;non;non;non;non;non;non;non;non;oui;oui;nodules Schmorl, enthésopathie, appositions périostées jambes
+#RL_039;Flers;SP 1024;non;non;non;non;non;non;non;non;non;non;non;non;oui;nodules Schmorl VT, arthrose coude D, hypoplasies  de l'émail dentaire
+#RL_040;Flers;SP 1036;non;non;non;non;non;non;non;non;non;non;non;non;oui;arthrose VC et patella G, nodules schmorl VT, hypoplasies de l'émail dentaire, enthésopathie clavicule G
+#RL_041;Flers;SP 1049;non;non;non;non;non;non;non;non;non;non;non;non;oui;arthrose VT/VL, enthésopathie
+#RL_042;Flers;SP 1050;non;non;non;non;non;non;non;non;non;non;non;non;oui;arthrose, VT, nodules schmorl VT, enthésopathie
+#RL_043;Flers;SP 1077;non;non;non;non;non;non;non;non;non;non;non;non;oui;arthrose VT, VL et du coude D, nodules schmorl VT, enthséopathie clavicule D
+#RL_044;Flers;SP 1085;non;non;non;non;non;non;non;non;non;non;non;non;oui;arthrose pieds, os coxal G, ulna D
+#RL_045;Flers;SP 1087;non;non;non;non;non;non;non;non;non;non;non;non;oui;arthrose généralisée rachis, dysplasie de la hanche D
+#RL_046;Flers;SP 1104;non;non;non;non;non;non;non;non;non;non;non;non;oui;arthrose généralisée rachis, nodules schmorl VT, enthésopathie clavicule G
+#RL_047;Flers;SP 1109;non;non;non;non;non;non;non;non;non;non;non;non;oui;arthrose généralisée rachis, nodules schmorl VT,VL, enthésopathie clavicule D
+#RL_048;Flers;SP 1111;non;non;non;non;non;non;non;non;non;non;non;non;oui;arthrose VC/VT, nodules schmorl VT, cribra orbitalia, enthésopathie clavicules
+#RL_049;Flers;SP 1118;non;non;non;non;non;non;non;non;non;oui;non;non;non;
+#RL_050;Flers;SP 1128;non;non;non;non;non;non;non;non;non;non;non;non;oui;Arthrose généralisée rachis, enthésopathie clavicule G
+#RL_051;Flers;SP 1158;non;non;non;non;non;non;non;non;non;non;non;non;oui;dysplasie hanche ?
+#RL_052;Flers;SP 1161;non;non;non;non;non;non;non;non;non;non;non;non;oui;lésions tumorales ? Arthrose VC, VT, enthésopathie clavicules
+#RL_053;Flers;SP 1172;non;non;non;non;non;non;non;non;non;non;non;non;oui;arthrose VT
+#RL_054;Flers;SP 1176;non;non;non;non;non;non;non;non;non;non;non;non;oui;arthrose VT,VL, nodules schmorl, enthésopathie clavicule D, humérus
+#RL_055;Flers;SP 1192;non;non;non;non;non;non;non;non;non;non;non;non;oui;arthrose VT, VL, nodules schmorl VT et VL
+#RL_056;Flers;SP 2042;non;non;non;non;non;non;non;non;non;non;non;non;oui;arthrose genou
+#RL_057;Flers;SP 2045;non;non;non;non;non;non;non;non;non;oui;non;non;non;
+#RL_058;Nonant-le-Pin;SP 7;non;non;non;non;non;non;non;non;non;oui;non;non;oui;arthrose VC, enthésopathie clavicule G
+#RL_059;Nonant-le-Pin;SP 9B;non;non;non;non;non;non;non;non;non;non;non;non;oui;arthrose généralisée + nodules de schmorl
+#RL_060;Nonant-le-Pin;SP 23A;non;non;non;non;non;non;non;non;oui;non;non;non;oui;cribra orbitalia
+#RL_061;Nonant-le-Pin;SP 23B;non;non;non;non;non;non;non;non;non;oui;non;non;oui;arthrose généralisée
+#RL_062;Nonant-le-Pin;SP 26;non;non;non;non;non;non;non;non;non;non;non;non;oui;arthrose rachis, nodules de schmorl, enthésopathie
+#RL_063;Nonant-le-Pin;SP 31;non;non;non;non;non;non;non;non;non;oui;non;non;oui;arthrose VC/VL, enthésopathie
+#RL_064;Nonant-le-Pin;SP 33;non;non;non;non;non;non;non;non;oui;non;non;non;oui;hypoplasies de l'émail dentaire
+#RL_065;Nonant-le-Pin;SP 41A;non;non;non;non;non;non;non;non;oui;non;non;non;non;
+#RL_066;Courcy;SP 2001;non;non;non;non;non;non;non;non;non;non;non;non;oui;nodules schmorl
+#RL_067;Courcy;SP 2002A;non;non;non;non;non;non;non;non;non;non;non;non;oui;arthrose généralisée rachis et côtes, patella D, léger nodule schmorl VT
+#RL_068;Courcy;SP 2007;non;non;non;non;non;non;non;non;non;non;non;non;oui;arthrose généralisée + nodules de schmorl
+#RL_069;Courcy;SP 2008;non;non;non;non;non;non;non;non;non;non;non;non;oui;arthrose généralisée + nodules de schmorl
+#RL_070;Alizay;SP 45;non;non;non;non;non;non;non;non;non;non;non;non;oui;arthrose VC/VL
+#RL_071;Alizay;SP 513;non;non;non;non;non;non;non;non;non;non;non;non;oui;Nodules schmorl, enthésopathie clavicules
+#RL_072;Alizay;SP 1399;non;non;non;non;non;non;non;non;non;oui;non;non;non;
+#RL_073;Creully;SP 1331;non;non;non;non;non;non;non;non;oui;non;non;non;non;
+#RL_074;Creully;SP 1375;non;non;non;non;non;non;non;non;oui;non;non;non;non;
+#RL_075;Creully;SP 1564;non;non;oui;non;non;non;non;non;non;non;non;non;non;
+#RL_076;Escoville;SP 219;non;non;non;non;non;non;non;non;non;non;non;oui;oui;enthésopathie os coxaux et clavicule G
+#RL_077;Escoville;SP 233;non;non;non;non;non;non;non;non;non;non;non;non;oui;arthrose rachis, enthésopathie clavicule G
+#RL_078;Escoville;SP 365;non;non;non;non;non;non;non;non;non;non;non;non;oui;nodules de Schmorl VT/VL, enthésopathie talon d'Achille, clavicule D
+#RL_079;Escoville;SP 395;non;non;non;non;non;non;non;non;non;non;non;non;oui;arthrose VC/nodules de schmorl
+#RL_080;Escoville;SP 396;non;non;non;non;non;non;non;non;non;non;non;non;oui;coup sur le crâne
+#RL_081;Escoville;SP 105;non;non;non;non;non;non;non;non;non;non;non;non;oui;articulation sacro-iliaque en cours de fusion
+#RL_082;Escoville;SP 109;non;non;non;non;non;non;non;non;oui;non;non;non;non;
+#RL_083;Escoville;SP 134;non;non;non;non;non;non;non;non;non;non;non;non;oui;arthrose rachis, enthésopathie clavicule D, talons d'achille, hypoplasie de l'émail dentaire
+#RL_084;Escoville;SP 333;non;non;non;non;non;non;non;non;non;oui;non;non;oui;coup sur le crâne
+#RL_085;Escoville;SP 336;non;non;non;non;non;non;non;non;non;non;non;non;oui;nodules de schmorl, entaille sur VT
+#RL_086;Escoville;SP 340;non;non;non;non;non;non;non;non;non;oui;non;non;oui;arthrose généralisée + nodules de schmorl+enthésopathie patella, ischium, fémurs
+#RL_087;Escoville;SP 372;non;non;non;non;non;non;non;non;non;non;non;non;oui;arthrose généralisée, enthésopathies os coxaux, genoux, calcaneus
+#RL_088;Escoville;SP 400;non;non;non;non;non;non;non;non;non;non;non;non;oui;arthrose + nodules de schmorl
+#RL_089;Vire;SP 1105;non;non;non;non;non;non;non;non;non;non;non;oui;oui;arthrose diffuse (colonne, côtes, clavicules, épaules, mains) + enthésopathies (coxaux, clavicules)
+#RL_090;Vire;SP 1137;non;non;non;non;non;non;non;non;non;oui;non;non;oui;arthrose VC-/VT, fracture fibula G  avec appositions périostées sur tibia G, enthésopathie (cheville D et talon d'Achille)
+#RL_091;Grentheville;SP 51;non;non;non;non;non;non;non;non;non;non;non;oui;oui;arthrose généralisée colonne, des épaules, des coudes, poignets, des côtes, du bassin, du genou D + nodules de schmorl
+#RL_092;Bretteville-le-Rabet;SP 2005;non;non;non;non;non;non;non;non;non;non;non;non;oui;édentement quasi-complet de la MD, arthrose VL, atteintes infectieuses MS et MI
+#RL_093;Bretteville-le-Rabet;SP 2007;non;non;non;non;non;non;non;non;non;oui;non;non;oui;fracture côte D + arthrose VT/VL, nodules de schmorl, enthésopathie, appositions périostées MI
+#RL_094;Sartilly-Biae-Bocage;SP 3012;non;non;non;non;non;non;non;non;non;non;non;non;oui;arthrose sur la colonne, épaule, coude, clavicule gauches, hanche droite + appositions périostées sinus
+#RL_095;Sartilly-Biae-Bocage;SP 5004;non;non;non;non;non;non;non;non;oui;non;non;non;non;
+#RL_096;Bellou-en-Houlme;SP 2008;non;non;non;non;non;non;non;non;non;non;non;non;oui;édentation partielle + arthrose VT, VL et coxaux
+#RL_097;Bellou-en-Houlme;SP 3008;non;oui;non;non;non;non;non;non;non;non;non;non;oui;arthrose généralisée (colonne, côtes, MS, clavicules, MI), enthésopathie clavicule
+#RL_098;Bellou-en-Houlme;SP 5003;non;non;non;non;non;non;non;non;non;non;non;non;non;édentation partielle + arthrose colonne, éburnation ulna D
+#RL_099;Bellou-en-Houlme;SP 5005;non;non;non;non;non;non;non;non;non;oui;non;non;non;
+#RL_100;Gisors;SP 1077;non;non;non;non;non;non;oui;non;non;non;non;non;oui;goutte ?

@@ -1,0 +1,25 @@
+Bonjour,
+voici mon compte rendu pour cette semaine.
+
+Compte rendu (14/03/22 - 18/03/22)
+
+Tâches accomplies :
+
+- Modification/Ajout de nombreux champs dans la base de données
+    - Ajout date d'ajout des opérations et sujets
+    - Ajout méthode de détermination de l'âge et du sexe
+    - Ajout option mobilier atypique
+    - Ajout d'un champ indiquant que l'opération/sujet est complet
+    - Ajout numéro INSEE aux communes
+    - Ajout champ libre pour les données génétiques
+    - Ajout de la prévalence
+    - Ajout des images pour les opérations
+    - Ajout urls pour la bibliographie des opérations
+- Amélioration visuel du tableau des sujets
+- Mise à jour du mode d'emploi
+- Suppression recherche par la page d'opération
+- Amelioration de la navigation général
+- Correction affichage de l'iconographie en cas d'absence d'image
+
+Bon week-end,
+Alex BAIET
