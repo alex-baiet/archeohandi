@@ -1,10 +1,8 @@
 <?php
 
-use Fuel\Core\Asset;
 use Fuel\Core\View;
 use Model\Db\Compte;
 use Model\Db\Operation;
-use Model\Searchresult;
 
 /** @var Operation[] */
 $lines = $lines;
@@ -22,7 +20,7 @@ $countOp = $countOp;
 	<h1 class="m-2">Opérations
 		<!-- Bouton "Ajout d'un opération -->
 		<?php if (Compte::checkPermission(Compte::PERM_WRITE)) : ?>
-			<a class="btn btn-primary btn-sm" href="/public/operations/add">Ajouter une opération <i class="bi bi-plus-circle-fill"></i></a>
+			<a class="btn btn-primary btn-sm" href="/public/operations/add">Créer une opération <i class="bi bi-plus-circle-fill"></i></a>
 		<?php endif; ?>
 	</h1>
 
