@@ -157,6 +157,7 @@ Asset::js("form.js");
 </div>
 
 <div class="row my-2">
+	<a href="https://www.culture.gouv.fr/content/download/150076/file/Identifiants-operation-archeologique.pdf" target="_blank">Informations sur les champs EA et OA</a>
 	<!-- EA -->
 	<div class="col-md-4">
 		<div class="form-floating">
