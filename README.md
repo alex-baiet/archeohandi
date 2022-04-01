@@ -1,6 +1,9 @@
 # Archeohandi
 
 Pour vous aider à comprendre la structure du site et de la base de données, il est conseillé d'aller voir les différents schémas dans doc/schemas.
+Si vous êtes amener à travailler sur le site, demander moi la permission sur le [repository Github](https://github.com/alex-baiet/archeohandi)
+
+	Alex BAIET, développeur du site Archeohandi
 
 # FuelPHP
 
