@@ -32,3 +32,13 @@ td {
   height: 600px;
   overflow-y: scroll;
 }
+
+/* Liste pour l'autocompletion */
+.autocompletion {
+	max-height: 400px;
+	overflow-y: auto;
+	background-color: white;
+	border-color: #0004;
+	border-width: 1px;
+	border-style: solid;
+}

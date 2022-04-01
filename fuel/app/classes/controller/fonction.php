@@ -69,7 +69,7 @@ class Controller_Fonction extends Controller {
 		$data["results"] = $request->execute()->as_array();
 		
 		$data["id"] = $_POST["id"];
-		$data["maxResultCount"] = 10;
+		$data["maxResultCount"] = 100;
 
 		return Response::forge(View::forge('fonction/autocomplete', $data));
 	}

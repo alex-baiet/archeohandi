@@ -208,7 +208,7 @@ function autocomplete(id, select, table, where, onResult) {
 /**
  * Ajoute l'autocomplétion pour le champ des communes uniquement.
  */
- function addAutocompleteCommune() {
+function addAutocompleteCommune() {
 	const id = "form_commune";
 	// Récupération des champ
 	let inputCom = document.getElementById(id);
@@ -221,7 +221,7 @@ function autocomplete(id, select, table, where, onResult) {
 	// Création de la zone d'autocomplétion
 	// TODO: vérifier qu'un champ n'existe pas déjà
 	let showList = document.createElement("div");
-	showList.className = "list-group";
+	showList.className = "list-group autocompletion";
 	showList.id = `${id}_list`;
 	inputCom.parentNode.appendChild(showList);
 	autocompleteField.push(showList);
@@ -280,7 +280,7 @@ function addAutocomplete(id, select, table, where) {
 	// Création de la zone d'autocomplétion
 	// TODO: vérifier qu'un champ n'existe pas déjà
 	let showList = document.createElement("div");
-	showList.className = "list-group";
+	showList.className = "list-group autocompletion";
 	showList.id = `${id}_list`;
 	input.parentNode.appendChild(showList);
 	autocompleteField.push(showList);
