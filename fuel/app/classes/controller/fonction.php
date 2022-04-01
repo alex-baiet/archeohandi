@@ -11,7 +11,7 @@ use Model\Helper;
 
 class Controller_Fonction extends Controller {
 
-	/** 
+	/**
 	 * @return Commune[]
 	 * @deprecated
 	 */
@@ -28,7 +28,10 @@ class Controller_Fonction extends Controller {
 		return $arr;
 	}
 
-	/** @return Compte[] */
+	/**
+	 * @return Compte[]
+	 * @deprecated
+	 */
 	private static function autoCompleteCompte(string $input): array {
 		$results = DB::select()
 			->from("compte")
@@ -46,6 +49,9 @@ class Controller_Fonction extends Controller {
 
 	/**
 	 * Affiche une page de tous les mots permettant de compléter le début de mot passé en POST.
+	 * "select" Expression de selection.
+	 * "table" Table cible de recherche.
+	 * "where" array de condition aux format ["champs", "=", "input", "and"].
 	 */
 	public function action_autocomplete() {
 		$data = array();
@@ -117,6 +123,7 @@ class Controller_Fonction extends Controller {
 		return empty($results) ? "0" : "1";
 	}
 
+	/** Ajoute dans la BDD le nom de l'organisme contenu dans $_POST["name"]. */
 	public function action_add_organisme() {
 		if (!Compte::checkPermission(Compte::PERM_WRITE)) {
 			return new Response("you have no right to create an organisme.", 500);

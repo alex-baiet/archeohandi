@@ -7,16 +7,14 @@ use Fuel\Core\Response;
 use Fuel\Core\View;
 use Model\Db\Compte;
 use Model\Db\Operation;
-use Model\Db\Sujethandicape;
 use Model\Helper;
 use Model\Messagehandler;
 use Model\Redirect;
 use Model\Searchresult;
 
 class Controller_Operations extends Controller_Template {
-	private const DEBUG = false;
-
-	/** Page d'affichages de toutes les opérations */
+	
+	/** Page d'affichages de toutes les opérations. */
 	public function action_index() {
 		Compte::checkPermissionRedirect("Vous devez avoir un compte pour voir les opérations.", Compte::PERM_WRITE);
 
@@ -44,6 +42,7 @@ class Controller_Operations extends Controller_Template {
 		$this->template->content = View::forge('operations/index', $data, false);
 	}
 
+	/** Page des opérations personnels uniquement (opérations sur lesquels l'utilisateur a des droits). */
 	public function action_personnel() {
 		Compte::checkPermissionRedirect("Vous devez avoir un compte pour voir les opérations.", Compte::PERM_WRITE);
 		$data = array();
@@ -82,17 +81,9 @@ class Controller_Operations extends Controller_Template {
 			$operation = new Operation($_POST);
 			
 			if ($operation->saveOnDB()) {
-				if (Controller_Operations::DEBUG === true) {
-					// Débuggage
-					echo "Tentative de création d'une opération...<br>";
-					Helper::varDump($_POST);
-					Helper::varDump($operation);
-				}
-				else {
-					// Ajout de l'opération avec succès
-					Messagehandler::prepareAlert("Ajout de l'opération réussi.", "success");
-					Response::redirect("/sujet/add/{$operation->getId()}");
-				}
+				// Ajout de l'opération avec succès
+				Messagehandler::prepareAlert("Ajout de l'opération réussi.", "success");
+				Response::redirect("/sujet/add/{$operation->getId()}");
 			}
 		}
 
@@ -168,11 +159,7 @@ class Controller_Operations extends Controller_Template {
 				$operation->saveOnDB();
 				Messagehandler::prepareAlert("Modification de l'opération réussi.", "success");
 
-				if (Controller_Operations::DEBUG === true) {
-					Helper::varDump($operation);
-				} else {
-					Response::redirect("/operations/view/$id");
-				}
+				Response::redirect("/operations/view/$id");
 			} else {
 				// Les données ne sont pas valides : on affiche les problèmes
 				$errors = $result;

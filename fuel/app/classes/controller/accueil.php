@@ -2,9 +2,10 @@
 
 use Fuel\Core\Controller_Template;
 use Fuel\Core\View;
-use Model\Constants;
 
 class Controller_Accueil extends Controller_Template {
+
+  /** Page d'accueil du site. */
   public function action_index(){
     $data = array();
     $this->template->navActive = false;

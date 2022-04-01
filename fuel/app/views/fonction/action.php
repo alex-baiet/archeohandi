@@ -3,6 +3,8 @@
 use Model\Commune;
 use Model\Db\Compte;
 
+// Obselète.
+
 /** @var string */
 $id = $id;
 /** @var int */

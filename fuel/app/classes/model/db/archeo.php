@@ -97,6 +97,7 @@ class Archeo {
 
 	/**
 	 * Récupère les données d'une table correspondant à l'id.
+	 * 
 	 * @param int $id L'identifiant des données.
 	 * @param string $table Table où rechercher.
 	 * @param Closure $dataFormater Transforme les données dans un autre format de votre choix.
@@ -112,6 +113,7 @@ class Archeo {
 
 	/**
 	 * Récupère toutes les données d'une table.
+	 * 
 	 * @param string $table Table où récupérer les données.
 	 * @param Closure $dataFormater Transforme chaque donnée dans un autre format de votre choix.
 	 */
@@ -126,6 +128,7 @@ class Archeo {
 
 	/**
 	 * Réassigne $value avec une donnée dans data, si elle existe. 
+	 * 
 	 * @param mixed &$value Valeur à réassigner.
 	 * @param mixed $key Nom de la valeur dans $data.
 	 * @param array $key Liste des noms possible de la valeur dans $data.
@@ -166,6 +169,8 @@ class Archeo {
 	}
 
 	/**
+	 * Met à jour les données d'une table de relation entre deux autres tables.
+	 * 
 	 * @param string $table Table cible dans la BDD
 	 * @param string $where Expression du where pour la suppression des anciennes données.
 	 * @param array $toInsert Liste des données à intégrer dans la table.

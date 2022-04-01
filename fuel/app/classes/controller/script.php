@@ -4,12 +4,12 @@ use Fuel\Core\Controller_Template;
 use Fuel\Core\DB;
 use Fuel\Core\View;
 use Model\Db\Compte;
-use Model\Db\Operation;
 use Model\Db\Personne;
 use Model\Db\Sujethandicape;
 use Model\Helper;
 use Model\Script\Import;
 
+/** Contient des scripts à utilisation unique. (en gros des scripts devenus inutiles) */
 class Controller_Script extends Controller_Template {
 	private const ACTIVE = false;
 
@@ -43,6 +43,7 @@ class Controller_Script extends Controller_Template {
 		}
 	}
 
+	/** Import des csv (ne fonctionne pas) */
 	public function action_import_csv() {
 		if (!$this->checkPermission()) return;
 
@@ -52,6 +53,7 @@ class Controller_Script extends Controller_Template {
 		$this->template->content = View::forge('script/import_csv', $data, false);
 	}
 
+	/** Resultat d'import des csv (ne fonctionne pas) */
 	public function action_import_csv_result() {
 		if (!$this->checkPermission()) return;
 
@@ -146,6 +148,10 @@ class Controller_Script extends Controller_Template {
 		$this->template->content = '';
 	}
 
+	/**
+	 * Ajoute des numéros INSEE à l'aide d'un fichier.
+	 * @deprecated
+	 */
 	public function action_add_insee_1() {
 		if (!$this->checkPermission()) return;
 
@@ -188,6 +194,7 @@ class Controller_Script extends Controller_Template {
 	private const I_INSEE = 0;
 	private const I_NAME = 13;
 
+	/** Ajoute des numéros INSEE à l'aide d'un fichier. */
 	public function action_add_insee_2() {
 		if (!$this->checkPermission()) return;
 

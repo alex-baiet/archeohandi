@@ -2,6 +2,7 @@
 
 namespace Model;
 
+/** Gère les notifications sur le site. */
 class Messagehandler {
 	/** Prepare l'affichage d'une alert qui sera afficher lors du prochain chargement de page. */
 	public static function prepareAlert(string $msg, string $type = "primary") {

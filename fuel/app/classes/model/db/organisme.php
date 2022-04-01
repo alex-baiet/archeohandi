@@ -6,7 +6,7 @@ use Fuel\Core\DB;
 use Fuel\Core\Model;
 use Model\Helper;
 
-/** Représentation d'un organisme dans la base de données. */
+/** Représentation de la table "organisme" de la BDD. */
 class Organisme extends Model {
 	private int $id;
 	private string $nom;

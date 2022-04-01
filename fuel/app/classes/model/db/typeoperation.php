@@ -6,7 +6,7 @@ use Fuel\Core\DB;
 use Fuel\Core\Model;
 use Model\Helper;
 
-/** Représentation d'un type d'opération dans la base de données. */
+/** Représentation de la table "type_operation" de la BDD. */
 class Typeoperation extends Model {
 	private int $id;
 	private string $nom;

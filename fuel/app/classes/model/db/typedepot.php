@@ -5,7 +5,7 @@ namespace Model\Db;
 use Fuel\Core\Model;
 use Model\Helper;
 
-/** Représentation d'un type de dépôt dans la base de données. */
+/** Représentation de la table "type_depot" de la BDD. */
 class Typedepot extends Model {
 	private int $id;
 	private string $nom;

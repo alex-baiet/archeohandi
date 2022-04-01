@@ -9,6 +9,9 @@ use Model\Helper;
 use Model\Messagehandler;
 use Model\Redirect;
 
+/**
+ * Contient des fonctions de gestions des droits, et représentation de la table "compte" de la BDD.
+ */
 class Compte {
 	public const PERM_ADMIN = "admin";
 	public const PERM_WRITE = "write";

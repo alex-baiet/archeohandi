@@ -17,7 +17,7 @@ class Controller_Compte extends Controller_Template {
 	/** Token de sécurité devant être validé pour pouvoir créer un compte. */
 	private const TOKEN = "c7e626f1f507f3798570649c91ff9a5e";
 
-	/** Création d'un compte. */
+	/** Page création d'un compte. */
 	public function action_creation() {
 		Compte::checkTestRedirect("Vous êtes déjà connecté.", Compte::checkPermission(Compte::PERM_DISCONNECTED) || Compte::checkPermission(Compte::PERM_ADMIN));
 
@@ -84,7 +84,7 @@ class Controller_Compte extends Controller_Template {
 		$this->template->content = View::forge('compte/creation', $data);
 	}
 
-	/** Connexion à un compte existant. */
+	/** Page connexion à un compte existant. */
 	public function action_connexion() {
 		Compte::checkPermissionRedirect("Vous êtes déjà connecté.", Compte::PERM_DISCONNECTED);
 

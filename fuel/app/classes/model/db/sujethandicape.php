@@ -2,14 +2,12 @@
 
 namespace Model\Db;
 
-use Closure;
-use Exception;
 use Fuel\Core\DB;
 use Fuel\Core\Model;
 use Model\Helper;
 use Model\Validation;
 
-/** Représentation d'une opération dans la base de données. */
+/** Représentation de la table "sujet_handicape" de la BDD. */
 class Sujethandicape extends Model {
 	#region Values
 	private ?int $id = null;

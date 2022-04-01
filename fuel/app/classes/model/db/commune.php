@@ -5,6 +5,9 @@ namespace Model\Db;
 use Fuel\Core\Model;
 use Model\Helper;
 
+/**
+ * Représentation de la table "commune" de la BDD.
+ */
 class Commune extends Model {
 	private $id;
 	private $x;

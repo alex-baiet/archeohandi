@@ -2,6 +2,10 @@
 
 namespace Model;
 
+/**
+ * Classe pour envoyer des donner post a Nakala. Un échec...
+ * @deprecated Utilisez Helper::postQuery pour envoyer des données POST.
+ */
 class Requesthandler {
 	private static string $apiKey = '6f916df0-ba8c-3d5a-f1c3-df4bbaa0b396';
 

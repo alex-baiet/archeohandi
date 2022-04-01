@@ -2,6 +2,9 @@
 
 namespace Model;
 
+/**
+ * Représente un résultat du script d'import.
+ */
 class Importresult {
 	public const COLOR_SUCCESS = "#0f04";
 	public const COLOR_ERROR = "#f004";

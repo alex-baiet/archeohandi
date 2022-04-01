@@ -5,7 +5,7 @@ namespace Model\Db;
 use Fuel\Core\Model;
 use Model\Helper;
 
-/** Représentation d'un type de sepulture dans la base de données. */
+/** Représentation de la table "type_sepulture" de la BDD. */
 class Typesepulture extends Model {
 	private $id;
 	private $nom;

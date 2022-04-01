@@ -4,7 +4,7 @@ namespace Model\Db;
 
 use Fuel\Core\Model;
 
-/** Représentation d'une chronologie dans la base de données. */
+/** Représentation de la table "pathologie" de la BDD. */
 class Pathology extends Model {
 	private ?int $id = null;
 	private string $name = "";

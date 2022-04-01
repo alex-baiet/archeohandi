@@ -6,6 +6,7 @@ use Fuel\Core\Database_Exception;
 use Fuel\Core\DB;
 use Model\Helper;
 
+/** Représentation de la table "personne" de la BDD. */
 class Personne {
 	/** @var string[] Contient le nom de toutes les personnes. */
 	private static ?array $names = null;

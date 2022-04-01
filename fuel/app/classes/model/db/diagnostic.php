@@ -5,6 +5,7 @@ namespace Model\Db;
 use Fuel\Core\Model;
 use Model\Helper;
 
+/** Représentation de la table "diagnostic" de la BDD. */
 class Diagnostic extends Model {
 	private int $id;
 	private string $nom;

@@ -6,7 +6,7 @@ use Fuel\Core\DB;
 use Fuel\Core\Model;
 use Model\Validation;
 
-/** Représentation d'une opération dans la base de données. */
+/** Représentation de la table "groupe_sujets" de la BDD. */
 class Groupesujet extends Model {
 	#region Values
 	private ?int $id = null;

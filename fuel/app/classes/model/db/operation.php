@@ -10,7 +10,7 @@ use Model\Helper;
 use Model\Messagehandler;
 use Model\Validation;
 
-/** Représentation d'une opération dans la base de données. */
+/** Représentation de la table "operations" de la BDD. */
 class Operation extends Model {
 	#region Values
 	private ?int $id = null;

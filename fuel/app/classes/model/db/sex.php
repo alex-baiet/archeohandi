@@ -5,6 +5,7 @@ namespace Model\Db;
 use Fuel\Core\Form;
 use Fuel\Core\Model;
 
+/** Facilite la gestion du sexe d'un sujet handicapé. */
 class Sex extends Model {
 	private static array $values = array(
 		"Femme" => "Femme",

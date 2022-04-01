@@ -5,7 +5,7 @@ namespace Model\Db;
 use Fuel\Core\Model;
 use Model\Helper;
 
-/** Représente une partie du corps. */
+/** Représentation de la table "localisation" de la BDD. */
 class Localisation extends Model {
 	private static $allSpots;
 

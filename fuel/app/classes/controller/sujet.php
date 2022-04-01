@@ -11,9 +11,14 @@ use Model\Helper;
 use Model\Messagehandler;
 use Model\Redirect;
 
+/** Contient les pages de gestions des sujets handicapés. */
 class Controller_Sujet extends Controller_Template {
 	private const DEBUG = false;
 
+	/**
+	 * Page de consultation des infos d'un sujet handicapé.
+	 * @param $id Id du sujet.
+	 */
 	public function action_view($id) {
 		Compte::checkPermissionRedirect("Vous devez être connecté pour pouvoir consulter un sujet.", Compte::PERM_WRITE);
 
@@ -35,6 +40,10 @@ class Controller_Sujet extends Controller_Template {
 		);
 	}
 
+	/**
+	 * Page d'édition d'un sujet handicapé.
+	 * @param $id Id du sujet.
+	 */
 	public function action_edit($id) {
 		$subject = Sujethandicape::fetchSingle($id);
 		$operation = $subject->getOperation();
@@ -80,6 +89,10 @@ class Controller_Sujet extends Controller_Template {
 		);
 	}
 
+	/**
+	 * Page de création d'un nouveau sujet handicapé.
+	 * @param $id Id de l'opération parent au sujet.
+	 */
 	public function action_add($id) {
 		Compte::checkPermissionRedirect("Vous n'êtes pas autorisés à ajouter un sujet sur cette opération.", Compte::PERM_WRITE, $id);
 

@@ -5,7 +5,7 @@ namespace Model\Db;
 use Fuel\Core\Model;
 use Model\Helper;
 
-/** Représentation d'un mobilier dans la base de données. */
+/** Représentation de la table "mobilier_archeologique" de la BDD. */
 class Mobilier extends Model {
 	private int $id;
 	private string $nom;

@@ -5,7 +5,9 @@ namespace Model\Db;
 use Fuel\Core\Model;
 use Model\Helper;
 
-/** Représentation d'une chronologie dans la base de données. */
+/**
+ * Représentation de la table "chronology" de la BDD.
+ */
 class Chronology extends Model {
 	private int $id;
 	private string $name;
@@ -28,6 +30,12 @@ class Chronology extends Model {
 		return Archeo::fetchSingle($id, "chronology", function ($data) { return new Chronology($data); });
 	}
 
+	/**
+	 * Retourne le code html des options pour construire un select.
+	 * 
+	 * @param mixed $idSelected Identifiant de la valeur sélectionnée.
+	 * @param ?string $emptyValue Ajoute une valeur vide avec comme value="" si non null.
+	 */
 	public static function fetchOptions($idSelected = 18, $emptyValue = null) {
 		$valueRecover = function ($data) { return $data["id"]; };
 		$textRecover = function ($data) { return $data["name"]; };

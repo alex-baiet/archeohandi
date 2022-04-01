@@ -13,7 +13,7 @@ use Model\Messagehandler;
 use Model\Searchresult;
 
 class Controller_Recherche extends Controller_Template {
-	/** Page de recherche */
+	/** Page de choix de la recherche. */
 	public function action_index() {
 		Compte::checkPermissionRedirect("Vous devez vous connecter pour accéder à cette page.", Compte::PERM_WRITE);
 
@@ -30,7 +30,7 @@ class Controller_Recherche extends Controller_Template {
 		$this->template->content = View::forge('recherche/index', $data);
 	}
 
-	/** Page d'affichage des résultats de recherche */
+	/** Page des résultats de recherche. */
 	public function action_resultat() {
 		Compte::checkPermissionRedirect("Vous devez vous connecter pour accéder à cette page.", Compte::PERM_WRITE);
 		if (!isset($_POST["search"])) Response::redirect("/recherche");
@@ -64,7 +64,7 @@ class Controller_Recherche extends Controller_Template {
 		$this->template->content = View::forge('recherche/resultat', $data);
 	}
 
-	/** Page d'affichage des résultats de recherche */
+	/** Page des résultats de recherche au format JSON. */
 	public function action_api() {
 		// if (!Compte::checkPermission(Compte::PERM_WRITE)) return Response::forge("401", 401);
 		if (empty($_POST)) return Response::forge("0", 403);
@@ -91,7 +91,7 @@ class Controller_Recherche extends Controller_Template {
 	}
 
 	/** 
-	 * Récupère toutes les opérations correspondant à l'opération de recherche donné.
+	 * Récupère toutes les opérations correspondant à l'opération de recherche donné et aux données POST.
 	 * @return Operation[]
 	 */
 	private function searchOperations(Operation $refOp): array {
@@ -138,7 +138,7 @@ class Controller_Recherche extends Controller_Template {
 	}
 
 	/**
-	 * Récupère tous les sujets correspondant au sujet de recherche donné.
+	 * Récupère tous les sujets correspondant au sujet de recherche donné et aux données POST.
 	 * @param Operation $opParent Operation parent au sujet.
 	 * @return Sujethandicape[]
 	 */

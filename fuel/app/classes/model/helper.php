@@ -11,24 +11,6 @@ use InvalidArgumentException;
 class Helper {
 
 	/**
-	 * Permet de vérifier si ce qui est envoyé correspond à des caractères valides.
-	 * @return string|false Renvoie false uniquement si le texte n'est pas conforme,
-	 * ou renvoie le texte corrigé (si il est corrigeable).
-	 */
-	static function verifAlpha($str, $type = "alphatout") {
-		if (empty($str)) return "";
-		//Enlève les espaces, tabulations, etc au début et fin de la chaine de caractère
-		trim($str);
-		strip_tags($str);
-
-		if ($type == "alpha") preg_match('/([^A-Za-zàáâãäåçèéêëìíîïðòóôõöùúûüýÿ ])/', $str, $result);
-		if ($type == "alphatout") preg_match('/([^A-Za-z0-9àáâãäåçèéêëìíîïðòóôõöùúûüýÿ ])/', $str, $result);
-		if ($type == "alphanum") preg_match('/([^A-Za-z0-9,-;()\/ ])/', $str, $result);
-		if (!empty($result)) return false;
-		return $str;
-	}
-
-	/**
 	 * Vérifie que la valeur représente un nombre entier.
 	 * @param string Chaîne de caractère à vérifier.
 	 */
@@ -66,8 +48,14 @@ class Helper {
 		return 0;
 	}
 
-	/** Récupère une valeur depuis l'array, ou $default si la clé n'existe pas. */
-	static function arrayGetValue($key, &$array, $default=null) {
+	/**
+	 * Récupère une valeur depuis l'array, ou $default si la clé n'existe pas.
+	 * 
+	 * @param mixed $key Clé dans l'array.
+	 * @param array &$array Array où chercher les données.
+	 * @param mixed $default Valeur retourné si la clé n'existe pas dans l'array.
+	 */
+	static function arrayGetValue($key, &$array, $default=null): mixed {
 		if (array_key_exists($key, $array)) return $array[$key];
 		return $default;
 	}
@@ -75,7 +63,7 @@ class Helper {
 	/**
 	 * Fait la requête SELECT donnée et renvoie le résultat directement sous forme d'un array.
 	 * 
-	 * @param string $sql
+	 * @param string $sql Requête SQL.
 	 * @return array
 	 */
 	public static function querySelect($sql): array {
@@ -92,10 +80,10 @@ class Helper {
 	/**
 	 * Fait la requête SQL donnée et renvoie le premier résultat.
 	 * 
-	 * @param string $sql
+	 * @param string $sql Requête SQL.
 	 * @return array|null
 	 */
-	public static function querySelectSingle($sql) {
+	public static function querySelectSingle($sql): ?array {
 		$res = Helper::querySelect($sql);
 		if (count($res) === 0) return null;
 		return $res[0];
@@ -108,7 +96,7 @@ class Helper {
 	 * @param string $keyName Nom de la colonne sélectionnée.
 	 * @return array Array des résultats sous forme d'une liste. ex: array("resultat 1", "resultat 2", ...)
 	 */
-	public static function querySelectList($sql) : array {
+	public static function querySelectList($sql): array {
 		// Requete SQL
 		$resQuery = Helper::querySelect($sql);
 		
@@ -123,15 +111,7 @@ class Helper {
 		return $resFinal;
 	}
 
-	public static function arrayValuesAreKeys($array) {
-		$res = array();
-		foreach ($array as $key => $value) {
-			$res[$value] = $value;
-		}
-		return $res;
-	}
-
-	/** Raccourci pour faire plus rapidement un var_dump entouré de <pre>. */
+	/** Raccourci pour faire plus rapidement un var_dump dans une balise "<pre>". */
 	public static function varDump($value, bool $hidden = false) {
 		if ($hidden) echo "<pre style='display: none;'>";
 		else echo "<pre>";
@@ -149,6 +129,7 @@ class Helper {
 			</div>';
 	}
 
+	/** Active la session si cela n'a pas encore été fait, sinon ne fait rien. */
 	public static function startSession() {
 		if (session_status() !== PHP_SESSION_ACTIVE) session_start();
 	}
@@ -174,6 +155,7 @@ class Helper {
 	 * @param float $longitudeTo Longitude of target point in [deg decimal]
 	 * @param float $earthRadius Mean earth radius in [m]
 	 * @return float Distance between points in [m] (same as earthRadius)
+	 * @author https://stackoverflow.com/users/575765/martinstoeckli
 	 */
 	public static function worldDistance($latitudeFrom, $longitudeFrom, $latitudeTo, $longitudeTo, $earthRadius = 6371000) {
 		// convert from degrees to radians
@@ -204,7 +186,12 @@ class Helper {
 		return $result;
 	}
 
-	/** Récupère le contenu d'une page a l'aide d'une requête POST. */
+	/**
+	 * Récupère le contenu d'une page a l'aide d'une requête POST.
+	 * @param string $url Lien de la page.
+	 * @param array $postFields Données POST.
+	 * @return string Contenu de la page cible.
+	 */
 	public static function postQuery(string $url, array $postFields): string {
 		// url-ify the data for the POST
 		$fieldsString = http_build_query($postFields);
