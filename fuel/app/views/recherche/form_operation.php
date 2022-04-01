@@ -41,7 +41,7 @@ Asset::js("form.js");
 			<div class="col-md-6">
 				<div class="form-floating">
 					<input name="departement" id="form_departement" value="<?= Helper::arrayGetValue("departement", $options) ?>" type="text" class="form-control"
-						placeholder="Département" autocomplete="chrome-caca" title="Indiquez le département de l'opération" oninput="FormOperation.checkDepartementExist()">
+						placeholder="Département" autocomplete="chrome-caca" title="Indiquez le département de l'opération" oninput="FormOperation.checkDepartementExist(true)">
 					<div class="form-msg-error">Le département n'existe pas.</div>
 					<label for="form_departement">Nom du département</label>
 					<script>
@@ -56,7 +56,7 @@ Asset::js("form.js");
 			<div class="col-md-6">
 				<div class="form-floating">
 					<input name="<?= $nameCom ?>" id="form_<?= $nameCom ?>" value="<?= Helper::arrayGetValue("commune", $options) ?>" type="text" class="form-control"
-						placeholder="Commune" autocomplete="caca-chrome" title="Indiquez la commune de l'opération" oninput="FormOperation.checkCommuneExist()">
+						placeholder="Commune" autocomplete="caca-chrome" title="Indiquez la commune de l'opération" oninput="FormOperation.checkCommuneExist(true)">
 					<div class="form-msg-error">La commune n'existe pas.</div>
 					<label for="form_<?= $nameCom ?>">Commune</label>
 					<script>

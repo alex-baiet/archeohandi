@@ -44,7 +44,7 @@ class Controller_Recherche extends Controller_Template {
 			Messagehandler::prepareAlert("Un problème est survenu lors de la recherche des résultats.", "danger");
 		} else {
 			$jsonArray = json_decode($json, true);
-			if ($jsonArray == null) {
+			if ($jsonArray == null && $json !== "[]") {
 				return Response::forge($json, 500);
 			}
 			foreach ($jsonArray as $key => $searchResultArray) {
@@ -76,11 +76,12 @@ class Controller_Recherche extends Controller_Template {
 
 		// Récupération des infos selon la recherche
 		$resOp = $this->searchOperations($refOp);
+		$searchSubjects = $this->searchingSubject($_POST);
 		foreach ($resOp as $op) {
 			$searchRes = new Searchresult();
 			$searchRes->operation = $op;
 			$resSu = $this->searchSubjects($refSubject, $op);
-			if (!empty($resSu)) {
+			if (!(empty($resSu) && $searchSubjects)) {
 				$searchRes->subjects = $resSu;
 				$results[$op->getId()] = $searchRes->toArray();
 			}
@@ -101,9 +102,12 @@ class Controller_Recherche extends Controller_Template {
 			->from("operations");
 
 		if ($refOp->getId() !== null) $query->where("operations.id", "=", $refOp->getId());
-		if ($refOp->getIdCommune() !== null) $query->where("id_commune", "=", $refOp->getIdCommune());
-		if (!empty($_POST["insee"])) {
-			$query->join("commune")->on("commune.id", "=", "id_commune")->where("insee", "=", $_POST["insee"]);
+		if (!empty($_POST["insee"]) || !empty($_POST["commune"]) || !empty($_POST["departement"])) {
+			$query->join("commune")->on("commune.id", "=", "id_commune");
+			
+			if (!empty($_POST["insee"])) $query->where("insee", "=", $_POST["insee"]);
+			if (!empty($_POST["commune"])) $query->where("commune.nom", "=", $_POST["commune"]);
+			if (!empty($_POST["departement"])) $query->where("departement", "=", $_POST["departement"]);
 		}
 		if (!empty($refOp->getAdresse())) $query->where("adresse", "LIKE", "%{$refOp->getAdresse()}%");
 		if (!empty($_POST["annee_min"])) $query->where("annee", ">=", $_POST["annee_min"]);
@@ -135,6 +139,31 @@ class Controller_Recherche extends Controller_Template {
 		}
 
 		return $operations;
+	}
+
+	/** Vérifie dans les données passé en argument si il y a recherche sur les sujets ou non. */
+	private function searchingSubject($data): bool {
+		if (!empty($data["id_sujet"])
+			|| !empty($data["id_sujet_handicape"])
+			|| !empty($data["id_chronologie"])
+			|| !empty($data["sexe"])
+			|| !empty($data["age_min"])
+			|| !empty($data["age_max"])
+			|| !empty($data["dating_min"])
+			|| !empty($data["dating_max"])
+			|| !empty($data["id_type_depot"])
+			|| !empty($data["id_sepulture"])
+			|| !empty($data["contexte_normatif"])
+			|| !empty($data["milieu_vie"])
+			|| !empty($data["contexte"])
+			|| !empty($data["pathologies"])
+		) {
+			return true;
+		}
+		foreach (Diagnostic::fetchAll() as $dia) {
+			if (isset($data["diagnostic_{$dia->getId()}"])) return true;
+		}
+		return false;
 	}
 
 	/**

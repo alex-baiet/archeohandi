@@ -1,37 +1,49 @@
 /** Propose des fonction uniquement pour le formulaire des opérations. */
 class FormOperation {
 
-	/** Permet de vérifier que le département existe. */
-	static checkDepartementExist() {
+	/**
+	 * Permet de vérifier que le département existe.
+	 * @param {boolean} nullable Indique que la valeur peut être vide ou non.
+	 */
+	static checkDepartementExist(nullable = false) {
 		/** @type {HTMLButtonElement} */
 		const field = document.getElementById("form_departement");
-		checkValueExist(
-			"commune",
-			[["departement", "=", field.value]],
-			() => {
-				field.setCustomValidity("");
-				document.getElementById("form_commune").oninput();
-			},
-			() => { field.setCustomValidity("Le departement n'existe pas."); }
-		);
+		if (nullable && field.value == "") field.setCustomValidity("");
+		else {
+			checkValueExist(
+				"commune",
+				[["departement", "=", field.value]],
+				() => {
+					field.setCustomValidity("");
+					document.getElementById("form_commune").oninput();
+				},
+				() => { field.setCustomValidity("Le departement n'existe pas."); }
+			);
+		}
 	}
 
-	/** Permet de vérifier que le département existe. */
-	static checkCommuneExist() {
+	/**
+	 * Permet de vérifier que le département existe.
+	 * @param {boolean} nullable Indique que la valeur peut être vide ou non.
+	 */
+	static checkCommuneExist(nullable = false) {
 		/** @type {HTMLButtonElement} */
 		const fieldCom = document.getElementById("form_commune");
 		/** @type {HTMLButtonElement} */
 		const fieldDep = document.getElementById("form_departement");
 		
-		let where = [["nom", "=", fieldCom.value]];
-		if (fieldDep.value != "" && fieldDep.validity.valid) where.push(["departement", "=", fieldDep.value]);
-		
-		checkValueExist(
-			"commune",
-			where,
-			() => { fieldCom.setCustomValidity(""); },
-			() => { fieldCom.setCustomValidity("Le departement n'existe pas."); }
-		);
+		if (nullable && fieldCom.value == "") fieldCom.setCustomValidity("");
+		else {
+			let where = [["nom", "=", fieldCom.value]];
+			if (fieldDep.value != "" && fieldDep.validity.valid) where.push(["departement", "=", fieldDep.value]);
+			
+			checkValueExist(
+				"commune",
+				where,
+				() => { fieldCom.setCustomValidity(""); },
+				() => { fieldCom.setCustomValidity("Le departement n'existe pas."); }
+			);
+		}
 	}
 
 	/** Met à jour l'affichage de l'input de l'organisme en fonction de si il existe dans la BDD. */

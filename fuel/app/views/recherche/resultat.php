@@ -40,8 +40,11 @@ Helper::postQuery("https://archeohandi.huma-num.fr/public/recherche/api", $_POST
 		<b><?= $countOperation ?></b> opérations et <b><?= $countSubject ?></b> sujets handicapés correspondent à votre recherche.
 	</p>
 
+	<?php if (!empty($results)) : ?>
 	<div class="table-scroll">
 		<?= View::forge("operations/table", array("lines" => $results)) ?>
 	</div>
-		
+	<?php else : ?>
+		<h2 class="text-muted text-center">Aucun résultat pour la recherche</h2>
+	<?php endif; ?>
 </div>
