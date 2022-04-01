@@ -55,7 +55,7 @@ class Helper {
 	 * @param array &$array Array où chercher les données.
 	 * @param mixed $default Valeur retourné si la clé n'existe pas dans l'array.
 	 */
-	static function arrayGetValue($key, &$array, $default=null): mixed {
+	static function arrayGetValue($key, &$array, $default=null) {
 		if (array_key_exists($key, $array)) return $array[$key];
 		return $default;
 	}
