@@ -60,12 +60,28 @@ $defaultAttr = array("type" => "text", "class" => "form-control", "placeholder" 
 		</div>
 
 		<!-- Organisme -->
-		<div class="row mt-4" >
+		<!-- <div class="row mt-4" >
 			<div class="col-md">
 				<div class="form-floating">
 					<input type="text" class="form-control" name="organisme" class="form_organisme" value="<?= Helper::arrayGetString("organisme", $_POST) ?>"
 						placeholder="Organisme">
 					<label for="form_organisme">Organisme</label>
+				</div>
+			</div>
+		</div> -->
+
+		<!-- Organisme -->
+		<div class="row mt-4">
+			<div class="col-md">
+				<div class="form-floating">
+					<input name="organisme" id="form_organisme" class="form-control" placeholder="Organisme"
+						value="<?= Helper::arrayGetValue("organisme", $_POST) ?>" autocomplete="off">
+					<label for="form_organimse">Organisme</label>
+					<script>
+						addAutocomplete("form_organisme", "nom", "organisme", [
+							["nom", "LIKE", "?%"]
+						]);
+					</script>
 				</div>
 			</div>
 		</div>
@@ -79,7 +95,7 @@ $defaultAttr = array("type" => "text", "class" => "form-control", "placeholder" 
 			</div>
 		</div>
 		
-		<!-- Création immédiat -->
+		<!-- Conditions -->
 		<?php if (!Compte::checkPermission(Compte::PERM_ADMIN)) : ?>
 			<div class="row my-2">
 				<div class="col-md" style="text-align: justify;">
@@ -103,7 +119,7 @@ $defaultAttr = array("type" => "text", "class" => "form-control", "placeholder" 
 				</p>
 				<div class="col-md">
 					<input type="checkbox" class="form-checkbox" name="immediate" class="form_immediate" value="1">
-					<label for="form_immediate">Création immédiate</label>
+					<label for="form_immediate">Création immédiate (admins uniquement)</label>
 				</div>
 			</div>
 		<?php endif; ?>
