@@ -251,7 +251,7 @@ if (!empty($msg)) {
 
 <div class="row">
 
-	<div class="col-md-6">
+	<div class="col-xxl-6">
 
 		<h3>Atteinte invalidante</h3>
 		<p class="text-muted"><em>D : Partie droite, G : Partie gauche</em></p>
@@ -358,7 +358,7 @@ if (!empty($msg)) {
 		<div class="text-muted">*La prévalence est ici une estimation minimale de la prévalence réelle.</div>
 	</div>
 
-	<div class="col-md-6">
+	<div class="col-xxl-6">
 		<!-- Dépôt -->
 		<h3>Dépôt</h3>
 		<?php
