@@ -2,6 +2,7 @@ class Leaflet {
 	static map = null;
   static geocodeService = null;
 	static marker = null;
+	static circle = null;
 
 	/**
 	 * Initialise la carte Leaflet.
@@ -34,26 +35,13 @@ class Leaflet {
 
 	/**
 	 * Permet de définir une action à effectuer lors du clic sur la carte.
+	 * @param {string} event Nom de l'évènement. https://leafletjs.com/SlavaUkraini/reference.html#map-interaction-events List of all events
 	 * @param {(result) => {}} action Position : result.latlng.lng, result.latlng.lat
 	 */
-	static setOnClick(action) {
+	static setEventHandler(event, action) {
 		let a = []
-		Leaflet.map.on('click', function(e) {
+		Leaflet.map.on(event, function(e) {
 			action(e);
-			// while (e.latlng.lng < -180) e.latlng.lng += 360;
-			// while (e.latlng.lng > 180) e.latlng.lng -= 360;
-			// Leaflet.geocodeService.reverse().latlng(e.latlng).run(function (error, result) {
-			// 	// Gestion de l'erreur
-			// 	if (error) {
-			// 		console.error(`Une erreur est survenu lors du click sur la carte`);
-			// 		console.error(e.latlng);
-			// 		console.error(error);
-			// 		return;
-			// 	}
-
-			// 	// Exécution de l'action a effectuer
-			// 	action(result);
-			// })
 		});
 	}
 
@@ -71,5 +59,23 @@ class Leaflet {
 		Leaflet.marker = L.marker(position);
 		Leaflet.marker.addTo(Leaflet.map);
 	}
+
+	/**
+	 * Met à jour le cercle, ou le créer si il n'existe pas.
+	 */
+	static updateCircle(lat, lng, radius) {
+		if (this.circle !== null) {
+			// Maj de l'ancien cercle
+			const ll = L.latLng(lat, lng);
+			this.circle.setRadius(radius);
+			this.circle.setLatLng(ll);
+
+		} else {
+			// Création d'un nouveau cercle
+			this.circle = L.circle([lat, lng], { radius: radius });
+			this.circle.addTo(this.map);
+		}
+
+	}	
 
 }

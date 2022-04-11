@@ -92,7 +92,8 @@ Asset::js("form.js");
 			<!-- Longitude -->
 			<div class="col-md-4">
 				<div class="form-floating">
-					<input name="X" id="form_X" value="<?= Helper::arrayGetValue("X", $options) ?>" type="number" class="form-control" placeholder="Longitude" min="-180" max="180" step="any" title="Indiquez la position GPS horizontale" oninput="FormOperation.updateCoordinate()">
+					<input name="X" id="form_X" value="<?= Helper::arrayGetValue("X", $options) ?>" type="number" class="form-control" placeholder="Longitude"
+						min="-180" max="180" step="any" title="Indiquez la position GPS horizontale" oninput="FormOperation.updateCoordinate()">
 					<div class="form-msg-error">La valeur doit être un nombre entre -180 et 180</div>
 					<label for="form_X">Longitude</label>
 				</div>
@@ -101,7 +102,8 @@ Asset::js("form.js");
 			<!-- Latitude -->
 			<div class="col-md-4">
 				<div class="form-floating">
-					<input name="Y" id="form_Y" value="<?= Helper::arrayGetValue("Y", $options) ?>" type="number" class="form-control" placeholder="Latitude" min="-90" max="90" step="any" title="Indiquez la position GPS verticale" oninput="FormOperation.updateCoordinate()">
+					<input name="Y" id="form_Y" value="<?= Helper::arrayGetValue("Y", $options) ?>" type="number" class="form-control" placeholder="Latitude"
+						min="-90" max="90" step="any" title="Indiquez la position GPS verticale" oninput="FormOperation.updateCoordinate()">
 					<div class="form-msg-error">La valeur doit être un nombre entre -90 et 90</div>
 					<label for="form_Y">Latitude</label>
 				</div>
@@ -110,7 +112,8 @@ Asset::js("form.js");
 			<!-- Rayon -->
 			<div class="col-md-4">
 				<div class="form-floating">
-					<input name="radius" id="form_radius" type="number" class="form-control" value="<?= Helper::arrayGetValue("radius", $options, 100) ?>" placeholder="Latitude" min="0" step="any" title="Indiquez le rayon de recherche">
+					<input name="radius" id="form_radius" type="number" class="form-control" value="<?= Helper::arrayGetValue("radius", $options, 100) ?>" placeholder="Latitude"
+						min="0" step="any" title="Indiquez le rayon de recherche" oninput="FormOperation.updateCoordinate()">
 					<div class="form-msg-error">La valeur doit être supérieur à 0</div>
 					<label for="form_radius">Rayon (km)</label>
 				</div>
