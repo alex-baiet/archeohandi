@@ -10,6 +10,11 @@ use Model\Helper;
 
 /** Contient des fonctions facilitant la gestion des modèles de la bases de données. */
 class Archeo {
+	const MERGE_STRING = "string";
+	const MERGE_INT = "int";
+	const MERGE_FLOAT = "float";
+	const MERGE_BOOL = "bool";
+	const MERGE_ARRAY = "array";
 
 	/**
 	 * Retourne le code html des options pour construire un select.
@@ -134,7 +139,7 @@ class Archeo {
 	 * @param array $key Liste des noms possible de la valeur dans $data.
 	 * @param array $data Contient toutes les données.
 	 */
-	public static function mergeValue(&$value, array &$data, $key, $type = "string", $nullable = false) {
+	public static function mergeValue(&$value, array &$data, $key, $type = Archeo::MERGE_STRING, $nullable = false) {
 		if (!is_array($key)) $key = array($key);
 		foreach ($key as $k) {
 			if (isset($data[$k])) {

@@ -9,32 +9,32 @@ use Model\Helper;
  * Représentation de la table "commune" de la BDD.
  */
 class Commune extends Model {
-	private $id;
-	private $x;
-	private $y;
-	private $z;
-	private $codePostal;
-	private $nom;
-	private $departement;
-	private $region;
-	private $pays;
-	private $superficie;
-	private $population;
+	private ?int $id = null;
+	private ?float $x = null;
+	private ?float $y = null;
+	private ?float $z = null;
+	private ?string $codePostal = null;
+	private ?string $nom = null;
+	private ?string $departement = null;
+	private ?string $region = null;
+	private ?string $pays = null;
+	private ?float $superficie = null;
+	private ?int $population = null;
 	private string $insee = "";
 
 	public function __construct(array $values) {
-		$this->id = Helper::arrayGetString("id", $values);
-		$this->x = Helper::arrayGetString("x", $values);
-		$this->y = Helper::arrayGetString("y", $values);
-		$this->z = Helper::arrayGetString("z", $values);
-		$this->codePostal = Helper::arrayGetString("code_postal", $values);
-		$this->nom = Helper::arrayGetString("nom", $values);
-		$this->departement = Helper::arrayGetString("departement", $values);
-		$this->region = Helper::arrayGetString("region", $values);
-		$this->pays = Helper::arrayGetString("pays", $values);
-		$this->superficie = Helper::arrayGetString("superficie", $values);
-		$this->population = Helper::arrayGetString("population", $values);
-		Archeo::mergeValue($this->insee, $values, "insee");
+		Archeo::mergeValue($this->id, $values, "id", Archeo::MERGE_STRING, false);
+		Archeo::mergeValue($this->x, $values, "x", Archeo::MERGE_FLOAT, false);
+		Archeo::mergeValue($this->y, $values, "y", Archeo::MERGE_FLOAT, false);
+		Archeo::mergeValue($this->z, $values, "z", Archeo::MERGE_FLOAT, false);
+		Archeo::mergeValue($this->codePostal, $values, "code_postal", Archeo::MERGE_STRING, true);
+		Archeo::mergeValue($this->nom, $values, "nom", Archeo::MERGE_STRING, true);
+		Archeo::mergeValue($this->departement, $values, "departement", Archeo::MERGE_STRING, true);
+		Archeo::mergeValue($this->region, $values, "region", Archeo::MERGE_STRING, true);
+		Archeo::mergeValue($this->pays, $values, "pays", Archeo::MERGE_STRING, true);
+		Archeo::mergeValue($this->superficie, $values, "superficie", Archeo::MERGE_FLOAT, true);
+		Archeo::mergeValue($this->population, $values, "population", Archeo::MERGE_INT, true);
+		Archeo::mergeValue($this->insee, $values, "insee", Archeo::MERGE_STRING, true);
 	}
 
 	/** Retourne la commune correspondant à l'id donné. */
