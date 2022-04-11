@@ -5,21 +5,33 @@ Compte rendu (14/03/22 - 18/03/22)
 
 Tâches accomplies :
 
-- Modification/Ajout de nombreux champs dans la base de données
-    - Ajout date d'ajout des opérations et sujets
-    - Ajout méthode de détermination de l'âge et du sexe
-    - Ajout option mobilier atypique
-    - Ajout d'un champ indiquant que l'opération/sujet est complet
-    - Ajout numéro INSEE aux communes
-    - Ajout champ libre pour les données génétiques
-    - Ajout de la prévalence
-    - Ajout des images pour les opérations
-    - Ajout urls pour la bibliographie des opérations
-- Amélioration visuel du tableau des sujets
-- Mise à jour du mode d'emploi
-- Suppression recherche par la page d'opération
-- Amelioration de la navigation général
-- Correction affichage de l'iconographie en cas d'absence d'image
+- Amélioration du système de redirection :
+    - Redirection par défaut vers l'accueil;
+    - Modification du sujet redirige vers la page de consultation du sujet;
+    - Idem pour l'opération;
+- Retour sur la page de recherche avec les options mis précédemment possible;
+- Modification système de suppression des sujets / opérations;
+- Création de la page des opérations personnels;
+- Ajout compteur de sujets et d'opérations sur plusieurs pages;
+- Amélioration visuel de la plupart des tableaux;
+- Correction de l'ordre d'affichage des opérations, qui était un peu bizarre;
+- Amélioration du mode d'emploi;
+- Ajout export CSV des résultats de recherche;
+- Essayer de supprimer le dernier champ d'une liste de champ le vide (ex: champs des paleopatologistes);
+- Maj des valeurs concernant la prevalence en direct, plus besoin de recharger la page;
+- Modifications gestions des personnes sur la base de données. Les personnes étaient directement écrits dans la table "operations", maintenant ils sont écrits sur des tables à part en fonction de leurs rôles;
+- Ajout completion automatique des personnes;
+- Amélioration des titres des onglets (préfixés par "Archeohandi");
+- Suppression du bouton pour remonter la page, il était visuellement buggé;
+- Ajout de documentations (commentaires dans le code, readme, autres documents) un peu partout dans le projet;
+- Correction de la completion automatique des communes sur chrome ET sur tous les autres navigateurs;
+- Opérations vides affichés lors de la recherche en fonction des circonstances;
+- Ajout completion automatique de l'organisme à la création du compte;
+- Liste de complétion automatique devenu déroulant;
+- Correction de l'affichage du tableau des diagnostics sur des résolutions plus petites;
+
+
+La liste est plus longue que d'habitude... En espérant faire encore plus la prochaine fois !
 
 Bon week-end,
 Alex BAIET

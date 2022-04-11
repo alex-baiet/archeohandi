@@ -379,7 +379,10 @@ if (!empty($msg)) {
 			<label for="form_depot_commune">Commune</label>
 		</div>
 		<script>
-			addAutocompleteOld("form_depot_commune", "commune");
+			addAutocomplete("form_depot_commune", "CONCAT(nom, ', ', departement)", "commune", [
+				["nom", "LIKE", "?%"],
+				["departement", "LIKE", "?%", "or"]
+			]);
 		</script>
 		<!-- Adresse du dépôt -->
 		<div class="form-floating my-2">

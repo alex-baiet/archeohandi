@@ -29,9 +29,7 @@ Asset::js("form.js");
 <h3 class="text-center">Opération</h3>
 
 <!-- Affichage des champs -->
-<?php $nameCom = "commune" ?>
 <div class="row my-2">
-
 	<div class="col-md-6 mt-4">
 
 		<div class="row mb-4 mt-2">
@@ -54,10 +52,10 @@ Asset::js("form.js");
 			<!-- Commune -->
 			<div class="col-md-6">
 				<div class="form-floating">
-					<input name="<?= $nameCom ?>" id="form_<?= $nameCom ?>" value="<?= $commune !== null ? $commune->getNom() : null ?>" type="text" class="form-control"
+					<input name="commune" id="form_commune" value="<?= $commune !== null ? $commune->getNom() : null ?>" type="text" class="form-control"
 						placeholder="Commune" title="Indiquez la commune de l'opération" oninput="FormOperation.checkCommuneExist()" autocomplete="chrome-fait-des-decisions-debiles-avec-l-autocompletion">
 					<div class="form-msg-error">La commune n'existe pas.</div>
-					<label for="form_<?= $nameCom ?>">Commune</label>
+					<label for="form_commune">Commune</label>
 					<script>
 						addAutocompleteCommune();
 					</script>

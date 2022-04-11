@@ -18,9 +18,6 @@ $defaultAttr = array("type" => "text", "class" => "form-control", "placeholder" 
 Asset::js("form.js");
 ?>
 
-<!-- Affichage des champs -->
-<?php $nameCom = "commune" ?>
-
 <!-- Id operation -->
 <div class="row my-2">
 	<div class="col-md-12">
@@ -55,10 +52,10 @@ Asset::js("form.js");
 			<!-- Commune -->
 			<div class="col-md-6">
 				<div class="form-floating">
-					<input name="<?= $nameCom ?>" id="form_<?= $nameCom ?>" value="<?= Helper::arrayGetValue("commune", $options) ?>" type="text" class="form-control"
+					<input name="commune" id="form_commune" value="<?= Helper::arrayGetValue("commune", $options) ?>" type="text" class="form-control"
 						placeholder="Commune" autocomplete="caca-chrome" title="Indiquez la commune de l'opération" oninput="FormOperation.checkCommuneExist(true)">
 					<div class="form-msg-error">La commune n'existe pas.</div>
-					<label for="form_<?= $nameCom ?>">Commune</label>
+					<label for="form_commune">Commune</label>
 					<script>
 						addAutocompleteCommune();
 					</script>
