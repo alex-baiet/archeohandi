@@ -31,7 +31,7 @@ class Groupesujet extends Model {
 		Archeo::mergeValue($this->idOperation, $data, "id_operation", "int");
 		Archeo::mergeValue($this->nmi, $data, "NMI", "int");
 
-		if (isset($data["chronology"])) $this->idChronology = Chronology::nameToId($data["chronology"]);
+		if (isset($data["chronologie"])) $this->idChronology = Chronology::nameToId($data["chronologie"]);
 	}
 
 	/**
