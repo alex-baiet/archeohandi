@@ -1,9 +1,9 @@
 <?php
 
 use Fuel\Core\Controller_Template;
+use Fuel\Core\DB;
 use Fuel\Core\Response;
 use Fuel\Core\View;
-use Model\Constants;
 use Model\Db\Compte;
 use Model\Helper;
 use Model\Messagehandler;
@@ -17,9 +17,59 @@ class Controller_Compte extends Controller_Template {
 	/** Token de sécurité devant être validé pour pouvoir créer un compte. */
 	private const TOKEN = "c7e626f1f507f3798570649c91ff9a5e";
 
+	/** Page connexion à un compte existant. */
+	public function action_connexion() {
+		Compte::checkPermissionRedirect("Vous êtes déjà connecté.", Compte::PERM_DISCONNECTED);
+
+		if (isset($_POST["login"]) && isset($_POST["mdp"])) {
+			$login = $_POST["login"];
+			$mdp = $_POST["mdp"];
+			if (Compte::connect($login, $mdp)) {
+				// Connexion réussi
+				Response::redirect("/accueil");
+			} else {
+				Messagehandler::prepareAlert("Votre login ou/et mot de passe est incorrect.", "danger");
+			}
+		}
+
+		$data = array();
+		$this->template->title = 'Connexion';
+		$this->template->content = View::forge('compte/connexion', $data);
+	}
+
+	/** Reset le mot de passe. */
+	public function action_redefinition() {
+		Compte::checkPermissionRedirect("Vous êtes déjà connecté.", Compte::PERM_DISCONNECTED);
+
+		if (isset($_POST["login"]) && isset($_POST["email"])) {
+			$login = $_POST["login"];
+			$email = $_POST["email"];
+			$result = DB::select()->from("compte")->where("login", "=", $login)->where("email", "=", $email)->execute()->as_array();
+			if (!empty($result)) {
+				// Création du nouveau mdp
+				$pw = Compte::redefinePassword($login);
+				if ($pw === null) {
+					Messagehandler::prepareAlert("Impossible de redéfinir le mot de passe.");
+				} else {
+					Helper::sendMail($email, "Changement de mot de passe", View::forge("compte/mail_mdp", array("login" => $login, "pw" => $pw)));
+					Messagehandler::prepareAlert("Votre mot de passe a bien été redéfini et a été envoyé dans votre boîte mail.", "success");
+					Response::redirect("/compte/connexion");
+				}
+
+			} else {
+				Messagehandler::prepareAlert("Le login et/ou compte mail n'est pas valide.", "danger");
+			}
+		}
+
+		$data = array();
+		$this->template->title = 'Redéfinition';
+		$this->template->content = View::forge('compte/redefinition', $data);
+	}
+
 	/** Page création d'un compte. */
 	public function action_creation() {
 		Compte::checkTestRedirect("Vous êtes déjà connecté.", Compte::checkPermission(Compte::PERM_DISCONNECTED) || Compte::checkPermission(Compte::PERM_ADMIN));
+		$this->template->title = 'Créer un compte';
 
 		$data = array();
 		if (isset($_POST["create"])) {
@@ -64,7 +114,7 @@ class Controller_Compte extends Controller_Template {
 				} else {
 					// Creation par mail
 					$to = Controller_Compte::DEBUG === true || $_POST["msg"] === "\\REDIRECT" ? "alex.baiet3@gmail.com" : "cyrille.le-forestier@inrap.fr";//, valerie.delattre@inrap.fr";
-					$result = Controller_Compte::sendMail(
+					$result = Helper::sendMail(
 						$to,
 						"Demande d'accès Archéologie du handicap",
 						View::forge("compte/mail", array("data" => $_POST))
@@ -80,28 +130,7 @@ class Controller_Compte extends Controller_Template {
 			}
 		}
 
-		$this->template->title = 'Créer un compte';
 		$this->template->content = View::forge('compte/creation', $data);
-	}
-
-	/** Page connexion à un compte existant. */
-	public function action_connexion() {
-		Compte::checkPermissionRedirect("Vous êtes déjà connecté.", Compte::PERM_DISCONNECTED);
-
-		if (isset($_POST["login"]) && isset($_POST["mdp"])) {
-			$login = $_POST["login"];
-			$mdp = $_POST["mdp"];
-			if (Compte::connect($login, $mdp)) {
-				// Connexion réussi
-				Response::redirect("/accueil");
-			} else {
-				Messagehandler::prepareAlert("Votre login ou/et mot de passe est incorrect.", "danger");
-			}
-		}
-
-		$data = array();
-		$this->template->title = 'Connexion';
-		$this->template->content = View::forge('compte/connexion', $data);
 	}
 
 	/** Page admin uniquement : permet de créer le compte */
@@ -136,7 +165,7 @@ class Controller_Compte extends Controller_Template {
 				Messagehandler::prepareAlert("Compte créé !", "success");
 
 				// Mail de confirmation de la création de compte
-				Controller_Compte::sendMail(
+				Helper::sendMail(
 					$email,
 					"Demande d'accès Archéologie du handicap",
 					View::forge("compte/mail_confirmed", array(
@@ -162,15 +191,6 @@ class Controller_Compte extends Controller_Template {
 
 		if (isset($_POST["previous_page"])) Response::redirect($_POST["previous_page"]);
 		else Redirect::redirectBack();
-	}
-
-	/** Envoie un mail. */
-	private static function sendMail(string $to, string $title, string $content): bool {
-		$headers  = "MIME-Version: 1.0\r\n";
-		$headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
-		$headers .= "From: noreply@archeologieduhandicap\r\n";
-
-		return mail($to, $title, $content, $headers);
 	}
 
 }

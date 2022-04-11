@@ -170,6 +170,19 @@ class Compte {
 	}
 
 	/**
+	 * Change le mot de passe pour le compte indiqué.
+	 * @return string Nouveau mot de passe généré.
+	 * @return null Si le compte n'existe pas.
+	 */
+	public static function redefinePassword(string $login): ?string {
+		if (Compte::fetchSingle($login) === null) return null;
+
+		$pw = Compte::generatePassword();
+		$result = DB::update("compte")->set(array("mdp" => md5($pw)))->where("login", "=", $login)->execute();
+		return $pw;
+	}
+
+	/**
 	 * Vérifie que l'utilisateur a les permissions indiqués, et redirige vers la page précédente si les droits sont insuffisant.
 	 */
 	public static function checkPermissionRedirect(string $errorMsg, string $permission, ?int $idOperation = null) {

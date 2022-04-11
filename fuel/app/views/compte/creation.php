@@ -22,7 +22,7 @@ $defaultAttr = array("type" => "text", "class" => "form-control", "placeholder" 
 			<div class="col-md-6">
 				<p class="text-muted" style="margin-bottom:0;">Indiquez le prénom avec la 1<sup>ère</sup> lettre en majuscule.</p>
 				<div class="form-floating">
-					<input type="text" class="form-control" name="prenom" class="form_prenom" value="<?= Helper::arrayGetString("prenom", $_POST) ?>"
+					<input type="text" class="form-control" name="prenom" class="form_prenom" value="<?= Helper::arrayGetValue("prenom", $_POST) ?>"
 						placeholder="Prénom" autocomplete="off"
 						onkeyup="this.required=`required`">
 					<div class="form-msg-error">Veuillez remplir ce champ.</div>
@@ -34,11 +34,11 @@ $defaultAttr = array("type" => "text", "class" => "form-control", "placeholder" 
 			<div class="col-md-6">
 				<p class="text-muted" style="margin-bottom:0;">Indiquez le nom en majuscules.</p>
 				<div class="form-floating">
-					<input type="text" class="form-control" name="nom" class="form_nom" value="<?= Helper::arrayGetString("nom", $_POST) ?>"
+					<input type="text" class="form-control" name="nom" class="form_nom" value="<?= Helper::arrayGetValue("nom", $_POST) ?>"
 						placeholder="Nom" autocomplete="off"
 						onkeyup="this.required=`required`">
 					<div class="form-msg-error">Veuillez remplir ce champ.</div>
-					<label for="form_nom">Nom</label>
+					<label for="form_nom">NOM</label>
 				</div>
 			</div>
 		</div>
@@ -50,7 +50,7 @@ $defaultAttr = array("type" => "text", "class" => "form-control", "placeholder" 
 					Une fois le compte créé, vous recevrez un message au mail donné.
 				</p>
 				<div class="form-floating">
-					<input type="email" class="form-control" name="email" class="form_email" value="<?= Helper::arrayGetString("email", $_POST) ?>"
+					<input type="email" class="form-control" name="email" class="form_email" value="<?= Helper::arrayGetValue("email", $_POST) ?>"
 						placeholder="Email" autocomplete="off"
 						onkeyup="this.required=`required`">
 					<div class="form-msg-error">Le mail n'est pas valide.</div>
@@ -79,7 +79,7 @@ $defaultAttr = array("type" => "text", "class" => "form-control", "placeholder" 
 		<div class="row my-2">
 			<div class="col-md">
 				<label for="form_msg">Message</label>
-				<textarea class="form-control" name="msg" class="form_msg" value="<?= Helper::arrayGetString("msg", $_POST) ?>"
+				<textarea class="form-control" name="msg" class="form_msg" value="<?= Helper::arrayGetValue("msg", $_POST) ?>"
 					placeholder="Entrez un message (optionnel)" autocomplete="off"></textarea>
 			</div>
 		</div>

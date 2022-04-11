@@ -210,4 +210,13 @@ class Helper {
 		// execute post
 		return curl_exec($ch);
 	}
+
+	/** Envoie un mail. */
+	public static function sendMail(string $to, string $title, string $content): bool {
+		$headers  = "MIME-Version: 1.0\r\n";
+		$headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
+		$headers .= "From: noreply@archeologieduhandicap\r\n";
+
+		return mail($to, $title, $content, $headers);
+	}
 }

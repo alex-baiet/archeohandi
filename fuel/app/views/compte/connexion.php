@@ -31,6 +31,7 @@ use Model\Helper;
 				</div>
 			</div>
 		</div>
+		<p class="text-muted">Mot de passe oublié ? <a href="/public/compte/redefinition">Changer le mot de passe</a></p>
 		
 		<!-- Boutons de confirmation -->
 		<div class="row">
