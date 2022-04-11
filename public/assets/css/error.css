@@ -1,0 +1,11 @@
+.error-title {
+	margin-top: 200px;
+	font-size: 12em;
+	text-align: center;
+	opacity: 80%;
+}
+
+.error-body {
+	text-align: center;
+	font-size: 2em;
+}
