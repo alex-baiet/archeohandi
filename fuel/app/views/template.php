@@ -31,6 +31,7 @@ if (Constants::MAINTENANCE === true) {
 	<meta name="author" content="Virgile Louin">
 	<meta name="author" content="Alex BAIET">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" href="/public/assets/img/favicon.png" type="image/x-icon">
 
 	<!-- CSS -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
