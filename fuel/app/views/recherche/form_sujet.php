@@ -81,18 +81,18 @@ $options = $options;
 	<!-- Période minimum estimé -->
 	<div class="col-md-3">
 		<div class="form-floating">
-			<input name="dating_min" id="form_dating_min" value="<?= Helper::arrayGetValue("dating_min", $options) ?>" type="number" class="form-control" placeholder="Datation minimale" min="-20000" max="1945" step="1" title="Indiquez la borne inférieure de datation du sujet">
+			<input name="date_min" id="form_date_min" value="<?= Helper::arrayGetValue("date_min", $options) ?>" type="number" class="form-control" placeholder="Datation minimale" min="-20000" max="1945" step="1" title="Indiquez la borne inférieure de datation du sujet">
 			<div class="form-msg-error">La valeur doit être un nombre entier entre -20000 et 1945</div>
-			<label for="form_dating_min">Datation minimale</label>
+			<label for="form_date_min">Datation minimale</label>
 		</div>
 	</div>
 
 	<!-- Période maximum estimé -->
 	<div class="col-md-3">
 		<div class="form-floating">
-			<input name="dating_max" id="form_dating_max" value="<?= Helper::arrayGetValue("dating_max", $options) ?>" type="number" class="form-control" placeholder="Datation maximal" min="-20000" max="1945" step="1" title="Indiquez la borne supérieure de datation du sujet">
+			<input name="date_max" id="form_date_max" value="<?= Helper::arrayGetValue("date_max", $options) ?>" type="number" class="form-control" placeholder="Datation maximal" min="-20000" max="1945" step="1" title="Indiquez la borne supérieure de datation du sujet">
 			<div class="form-msg-error">La valeur doit être un nombre entier entre -20000 et 1945</div>
-			<label for="form_dating_max">Datation maximale</label>
+			<label for="form_date_max">Datation maximale</label>
 		</div>
 	</div>
 

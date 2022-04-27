@@ -8,8 +8,8 @@ class Subject extends Archeo {
 		"age_methode",
 		"sexe",
 		"sexe_methode",
-		"dating_min",
-		"dating_max",
+		"date_min",
+		"date_max",
 		"milieu_vie",
 		"contexte",
 		"contexte_normatif",
@@ -23,7 +23,7 @@ class Subject extends Archeo {
 		"adresse",
 		"chronologie",
 		"date_ajout",
-		"donnees_genetiques",
+		"genetique",
 		"pathologies_sujet",
 		"appareils_compensatoires",
 		"diagnostics_sujet",
@@ -37,8 +37,8 @@ class Subject extends Archeo {
 	age_methode = null;
 	sexe = null;
 	sexe_methode = null;
-	dating_min = null;
-	dating_max = null;
+	date_min = null;
+	date_max = null;
 	milieu_vie = null;
 	contexte = null;
 	contexte_normatif = null;
@@ -56,7 +56,7 @@ class Subject extends Archeo {
 	id_groupe_sujets = null;
 	chronologie = null;
 	date_ajout = null;
-	donnees_genetiques = null;
+	genetique = null;
 	pathologies_sujet = null;
 	appareils_compensatoires = null;
 	diagnostics_sujet = null;
@@ -76,8 +76,8 @@ class Subject extends Archeo {
 		this.mergeValue(data, "age_methode", "age_methode", Archeo.STRING);
 		this.mergeValue(data, "sexe", "sexe", Archeo.NUMBER);
 		this.mergeValue(data, "sexe_methode", "sexe_methode", Archeo.STRING);
-		this.mergeValue(data, "dating_min", "dating_min", Archeo.NUMBER);
-		this.mergeValue(data, "dating_max", "dating_max", Archeo.NUMBER);
+		this.mergeValue(data, "date_min", "date_min", Archeo.NUMBER);
+		this.mergeValue(data, "date_max", "date_max", Archeo.NUMBER);
 		this.mergeValue(data, "milieu_vie", "milieu_vie", Archeo.STRING);
 		this.mergeValue(data, "contexte", "contexte", Archeo.STRING);
 		this.mergeValue(data, "contexte_normatif", "contexte_normatif", Archeo.STRING);
@@ -95,7 +95,7 @@ class Subject extends Archeo {
 		this.mergeValue(data, "id_groupe_sujets", "id_groupe_sujets", Archeo.NUMBER);
 		this.mergeValue(data, "chronologie", "chronologie", Archeo.STRING);
 		this.mergeValue(data, "date_ajout", "date_ajout", Archeo.STRING);
-		this.mergeValue(data, "donnees_genetiques", "donnees_genetiques", Archeo.STRING);
+		this.mergeValue(data, "genetique", "genetique", Archeo.STRING);
 		this.mergeValue(data, "pathologies_sujet", "pathologies_sujet", Archeo.STRING);
 		this.mergeValue(data, "appareils_compensatoires", "appareils_compensatoires", Archeo.STRING);
 		this.mergeValue(data, "diagnostics_sujet", "diagnostics_sujet", Archeo.STRING);

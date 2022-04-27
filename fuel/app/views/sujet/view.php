@@ -58,7 +58,8 @@ $subject = $subject;
 		</div>
 		<div class="col">
 			<!-- Ce n'est pas vraiment l'écart type qui est calculé mais bon... -->
-			<div class="p-2">Écart type de la datation : <?= $subject->getDatingMax() - $subject->getDatingMin(); ?> années</div>
+			<?php $diff = $subject->getDatingMax() - $subject->getDatingMin(); ?>
+			<div class="p-2">Écart type de la datation : <?= $diff ?> année<?= $diff !== 1 ? 's' : null ?></div>
 		</div>
 		<div class="col">
 			<div class="p-2">Milieu de vie : <?= $subject->getMilieuVie(); ?></div>

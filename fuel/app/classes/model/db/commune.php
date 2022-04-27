@@ -63,8 +63,8 @@ class Commune extends Model {
 	}
 
 	public function getId() { return $this->id; }
-	public function getX() { return $this->x; }
-	public function getY() { return $this->y; }
+	public function getLongitude() { return $this->x; }
+	public function getLatitude() { return $this->y; }
 	public function getZ() { return $this->z; }
 	public function getCodePostal() { return $this->codePostal; }
 	public function getNom() { return $this->nom; }

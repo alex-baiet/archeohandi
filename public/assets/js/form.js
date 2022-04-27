@@ -268,7 +268,6 @@ function addAutocompleteCommune() {
  * Les "?" sont remplacé par la valeur du champ input appartenant à l'id.
  */
 function addAutocomplete(id, select, table, where) {
-	console.log(where);
 	// Récupération du champ
 	/** @type {HTMLFormElement} */
 	let input = document.getElementById(id);

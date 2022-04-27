@@ -19,12 +19,12 @@ class Operation extends Model {
 	private ?int $annee = null;
 	private ?int $idCommune = null;
 	private string $adresse = "";
-	private ?float $x = null;
-	private ?float $y = null;
+	private ?float $longitude = null;
+	private ?float $latitude = null;
 	private ?int $idOrganisme = null;
 	private ?int $idTypeOp = null;
-	private string $EA = "";
-	private string $OA = "";
+	private string $ea = "";
+	private string $oa = "";
 	private string $patriarche = "";
 	private string $numeroOperation = "";
 	private string $arretePrescription = "";
@@ -85,12 +85,12 @@ class Operation extends Model {
 		Archeo::mergeValue($this->annee, $data, "annee", "int", true);
 		Archeo::mergeValue($this->idCommune, $data, "id_commune", "int");
 		Archeo::mergeValue($this->adresse, $data, "adresse");
-		Archeo::mergeValue($this->x, $data, "X", "float", true);
-		Archeo::mergeValue($this->y, $data, "Y", "float", true);
+		Archeo::mergeValue($this->longitude, $data, "longitude", "float", true);
+		Archeo::mergeValue($this->latitude, $data, "latitude", "float", true);
 		Archeo::mergeValue($this->idOrganisme, $data, "id_organisme", "int");
 		Archeo::mergeValue($this->idTypeOp, $data, "id_type_op", "int");
-		Archeo::mergeValue($this->EA, $data, "EA");
-		Archeo::mergeValue($this->OA, $data, "OA");
+		Archeo::mergeValue($this->ea, $data, "ea");
+		Archeo::mergeValue($this->oa, $data, "oa");
 		Archeo::mergeValue($this->patriarche, $data, "patriarche");
 		Archeo::mergeValue($this->numeroOperation, $data, "numero_operation");
 		Archeo::mergeValue($this->arretePrescription, $data, "arrete_prescription");
@@ -203,12 +203,12 @@ class Operation extends Model {
 	public function getAnnee() { return $this->annee; }
 	public function getIdCommune() { return $this->idCommune; }
 	public function getAdresse() { return $this->adresse; }
-	public function getX() { return $this->x; }
-	public function getY() { return $this->y; }
+	public function getLongitude() { return $this->longitude; }
+	public function getLatitude() { return $this->latitude; }
 	public function getIdOrganisme() { return $this->idOrganisme; }
 	public function getIdTypeOp() { return $this->idTypeOp; }
-	public function getEA() { return $this->EA; }
-	public function getOA() { return $this->OA; }
+	public function getEA() { return $this->ea; }
+	public function getOA() { return $this->oa; }
 	public function getPatriarche() { return $this->patriarche; }
 	public function getNumeroOperation() { return $this->numeroOperation; }
 	public function getArretePrescription() { return $this->arretePrescription; }
@@ -380,10 +380,10 @@ class Operation extends Model {
 	public function setARevoir(string $value) { $this->aRevoir = $value; }
 	public function setAnnee(?int $value) { $this->annee = $value; }
 	public function setAdresse(string $value) { $this->adresse = $value; }
-	public function setX(?float $value) { $this->x = $value; }
-	public function setY(?float $value) { $this->y = $value; }
-	public function setEA(string $value) { $this->EA = $value; }
-	public function setOA(string $value) { $this->OA = $value; }
+	public function setLongitude(?float $value) { $this->longitude = $value; }
+	public function setLatitude(?float $value) { $this->latitude = $value; }
+	public function setEa(string $value) { $this->ea = $value; }
+	public function setOa(string $value) { $this->oa = $value; }
 	public function setPatriarche(string $value) { $this->patriarche = $value; }
 	public function setNumeroOperation(string $value) { $this->numeroOperation = $value; }
 	public function setArretePrescription(string $value) { $this->arretePrescription = $value; }
@@ -603,12 +603,12 @@ class Operation extends Model {
 			"annee" => $this->annee,
 			"id_commune" => $this->idCommune,
 			"adresse" => $this->adresse,
-			"X" => $this->x,
-			"Y" => $this->y,
+			"longitude" => $this->longitude,
+			"latitude" => $this->latitude,
 			"id_organisme" => $this->idOrganisme,
 			"id_type_op" => $this->idTypeOp,
-			"EA" => $this->EA,
-			"OA" => $this->OA,
+			"ea" => $this->ea,
+			"oa" => $this->oa,
 			"patriarche" => $this->patriarche,
 			"numero_operation" => $this->numeroOperation,
 			"arrete_prescription" => $this->arretePrescription,

@@ -80,18 +80,18 @@ Asset::js("form.js");
 			<!-- Longitude -->
 			<div class="col-md-6">
 				<div class="form-floating">
-					<input name="X" id="form_X" value="<?= $operation->getX() ?>" type="number" class="form-control" placeholder="Longitude" min="-180" max="180" step="any" title="Indiquez la position GPS horizontale" oninput="FormOperation.updateCoordinate()">
+					<input name="longitude" id="form_longitude" value="<?= $operation->getLongitude() ?>" type="number" class="form-control" placeholder="Longitude" min="-180" max="180" step="any" title="Indiquez la position GPS horizontale" oninput="FormOperation.updateCoordinate()">
 					<div class="form-msg-error">La valeur doit être un nombre entre -180 et 180</div>
-					<label for="form_X">Longitude</label>
+					<label for="form_longitude">Longitude</label>
 				</div>
 			</div>
 
 			<!-- Latitude -->
 			<div class="col-md-6">
 				<div class="form-floating">
-					<input name="Y" id="form_Y" value="<?= $operation->getY() ?>" type="number" class="form-control" placeholder="Latitude" min="-90" max="90" step="any" title="Indiquez la position GPS verticale" oninput="FormOperation.updateCoordinate()">
+					<input name="latitude" id="form_latitude" value="<?= $operation->getLatitude() ?>" type="number" class="form-control" placeholder="Latitude" min="-90" max="90" step="any" title="Indiquez la position GPS verticale" oninput="FormOperation.updateCoordinate()">
 					<div class="form-msg-error">La valeur doit être un nombre entre -90 et 90</div>
-					<label for="form_Y">Latitude</label>
+					<label for="form_latitude">Latitude</label>
 				</div>
 			</div>
 		</div>
@@ -114,11 +114,11 @@ Asset::js("form.js");
 	<div class="col-md-4">
 		<div class="form-floating">
 			<?php
-			$opYear = $operation->getAnnee();
-			$year = $opYear < 1800 || $opYear === null ? null : $operation->getAnnee();
+			$oplatitudeear = $operation->getAnnee();
+			$year = $oplatitudeear < 1800 || $oplatitudeear === null ? null : $operation->getAnnee();
 			?>
-			<input name="annee" id="form_annee" value="<?= $year ?>" type="number" class="form-control" placeholder="Année de l'opération" min="1800" max="<?= date("Y") ?>" title="Mettez l'année de l'opération, ou la dernière année si l'opération s'est déroulé sur plusieurs année">
-			<div class="form-msg-error">La valeur doit être un nombre entre 1800 et <?= date("Y") ?></div>
+			<input name="annee" id="form_annee" value="<?= $year ?>" type="number" class="form-control" placeholder="Année de l'opération" min="1800" max="<?= date("latitude") ?>" title="Mettez l'année de l'opération, ou la dernière année si l'opération s'est déroulé sur plusieurs année">
+			<div class="form-msg-error">La valeur doit être un nombre entre 1800 et <?= date("latitude") ?></div>
 			<label for="form_annee">Année de l'opération</label>
 		</div>
 	</div>
@@ -155,20 +155,20 @@ Asset::js("form.js");
 </div>
 
 <div class="row my-2">
-	<a href="https://www.culture.gouv.fr/content/download/150076/file/Identifiants-operation-archeologique.pdf" target="_blank">Informations sur les champs EA et OA</a>
+	<a href="https://www.culture.gouv.fr/content/download/150076/file/Identifiants-operation-archeologique.pdf" target="_blank">Informations sur les champs ea et oa</a>
 	<!-- EA -->
 	<div class="col-md-4">
 		<div class="form-floating">
-			<input name="EA" id="form_EA" value="<?= $operation->getEA() ?>" type="text" class="form-control" placeholder="EA" maxlength="256" title="Indiquez le numéro de l'entité archéologique">
-			<label for="form_EA">EA</label>
+			<input name="ea" id="form_ea" value="<?= $operation->getEA() ?>" type="text" class="form-control" placeholder="ea" maxlength="256" title="Indiquez le numéro de l'entité archéologique">
+			<label for="form_ea">EA</label>
 		</div>
 	</div>
 
 	<!-- OA -->
 	<div class="col-md-4">
 		<div class="form-floating">
-			<input name="OA" id="form_OA" value="<?= $operation->getOA() ?>" type="text" class="form-control" placeholder="OA" maxlength="256" title="Indiquez le numéro d'opération archéologique">
-			<label for="form_OA">OA</label>
+			<input name="oa" id="form_oa" value="<?= $operation->getOA() ?>" type="text" class="form-control" placeholder="oa" maxlength="256" title="Indiquez le numéro d'opération archéologique">
+			<label for="form_oa">OA</label>
 		</div>
 	</div>
 

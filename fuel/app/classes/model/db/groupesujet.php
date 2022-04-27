@@ -29,7 +29,7 @@ class Groupesujet extends Model {
 		Archeo::mergeValue($this->id, $data, "id", "int");
 		Archeo::mergeValue($this->idChronology, $data, "id_chronologie", "int");
 		Archeo::mergeValue($this->idOperation, $data, "id_operation", "int");
-		Archeo::mergeValue($this->nmi, $data, "NMI", "int");
+		Archeo::mergeValue($this->nmi, $data, "nmi", "int");
 
 		if (isset($data["chronologie"])) $this->idChronology = Chronology::nameToId($data["chronologie"]);
 	}
@@ -83,7 +83,7 @@ class Groupesujet extends Model {
 			"id" => $this->id,
 			"id_chronologie" => $this->idChronology,
 			"id_operation" => $this->idOperation,
-			"NMI" => $this->nmi,
+			"nmi" => $this->nmi,
 		);
 	}
 	#endregion
@@ -122,7 +122,7 @@ class Groupesujet extends Model {
 			$validation = $this->validation;
 			if (Chronology::fetchSingle($this->idChronology) === null) $validation->invalidate("La chronologie n'est pas valide.");
 			if (Operation::fetchSingle($this->idOperation) === null) $validation->invalidate("L'opération n'est pas valide.");
-			if ($this->nmi < 0) $validation->invalidate("La valeur de NMI doit être positive.");
+			if ($this->nmi < 0) $validation->invalidate("La valeur de nmi doit être positive.");
 		});
 	}
 

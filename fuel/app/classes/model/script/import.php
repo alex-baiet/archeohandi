@@ -85,10 +85,10 @@ class Import {
 		$op->setARevoir($columns[$iarevoir]);
 		$op->setAdresse($columns[$iadresse]);
 		$op->setAnnee(intval($columns[$iannee]));
-		$op->setX(floatval($columns[$ix]));
-		$op->setY(floatval($columns[$iy]));
-		$op->setEA($columns[$iea]);
-		$op->setOA($columns[$ioa]);
+		$op->setLongitude(floatval($columns[$ix]));
+		$op->setLatitude(floatval($columns[$iy]));
+		$op->setEa($columns[$iea]);
+		$op->setOa($columns[$ioa]);
 		$op->setPatriarche($columns[$ipatriarche]);
 		$op->setNumeroOperation($columns[$inumOp]);
 		$op->setArretePrescription($columns[$iarretePrescription]);

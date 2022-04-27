@@ -56,9 +56,9 @@ if (!empty($msg)) {
 	<!-- NMI -->
 	<div class="col-md-6">
 		<div class="form-floating">
-			<input name="NMI" id="form_NMI" value="<?= $group !== null ? $group->getNMI() : "" ?>" type="number" class="form-control" placeholder="NMI" min="0" title="Indiquez le Nombre Minimum d'Individu que compose le groupe dont fait parti le sujet handicapé">
+			<input name="nmi" id="form_nmi" value="<?= $group !== null ? $group->getNMI() : "" ?>" type="number" class="form-control" placeholder="nmi" min="0" title="Indiquez le Nombre Minimum d'Individu que compose le groupe dont fait parti le sujet handicapé">
 			<div class="form-msg-error">La valeur doit être un nombre positif</div>
-			<label for="form_NMI">NMI</label>
+			<label for="form_nmi">NMI</label>
 		</div>
 	</div>
 
@@ -91,18 +91,18 @@ if (!empty($msg)) {
 	<!-- Période minimum estimé -->
 	<div class="col-md-6">
 		<div class="form-floating">
-			<input name="dating_min" id="form_dating_min" value="<?= $subject->getDatingMin(); ?>" type="number" class="form-control" placeholder="Datation minimale" min="-20000" max="1945" step="1" title="Indiquez la borne inférieure de datation du sujet">
+			<input name="date_min" id="form_date_min" value="<?= $subject->getDatingMin(); ?>" type="number" class="form-control" placeholder="Datation minimale" min="-20000" max="1945" step="1" title="Indiquez la borne inférieure de datation du sujet">
 			<div class="form-msg-error">La valeur doit être un nombre entier entre -20000 et 1945</div>
-			<label for="form_dating_min">Datation minimale</label>
+			<label for="form_date_min">Datation minimale</label>
 		</div>
 	</div>
 
 	<!-- Période maximum estimé -->
 	<div class="col-md-6">
 		<div class="form-floating">
-			<input name="dating_max" id="form_dating_max" value="<?= $subject->getDatingMax(); ?>" type="number" class="form-control" placeholder="Datation maximal" min="-20000" max="1945" step="1" title="Indiquez la borne supérieure de datation du sujet">
+			<input name="date_max" id="form_date_max" value="<?= $subject->getDatingMax(); ?>" type="number" class="form-control" placeholder="Datation maximal" min="-20000" max="1945" step="1" title="Indiquez la borne supérieure de datation du sujet">
 			<div class="form-msg-error">La valeur doit être un nombre entier entre -20000 et 1945</div>
-			<label for="form_dating_max">Datation maximale</label>
+			<label for="form_date_max">Datation maximale</label>
 		</div>
 	</div>
 </div>
@@ -428,15 +428,15 @@ if (!empty($msg)) {
 <div class="form-check form-switch">
 	<input type="hidden" name="genetiques_actif" value="0">
 	<input type="checkbox" name="genetiques_actif" value="1" id="form_genetiques_actif" class="form-check-input" 
-	<?php if ($subject->getDonneesGenetiques() !== null) : ?>checked<?php endif; ?> onclick="checkboxActivator(`form_genetiques_actif` ,`donnees_genetiques_parent`)">
+	<?php if ($subject->getDonneesGenetiques() !== null) : ?>checked<?php endif; ?> onclick="checkboxActivator(`form_genetiques_actif` ,`genetique_parent`)">
 	<label for="form_genetiques_actif">Données génétiques</label>
 </div>
-<div class="input-group" id="donnees_genetiques_parent">
-	<textarea class="form-control" name="donnees_genetiques" rows="2" maxlength="65535" title="Ecrivez ici les informations sur les données génétiques"
+<div class="input-group" id="genetique_parent">
+	<textarea class="form-control" name="genetique" rows="2" maxlength="65535" title="Ecrivez ici les informations sur les données génétiques"
 	style="width: 100%;"
 	><?= $subject->getDonneesGenetiques(); ?></textarea>
 </div>
-<script>checkboxActivator(`form_genetiques_actif` ,`donnees_genetiques_parent`);</script>
+<script>checkboxActivator(`form_genetiques_actif` ,`genetique_parent`);</script>
 
 <h3>Iconographie</h3>
 <!-- Lien Nakala -->

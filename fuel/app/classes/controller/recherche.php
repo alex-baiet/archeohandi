@@ -97,7 +97,7 @@ class Controller_Recherche extends Controller_Template {
 	 */
 	private function searchOperations(Operation $refOp): array {
 		$query = DB::select(
-			"operations.id", "annee", "id_commune", "adresse", "operations.X", "operations.Y", "id_organisme", "id_type_op", "EA", "OA", "patriarche",
+			"operations.id", "annee", "id_commune", "adresse", "operations.longitude", "operations.latitude", "id_organisme", "id_type_op", "ea", "oa", "patriarche",
 			"numero_operation", "arrete_prescription", "bibliographie", "date_ajout", "complet",)
 			->from("operations");
 
@@ -123,16 +123,16 @@ class Controller_Recherche extends Controller_Template {
 		}
 
 		// Tri en fonction de la position (trop compliqué a intégré directement dans SQL)
-		if ($refOp->getX() !== null && $refOp->getY() !== null && !empty($_POST["radius"])) {
+		if ($refOp->getLongitude() !== null && $refOp->getLatitude() !== null && !empty($_POST["radius"])) {
 			/** @var float Rayon de recherche en mètres. */
 			$radius = floatval($_POST["radius"]) * 1000;
 			for ($i = count($operations) -1; $i >= 0; $i--) {
 				$op = $operations[$i];
-				if ($op->getX() === null || $op->getY() === null) {
+				if ($op->getLongitude() === null || $op->getLatitude() === null) {
 					unset($operations[$i]);
 					continue;
 				}
-				if (Helper::worldDistance($refOp->getY(), $refOp->getX(), $op->getY(), $op->getX()) > $radius) {
+				if (Helper::worldDistance($refOp->getLatitude(), $refOp->getLongitude(), $op->getLatitude(), $op->getLongitude()) > $radius) {
 					unset($operations[$i]);
 				}
 			}
@@ -149,8 +149,8 @@ class Controller_Recherche extends Controller_Template {
 			|| !empty($data["sexe"])
 			|| !empty($data["age_min"])
 			|| !empty($data["age_max"])
-			|| !empty($data["dating_min"])
-			|| !empty($data["dating_max"])
+			|| !empty($data["date_min"])
+			|| !empty($data["date_max"])
 			|| !empty($data["id_type_depot"])
 			|| !empty($data["id_sepulture"])
 			|| !empty($data["contexte_normatif"])
@@ -172,7 +172,7 @@ class Controller_Recherche extends Controller_Template {
 	 * @return Sujethandicape[]
 	 */
 	private function searchSubjects(Sujethandicape $refSubject, Operation $opParent): array {
-		$query = DB::select("sujet.id", "id_sujet_handicape", "age_min", "age_max", "sexe", "dating_min", "dating_max", "milieu_vie", "contexte", "contexte_normatif",
+		$query = DB::select("sujet.id", "id_sujet_handicape", "age_min", "age_max", "sexe", "date_min", "date_max", "milieu_vie", "contexte", "contexte_normatif",
 		                    "comment_contexte", "comment_diagnostic", "description_mobilier", "id_type_depot", "id_sepulture", "id_depot", "id_groupe_sujets")
 			->from(array("sujet_handicape", "sujet"))
 			->join(array("groupe_sujets", "groupe"))
@@ -185,8 +185,8 @@ class Controller_Recherche extends Controller_Template {
 		if (!empty($_POST["id_chronologie"])) $query->where("groupe.id_chronologie", "=", $_POST["id_chronologie"]);
 		if ($refSubject->getAgeMin() !== null) $query->where("age_max", ">=", $refSubject->getAgeMin());
 		if ($refSubject->getAgeMax() !== null) $query->where("age_min", "<=", $refSubject->getAgeMax());
-		if ($refSubject->getDatingMin() !== null) $query->where("dating_max", ">=", $refSubject->getDatingMin());
-		if ($refSubject->getDatingMax() !== null) $query->where("dating_min", "<=", $refSubject->getDatingMax());
+		if ($refSubject->getDatingMin() !== null) $query->where("date_max", ">=", $refSubject->getDatingMin());
+		if ($refSubject->getDatingMax() !== null) $query->where("date_min", "<=", $refSubject->getDatingMax());
 		if ($refSubject->getIdTypeDepot() !== null) $query->where("id_type_depot", "=", $refSubject->getIdTypeDepot());
 		if ($refSubject->getIdTypeSepulture() !== null) $query->where("id_sepulture", "=", $refSubject->getIdTypeSepulture());
 		if (!empty($refSubject->getContexteNormatif())) $query->where("contexte_normatif", "=", $refSubject->getContexteNormatif());

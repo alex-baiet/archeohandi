@@ -82,8 +82,8 @@ class Sujethandicape extends Model {
 		Archeo::mergeValue($this->ageMethode, $data, "age_methode");
 		Archeo::mergeValue($this->sexe, $data, "sexe");
 		Archeo::mergeValue($this->sexeMethode, $data, "sexe_methode");
-		Archeo::mergeValue($this->datingMin, $data, "dating_min", "int", true);
-		Archeo::mergeValue($this->datingMax, $data, "dating_max", "int", true);
+		Archeo::mergeValue($this->datingMin, $data, "date_min", "int", true);
+		Archeo::mergeValue($this->datingMax, $data, "date_max", "int", true);
 		Archeo::mergeValue($this->milieuVie, $data, "milieu_vie");
 		Archeo::mergeValue($this->contexte, $data, "contexte");
 		Archeo::mergeValue($this->contexteNormatif, $data, "contexte_normatif");
@@ -98,10 +98,10 @@ class Sujethandicape extends Model {
 		Archeo::mergeValue($this->idGroupeSujet, $data, "id_groupe_sujets", "int");
 		Archeo::mergeValue($this->dateAjout, $data, "date_ajout", "string", true);
 		Archeo::mergeValue($this->complet, $data, "complet", "bool");
-		if ((isset($data["genetiques_actif"]) && $data["genetiques_actif"] == false) || !isset($data["donnees_genetiques"]) || $data["donnees_genetiques"] === null) {
+		if ((isset($data["genetiques_actif"]) && $data["genetiques_actif"] == false) || !isset($data["genetique"]) || $data["genetique"] === null) {
 			$this->donneesGenetiques = null;
 		} else {
-			Archeo::mergeValue($this->donneesGenetiques, $data, "donnees_genetiques");
+			Archeo::mergeValue($this->donneesGenetiques, $data, "genetique");
 		}
 
 		// Recréation du groupe du sujet
@@ -109,7 +109,7 @@ class Sujethandicape extends Model {
 		if (isset($data["id_group"])) $groupData["id"] = $data["id_group"];
 		if (isset($data["id_chronologie"])) $groupData["id_chronologie"] = $data["id_chronologie"];
 		if (isset($data["id_operation"])) $groupData["id_operation"] = $data["id_operation"];
-		if (isset($data["NMI"])) $groupData["NMI"] = $data["NMI"];
+		if (isset($data["nmi"])) $groupData["nmi"] = $data["nmi"];
 		if (count($groupData) > 0 || $setWithEmpty) $this->group = new Groupesujet($groupData);
 
 		// Récupération des données du dépôt
@@ -609,8 +609,8 @@ class Sujethandicape extends Model {
 			"age_methode" => $this->ageMethode,
 			"sexe" => $this->sexe,
 			"sexe_methode" => $this->sexeMethode,
-			"dating_min" => $this->datingMin,
-			"dating_max" => $this->datingMax,
+			"date_min" => $this->datingMin,
+			"date_max" => $this->datingMax,
 			"milieu_vie" => $this->milieuVie,
 			"contexte" => $this->contexte,
 			"contexte_normatif" => $this->contexteNormatif,
@@ -622,7 +622,7 @@ class Sujethandicape extends Model {
 			"id_depot" => $this->idDepot,
 			"id_groupe_sujets" => $this->idGroupeSujet,
 			"complet" => $this->complet,
-			"donnees_genetiques" => $this->donneesGenetiques,
+			"genetique" => $this->donneesGenetiques,
 		);
 	}
 

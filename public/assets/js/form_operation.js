@@ -72,8 +72,8 @@ class FormOperation {
 	static prepareMap(addAllMap = false) {
 		Leaflet.initMap("map");
 
-		const inputLon = document.getElementById("form_X");
-		const inputLat = document.getElementById("form_Y");
+		const inputLon = document.getElementById("form_longitude");
+		const inputLat = document.getElementById("form_latitude");
 		// const inputDep = document.getElementById("form_departement");
 		// const inputCom = document.getElementById("form_commune");
 		// const inputAddr = document.getElementById("form_adresse");
@@ -89,14 +89,14 @@ class FormOperation {
 		// Ajout marqueurs pour toutes les autres operations
 		if (addAllMap) {
 			DB.query(
-				`SELECT operations.X, operations.Y, operations.adresse, commune.nom
+				`SELECT operations.longitude, operations.latitude, operations.adresse, commune.nom
 				FROM operations
 				JOIN commune ON commune.id = operations.id_commune
-				WHERE operations.X IS NOT NULL
-				AND operations.Y IS NOT NULL`,
+				WHERE operations.longitude IS NOT NULL
+				AND operations.latitude IS NOT NULL`,
 				function (json) {
 					for (const op of json) {
-						Leaflet.addMarker(op["Y"], op["X"], `${op["nom"]}, ${op["adresse"]}`);
+						Leaflet.addMarker(op["latitude"], op["longitude"], `${op["nom"]}, ${op["adresse"]}`);
 					}
 				}
 			);
@@ -107,8 +107,8 @@ class FormOperation {
 
 	/** Met à jour le marqueur de la carte en fonction de la valeur des champs. */
 	static updateCoordinate() {
-		const inputLon = document.getElementById("form_X");
-		const inputLat = document.getElementById("form_Y");
+		const inputLon = document.getElementById("form_longitude");
+		const inputLat = document.getElementById("form_latitude");
 		const inputRad = document.getElementById("form_radius");
 
 		// En cas d'informations manquantes

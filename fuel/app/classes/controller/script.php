@@ -32,12 +32,12 @@ class Controller_Script extends Controller_Template {
 
 		foreach ($subjects as $subj) {
 			$datings = explode(";", str_replace("]", "", str_replace("[", "",  $subj["datation"])));
-			$dating_min = is_numeric($datings[0]) ? intval($datings[0]) : NULL;
-			$dating_max = is_numeric($datings[1]) ? intval($datings[1]) : NULL;
+			$date_min = is_numeric($datings[0]) ? intval($datings[0]) : NULL;
+			$date_max = is_numeric($datings[1]) ? intval($datings[1]) : NULL;
 
-			Helper::varDump(array($dating_min, $dating_max));
+			Helper::varDump(array($date_min, $date_max));
 			DB::update("sujet_handicape")
-				->set(array("dating_min" => $dating_min, "dating_max" => $dating_max))
+				->set(array("date_min" => $date_min, "date_max" => $date_max))
 				->where("id", "=", $subj["id"])
 				->execute();
 		}

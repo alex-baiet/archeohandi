@@ -11,8 +11,8 @@ class Operation extends Archeo {
 		"Y",
 		"organisme",
 		"type_operation",
-		"EA",
-		"OA",
+		"ea",
+		"oa",
 		"patriarche",
 		"numero_operation",
 		"arrete_prescription",
@@ -37,8 +37,8 @@ class Operation extends Archeo {
 	organisme = null;
 	id_type_op = null;
 	type_operation = null;
-	EA = null;
-	OA = null;
+	ea = null;
+	oa = null;
 	patriarche = null;
 	numero_operation = null;
 	arrete_prescription = null;
@@ -68,8 +68,8 @@ class Operation extends Archeo {
 		this.mergeValue(data, "organisme", "organisme", Archeo.STRING);
 		this.mergeValue(data, "id_type_op", "id_type_op", Archeo.NUMBER);
 		this.mergeValue(data, "type_operation", "type_operation", Archeo.STRING);
-		this.mergeValue(data, "EA", "EA", Archeo.STRING);
-		this.mergeValue(data, "OA", "OA", Archeo.STRING);
+		this.mergeValue(data, "ea", "ea", Archeo.STRING);
+		this.mergeValue(data, "oa", "oa", Archeo.STRING);
 		this.mergeValue(data, "patriarche", "patriarche", Archeo.STRING);
 		this.mergeValue(data, "numero_operation", "numero_operation", Archeo.STRING);
 		this.mergeValue(data, "arrete_prescription", "arrete_prescription", Archeo.STRING);

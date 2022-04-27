@@ -92,20 +92,20 @@ Asset::js("form.js");
 			<!-- Longitude -->
 			<div class="col-md-4">
 				<div class="form-floating">
-					<input name="X" id="form_X" value="<?= Helper::arrayGetValue("X", $options) ?>" type="number" class="form-control" placeholder="Longitude"
+					<input name="longitude" id="form_longitude" value="<?= Helper::arrayGetValue("longitude", $options) ?>" type="number" class="form-control" placeholder="Longitude"
 						min="-180" max="180" step="any" title="Indiquez la position GPS horizontale" oninput="FormOperation.updateCoordinate()">
 					<div class="form-msg-error">La valeur doit être un nombre entre -180 et 180</div>
-					<label for="form_X">Longitude</label>
+					<label for="form_longitude">Longitude</label>
 				</div>
 			</div>
 
 			<!-- Latitude -->
 			<div class="col-md-4">
 				<div class="form-floating">
-					<input name="Y" id="form_Y" value="<?= Helper::arrayGetValue("Y", $options) ?>" type="number" class="form-control" placeholder="Latitude"
+					<input name="latitude" id="form_latitude" value="<?= Helper::arrayGetValue("latitude", $options) ?>" type="number" class="form-control" placeholder="Latitude"
 						min="-90" max="90" step="any" title="Indiquez la position GPS verticale" oninput="FormOperation.updateCoordinate()">
 					<div class="form-msg-error">La valeur doit être un nombre entre -90 et 90</div>
-					<label for="form_Y">Latitude</label>
+					<label for="form_latitude">Latitude</label>
 				</div>
 			</div>
 
@@ -184,16 +184,16 @@ Asset::js("form.js");
 	<!-- EA -->
 	<div class="col-md-4">
 		<div class="form-floating">
-			<input name="EA" id="form_EA" value="<?= Helper::arrayGetValue("EA", $options) ?>" type="text" class="form-control" placeholder="EA" maxlength="256" title="Indiquez le numéro de l'entité archéologique">
-			<label for="form_EA">EA</label>
+			<input name="ea" id="form_ea" value="<?= Helper::arrayGetValue("ea", $options) ?>" type="text" class="form-control" placeholder="ea" maxlength="256" title="Indiquez le numéro de l'entité archéologique">
+			<label for="form_ea">EA</label>
 		</div>
 	</div>
 
 	<!-- OA -->
 	<div class="col-md-4">
 		<div class="form-floating">
-			<input name="OA" id="form_OA" value="<?= Helper::arrayGetValue("OA", $options) ?>" type="text" class="form-control" placeholder="OA" maxlength="256" title="Indiquez le numéro d'opération archéologique">
-			<label for="form_OA">OA</label>
+			<input name="oa" id="form_oa" value="<?= Helper::arrayGetValue("oa", $options) ?>" type="text" class="form-control" placeholder="oa" maxlength="256" title="Indiquez le numéro d'opération archéologique">
+			<label for="form_oa">OA</label>
 		</div>
 	</div>
 
