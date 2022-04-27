@@ -47,7 +47,7 @@ class Leaflet {
 
 	/** Ajoute un marqueur à la position indiquée sur la carte. */
 	static addMarker(lat, lng) {
-		const newMarker = L.marker(position);
+		const newMarker = L.marker([lat, lng]);
 		newMarker.addTo(Leaflet.map);
 		// Pour pouvoir les éditer, il faut d'abord les stocker
 	}

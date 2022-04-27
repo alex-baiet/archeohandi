@@ -31,12 +31,12 @@ class FormOperation {
 		const fieldCom = document.getElementById("form_commune");
 		/** @type {HTMLButtonElement} */
 		const fieldDep = document.getElementById("form_departement");
-		
+
 		if (nullable && fieldCom.value == "") fieldCom.setCustomValidity("");
 		else {
 			let where = [["nom", "=", fieldCom.value]];
 			if (fieldDep.value != "" && fieldDep.validity.valid) where.push(["departement", "=", fieldDep.value]);
-			
+
 			checkValueExist(
 				"commune",
 				where,
@@ -49,7 +49,7 @@ class FormOperation {
 	/** Met à jour l'affichage de l'input de l'organisme en fonction de si il existe dans la BDD. */
 	static checkOrganismeExist() {
 		const input = document.getElementById("form_organisme");
-		checkValueExist("organisme", [["nom", "=", input.value]], 
+		checkValueExist("organisme", [["nom", "=", input.value]],
 			() => { input.setCustomValidity(""); },
 			() => { input.setCustomValidity("L'organisme n'existe pas."); }
 		);
@@ -87,7 +87,21 @@ class FormOperation {
 		});
 
 		// Ajout marqueurs pour toutes les autres operations
-		
+		if (addAllMap) {
+			DB.query(
+				`SELECT X, Y
+				FROM operations
+				WHERE X IS NOT NULL
+				AND Y IS NOT NULL`,
+				function (json) {
+					console.log(json.length);
+					for (const op of json) {
+						console.log(op)
+						Leaflet.addMarker(Number(op["X"]), Number(op["Y"]));
+					}
+				}
+			);
+		}
 
 		this.updateCoordinate();
 	}
@@ -100,13 +114,13 @@ class FormOperation {
 
 		// En cas d'informations manquantes
 		if (inputLon.value == "" || inputLat.value == "") return;
-		
+
 		if (inputRad === null) {
 			// Placement d'un point précis
 			Leaflet.setMarker([Number(inputLat.value), Number(inputLon.value)]);
 		} else {
 			// Placement d'un zone
-			Leaflet.updateCircle(Number(inputLat.value), Number(inputLon.value), Number(inputRad.value)*1000)
+			Leaflet.updateCircle(Number(inputLat.value), Number(inputLon.value), Number(inputRad.value) * 1000)
 		}
 	}
 }

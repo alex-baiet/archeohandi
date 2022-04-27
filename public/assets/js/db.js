@@ -10,7 +10,6 @@ class DB {
 			url: "https://archeohandi.huma-num.fr/public/fonction/query",
 			data: { query: sql },
 			success: function (response) {
-				console.log(response)
 				const json = JSON.parse(response);
 				onSuccess(json);
 			}
