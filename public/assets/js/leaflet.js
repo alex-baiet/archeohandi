@@ -11,8 +11,8 @@ class Leaflet {
 	static initMap(id) {
 		// Initialisation de la carte
 		Leaflet.map = L.map(id).setView([47, 2], 5);
-		var southWest = L.latLng(41.0594733607425, -5.625),
-    northEast = L.latLng(51.2446271894719, 8.96447621125652),
+		var southWest = L.latLng(41, -5.625),
+    northEast = L.latLng(52, 8.96447621125652),
     bounds = L.latLngBounds(southWest, northEast);
 
 		L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
