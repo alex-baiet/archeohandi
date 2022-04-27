@@ -313,7 +313,7 @@ return array(
 			'Model\\Db\\Sujethandicape',
 			'Model\\Db\\Commune',
 			'Model\\Db\\Personne',
-			'Model\\Db\\Groupesujet',
+			'Model\\Db\\Groupe',
 			'Model\\Db\\Compte',
 			'Model\\Searchresult',
 		),

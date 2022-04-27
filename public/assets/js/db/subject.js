@@ -53,7 +53,7 @@ class Subject extends Archeo {
 	id_depot = null;
 	adresse = null;
 	num_inventaire = null;
-	id_groupe_sujets = null;
+	id_groupe = null;
 	chronologie = null;
 	date_ajout = null;
 	genetique = null;
@@ -92,7 +92,7 @@ class Subject extends Archeo {
 		this.mergeValue(data, "id_depot", "id_depot", Archeo.NUMBER);
 		this.mergeValue(data, "adresse", "adresse", Archeo.NUMBER);
 		this.mergeValue(data, "num_inventaire", "num_inventaire", Archeo.NUMBER);
-		this.mergeValue(data, "id_groupe_sujets", "id_groupe_sujets", Archeo.NUMBER);
+		this.mergeValue(data, "id_groupe", "id_groupe", Archeo.NUMBER);
 		this.mergeValue(data, "chronologie", "chronologie", Archeo.STRING);
 		this.mergeValue(data, "date_ajout", "date_ajout", Archeo.STRING);
 		this.mergeValue(data, "genetique", "genetique", Archeo.STRING);

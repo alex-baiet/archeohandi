@@ -6,8 +6,8 @@ use Fuel\Core\DB;
 use Fuel\Core\Model;
 use Model\Validation;
 
-/** Représentation de la table "groupe_sujets" de la BDD. */
-class Groupesujet extends Model {
+/** Représentation de la table "groupe" de la BDD. */
+class Groupe extends Model {
 	#region Values
 	private ?int $id = null;
 	private ?int $idChronology = null;
@@ -38,13 +38,13 @@ class Groupesujet extends Model {
 	 * Récupère le groupe correspondant à l'id.
 	 * @param int $id Identifiant du groupe.
 	 */
-	public static function fetchSingle(int $id): ?Groupesujet {
-		return Archeo::fetchSingle($id, "groupe_sujets", function ($data) { return new Groupesujet($data); });
+	public static function fetchSingle(int $id): ?Groupe {
+		return Archeo::fetchSingle($id, "groupe", function ($data) { return new Groupe($data); });
 	}
 
-	/** @return Groupesujet[] */
+	/** @return Groupe[] */
 	public static function fetchAll(): array {
-		return Archeo::fetchAll("groupe_sujets", function ($data) { return new Groupesujet($data); });
+		return Archeo::fetchAll("groupe", function ($data) { return new Groupe($data); });
 	}
 
 	/**
@@ -53,7 +53,7 @@ class Groupesujet extends Model {
 	 * @return null Si tout s'est bien passé.
 	 */
 	public static function deleteOnDB(int $id): ?string {
-		$result = DB::delete("groupe_sujets")->where("id", "=", $id)->execute();
+		$result = DB::delete("groupe")->where("id", "=", $id)->execute();
 		if ($result < 1) return "Le groupe de sujet à supprimer n'existe pas";
 
 		return null;
@@ -95,9 +95,9 @@ class Groupesujet extends Model {
 		// Préparation des valeurs à envoyer à la BDD
 		$arr = $this->toArray();
 
-		if ($this->id === null || Groupesujet::fetchSingle($this->id) === null) {
+		if ($this->id === null || Groupe::fetchSingle($this->id) === null) {
 			// Le groupe n'existe pas : on la rajoute à la BDD
-			list($insertId, $rowAffected) = DB::insert("groupe_sujets")
+			list($insertId, $rowAffected) = DB::insert("groupe")
 				->set($arr)
 				->execute();
 			if ($rowAffected < 1) {
@@ -108,7 +108,7 @@ class Groupesujet extends Model {
 		}
 		else {
 			// Le groupe existe : on met à jour
-			$rowAffected = DB::update("groupe_sujets")
+			$rowAffected = DB::update("groupe")
 				->set($arr)
 				->where("id", "=", $this->id)
 				->execute();

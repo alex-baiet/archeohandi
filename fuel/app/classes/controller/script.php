@@ -122,7 +122,7 @@ class Controller_Script extends Controller_Template {
 			WHERE EXISTS(
 				SELECT id
 				FROM sujet_handicape AS copy
-				WHERE copy.id_groupe_sujets = original.id_groupe_sujets
+				WHERE copy.id_groupe = original.id_groupe
 				AND copy.id != original.id
 			);"
 		)->execute()->as_array();
@@ -140,7 +140,7 @@ class Controller_Script extends Controller_Template {
 			echo $group->getId()."<br>";
 
 			// Sauvegarde du sujet
-			echo "nbr lignes modifiées : ".DB::query("UPDATE sujet_handicape SET id_groupe_sujets={$group->getId()} WHERE id={$subject->getId()}")->execute()."<br>";
+			echo "nbr lignes modifiées : ".DB::query("UPDATE sujet_handicape SET id_groupe={$group->getId()} WHERE id={$subject->getId()}")->execute()."<br>";
 			// $subject->saveOnDB();
 		}
 		

@@ -173,10 +173,10 @@ class Controller_Recherche extends Controller_Template {
 	 */
 	private function searchSubjects(Sujethandicape $refSubject, Operation $opParent): array {
 		$query = DB::select("sujet.id", "id_sujet_handicape", "age_min", "age_max", "sexe", "date_min", "date_max", "milieu_vie", "contexte", "contexte_normatif",
-		                    "comment_contexte", "comment_diagnostic", "description_mobilier", "id_type_depot", "id_sepulture", "id_depot", "id_groupe_sujets")
+		                    "comment_contexte", "comment_diagnostic", "description_mobilier", "id_type_depot", "id_sepulture", "id_depot", "id_groupe")
 			->from(array("sujet_handicape", "sujet"))
-			->join(array("groupe_sujets", "groupe"))
-			->on("sujet.id_groupe_sujets", "=", "groupe.id")
+			->join(array("groupe", "groupe"))
+			->on("sujet.id_groupe", "=", "groupe.id")
 			->where("groupe.id_operation", "=", $opParent->getId());
 
 		if ($refSubject->getId() !== null) $query->where("sujet.id", "=", $refSubject->getId());

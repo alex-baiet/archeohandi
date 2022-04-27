@@ -33,7 +33,7 @@ class Sujethandicape extends Model {
 	private bool $complet = false;
 	private ?string $donneesGenetiques = null;
 
-	/** @var Groupesujet|null|unset */
+	/** @var Groupe|null|unset */
 	private $group;
 	/** @var Typedepot|null|unset */
 	private $typeDepot;
@@ -95,7 +95,7 @@ class Sujethandicape extends Model {
 		Archeo::mergeValue($this->idTypeDepot, $data, "id_type_depot", "int", true);
 		Archeo::mergeValue($this->idSepulture, $data, "id_sepulture", "int", true);
 		Archeo::mergeValue($this->idDepot, $data, "id_depot", "int");
-		Archeo::mergeValue($this->idGroupeSujet, $data, "id_groupe_sujets", "int");
+		Archeo::mergeValue($this->idGroupeSujet, $data, "id_groupe", "int");
 		Archeo::mergeValue($this->dateAjout, $data, "date_ajout", "string", true);
 		Archeo::mergeValue($this->complet, $data, "complet", "bool");
 		if ((isset($data["genetiques_actif"]) && $data["genetiques_actif"] == false) || !isset($data["genetique"]) || $data["genetique"] === null) {
@@ -110,7 +110,7 @@ class Sujethandicape extends Model {
 		if (isset($data["id_chronologie"])) $groupData["id_chronologie"] = $data["id_chronologie"];
 		if (isset($data["id_operation"])) $groupData["id_operation"] = $data["id_operation"];
 		if (isset($data["nmi"])) $groupData["nmi"] = $data["nmi"];
-		if (count($groupData) > 0 || $setWithEmpty) $this->group = new Groupesujet($groupData);
+		if (count($groupData) > 0 || $setWithEmpty) $this->group = new Groupe($groupData);
 
 		// Récupération des données du dépôt
 		$depotData = array();
@@ -206,7 +206,7 @@ class Sujethandicape extends Model {
 		}
 		
 		if ($subject->getIdGroupeSujet() !== null) {
-			$result = Groupesujet::deleteOnDB($subject->getIdGroupeSujet());
+			$result = Groupe::deleteOnDB($subject->getIdGroupeSujet());
 			if ($result !== null) return $result;
 		}
 
@@ -267,7 +267,7 @@ class Sujethandicape extends Model {
 	public function getGroup() {
 		if (!isset($this->group)){
 			if ($this->idGroupeSujet === null) $this->group = null;
-			else $this->group = Groupesujet::fetchSingle($this->idGroupeSujet);
+			else $this->group = Groupe::fetchSingle($this->idGroupeSujet);
 		}
 		return $this->group;
 	}
@@ -413,7 +413,7 @@ class Sujethandicape extends Model {
 		$this->furnitures[] = $furniture;
 	}
 
-	public function setGroup(Groupesujet $group) {
+	public function setGroup(Groupe $group) {
 		$this->validation->resetValidation();
 		$this->group = $group;
 		$this->idGroupeSujet = $group->getId();
@@ -620,7 +620,7 @@ class Sujethandicape extends Model {
 			"id_type_depot" => $this->idTypeDepot,
 			"id_sepulture" => $this->idSepulture,
 			"id_depot" => $this->idDepot,
-			"id_groupe_sujets" => $this->idGroupeSujet,
+			"id_groupe" => $this->idGroupeSujet,
 			"complet" => $this->complet,
 			"genetique" => $this->donneesGenetiques,
 		);

@@ -276,13 +276,13 @@ class Operation extends Model {
 	public function getSubjects(): array {
 		if (isset($this->subjects)) return $this->subjects;
 		
-		// Récupération des groupe_sujets
-		$idGroups = Helper::querySelectList('SELECT id FROM groupe_sujets WHERE id_operation=' . $this->getId());
+		// Récupération des groupe
+		$idGroups = Helper::querySelectList('SELECT id FROM groupe WHERE id_operation=' . $this->getId());
 
 		// Récupération de tous les sujets handicapé des différents groupes
 		$this->subjects = array();
 		foreach ($idGroups as $idGroup) {
-			$result = Helper::querySelectSingle('SELECT * FROM sujet_handicape WHERE id_groupe_sujets=' . $idGroup);
+			$result = Helper::querySelectSingle('SELECT * FROM sujet_handicape WHERE id_groupe=' . $idGroup);
 			if ($result !== null) {
 				$subject = new Sujethandicape($result);
 				$this->subjects[$subject->getId()] = $subject;
