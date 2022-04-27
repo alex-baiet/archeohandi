@@ -95,7 +95,7 @@ if (Constants::MAINTENANCE === true) {
 
 					<?php if ($navActive) : ?>
 						<li class="nav-item active">
-							<a class="nav-link" href="/public/operations">Opérations</a>
+							<a class="nav-link" href="/public/operation">Opérations</a>
 						</li>
 
 						<?php /*if (Compte::checkPermission(Compte::PERM_ADMIN)) :*/ ?>
@@ -122,7 +122,7 @@ if (Constants::MAINTENANCE === true) {
 						<div class="dropdown-menu">
 							<?php if ($account !== null) : ?>
 								<!-- Operations personnelles -->
-								<a class="dropdown-item" href="/public/operations/personnel">Mes opérations</a>
+								<a class="dropdown-item" href="/public/operation/personnel">Mes opérations</a>
 							<?php endif; ?>
 							<?php if (Compte::checkPermission(Compte::PERM_DISCONNECTED)) : ?>
 								<!-- Connexion -->

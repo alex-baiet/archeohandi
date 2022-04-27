@@ -237,7 +237,7 @@ $subject = $subject;
 				</div>
 				<div class="modal-footer">
 					<form method="post" action="/public/sujet/delete">
-						<input type="hidden" name="redirect" value="/operations/sujets/<?= $subject->getOperation()->getId() ?>">
+						<input type="hidden" name="redirect" value="/operation/sujets/<?= $subject->getOperation()->getId() ?>">
 						<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#validationPopup">Retour</button>
 						<button type="submit" name="id" id="form_id" value="<?= $subject->getId() ?>" class="btn btn-danger">Supprimer</button>
 					</form>

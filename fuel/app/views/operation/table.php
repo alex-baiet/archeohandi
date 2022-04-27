@@ -41,7 +41,7 @@ $lines = $lines;
 				<td><?= $author ?></td>
 				<td><?= $op->getNomOp() ?></td>
 				<td><?= $op->getAnnee() ?></td>
-				<td><a href="/public/operations/view/<?= $op->getId() ?>">Consulter</a></td>
+				<td><a href="/public/operation/view/<?= $op->getId() ?>">Consulter</a></td>
 			</tr>
 			<tr id="row_subjects_<?= $op->getId() ?>" style="display:none;">
 				<td colspan="100%" style="

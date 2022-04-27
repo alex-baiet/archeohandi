@@ -135,7 +135,7 @@ class Operation extends Model {
 	 */
 	public static function fetchSingle(int $id) {
 		if (!is_numeric($id)) return null;
-		$res = Helper::querySelectSingle("SELECT * FROM operations WHERE id=$id");
+		$res = Helper::querySelectSingle("SELECT * FROM operation WHERE id=$id");
 		if ($res === null) return null;
 
 		$obj = new Operation($res);
@@ -147,7 +147,7 @@ class Operation extends Model {
 	 * @return Operation[]
 	 */
 	public static function fetchAll() {
-		$results = Helper::querySelect("SELECT * FROM operations");
+		$results = Helper::querySelect("SELECT * FROM operation");
 		$operations = array();
 		foreach ($results as $res) {
 			$newOp = new Operation($res);
@@ -173,7 +173,7 @@ class Operation extends Model {
 			if ($result !== null) return "$result (sujet n°{$subject->getId()})";
 		}
 
-		$result = DB::delete("operations")->where("id", "=", $id)->execute();
+		$result = DB::delete("operation")->where("id", "=", $id)->execute();
 		if ($result < 1) return "L'opération n'a pas pû être supprimé";
 
 		Personne::deleteOperationNames($id);
@@ -193,7 +193,7 @@ class Operation extends Model {
 			$value = new Operation($data);
 			return $value->getNomOp();
 		};
-		return Archeo::generateSelect($field, $label, $idSelected, "operations", $valueRecover, $textRecover, $formFloating);
+		return Archeo::generateSelect($field, $label, $idSelected, "operation", $valueRecover, $textRecover, $formFloating);
 	}
 
 	#region Getters
@@ -489,7 +489,7 @@ class Operation extends Model {
 			// L'opération n'existe pas : on la rajoute à la BDD
 			$arr["id"] = null;
 			$arr["date_ajout"] = DB::expr("CURRENT_DATE()");
-			list($insertId, $rowAffected) = DB::insert("operations")
+			list($insertId, $rowAffected) = DB::insert("operation")
 				->set($arr)
 				->execute();
 			$this->id = $insertId;
@@ -502,7 +502,7 @@ class Operation extends Model {
 		}
 		else {
 			// L'opération existe : on la met à jour
-			$rowAffected = DB::update("operations")
+			$rowAffected = DB::update("operation")
 				->set($arr)
 				->where("id", $this->id)
 				->execute();

@@ -12,7 +12,7 @@ use Model\Messagehandler;
 use Model\Redirect;
 use Model\Searchresult;
 
-class Controller_Operations extends Controller_Template {
+class Controller_Operation extends Controller_Template {
 	
 	/** Page d'affichages de toutes les opérations. */
 	public function action_index() {
@@ -35,11 +35,11 @@ class Controller_Operations extends Controller_Template {
 		// Calcul nombre de sujets enregistrés
 		$countSubject = intval(Helper::querySelectSingle("SELECT COUNT(id) AS total FROM sujet_handicape")["total"]);
 		$data['countSubject'] = $countSubject;
-		$countOp = intval(Helper::querySelectSingle("SELECT COUNT(id) AS total FROM operations")["total"]);
+		$countOp = intval(Helper::querySelectSingle("SELECT COUNT(id) AS total FROM operation")["total"]);
 		$data['countOp'] = $countOp;
 
 		$this->template->title = 'Opérations';
-		$this->template->content = View::forge('operations/index', $data, false);
+		$this->template->content = View::forge('operation/index', $data, false);
 	}
 
 	/** Page des opérations personnels uniquement (opérations sur lesquels l'utilisateur a des droits). */
@@ -51,7 +51,7 @@ class Controller_Operations extends Controller_Template {
 
 		// Récupération des opérations
 		$results = DB::select()
-			->from("operations")
+			->from("operation")
 			->join("droit_compte")
 			->on("id_operation", "=", "id")
 			->where("login_compte", "=", Compte::getInstance()->getLogin())
@@ -69,7 +69,7 @@ class Controller_Operations extends Controller_Template {
 
 		$data["lines"] = $lines;
 		$this->template->title = 'Opérations personnelles';
-		$this->template->content = View::forge('operations/personnel', $data, false);
+		$this->template->content = View::forge('operation/personnel', $data, false);
 	}
 
 	/** Page d'ajout d'une opération. */
@@ -90,7 +90,7 @@ class Controller_Operations extends Controller_Template {
 		$this->template->title = 'Nouvelle opération';
 		$data = array();
 		if (isset($operation)) $data["operation"] = $operation;
-		$this->template->content = View::forge('operations/add', $data);
+		$this->template->content = View::forge('operation/add', $data);
 	}
 
 	/** Page affichant les informations d'une opération. */
@@ -109,8 +109,8 @@ class Controller_Operations extends Controller_Template {
 		$data["operation"] = $operation;
 		$this->template->title = 'Consultation de l\'opération '.$id;
 		$this->template->content = View::forge(
-			'operations/template',
-			array("content" => View::forge("operations/view", $data))
+			'operation/template',
+			array("content" => View::forge("operation/view", $data))
 		);
 	}
 
@@ -130,8 +130,8 @@ class Controller_Operations extends Controller_Template {
 		$data["operation"] = $operation;
 		$this->template->title = 'Sujets de l\'opération '.$id;
 		$this->template->content = View::forge(
-			'operations/template',
-			array("content" => View::forge("operations/sujets", $data))
+			'operation/template',
+			array("content" => View::forge("operation/sujets", $data))
 		);
 	}
 
@@ -159,7 +159,7 @@ class Controller_Operations extends Controller_Template {
 				$operation->saveOnDB();
 				Messagehandler::prepareAlert("Modification de l'opération réussi.", "success");
 
-				Response::redirect("/operations/view/$id");
+				Response::redirect("/operation/view/$id");
 			} else {
 				// Les données ne sont pas valides : on affiche les problèmes
 				$errors = $result;
@@ -169,8 +169,8 @@ class Controller_Operations extends Controller_Template {
 		$data = array('operation'=> $operation, 'errors' => $errors);
 		$this->template->title = 'Modification de l\'opération '.$id;
 		$this->template->content = View::forge(
-			'operations/template',
-			array("content" => View::forge("operations/edit", $data))
+			'operation/template',
+			array("content" => View::forge("operation/edit", $data))
 		);
 	}
 

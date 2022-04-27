@@ -97,11 +97,11 @@ class Controller_Recherche extends Controller_Template {
 	 */
 	private function searchOperations(Operation $refOp): array {
 		$query = DB::select(
-			"operations.id", "annee", "id_commune", "adresse", "operations.longitude", "operations.latitude", "id_organisme", "id_type_op", "ea", "oa", "patriarche",
+			"operation.id", "annee", "id_commune", "adresse", "operation.longitude", "operation.latitude", "id_organisme", "id_type_op", "ea", "oa", "patriarche",
 			"numero_operation", "arrete_prescription", "bibliographie", "date_ajout", "complet",)
-			->from("operations");
+			->from("operation");
 
-		if ($refOp->getId() !== null) $query->where("operations.id", "=", $refOp->getId());
+		if ($refOp->getId() !== null) $query->where("operation.id", "=", $refOp->getId());
 		if (!empty($_POST["insee"]) || !empty($_POST["commune"]) || !empty($_POST["departement"])) {
 			$query->join("commune")->on("commune.id", "=", "id_commune");
 			

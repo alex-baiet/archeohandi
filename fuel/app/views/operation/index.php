@@ -20,7 +20,7 @@ $countOp = $countOp;
 	<h1 class="m-2">Opérations
 		<!-- Bouton "Ajout d'un opération -->
 		<?php if (Compte::checkPermission(Compte::PERM_WRITE)) : ?>
-			<a class="btn btn-primary btn-sm" href="/public/operations/add">Créer une opération <i class="bi bi-plus-circle-fill"></i></a>
+			<a class="btn btn-primary btn-sm" href="/public/operation/add">Créer une opération <i class="bi bi-plus-circle-fill"></i></a>
 		<?php endif; ?>
 	</h1>
 
@@ -32,6 +32,6 @@ $countOp = $countOp;
 	<br />
 	<!-- Contenu de la page -->
 	<div class="table-scroll">
-		<?= View::forge("operations/table", array("lines" => $lines)) ?>
+		<?= View::forge("operation/table", array("lines" => $lines)) ?>
 	</div>
 </div>

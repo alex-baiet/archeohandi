@@ -18,7 +18,7 @@ foreach ($lines as $data) {
 
 	<h1 class="mt-4">
 		Page des opérations personnels
-		<a class="btn btn-primary btn-sm" href="/public/operations/add">Créer une opération <i class="bi bi-plus-circle-fill"></i></a>
+		<a class="btn btn-primary btn-sm" href="/public/operation/add">Créer une opération <i class="bi bi-plus-circle-fill"></i></a>
 	</h1>
 
 	<p class="text-muted mb-4">
@@ -26,7 +26,7 @@ foreach ($lines as $data) {
 		<b><?= $countOperation ?></b> opérations et <b><?= $countSubject ?></b> sujets handicapés correspondent à votre recherche.
 	</p>
 	
-	<?= View::forge("operations/table", array("lines" => $lines)) ?>
+	<?= View::forge("operation/table", array("lines" => $lines)) ?>
 </div>
 	
 

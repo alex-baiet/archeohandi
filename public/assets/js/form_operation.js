@@ -86,14 +86,14 @@ class FormOperation {
 			this.updateCoordinate();
 		});
 
-		// Ajout marqueurs pour toutes les autres operations
+		// Ajout marqueurs pour toutes les autres operation
 		if (addAllMap) {
 			DB.query(
-				`SELECT operations.longitude, operations.latitude, operations.adresse, commune.nom
-				FROM operations
-				JOIN commune ON commune.id = operations.id_commune
-				WHERE operations.longitude IS NOT NULL
-				AND operations.latitude IS NOT NULL`,
+				`SELECT operation.longitude, operation.latitude, operation.adresse, commune.nom
+				FROM operation
+				JOIN commune ON commune.id = operation.id_commune
+				WHERE operation.longitude IS NOT NULL
+				AND operation.latitude IS NOT NULL`,
 				function (json) {
 					for (const op of json) {
 						Leaflet.addMarker(op["latitude"], op["longitude"], `${op["nom"]}, ${op["adresse"]}`);

@@ -262,7 +262,7 @@ class Controller_Script extends Controller_Template {
 		if (!$this->checkPermission()) return;
 		echo "<pre>";
 
-		$operations = Helper::querySelect("SELECT * FROM operations");
+		$operations = Helper::querySelect("SELECT * FROM operation");
 
 		foreach ($operations as $op) {
 			// Récupération des noms

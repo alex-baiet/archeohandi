@@ -26,7 +26,7 @@ class Import {
 			$op = Import::lineToOperation($line);
 
 			if (!empty($op->getNumeroOperation())) {
-				$res = Helper::querySelect("SELECT * FROM operations WHERE numero_operation=\"{$op->getNumeroOperation()}\"");
+				$res = Helper::querySelect("SELECT * FROM operation WHERE numero_operation=\"{$op->getNumeroOperation()}\"");
 				if (!empty($res)) {
 					$results[] = new Importresult($op, Importresult::COLOR_WARNING, "Une opération avec le même numéro existe déjà.");
 					continue;

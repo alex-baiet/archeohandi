@@ -16,7 +16,7 @@ use Fuel\Core\Asset;
 			Avant la saisie, <b>lire absolument</b> le mode d'emploi.
 		</p>
 
-		<a href="/public/operations" class="btn btn-primary">Opérations</a>
+		<a href="/public/operation" class="btn btn-primary">Opérations</a>
 		<a href="/public/recherche" class="btn btn-primary">Recherche</a>
 		<a href="/public/assets/other/mode_emploi.pdf" target="_blank" class="btn btn-primary">Mode d'emploi</a>
 		<div class="btn-group" role="group" aria-label="Basic example">

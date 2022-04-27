@@ -154,8 +154,8 @@ $sujets = $operation->getSubjects();
 					</p>
 				</div>
 				<div class="modal-footer">
-					<form method="post" action="/public/operations/delete">
-						<input type="hidden" name="redirect" value="/operations">
+					<form method="post" action="/public/operation/delete">
+						<input type="hidden" name="redirect" value="/operation">
 						<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#validationPopup">Retour</button>
 						<button type="submit" name="id" id="form_id" value="<?= $operation->getId() ?>" class="btn btn-danger">Supprimer</button>
 					</form>
