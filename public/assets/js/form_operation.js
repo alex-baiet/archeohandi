@@ -97,7 +97,7 @@ class FormOperation {
 					console.log(json.length);
 					for (const op of json) {
 						console.log(op)
-						Leaflet.addMarker(Number(op["X"]), Number(op["Y"]));
+						Leaflet.addMarker(op["Y"], op["X"]);
 					}
 				}
 			);
