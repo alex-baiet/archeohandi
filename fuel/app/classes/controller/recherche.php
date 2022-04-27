@@ -185,8 +185,8 @@ class Controller_Recherche extends Controller_Template {
 		if (!empty($_POST["id_chronologie"])) $query->where("groupe.id_chronologie", "=", $_POST["id_chronologie"]);
 		if ($refSubject->getAgeMin() !== null) $query->where("age_max", ">=", $refSubject->getAgeMin());
 		if ($refSubject->getAgeMax() !== null) $query->where("age_min", "<=", $refSubject->getAgeMax());
-		if ($refSubject->getDatingMin() !== null) $query->where("date_max", ">=", $refSubject->getDatingMin());
-		if ($refSubject->getDatingMax() !== null) $query->where("date_min", "<=", $refSubject->getDatingMax());
+		if ($refSubject->getDateMin() !== null) $query->where("date_max", ">=", $refSubject->getDateMin());
+		if ($refSubject->getDateMax() !== null) $query->where("date_min", "<=", $refSubject->getDateMax());
 		if ($refSubject->getIdTypeDepot() !== null) $query->where("id_type_depot", "=", $refSubject->getIdTypeDepot());
 		if ($refSubject->getIdTypeSepulture() !== null) $query->where("id_sepulture", "=", $refSubject->getIdTypeSepulture());
 		if (!empty($refSubject->getContexteNormatif())) $query->where("contexte_normatif", "=", $refSubject->getContexteNormatif());

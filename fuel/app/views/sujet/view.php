@@ -53,16 +53,18 @@ $subject = $subject;
 	<div class="row">
 		<div class="col">
 			<div class="p-2">
-				<?php if ($subject->getDatingMin() === $subject->getDatingMax()) : ?>
-					Datation : <?= $subject->getDatingMin(); ?>
-				<?php else : ?>
-					Datation : entre <?= $subject->getDatingMin(); ?> et <?= $subject->getDatingMax(); ?>
-				<?php endif; ?>
+				Datation :
+				<?php
+				if ($subject->getDateMin() !== null && $subject->getDateMax() !== null && $subject->getDateMin() !== $subject->getDateMax()) echo "entre {$subject->getDateMin()} et {$subject->getDateMax()}";
+				else if ($subject->getDateMin() !== null) echo "{$subject->getDateMin()} ans";
+				else if ($subject->getDateMax() !== null) echo "{$subject->getDateMax()} ans";
+				else echo "inconnu";
+				?>
 			</div>
 		</div>
 		<div class="col">
 			<!-- Ce n'est pas vraiment l'écart type qui est calculé mais bon... -->
-			<?php $diff = $subject->getDatingMax() - $subject->getDatingMin(); ?>
+			<?php $diff = $subject->getDateMax() - $subject->getDateMin(); ?>
 			<div class="p-2">Écart type de la datation : <?= $diff ?> année<?= $diff !== 1 ? 's' : null ?></div>
 		</div>
 		<div class="col">

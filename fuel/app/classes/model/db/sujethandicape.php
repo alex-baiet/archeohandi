@@ -243,8 +243,8 @@ class Sujethandicape extends Model {
 	public function getAgeMethode() { return $this->ageMethode; }
 	public function getSexe() { return $this->sexe; }
 	public function getSexeMethode() { return $this->sexeMethode; }
-	public function getDatingMin() { return $this->datingMin; }
-	public function getDatingMax() { return $this->datingMax; }
+	public function getDateMin() { return $this->datingMin; }
+	public function getDateMax() { return $this->datingMax; }
 	public function getMilieuVie() { return $this->milieuVie; }
 	public function getContexte() { return $this->contexte; }
 	public function getContexteNormatif() { return $this->contexteNormatif; }
