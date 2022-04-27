@@ -15,7 +15,7 @@ $subject = $subject;
 	Ici vous retrouvez toutes les informations du sujet <strong><?= $subject->getIdSujetHandicape(); ?></strong>.
 </p>
 
-<!-- Contenu de la page -->
+<!-- Informations générales -->
 <section class="form-sheet">
 	<h4>Informations générales</h4>
 
@@ -95,6 +95,7 @@ $subject = $subject;
 </section>
 <br />
 
+<!-- Groupe du sujet -->
 <section class="form-sheet">
 	<h4>Groupe du sujet</h4>
 	<?php $group = $subject->getGroup(); ?>
@@ -147,7 +148,7 @@ $subject = $subject;
 </section>
 <br />
 
-<!-- Diagnostics -->
+<!-- Atteinte invalidante -->
 <section class="form-sheet">
 	<h4>Atteinte invalidante</h4>
 	<div class="row">
@@ -198,6 +199,7 @@ $subject = $subject;
 </section>
 <br />
 
+<!-- Iconographie -->
 <section class="form-sheet">
 	<h4>Iconographie</h4>
 	<?php
@@ -246,13 +248,3 @@ $subject = $subject;
 		</div>
 	</div>
 <?php endif; ?>
-
-<script type="text/javascript">
-	// Permet d'afficher un message d'alert avant la confirmation d'une suppression -->
-	$("[name=btn_supp_sujet]").click(function() {
-		var x = $(this).val();
-		if (window.confirm("Vous êtes sur le point de supprimer un sujet. Êtes-vous sûr de supprimer le sujet " + x + " ?")) {
-			$("#form_suppr_" + x).submit();
-		}
-	});
-</script>

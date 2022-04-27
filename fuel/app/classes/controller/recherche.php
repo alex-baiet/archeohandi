@@ -23,6 +23,7 @@ class Controller_Recherche extends Controller_Template {
 			// Récupération de la recherche précédente
 			Helper::startSession();
 			$options = $_SESSION["searchOptions"];
+			Helper::varDump($options, true);
 			$data["options"] = $options;
 		}
 
