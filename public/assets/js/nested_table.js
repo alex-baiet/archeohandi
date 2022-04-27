@@ -3,9 +3,9 @@ class NestedTable {
 	static opened = null;
 
 	/** Chemin de l'icone indiquant qu'un tableau n'est pas affiché. */
-	static FOLD_CLOSE_PATH = "/public/assets/img/icon/arrow-right.png";
+	static FOLD_CLOSE_PATH = "/public/assets/img/icon/arrow-right-low.png";
 	/** Chemin de l'icone indiquant qu'un tableau est affiché. */
-	static FOLD_OPEN_PATH = "/public/assets/img/icon/arrow-down.png";
+	static FOLD_OPEN_PATH = "/public/assets/img/icon/arrow-down-low.png";
 
 	/**
 	 * Affiche/cache la table correspondant en fonction de sa visibilité actuelle.

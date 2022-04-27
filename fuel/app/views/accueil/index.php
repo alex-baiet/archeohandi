@@ -37,7 +37,7 @@ use Fuel\Core\Asset;
 			</p>
 		</div>
 		<div class="col-6" style="text-align: justify;">
-			<?= Asset::img("arc_du_handicap.jpg", array("alt" => "arc_du_handicap.jpg", "style" => "width: 50%;")); ?>
+			<?= Asset::img("arc_du_handicap-low.jpg", array("alt" => "arc_du_handicap.jpg", "style" => "width: 50%;")); ?>
 		</div>
 	</div>
 </div>
@@ -46,19 +46,19 @@ use Fuel\Core\Asset;
 <div class="container">
 	<div style="text-align: center;">
 		<a href="https://www.inrap.fr/" target="_blank">
-			<?= Asset::img("logo/inrap.jpg", array('class' => "logo", "alt" => "inrap")) ?>
+			<?= Asset::img("logo/inrap-low.jpg", array('class' => "logo", "alt" => "inrap")) ?>
 		</a>
 		<a href="https://creaah.cnrs.fr/" target="_blank">
-			<?= Asset::img("logo/creaah.png", array('class' => "logo", "alt" => "creaah")) ?>
+			<?= Asset::img("logo/creaah-low.png", array('class' => "logo", "alt" => "creaah")) ?>
 		</a>
 		<a href="https://artehis.u-bourgogne.fr/" target="_blank">
-			<?= Asset::img("logo/artehis.jpg", array('class' => "logo", "alt" => "artehis")) ?>
+			<?= Asset::img("logo/artehis-low.jpg", array('class' => "logo", "alt" => "artehis")) ?>
 		</a>
 		<a href="https://www.cnrs.fr/" target="_blank">
-			<?= Asset::img("logo/cnrs.png", array('class' => "logo", "alt" => "cnrs")) ?>
+			<?= Asset::img("logo/cnrs-low.png", array('class' => "logo", "alt" => "cnrs")) ?>
 		</a>
 		<a href="https://archeonec.hypotheses.org/" target="_blank">
-			<?= Asset::img("logo/adn.jpg", array('class' => "logo", "alt" => "adn", "style" => "height: 80px;")) ?>
+			<?= Asset::img("logo/adn-low.jpg", array('class' => "logo", "alt" => "adn", "style" => "height: 80px;")) ?>
 		</a>
 	</div>
 </div>
