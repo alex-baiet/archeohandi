@@ -1,8 +1,8 @@
 class Leaflet {
 	static map = null;
-  static geocodeService = null;
 	static marker = null;
 	static circle = null;
+  static _geocodeService = null;
 
 	/**
 	 * Initialise la carte Leaflet.
@@ -29,7 +29,7 @@ class Leaflet {
 		document.getElementsByClassName("leaflet-control-zoom")[0].style.display = "none";
 
 		// Initialisation geocodeService
-		// Leaflet.geocodeService = L.esri.Geocoding.geocodeService({ apikey: "AAPKe9e63b0e7f4048e6bff53201d20b4b92Z5BraV8Ow8Qvorsmc4WsR3stO83QGD3tXEUKZZexGfR-MyLf-F9NRZz3eQs9miYI" })
+		// Leaflet._geocodeService = L.esri.Geocoding.geocodeService({ apikey: "AAPKe9e63b0e7f4048e6bff53201d20b4b92Z5BraV8Ow8Qvorsmc4WsR3stO83QGD3tXEUKZZexGfR-MyLf-F9NRZz3eQs9miYI" })
 
 	}
 
@@ -43,6 +43,13 @@ class Leaflet {
 		Leaflet.map.on(event, function(e) {
 			action(e);
 		});
+	}
+
+	/** Ajoute un marqueur à la position indiquée sur la carte. */
+	static addMarker(lat, lng) {
+		const newMarker = L.marker(position);
+		newMarker.addTo(Leaflet.map);
+		// Pour pouvoir les éditer, il faut d'abord les stocker
 	}
 
 	/**

@@ -55,6 +55,7 @@ if (Constants::MAINTENANCE === true) {
 	<?= Asset::js('page_manager.js') ?>
 	<?= Asset::js('nested_table.js') ?>
 	<?= Asset::js('search.js') ?>
+	<?= Asset::js('db.js') ?>
 	<?= Asset::js('db/archeo.js') ?>
 	<?= Asset::js('db/search_result.js') ?>
 	<?= Asset::js('db/operation.js') ?>

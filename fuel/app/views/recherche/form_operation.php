@@ -128,7 +128,7 @@ Asset::js("form.js");
 		</p>
 		<div id="map" style="height: 350px"></div>
 		<script>
-			FormOperation.prepareMap();
+			FormOperation.prepareMap(true);
 		</script>
 	</div>
 </div>

@@ -67,4 +67,16 @@ class Controller_Fonction extends Controller {
 
 		return "1";
 	}
+
+	/** Permet de faire une requête SQL libre à partir de $_POST["query"] et d'afficher le résultat sous forme de JSON. */
+	public function action_query() {
+		if (!Compte::checkPermission(Compte::PERM_WRITE)) {
+			return new Response("You need to have an account.", 500);
+		}
+		if (!isset($_POST["query"])) {
+			return new Response("No query has been passed in post.", 501);
+		}
+		$result = DB::query($_POST["query"])->execute()->as_array();
+		echo json_encode($result);
+	}
 }

@@ -69,7 +69,7 @@ class FormOperation {
 	}
 
 	/** Prépare tous ce qu'il faut pour la carte. */
-	static prepareMap() {
+	static prepareMap(addAllMap = false) {
 		Leaflet.initMap("map");
 
 		const inputLon = document.getElementById("form_X");
@@ -85,6 +85,9 @@ class FormOperation {
 			// inputAddr.value = result.address.Address;
 			this.updateCoordinate();
 		});
+
+		// Ajout marqueurs pour toutes les autres operations
+		
 
 		this.updateCoordinate();
 	}
