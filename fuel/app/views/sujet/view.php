@@ -26,13 +26,17 @@ $subject = $subject;
 	</div>
 
 	<div class="row">
-		<div class="col">
-			<div class="p-2">Âge minimum : <?= $subject->getAgeMin(); ?></div>
+		<div class="col-4">
+			<div class="p-2">Âge estimé :
+				<?php
+				if ($subject->getAgeMin() !== null && $subject->getAgeMax() !== null && $subject->getAgeMin() !== $subject->getAgeMax()) echo "entre {$subject->getAgeMin()} et {$subject->getAgeMax()} ans";
+				else if ($subject->getAgeMin() !== null) echo "{$subject->getAgeMin()} ans";
+				else if ($subject->getAgeMax() !== null) echo "{$subject->getAgeMax()} ans";
+				else echo "inconnu";
+				?>
+			</div>
 		</div>
-		<div class="col">
-			<div class="p-2">Âge maximum : <?= $subject->getAgeMax(); ?></div>
-		</div>
-		<div class="col">
+		<div class="col-8">
 			<div class="p-2">Méthode âge : <?= $subject->getAgeMethode(); ?></div>
 		</div>
 	</div>

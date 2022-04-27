@@ -37,7 +37,7 @@ $sujets = $operation->getSubjects();
 			<div class="p-2">Date de saisie : <?= $operation->getDateAjout() !== null ? Helper::dateDBToFrench($operation->getDateAjout()) : "inconnu" ?></div>
 		</div>
 		<div class="col">
-			<div class="p-2">Année de l'opération : <?= $operation->getAnnee(); ?></div>
+			<div class="p-2">Année de l'opération : <?= $operation->getAnnee() === null ? "inconnu" : $operation->getAnnee() ?></div>
 		</div>
 	</div>
 	<div class="row">
