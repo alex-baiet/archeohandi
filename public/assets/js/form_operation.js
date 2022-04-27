@@ -116,7 +116,7 @@ class FormOperation {
 
 		if (inputRad === null) {
 			// Placement d'un point précis
-			Leaflet.setMarker([Number(inputLat.value), Number(inputLon.value)]);
+			Leaflet.setMarker(Number(inputLat.value), Number(inputLon.value));
 		} else {
 			// Placement d'un zone
 			Leaflet.updateCircle(Number(inputLat.value), Number(inputLon.value), Number(inputRad.value) * 1000)

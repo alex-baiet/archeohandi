@@ -59,14 +59,14 @@ class Leaflet {
 	 * met à la position indiquer le marqueur
 	 * @param {number[]} position Position au format [latitude, longitude]
 	 */
-	static setMarker(position) {
+	static setMarker(lat, lng) {
 		// Suppression de l'ancien marqueur
 		if (Leaflet.marker !== null) {
 			Leaflet.marker.remove();
 		}
 
 		// Ajout du nouveau marqueur
-		Leaflet.marker = L.marker(position);
+		Leaflet.marker = L.marker([lat, lng]);
 		Leaflet.marker.addTo(Leaflet.map);
 	}
 
