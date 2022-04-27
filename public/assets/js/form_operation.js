@@ -89,15 +89,14 @@ class FormOperation {
 		// Ajout marqueurs pour toutes les autres operations
 		if (addAllMap) {
 			DB.query(
-				`SELECT X, Y
+				`SELECT operations.X, operations.Y, operations.adresse, commune.nom
 				FROM operations
-				WHERE X IS NOT NULL
-				AND Y IS NOT NULL`,
+				JOIN commune ON commune.id = operations.id_commune
+				WHERE operations.X IS NOT NULL
+				AND operations.Y IS NOT NULL`,
 				function (json) {
-					console.log(json.length);
 					for (const op of json) {
-						console.log(op)
-						Leaflet.addMarker(op["Y"], op["X"]);
+						Leaflet.addMarker(op["Y"], op["X"], `${op["nom"]}, ${op["adresse"]}`);
 					}
 				}
 			);
