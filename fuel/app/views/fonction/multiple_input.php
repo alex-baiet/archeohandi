@@ -111,11 +111,11 @@ if (isset($autocompletion)) {
 	<div class="col-md-3">
 		<div class="my-2">
 			<button type="button" class="btn btn-primary me-md-2"
-			<?php if ($imageInput) : ?>
-				onclick="addCopyImg('<?= $name; ?>');"
-			<?php else : ?>
-				onclick="addCopy(`<?= $name; ?>`, <?= isset($autocompletion) ? $completionParams : `null` ?>);"
-			<?php endif; ?>
+				<?php if ($imageInput) : ?>
+					onclick="addCopyImg('<?= $name; ?>');"
+				<?php else : ?>
+					onclick="addCopy(`<?= $name; ?>`, <?= isset($autocompletion) ? $completionParams : `null` ?>);"
+				<?php endif; ?>
 			>
 				<i class="bi bi-plus"></i>
 			</button>

@@ -20,7 +20,7 @@ $subject = $subject;
 <div class="row">
 	<div class="col-lg">
 		<!-- Informations générales -->
-		<section class="form-sheet">
+		<section class="view-sheet">
 			<h2>Informations générales</h2>
 
 			<div class="info">Date de saisie :
@@ -90,7 +90,7 @@ $subject = $subject;
 
 	<div class="col-lg">
 		<!-- Groupe du sujet -->
-		<section class="form-sheet">
+		<section class="view-sheet">
 			<h2>Groupe du sujet</h2>
 			<?php $group = $subject->getGroup(); ?>
 			<div class="info">NMI : <?= Formview::dataToView($group->getNMI()) ?></div>
@@ -101,7 +101,7 @@ $subject = $subject;
 		</section>
 
 		<!-- Dépôt -->
-		<section class="form-sheet">
+		<section class="view-sheet">
 			<?php
 			$depot = $subject->getDepot();
 			if ($depot !== null) {
@@ -122,7 +122,7 @@ $subject = $subject;
 		</section>
 
 		<!-- Mobiliers / Accessoires -->
-		<section class="form-sheet">
+		<section class="view-sheet">
 			<h2>Accessoire</h2>
 			<?php if (empty($subject->getFurnitures())) : ?>
 				<div class="info"><span class="no-data">Aucun accessoire</span></div>
@@ -141,7 +141,7 @@ $subject = $subject;
 
 	<div class="col-lg">
 		<!-- Atteinte invalidante -->
-		<section class="form-sheet">
+		<section class="view-sheet">
 			<h2>Atteinte invalidante</h2>
 			<!-- Diagnostic -->
 			<h3>Diagnostics</h3>
@@ -207,7 +207,7 @@ $subject = $subject;
 
 
 <!-- Iconographie -->
-<section class="form-sheet">
+<section class="view-sheet">
 	<h2>Iconographie</h2>
 	<?php
 	$urls = $subject->getUrlsImg();

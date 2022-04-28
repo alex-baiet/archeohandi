@@ -27,7 +27,7 @@ $sujets = $operation->getSubjects();
 </p>
 
 <!-- Contenu de la page. Affichage des informations de l'opération -->
-<section class="form-sheet">
+<section class="view-sheet">
 	<h4>Informations</h4>
 	<div class="row">
 		<div class="col">
@@ -77,7 +77,7 @@ $sujets = $operation->getSubjects();
 	</div>
 </section>
 <br />
-<section class="form-sheet">
+<section class="view-sheet">
 	<h4>Personnes</h4>
 	<div class="row">
 		<div class="col">
@@ -105,7 +105,7 @@ $sujets = $operation->getSubjects();
 </section>
 <br />
 
-<section class="form-sheet">
+<section class="view-sheet">
 	<h4>Autre</h4>
 	<p>Bibliographie : <?= $operation->getBibliographie(); ?></p>
 	<ul>
@@ -116,7 +116,7 @@ $sujets = $operation->getSubjects();
 </section>
 <br>
 
-<section class="form-sheet">
+<section class="view-sheet">
 	<h4>Iconographie</h4>
 	<?php
 	$urls = $operation->getUrlsImg();

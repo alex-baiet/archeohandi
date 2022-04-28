@@ -43,42 +43,8 @@
 	font-weight: normal;
 }
 
-/* Conteneur des infos des pages "view" */
+/* Conteneur des formulaires */
 .form-sheet {
 	background-color: #0000000a;
 	padding: 1rem;
-	margin: 0 0 1rem 0;
-	box-shadow: 0 0 0.5rem #0004;
-	border-radius: 1rem;
-}
-
-.form-sheet .info {
-	margin: 0 0 0.5rem 0;
-}
-
-.form-sheet h2 {
-	text-align: center;
-	margin-bottom: 0.5rem;
-	border-style: solid;
-	border-width: 0 0 1px 0;
-	border-color: #0004;
-	padding-bottom: 0.5rem;
-}
-
-.form-sheet h3 {
-	font-weight: normal;
-	font-style: italic;
-}
-
-.form-sheet .description {
-	background-color: #0000000a;
-	text-align: justify;
-	padding: 0.25rem 0.75rem;
-	font-weight: 390;
-	line-height: 1.25;
-}
-
-.no-data {
-	color: #21252980;
-	font-style: italic;
 }
