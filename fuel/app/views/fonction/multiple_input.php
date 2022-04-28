@@ -114,7 +114,7 @@ if (isset($autocompletion)) {
 			<?php if ($imageInput) : ?>
 				onclick="addCopyImg('<?= $name; ?>');"
 			<?php else : ?>
-				onclick='addCopy(`<?= $name; ?>`, <?= isset($autocompletion) ? $completionParams : `null` ?>);'
+				onclick="addCopy(`<?= $name; ?>`, <?= isset($autocompletion) ? $completionParams : `null` ?>);"
 			<?php endif; ?>
 			>
 				<i class="bi bi-plus"></i>
