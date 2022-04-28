@@ -1,6 +1,6 @@
 <?php
 
-use Fuel\Core\Asset;
+use Model\Dataview;
 use Model\Db\Compte;
 use Model\Db\Operation;
 use Model\Db\Organisme;
@@ -27,114 +27,100 @@ $sujets = $operation->getSubjects();
 </p>
 
 <!-- Contenu de la page. Affichage des informations de l'opération -->
-<section class="view-sheet">
-	<h4>Informations</h4>
-	<div class="row">
-		<div class="col">
-			<div class="p-2">Numéro d'opération : <?= $operation->getNumeroOperation(); ?></div>
-		</div>
-		<div class="col">
-			<div class="p-2">Date de saisie : <?= $operation->getDateAjout() !== null ? Helper::dateDBToFrench($operation->getDateAjout()) : "inconnu" ?></div>
-		</div>
-		<div class="col">
-			<div class="p-2">Année de l'opération : <?= $operation->getAnnee() === null ? "inconnu" : $operation->getAnnee() ?></div>
-		</div>
-	</div>
-	<div class="row">
-		<?php $commune = $operation->getCommune(); ?>
-		<div class="col">
-			<div class="p-2">Département : <?= $commune !== null ? $commune->getDepartement() : null ?></div>
-		</div>
-		<div class="col">
-			<div class="p-2">Commune : <?= $commune !== null ? $commune->getNom() : null ?></div>
-		</div>
-		<div class="col">
-			<div class="p-2">Adresse : <?= $operation->getAdresse(); ?></div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col">
-			<div class="p-2">Numéro INSEE : <?= $commune !== null ? $commune->getInsee() : null ?></div>
-		</div>
-		<div class="col">
-			<div class="p-2">Type d'opération : <?= $operation->getTypeOperation()->getNom(); ?></div>
-		</div>
-		<div class="col">
+<div class="row">
+	<div class="col-lg">
+		<section class="view-sheet">
+			<h2>Informations</h2>
+			<div class="info">Date de saisie : <?= Dataview::dataToView($operation->getDateAjout(), function ($value) { return Helper::dateDBToFrench($value); }) ?></div>
+			<?php $commune = $operation->getCommune(); ?>
+			<div class="info">Département : <?= $commune !== null ? Dataview::dataToView($commune->getDepartement()) : Dataview::dataToView(null) ?></div>
+			<div class="info">Commune : <?= $commune !== null ? Dataview::dataToView($commune->getNom()) : Dataview::dataToView(null) ?></div>
+			<div class="info">Adresse : <?= Dataview::dataToView($operation->getAdresse()) ?></div>
+			<div class="info">Numéro INSEE : <?= $commune !== null ? Dataview::dataToView($commune->getInsee()) : Dataview::dataToView(null) ?></div>
+			<div class="info">Numéro d'opération : <?= Dataview::dataToView($operation->getNumeroOperation()) ?></div>
+			<div class="info">Année de l'opération : <?= Dataview::dataToView($operation->getAnnee()) ?></div>
+			<div class="info">Type d'opération : <?= Dataview::dataToView($operation->getTypeOperation()->getNom()) ?></div>
 			<?php $org = $operation->getOrganisme() !== null ? $operation->getOrganisme() : Organisme::fetchSingle(-1); ?>
-			<div class="p-2">Organisme : <?= $org->getNom() ?></div>
-		</div>
+			<div class="info">Organisme : <?= Dataview::dataToView($org->getNom()) ?></div>
+			<div class="info">Patriarche : <?= Dataview::dataToView($operation->getPatriarche()) ?></div>
+			<div class="info">Arrêté de prescription : <?= Dataview::dataToView($operation->getArretePrescription()) ?></div>
+			<div class="info">EA : <?= Dataview::dataToView($operation->getEA()) ?></div>
+			<div class="info">OA : <?= Dataview::dataToView($operation->getOA()) ?></div>
+		</section>
 	</div>
-	<div class="row">
-		<div class="col">
-			<div class="p-2">Patriarche : <?= $operation->getPatriarche(); ?></div>
-		</div>
-		<div class="col">
-			<div class="p-2">EA : <?= $operation->getEA(); ?></div>
-		</div>
-		<div class="col-md-4">
-			<div class="p-2">OA : <?= $operation->getOA(); ?></div>
-		</div>
-	</div>
-</section>
-<br />
-<section class="view-sheet">
-	<h4>Personnes</h4>
-	<div class="row">
-		<div class="col">
-			<div class="p-2">
-				Responsable de l'opération : <?= $operation->getResponsable(); ?>
-			</div>
-		</div>
-		<div class="col">
-			<div class="p-2">
-				Anthropologue(s) :
-				<?php foreach ($operation->getAnthropologues() as $person) : ?>
-					<br>- <?= $person; ?>
+
+	<div class="col-lg">
+		<section class="view-sheet">
+			<h2>Personnes</h2>
+			<h3>Responsable</h3>
+			<?php if (empty($operation->getResponsable())) : ?>
+				<span class="no-data">Aucun responsable</span>
+			<?php else : ?>
+				<ul>
+					<li><b><?= $operation->getResponsable(); ?></b></li>
+				</ul>
+			<?php endif; ?>
+
+			<hr>
+
+			<h3>Anthropologues</h3>
+			<?php if (empty($operation->getAnthropologues())) : ?>
+				<span class="no-data">Aucun anthropologue</span>
+			<?php else : ?>
+				<ul>
+					<?php foreach ($operation->getAnthropologues() as $person) : ?>
+						<li><b><?= $person; ?></b></li>
+					<?php endforeach; ?>
+				</ul>
+			<?php endif; ?>
+
+			<hr>
+
+			<h3>Paleopathologistes</h3>
+			<?php if (empty($operation->getPaleopathologistes())) : ?>
+				<span class="no-data">Aucun paleopathologiste</span>
+			<?php else : ?>
+				<ul>
+					<?php foreach ($operation->getPaleopathologistes() as $person) : ?>
+						<li><b><?= $person; ?></b></li>
+					<?php endforeach; ?>
+				</ul>
+			<?php endif; ?>
+		</section>
+
+		<section class="view-sheet">
+			<h2>Bibliographie</h2>
+			<div class="info"><?= Dataview::descriptionToView($operation->getBibliographie()) ?></div>
+			<ul>
+				<?php foreach ($operation->getUrls() as $url) : ?>
+					<li><a href="<?= $url ?>" target="_blank"><?= $url ?></a></li>
 				<?php endforeach; ?>
-			</div>
-		</div>
-		<div class="col">
-			<div class="p-2">
-				Paleopathologiste(s) :
-				<?php foreach ($operation->getPaleopathologistes() as $person) : ?>
-					<br>- <?= $person; ?>
-				<?php endforeach; ?>
-			</div>
-		</div>
+			</ul>
+		</section>
+		<br>
 	</div>
-</section>
-<br />
+</div>
 
 <section class="view-sheet">
-	<h4>Autre</h4>
-	<p>Bibliographie : <?= $operation->getBibliographie(); ?></p>
-	<ul>
-		<?php foreach ($operation->getUrls() as $url) : ?>
-			<li><a href="<?= $url ?>" target="_blank"><?= $url ?></a></li>
-		<?php endforeach; ?>
-	</ul>
-</section>
-<br>
-
-<section class="view-sheet">
-	<h4>Iconographie</h4>
+	<h2>Iconographie</h2>
 	<?php
 	$urls = $operation->getUrlsImg();
 	if (empty($urls)) :
 	?>
 		<p>Aucune image.</p>
 	<?php else : ?>
-		<?php
-		for ($i = 0; $i < count($urls); $i++) :
-			$url = $urls[$i];
-		?>
-			<a href="<?= $url ?>" target="_blank">
-				<img src="<?= $url ?>" alt="" style="height: 300px;">
-			</a>
-		<?php endfor; ?>
+		<div class="gallery">
+			<?php
+			for ($i = 0; $i < count($urls); $i++) :
+				$url = $urls[$i];
+			?>
+				<figure class="gallery-item">
+					<img class="can-zoom" src="<?= $url ?>" alt="<?= $url ?>">
+				</figure>
+			<?php endfor; ?>
+		</div>
 	<?php endif; ?>
 </section>
-<br />
 
 <?php if (Compte::checkPermission(Compte::PERM_ADMIN, $operation->getId())) : ?>
 	<!-- Suppression de l'opération -->

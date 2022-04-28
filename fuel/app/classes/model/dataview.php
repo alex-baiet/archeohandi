@@ -4,7 +4,7 @@ namespace Model;
 
 use Closure;
 
-class Formview {
+class Dataview {
 
 	/**
 	 * Renvoie la valeur sous forme de string pour l'afficher sur sujet/view ou operations/view.

@@ -3,7 +3,7 @@
 use Model\Db\Compte;
 use Model\Db\Localisation;
 use Model\Db\Sujethandicape;
-use Model\Formview;
+use Model\Dataview;
 use Model\Helper;
 
 /** @var Sujethandicape */
@@ -25,7 +25,7 @@ $subject = $subject;
 
 			<div class="info">Date de saisie :
 				<?=
-				Formview::dataToView(
+				Dataview::dataToView(
 					$subject->getDateAjout(),
 					function ($value) { return Helper::dateDBToFrench($value); })
 				?>
@@ -38,7 +38,7 @@ $subject = $subject;
 				if ($subject->getDateMin() !== null) $arr[] = $subject->getDateMin();
 				if ($subject->getDateMax() !== null) $arr[] = $subject->getDateMax();
 
-				echo Formview::dataToView(
+				echo Dataview::dataToView(
 					$arr,
 					function ($value) {
 						if (count($value) === 2) return "entre {$value[0]} et {$value[1]}";
@@ -52,14 +52,14 @@ $subject = $subject;
 					if ($subject->getDateMin() === null && $subject->getDateMax() === null) $diff = null;
 					else if ($subject->getDateMin() === null && $subject->getDateMax() === null) $diff = 0;
 					else $diff = $subject->getDateMax() - $subject->getDateMin();
-					echo Formview::dataToView($diff, function ($value) { return "$value année".($value !== 1 ? 's' : null); })
+					echo Dataview::dataToView($diff, function ($value) { return "$value année".($value !== 1 ? 's' : null); })
 					?>
 				</div>
 			</div>
 
 			<div class="info">
-				Sexe : <?= Formview::dataToView($subject->getSexe()); ?>
-				<div class="indent-1">Méthode sexe : <?= Formview::dataToView($subject->getSexeMethode()) ?></div>
+				Sexe : <?= Dataview::dataToView($subject->getSexe()); ?>
+				<div class="indent-1">Méthode sexe : <?= Dataview::dataToView($subject->getSexeMethode()) ?></div>
 			</div>
 
 			<div class="info">Âge estimé :
@@ -68,7 +68,7 @@ $subject = $subject;
 				if ($subject->getAgeMin() !== null) $arr[] = $subject->getAgeMin();
 				if ($subject->getAgeMax() !== null) $arr[] = $subject->getAgeMax();
 
-				echo Formview::dataToView(
+				echo Dataview::dataToView(
 					$arr,
 					function ($value) {
 						if (count($value) === 2) return "entre {$value[0]} et {$value[1]} ans";
@@ -76,15 +76,15 @@ $subject = $subject;
 					}
 				)
 				?>
-				<div class="indent-1">Méthode âge : <?= Formview::dataToView($subject->getAgeMethode()); ?></div>
+				<div class="indent-1">Méthode âge : <?= Dataview::dataToView($subject->getAgeMethode()); ?></div>
 			</div>
 
-			<div class="info">Milieu de vie : <?= Formview::dataToView($subject->getMilieuVie()) ?></div>
-			<div class="info">Type de dépôt : <?= Formview::dataToView($subject->getTypeDepot()->getNom()) ?></div>
-			<div class="info">Type de sépulture : <?= Formview::dataToView($subject->getTypeSepulture()->getNom()) ?></div>
-			<div class="info">Contexte : <?= Formview::dataToView($subject->getContexte()) ?></div>
-			<div class="info">Contexte normatif : <?= Formview::dataToView($subject->getContexteNormatif()) ?></div>
-			<div class="info">Commentaire du contexte : <?= Formview::descriptionToView($subject->getCommentContext()) ?></div>
+			<div class="info">Milieu de vie : <?= Dataview::dataToView($subject->getMilieuVie()) ?></div>
+			<div class="info">Type de dépôt : <?= Dataview::dataToView($subject->getTypeDepot()->getNom()) ?></div>
+			<div class="info">Type de sépulture : <?= Dataview::dataToView($subject->getTypeSepulture()->getNom()) ?></div>
+			<div class="info">Contexte : <?= Dataview::dataToView($subject->getContexte()) ?></div>
+			<div class="info">Contexte normatif : <?= Dataview::dataToView($subject->getContexteNormatif()) ?></div>
+			<div class="info">Commentaire du contexte : <?= Dataview::descriptionToView($subject->getCommentContext()) ?></div>
 		</section>
 	</div>
 
@@ -93,11 +93,11 @@ $subject = $subject;
 		<section class="view-sheet">
 			<h2>Groupe du sujet</h2>
 			<?php $group = $subject->getGroup(); ?>
-			<div class="info">NMI : <?= Formview::dataToView($group->getNMI()) ?></div>
-			<div class="info">Opération : <?= Formview::dataToView($group->getOperation()->getNomOp()) ?></div>
-			<div class="info">Période : <?= Formview::dataToView($group->getChronology()->getName()) ?></div>
-			<div class="info">Date de début : <?= Formview::dataToView($group->getChronology()->getStart()) ?></div>
-			<div class="info">Date de fin : <?= Formview::dataToView($group->getChronology()->getEnd()) ?></div>
+			<div class="info">NMI : <?= Dataview::dataToView($group->getNMI()) ?></div>
+			<div class="info">Opération : <?= Dataview::dataToView($group->getOperation()->getNomOp()) ?></div>
+			<div class="info">Période : <?= Dataview::dataToView($group->getChronology()->getName()) ?></div>
+			<div class="info">Date de début : <?= Dataview::dataToView($group->getChronology()->getStart()) ?></div>
+			<div class="info">Date de fin : <?= Dataview::dataToView($group->getChronology()->getEnd()) ?></div>
 		</section>
 
 		<!-- Dépôt -->
@@ -116,9 +116,9 @@ $subject = $subject;
 			?>
 			<h2>Dépôt</h2>
 			<?php $depot = $subject->getDepot(); ?>
-			<div class="info">Numéro d'inventaire : <?= Formview::dataToView($numInventaire) ?></div>
-			<div class="info">Commune : <?= Formview::dataToView($communeName) ?></div>
-			<div class="info">Adresse : <?= Formview::dataToView($address) ?></div>
+			<div class="info">Numéro d'inventaire : <?= Dataview::dataToView($numInventaire) ?></div>
+			<div class="info">Commune : <?= Dataview::dataToView($communeName) ?></div>
+			<div class="info">Adresse : <?= Dataview::dataToView($address) ?></div>
 		</section>
 
 		<!-- Mobiliers / Accessoires -->
@@ -134,7 +134,7 @@ $subject = $subject;
 				</ul>
 			<?php endif; ?>
 
-			<div class="info">Description du mobilier(s) : <?= Formview::descriptionToView($subject->getDescriptionMobilier()) ?></div>
+			<div class="info">Description du mobilier(s) : <?= Dataview::descriptionToView($subject->getDescriptionMobilier()) ?></div>
 		</section>
 
 	</div>
@@ -199,8 +199,8 @@ $subject = $subject;
 
 			<hr>
 
-			<div class="info">Commentaire du diagnostic : <?= Formview::descriptionToView($subject->getCommentDiagnosis()) ?></div>
-			<div class="info">Données génétiques : <?= Formview::descriptionToView($subject->getDonneesGenetiques()) ?></div>
+			<div class="info">Commentaire du diagnostic : <?= Dataview::descriptionToView($subject->getCommentDiagnosis()) ?></div>
+			<div class="info">Données génétiques : <?= Dataview::descriptionToView($subject->getDonneesGenetiques()) ?></div>
 		</section>
 	</div>
 </div>
