@@ -213,7 +213,7 @@ $subject = $subject;
 	$urls = $subject->getUrlsImg();
 	if (empty($urls)) :
 	?>
-		Aucune image.
+		<div class="info no-data">Aucune image</div>
 	<?php else : ?>
 		<div class="gallery">
 			<?php

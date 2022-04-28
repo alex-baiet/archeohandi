@@ -101,13 +101,14 @@ $sujets = $operation->getSubjects();
 	</div>
 </div>
 
+<!-- Iconographie -->
 <section class="view-sheet">
 	<h2>Iconographie</h2>
 	<?php
 	$urls = $operation->getUrlsImg();
 	if (empty($urls)) :
 	?>
-		<p>Aucune image.</p>
+		<div class="info no-data">Aucune image</div>
 	<?php else : ?>
 		<div class="gallery">
 			<?php
@@ -115,7 +116,7 @@ $sujets = $operation->getSubjects();
 				$url = $urls[$i];
 			?>
 				<figure class="gallery-item">
-					<img class="can-zoom" src="<?= $url ?>" alt="<?= $url ?>">
+					<img class="can-zoom" loading="lazy" src="<?= $url ?>" alt="<?= $url ?>">
 				</figure>
 			<?php endfor; ?>
 		</div>
