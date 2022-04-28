@@ -215,14 +215,16 @@ $subject = $subject;
 	?>
 		Aucune image.
 	<?php else : ?>
-		<?php
-		for ($i = 0; $i < count($urls); $i++) :
-			$url = $urls[$i];
-		?>
-			<a href="<?= $url ?>" target="_blank">
-				<img src="<?= $url ?>" alt="" style="height: 300px;">
-			</a>
-		<?php endfor; ?>
+		<div class="gallery">
+			<?php
+			for ($i = 0; $i < count($urls); $i++) :
+				$url = $urls[$i];
+			?>
+				<figure class="gallery-item">
+					<img class="can-zoom" loading="lazy" src="<?= $url ?>" alt="<?= $url ?>">
+				</figure>
+			<?php endfor; ?>
+		</div>
 	<?php endif; ?>
 </section>
 

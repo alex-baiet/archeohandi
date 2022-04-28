@@ -41,6 +41,7 @@ if (Constants::MAINTENANCE === true) {
 	<?= Asset::css('result.css') ?>
 	<?= Asset::css('error.css') ?>
 	<?= Asset::css('shortcut.css') ?>
+	<?= Asset::css('gallery.css') ?>
 
 	<!-- Javascript -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
@@ -57,6 +58,8 @@ if (Constants::MAINTENANCE === true) {
 	<?= Asset::js('page_manager.js') ?>
 	<?= Asset::js('nested_table.js') ?>
 	<?= Asset::js('search.js') ?>
+	<?= Asset::js('window.js', array("type" => "module")) ?>
+	<?= Asset::js('gallery.js', array("type" => "module")) ?>
 	<?= Asset::js('db.js') ?>
 	<?= Asset::js('db/archeo.js') ?>
 	<?= Asset::js('db/search_result.js') ?>
@@ -164,6 +167,9 @@ if (Constants::MAINTENANCE === true) {
 			</div>
 		</div>
 	</footer>
+
+	<!-- Affiche les images en pleine écran -->
+	<div id="fullpage"></div>
 </body>
 
 </html>

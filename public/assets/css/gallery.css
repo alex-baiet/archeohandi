@@ -1,0 +1,74 @@
+/*
+Code CSS permettant de faire des galleries d'images.
+
+Example d'utilisation dans la page boutique.php.
+
+*/
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+}
+
+.gallery .gallery-item {
+  height: 40vh;
+  flex-grow: 1;
+  margin: 5px;
+}
+
+.gallery-item:last-child {
+  flex-grow: 0;
+}
+
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 10px #0004;
+}
+
+.gallery-item > img {
+  max-height: 100%;
+  min-width: 100%;
+  object-fit: cover;
+  vertical-align: bottom;
+}
+
+.gallery-text {
+  opacity: 50%;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+
+  padding: 20px;
+  background: rgb(0,0,0);
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.5) 50%, rgba(0,0,0,0) 100%);
+
+  transition-timing-function: ease-in;
+  transition-duration: 200ms;
+}
+
+.gallery-item:hover .gallery-text {
+  opacity: 100%;
+}
+
+.gallery-text {
+  color: white;
+  text-decoration: none;
+}
+
+/* Conteneur d'image en plein écran */
+#fullpage {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-size: contain;
+  background-repeat: no-repeat no-repeat;
+  background-position: center center;
+  background-color: #0008;
+}
