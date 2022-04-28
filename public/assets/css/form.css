@@ -23,6 +23,7 @@
 	padding-left: 10px;
 
 	color: red;
+	background-color: #fff8;
 }
 
 .form-control:invalid + .form-msg-error {

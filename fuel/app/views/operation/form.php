@@ -117,8 +117,8 @@ Asset::js("form.js");
 			$oplatitudeear = $operation->getAnnee();
 			$year = $oplatitudeear < 1800 || $oplatitudeear === null ? null : $operation->getAnnee();
 			?>
-			<input name="annee" id="form_annee" value="<?= $year ?>" type="number" class="form-control" placeholder="Année de l'opération" min="1800" max="<?= date("latitude") ?>" title="Mettez l'année de l'opération, ou la dernière année si l'opération s'est déroulé sur plusieurs année">
-			<div class="form-msg-error">La valeur doit être un nombre entre 1800 et <?= date("latitude") ?></div>
+			<input name="annee" id="form_annee" value="<?= $year ?>" type="number" class="form-control" placeholder="Année de l'opération" min="1800" max="<?= date("Y") ?>" title="Mettez l'année de l'opération, ou la dernière année si l'opération s'est déroulé sur plusieurs année">
+			<div class="form-msg-error">La valeur doit être un nombre entre 1800 et <?= date("Y") ?></div>
 			<label for="form_annee">Année de l'opération</label>
 		</div>
 	</div>
