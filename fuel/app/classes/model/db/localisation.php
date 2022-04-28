@@ -43,6 +43,12 @@ class Localisation extends Model {
 		return Localisation::$allSpots;
 	}
 
+	/** Renvoie le nombre de localisation différent. */
+	public static function count(): int {
+		if (!isset(Localisation::$allSpots)) Localisation::fetchAll();
+		return count(Localisation::$allSpots);
+	}
+
 	public function getId() { return $this->id; }
 	public function getNom() { return $this->nom; }
 	public function getUrlImg() { return $this->urlImg; }

@@ -1,7 +1,9 @@
 <?php
 
 use Model\Db\Compte;
+use Model\Db\Localisation;
 use Model\Db\Sujethandicape;
+use Model\Formview;
 use Model\Helper;
 
 /** @var Sujethandicape */
@@ -15,193 +17,198 @@ $subject = $subject;
 	Ici vous retrouvez toutes les informations du sujet <strong><?= $subject->getIdSujetHandicape(); ?></strong>.
 </p>
 
-<!-- Informations générales -->
-<section class="form-sheet">
-	<h4>Informations générales</h4>
+<div class="row">
+	<div class="col-lg">
+		<!-- Informations générales -->
+		<section class="form-sheet">
+			<h2>Informations générales</h2>
 
-	<div class="row">
-		<div class="col">
-			<div class="p-2">Date de saisie : <?= $subject->getDateAjout() !== null ? Helper::dateDBToFrench($subject->getDateAjout()) : "inconnu" ?></div>
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="col-4">
-			<div class="p-2">Âge estimé :
-				<?php
-				if ($subject->getAgeMin() !== null && $subject->getAgeMax() !== null && $subject->getAgeMin() !== $subject->getAgeMax()) echo "entre {$subject->getAgeMin()} et {$subject->getAgeMax()} ans";
-				else if ($subject->getAgeMin() !== null) echo "{$subject->getAgeMin()} ans";
-				else if ($subject->getAgeMax() !== null) echo "{$subject->getAgeMax()} ans";
-				else echo "inconnu";
+			<div class="info">Date de saisie :
+				<?=
+				Formview::dataToView(
+					$subject->getDateAjout(),
+					function ($value) { return Helper::dateDBToFrench($value); })
 				?>
 			</div>
-		</div>
-		<div class="col-8">
-			<div class="p-2">Méthode âge : <?= $subject->getAgeMethode(); ?></div>
-		</div>
-	</div>
 
-	<div class="row">
-		<div class="col-4">
-			<div class="p-2">Sexe : <?= $subject->getSexe(); ?></div>
-		</div>
-		<div class="col-8">
-			<div class="p-2">Méthode sexe : <?= $subject->getSexeMethode(); ?></div>
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="col">
-			<div class="p-2">
+			<div class="info">
 				Datation :
 				<?php
-				if ($subject->getDateMin() !== null && $subject->getDateMax() !== null && $subject->getDateMin() !== $subject->getDateMax()) echo "entre {$subject->getDateMin()} et {$subject->getDateMax()}";
-				else if ($subject->getDateMin() !== null) echo "{$subject->getDateMin()} ans";
-				else if ($subject->getDateMax() !== null) echo "{$subject->getDateMax()} ans";
-				else echo "inconnu";
+				$arr = array();
+				if ($subject->getDateMin() !== null) $arr[] = $subject->getDateMin();
+				if ($subject->getDateMax() !== null) $arr[] = $subject->getDateMax();
+
+				echo Formview::dataToView(
+					$arr,
+					function ($value) {
+						if (count($value) === 2) return "entre {$value[0]} et {$value[1]}";
+						else return "{$value[0]}}";
+					}
+				)
 				?>
+				<div class="indent-1">
+					Écart type de la datation :
+					<?php
+					if ($subject->getDateMin() === null && $subject->getDateMax() === null) $diff = null;
+					else if ($subject->getDateMin() === null && $subject->getDateMax() === null) $diff = 0;
+					else $diff = $subject->getDateMax() - $subject->getDateMin();
+					echo Formview::dataToView($diff, function ($value) { return "$value année".($value !== 1 ? 's' : null); })
+					?>
+				</div>
 			</div>
-		</div>
-		<div class="col">
-			<!-- Ce n'est pas vraiment l'écart type qui est calculé mais bon... -->
-			<?php $diff = $subject->getDateMax() - $subject->getDateMin(); ?>
-			<div class="p-2">Écart type de la datation : <?= $diff ?> année<?= $diff !== 1 ? 's' : null ?></div>
-		</div>
-		<div class="col">
-			<div class="p-2">Milieu de vie : <?= $subject->getMilieuVie(); ?></div>
-		</div>
+
+			<div class="info">
+				Sexe : <?= Formview::dataToView($subject->getSexe()); ?>
+				<div class="indent-1">Méthode sexe : <?= Formview::dataToView($subject->getSexeMethode()) ?></div>
+			</div>
+
+			<div class="info">Âge estimé :
+				<?php
+				$arr = array();
+				if ($subject->getAgeMin() !== null) $arr[] = $subject->getAgeMin();
+				if ($subject->getAgeMax() !== null) $arr[] = $subject->getAgeMax();
+
+				echo Formview::dataToView(
+					$arr,
+					function ($value) {
+						if (count($value) === 2) return "entre {$value[0]} et {$value[1]} ans";
+						else return "{$value[0]} ans}";
+					}
+				)
+				?>
+				<div class="indent-1">Méthode âge : <?= Formview::dataToView($subject->getAgeMethode()); ?></div>
+			</div>
+
+			<div class="info">Milieu de vie : <?= Formview::dataToView($subject->getMilieuVie()) ?></div>
+			<div class="info">Type de dépôt : <?= Formview::dataToView($subject->getTypeDepot()->getNom()) ?></div>
+			<div class="info">Type de sépulture : <?= Formview::dataToView($subject->getTypeSepulture()->getNom()) ?></div>
+			<div class="info">Contexte : <?= Formview::dataToView($subject->getContexte()) ?></div>
+			<div class="info">Contexte normatif : <?= Formview::dataToView($subject->getContexteNormatif()) ?></div>
+			<div class="info">Commentaire du contexte : <?= Formview::descriptionToView($subject->getCommentContext()) ?></div>
+		</section>
 	</div>
 
-	<div class="row">
-		<div class="col">
-			<div class="p-2">Contexte normatif : <?= $subject->getContexteNormatif(); ?></div>
-		</div>
-		<div class="col">
-			<div class="p-2">Contexte : <?= $subject->getContexte(); ?></div>
-		</div>
-		<div class="col">
-			<div class="p-2">Commentaire du contexte : <?= $subject->getCommentContext(); ?></div>
-		</div>
+	<div class="col-lg">
+		<!-- Groupe du sujet -->
+		<section class="form-sheet">
+			<h2>Groupe du sujet</h2>
+			<?php $group = $subject->getGroup(); ?>
+			<div class="info">NMI : <?= Formview::dataToView($group->getNMI()) ?></div>
+			<div class="info">Opération : <?= Formview::dataToView($group->getOperation()->getNomOp()) ?></div>
+			<div class="info">Période : <?= Formview::dataToView($group->getChronology()->getName()) ?></div>
+			<div class="info">Date de début : <?= Formview::dataToView($group->getChronology()->getStart()) ?></div>
+			<div class="info">Date de fin : <?= Formview::dataToView($group->getChronology()->getEnd()) ?></div>
+		</section>
+
+		<!-- Dépôt -->
+		<section class="form-sheet">
+			<?php
+			$depot = $subject->getDepot();
+			if ($depot !== null) {
+				$numInventaire = $depot->getNumInventaire();
+				$communeName = $depot->getCommune() !== null ? $depot->getCommune()->fullName() : null;
+				$address = $depot->getAdresse();
+			} else {
+				$numInventaire = null;
+				$communeName = null;
+				$address = null;
+			}
+			?>
+			<h2>Dépôt</h2>
+			<?php $depot = $subject->getDepot(); ?>
+			<div class="info">Numéro d'inventaire : <?= Formview::dataToView($numInventaire) ?></div>
+			<div class="info">Commune : <?= Formview::dataToView($communeName) ?></div>
+			<div class="info">Adresse : <?= Formview::dataToView($address) ?></div>
+		</section>
+
+		<!-- Mobiliers / Accessoires -->
+		<section class="form-sheet">
+			<h2>Accessoire</h2>
+			<?php if (empty($subject->getFurnitures())) : ?>
+				<div class="info"><span class="no-data">Aucun accessoire</span></div>
+			<?php else : ?>
+				<ul>
+					<?php foreach ($subject->getFurnitures() as $furniture) : ?>
+						<li><b><?= $furniture->getNom(); ?></b></li>
+					<?php endforeach; ?>
+				</ul>
+			<?php endif; ?>
+
+			<div class="info">Description du mobilier(s) : <?= Formview::descriptionToView($subject->getDescriptionMobilier()) ?></div>
+		</section>
+
 	</div>
 
-	<div class="row">
-		<div class="col-md-4">
-			<div class="p-2">Type de dépôt : <?= $subject->getTypeDepot()->getNom(); ?></div>
-		</div>
-		<div class="col-md-4">
-			<div class="p-2">Type de sépulture : <?= $subject->getTypeSepulture()->getNom(); ?></div>
-		</div>
-	</div>
-</section>
-<br />
+	<div class="col-lg">
+		<!-- Atteinte invalidante -->
+		<section class="form-sheet">
+			<h2>Atteinte invalidante</h2>
+			<!-- Diagnostic -->
+			<h3>Diagnostics</h3>
+			<?php if (empty($subject->getAllDiagnosis())) : ?>
+				<div class="info"><span class="no-data">Aucun diagnostic</span></div>
+			<?php else : ?>
+				<ul>
+					<?php foreach ($subject->getAllDiagnosis() as $diagnosis) : ?>
+						<li>
+							<b><?= $diagnosis->getDiagnosis()->getNom(); ?></b>
+							<ul>
+								<?php
+								$spots = $diagnosis->getSpots();
+								if (count($spots) === Localisation::count()) :
+								?>
+									<li>corps complet</li>
+								<?php else : ?>
+									<?php foreach ($spots as $spot) : ?>
+										<li><?= $spot->getNom(); ?></li>
+									<?php endforeach; ?>
+								<?php endif; ?>
+							</ul>
+						</li>
+					<?php endforeach; ?>
+				</ul>
+			<?php endif; ?>
 
-<!-- Groupe du sujet -->
-<section class="form-sheet">
-	<h4>Groupe du sujet</h4>
-	<?php $group = $subject->getGroup(); ?>
-	<div class="row">
-		<div class="col-md-4 m-2">NMI : <?= $group->getNMI(); ?></div>
-		<div class="col-md-4 m-2">Opération : <?= $group->getOperation()->getNomOp(); ?></div>
-		<div class="col-md-4 m-2">Période : <?= $group->getChronology()->getName(); ?></div>
-	</div>
-	<div class="row">
-		<div class="col-md-4 m-2">Date de début : <?= $group->getChronology()->getStart(); ?></div>
-		<div class="col-md-4 m-2">Date de fin : <?= $group->getChronology()->getEnd(); ?></div>
-	</div>
-</section>
-<br />
+			<hr>
 
-<!-- Dépôt -->
-<section class="form-sheet">
-	<?php
-	$depot = $subject->getDepot();
-	if ($depot !== null) {
-		$numInventaire = $depot->getNumInventaire();
-		$communeName = $depot->getCommune() !== null ? $depot->getCommune()->fullName() : "aucun";
-		$address = $depot->getAdresse();
-	} else {
-		$numInventaire = null;
-		$communeName = "aucun";
-		$address = null;
-	}
-	?>
-	<h4>Dépôt</h4>
-	<?php $depot = $subject->getDepot(); ?>
-	<div class="row">
-		<div class="col m-2">Numéro d'inventaire : <?= $numInventaire; ?></div>
-		<div class="col m-2">Commune : <?= $communeName ?></div>
-		<div class="col m-2">Adresse : <?= $address; ?></div>
-	</div>
-</section>
-<br />
+			<!-- Pathologies -->
+			<h3>Pathologies</h3>
+			<?php if (empty($subject->getPathologies())) : ?>
+				<div class="info"><span class="no-data">Aucune pathologie</span></div>
+			<?php else : ?>
+				<ul>
+					<?php foreach ($subject->getPathologies() as $pathology) : ?>
+						<li><b><?= $pathology->getName(); ?></b></li>
+					<?php endforeach; ?>
+				</ul>
+			<?php endif; ?>
 
-<!-- Mobiliers / Accessoires -->
-<section class="form-sheet">
-	<h4>Accessoire</h4>
-	<div class="row">
-		<div class="col m-2">
-			<?php foreach ($subject->getFurnitures() as $furniture) : ?>
-				<?= $furniture->getNom(); ?><br>
-			<?php endforeach; ?>
-		</div>
-	</div>
-</section>
-<br />
+			<hr>
 
-<!-- Atteinte invalidante -->
-<section class="form-sheet">
-	<h4>Atteinte invalidante</h4>
-	<div class="row">
-		<!-- Diagnostic -->
-		<div class="col">
-			<h5>Diagnostics</h5>
-			<ul>
-				<?php foreach ($subject->getAllDiagnosis() as $diagnosis) : ?>
-					<li>
-						<?= $diagnosis->getDiagnosis()->getNom(); ?> :
-						<?php
-						$spots = $diagnosis->getSpots();
-						$i = 0;
-						foreach ($spots as $spot) :
-						?>
-							<?= $spot->getNom(); ?><?= $i !== count($spots) - 1 ? "," : null; ?>
-						<?php
-							$i++;
-						endforeach;
-						?>
-					</li>
-				<?php endforeach; ?>
-			</ul>
-		</div>
-		<!-- Pathologies -->
-		<div class="col">
-			<h5>Pathologies infectieuses</h5>
-			<ul>
-				<?php foreach ($subject->getPathologies() as $pathology) : ?>
-					<li><?= $pathology->getName(); ?></li>
-				<?php endforeach; ?>
-			</ul>
-		</div>
-		<!-- Appareils compensatoires -->
-		<div class="col">
-			<h5>Appareils compensatoires</h5>
-			<ul>
-				<?php foreach ($subject->getItemsHelp() as $item) : ?>
-					<li><?= $item->getName(); ?></li>
-				<?php endforeach; ?>
-			</ul>
-		</div>
+			<!-- Appareils compensatoires -->
+			<h3>Appareils compensatoires</h3>
+			<?php if (empty($subject->getItemsHelp())) : ?>
+				<div class="info"><span class="no-data">Aucun appareil</span></div>
+			<?php else : ?>
+				<ul>
+					<?php foreach ($subject->getItemsHelp() as $item) : ?>
+						<li><b><?= $item->getName(); ?></b></li>
+					<?php endforeach; ?>
+				</ul>
+			<?php endif; ?>
+
+			<hr>
+
+			<div class="info">Commentaire du diagnostic : <?= Formview::descriptionToView($subject->getCommentDiagnosis()) ?></div>
+			<div class="info">Données génétiques : <?= Formview::descriptionToView($subject->getDonneesGenetiques()) ?></div>
+		</section>
 	</div>
-	<div class="row">
-		<div class="col m-2">Commentaire du diagnostic : <?= $subject->getCommentDiagnosis(); ?></div>
-		<div class="col m-2">Données génétiques : <?= $subject->getDonneesGenetiques(); ?></div>
-	</div>
-</section>
-<br />
+</div>
+
 
 <!-- Iconographie -->
 <section class="form-sheet">
-	<h4>Iconographie</h4>
+	<h2>Iconographie</h2>
 	<?php
 	$urls = $subject->getUrlsImg();
 	if (empty($urls)) :
@@ -218,7 +225,6 @@ $subject = $subject;
 		<?php endfor; ?>
 	<?php endif; ?>
 </section>
-<br>
 
 <?php if (Compte::checkPermission(Compte::PERM_WRITE, $subject->getOperation()->getId())) : ?>
 	<!-- Suppression du sujet handicapé -->
@@ -228,14 +234,14 @@ $subject = $subject;
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="validationPopupLabel">Suppression du sujet</h5>
+					<h3 class="modal-title" id="validationPopupLabel">Suppression du sujet</h3>
 				</div>
 				<div class="modal-body">
-					<p>
+					<div class="info">
 						Êtes-vous sûr de vouloir supprimer le sujet n°<?= $subject->getId() ?> <em>"<?= $subject->getIdSujetHandicape() ?>"</em> ?<br>
 						<br>
 						<i class='bi bi-info-circle-fill'></i> La suppression est irréversible.
-					</p>
+					</div>
 				</div>
 				<div class="modal-footer">
 					<form method="post" action="/public/sujet/delete">

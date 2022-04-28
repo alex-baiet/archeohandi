@@ -1,0 +1,9 @@
+/* Contient des classes de mise en forme très simple */
+
+.opacity-50 {
+	opacity: 0.5;
+}
+
+.indent-1 {
+	text-indent: 1em;
+}
