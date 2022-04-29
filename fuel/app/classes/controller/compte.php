@@ -28,7 +28,7 @@ class Controller_Compte extends Controller_Template {
 				// Connexion réussi
 				Response::redirect("/accueil");
 			} else {
-				Messagehandler::prepareAlert("Votre login ou/et mot de passe est incorrect.", "danger");
+				Messagehandler::prepareAlert("Votre login ou/et mot de passe est incorrect.", Messagehandler::ALERT_DANGER);
 			}
 		}
 
@@ -49,15 +49,15 @@ class Controller_Compte extends Controller_Template {
 				// Création du nouveau mdp
 				$pw = Compte::redefinePassword($login);
 				if ($pw === null) {
-					Messagehandler::prepareAlert("Impossible de redéfinir le mot de passe.");
+					Messagehandler::prepareAlert("Impossible de redéfinir le mot de passe.", Messagehandler::ALERT_DANGER);
 				} else {
 					Helper::sendMail($email, "Changement de mot de passe", View::forge("compte/mail_mdp", array("login" => $login, "pw" => $pw)));
-					Messagehandler::prepareAlert("Votre mot de passe a bien été redéfini et a été envoyé dans votre boîte mail.", "success");
+					Messagehandler::prepareAlert("Votre mot de passe a bien été redéfini et a été envoyé dans votre boîte mail.", Messagehandler::ALERT_SUCCESS);
 					Response::redirect("/compte/connexion");
 				}
 
 			} else {
-				Messagehandler::prepareAlert("Le login et/ou compte mail n'est pas valide.", "danger");
+				Messagehandler::prepareAlert("Le login et/ou compte mail n'est pas valide.", Messagehandler::ALERT_DANGER);
 			}
 		}
 
@@ -82,19 +82,19 @@ class Controller_Compte extends Controller_Template {
 			$error = false;
 			if (empty($_POST["prenom"])) {
 				$error = true;
-				Messagehandler::prepareAlert("Indiquez votre prénom.", "danger");
+				Messagehandler::prepareAlert("Indiquez votre prénom.", Messagehandler::ALERT_DANGER);
 			}
 			if (empty($_POST["nom"])) {
 				$error = true;
-				Messagehandler::prepareAlert("Indiquez votre nom.", "danger");
+				Messagehandler::prepareAlert("Indiquez votre nom.", Messagehandler::ALERT_DANGER);
 			}
 			if (!$error && empty(Compte::generateLogin($_POST["prenom"], $_POST["nom"]))) {
 				$error = true;
-				Messagehandler::prepareAlert("Les prénom et nom donné ne permettent pas de créer un login. Ecrivez-les en alphabet latin.");
+				Messagehandler::prepareAlert("Les prénom et nom donné ne permettent pas de créer un login. Ecrivez-les en alphabet latin.", Messagehandler::ALERT_DANGER);
 			}
 			if (Compte::emailExist($_POST["email"])) {
 				$error = true;
-				Messagehandler::prepareAlert("Un compte avec le mail donné existe déjà.", "danger");
+				Messagehandler::prepareAlert("Un compte avec le mail donné existe déjà.", Messagehandler::ALERT_DANGER);
 			}
 
 			if (!$error) {
@@ -102,13 +102,13 @@ class Controller_Compte extends Controller_Template {
 				if (isset($_POST["immediate"])) {
 					// Creation immediate (pour les admins)
 					if (Compte::create($_POST["prenom"], $_POST["nom"], $_POST["email"], $login, $pw, $_POST["organisme"])) {
-						Messagehandler::prepareAlert("Le compte a bien été créé.", "success");
+						Messagehandler::prepareAlert("Le compte a bien été créé.", Messagehandler::ALERT_SUCCESS);
 						$data["login"] = $login;
 						$data["pw"] = $pw;
 						$this->template->content = View::forge('compte/creation_admin', $data);
 						return;
 					} else {
-						Messagehandler::prepareAlert("Une erreur est survenu lors de la création du compte.", "danger");
+						Messagehandler::prepareAlert("Une erreur est survenu lors de la création du compte.", Messagehandler::ALERT_DANGER);
 					}
 
 				} else {
@@ -121,10 +121,10 @@ class Controller_Compte extends Controller_Template {
 					);
 
 					if ($result) {
-						Messagehandler::prepareAlert("La demande de création de compte a été envoyé. Vous recevrez un mail de confirmation avec vos identifiants une fois la création validée par un administrateur.", "success");
+						Messagehandler::prepareAlert("La demande de création de compte a été envoyé. Vous recevrez un mail de confirmation avec vos identifiants une fois la création validée par un administrateur.", Messagehandler::ALERT_SUCCESS);
 						Response::redirect("/accueil");
 					} else {
-						Messagehandler::prepareAlert("La demande de création de compte n'a pas pu être envoyé.", "danger");
+						Messagehandler::prepareAlert("La demande de création de compte n'a pas pu être envoyé.", Messagehandler::ALERT_DANGER);
 					}
 				}
 			}
@@ -151,18 +151,18 @@ class Controller_Compte extends Controller_Template {
 		
 		if ($token !== Controller_Compte::TOKEN) {
 			$error = true;
-			Messagehandler::prepareAlert("Impossible de créer le compte : le token donné ne corresponde pas.");
+			Messagehandler::prepareAlert("Impossible de créer le compte : le token donné ne corresponde pas.", Messagehandler::ALERT_DANGER);
 		}
 
 		if (Compte::emailExist($email)) {
 			$error = true;
-			Messagehandler::prepareAlert("Un compte avec le mail indiqué existe déjà. Le compte n'a donc pas été créé.", "danger");
+			Messagehandler::prepareAlert("Un compte avec le mail indiqué existe déjà. Le compte n'a donc pas été créé.", Messagehandler::ALERT_DANGER);
 		}
 		
 		if (!$error) {
 			// Création du compte
 			if (Compte::create($firstName, $lastName, $email, $login, $pw, $organisme)) {
-				Messagehandler::prepareAlert("Compte créé !", "success");
+				Messagehandler::prepareAlert("Compte créé !", Messagehandler::ALERT_SUCCESS);
 
 				// Mail de confirmation de la création de compte
 				Helper::sendMail(
@@ -176,7 +176,7 @@ class Controller_Compte extends Controller_Template {
 					))
 				);
 			} else {
-				Messagehandler::prepareAlert("Le compte n'a pas pû être créé.", "danger");
+				Messagehandler::prepareAlert("Le compte n'a pas pû être créé.", Messagehandler::ALERT_DANGER);
 			}
 		}
 

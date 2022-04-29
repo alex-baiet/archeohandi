@@ -24,7 +24,7 @@ class Controller_Sujet extends Controller_Template {
 
 		$subject = Sujethandicape::fetchSingle($id);
 		if ($subject === null) {
-			Messagehandler::prepareAlert("Le sujet n'existe pas (quelqu'un vient peut-être de le supprimer).", "danger");
+			Messagehandler::prepareAlert("Le sujet n'existe pas (quelqu'un vient peut-être de le supprimer).", Messagehandler::ALERT_DANGER);
 			Response::redirect("accueil");
 		}
 
@@ -55,7 +55,7 @@ class Controller_Sujet extends Controller_Template {
 		);
 
 		if ($subject === null) {
-			Messagehandler::prepareAlert("Le sujet n'existe pas (quelqu'un vient peut-être de le supprimer).", "danger");
+			Messagehandler::prepareAlert("Le sujet n'existe pas (quelqu'un vient peut-être de le supprimer).", Messagehandler::ALERT_DANGER);
 			Response::redirect("accueil");
 		}
 
@@ -67,7 +67,7 @@ class Controller_Sujet extends Controller_Template {
 			// Maj du sujet
 			$subject = new Sujethandicape($_POST, true);
 			if ($subject->saveOnDB() && Controller_Sujet::DEBUG === false) {
-				Messagehandler::prepareAlert("Modification du sujet réussi.", "success");
+				Messagehandler::prepareAlert("Modification du sujet réussi.", Messagehandler::ALERT_SUCCESS);
 				Response::redirect("sujet/view/$id");
 			} else if (Controller_Sujet::DEBUG === true) {
 				echo "POST";
@@ -100,7 +100,7 @@ class Controller_Sujet extends Controller_Template {
 		$operation = Operation::fetchSingle($id);
 
 		if ($operation === null) {
-			Messagehandler::prepareAlert("L'opération n'existe pas (quelqu'un vient peut-être de le supprimer).", "danger");
+			Messagehandler::prepareAlert("L'opération n'existe pas (quelqu'un vient peut-être de le supprimer).", Messagehandler::ALERT_DANGER);
 			Response::redirect("accueil");
 		}
 
@@ -112,7 +112,7 @@ class Controller_Sujet extends Controller_Template {
 				$operation->setObservables($_POST["observables"]);
 				$operation->saveOnDB();
 
-				Messagehandler::prepareAlert("Ajout du sujet réussi.", "success");
+				Messagehandler::prepareAlert("Ajout du sujet réussi.", Messagehandler::ALERT_SUCCESS);
 				if (!$_POST["stayOnPage"]) Response::redirect("/operation/sujets/$id");
 
 				$copy = new Sujethandicape($_POST);
@@ -140,7 +140,7 @@ class Controller_Sujet extends Controller_Template {
 
 		$subject = Sujethandicape::fetchSingle($id);
 		if ($subject === null) {
-			Messagehandler::prepareAlert("Le sujet n'existe pas (quelqu'un vient peut-être de le supprimer).", "danger");
+			Messagehandler::prepareAlert("Le sujet n'existe pas (quelqu'un vient peut-être de le supprimer).", Messagehandler::ALERT_DANGER);
 			Redirect::redirectBack();
 		}
 
@@ -155,9 +155,9 @@ class Controller_Sujet extends Controller_Template {
 		// Suppression du sujet
 		$error = Sujethandicape::deleteOnDB($id);
 		if ($error === null) {
-			Messagehandler::prepareAlert("Le sujet n°$id a bien été supprimé.", "success");
+			Messagehandler::prepareAlert("Le sujet n°$id a bien été supprimé.", Messagehandler::ALERT_SUCCESS);
 		} else {
-			Messagehandler::prepareAlert($error, "danger");
+			Messagehandler::prepareAlert($error, Messagehandler::ALERT_DANGER);
 		}
 
 		// Redirection vers la page choisi

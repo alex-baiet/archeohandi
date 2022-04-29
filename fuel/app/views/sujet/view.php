@@ -14,6 +14,7 @@ $subject = $subject;
 <h1 class="m-2">Sujet n°<?= $subject->getId(); ?> <em>"<?= $subject->getIdSujetHandicape() ?>"</em></h1>
 
 <p class="text-muted">
+	Sujet de l'opération <b><em>"<?= $subject->getOperation()->getNomOp() ?>"</em></b><br>
 	Ici vous retrouvez toutes les informations du sujet <strong><?= $subject->getIdSujetHandicape(); ?></strong>.
 </p>
 

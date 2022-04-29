@@ -42,7 +42,7 @@ class Controller_Recherche extends Controller_Template {
 		$json = Helper::postQuery("https://archeohandi.huma-num.fr/public/recherche/api", $_POST);
 		$results = array();
 		if ($json == false) {
-			Messagehandler::prepareAlert("Un problème est survenu lors de la recherche des résultats.", "danger");
+			Messagehandler::prepareAlert("Un problème est survenu lors de la recherche des résultats.", Messagehandler::ALERT_DANGER);
 		} else {
 			$jsonArray = json_decode($json, true);
 			if ($jsonArray == null && $json !== "[]") {

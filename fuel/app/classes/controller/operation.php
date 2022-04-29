@@ -82,7 +82,7 @@ class Controller_Operation extends Controller_Template {
 			
 			if ($operation->saveOnDB()) {
 				// Ajout de l'opération avec succès
-				Messagehandler::prepareAlert("Ajout de l'opération réussi.", "success");
+				Messagehandler::prepareAlert("Ajout de l'opération réussi.", Messagehandler::ALERT_SUCCESS);
 				Response::redirect("/sujet/add/{$operation->getId()}");
 			}
 		}
@@ -101,7 +101,7 @@ class Controller_Operation extends Controller_Template {
 
 		$operation = Operation::fetchSingle($id);		
 		if ($operation === null) {
-			Messagehandler::prepareAlert("L'opération n'existe pas (quelqu'un vient peut-être de le supprimer).", "danger");
+			Messagehandler::prepareAlert("L'opération n'existe pas (quelqu'un vient peut-être de le supprimer).", Messagehandler::ALERT_DANGER);
 			Response::redirect("accueil");
 		}
 
@@ -122,7 +122,7 @@ class Controller_Operation extends Controller_Template {
 
 		$operation = Operation::fetchSingle($id);
 		if ($operation === null) {
-			Messagehandler::prepareAlert("L'opération n'existe pas (quelqu'un vient peut-être de le supprimer).", "danger");
+			Messagehandler::prepareAlert("L'opération n'existe pas (quelqu'un vient peut-être de le supprimer).", Messagehandler::ALERT_DANGER);
 			Response::redirect("accueil");
 		}
 
@@ -142,7 +142,7 @@ class Controller_Operation extends Controller_Template {
 		// Récupération des informations de l'opération
 		$operation = Operation::fetchSingle($id);		
 		if ($operation === null) {
-			Messagehandler::prepareAlert("L'opération n'existe pas (quelqu'un vient peut-être de le supprimer).", "danger");
+			Messagehandler::prepareAlert("L'opération n'existe pas (quelqu'un vient peut-être de le supprimer).", Messagehandler::ALERT_DANGER);
 			Response::redirect("accueil");
 		}
 
@@ -157,7 +157,7 @@ class Controller_Operation extends Controller_Template {
 			if ($result === true) {
 				// Les données sont valides : on met à jour la BDD
 				$operation->saveOnDB();
-				Messagehandler::prepareAlert("Modification de l'opération réussi.", "success");
+				Messagehandler::prepareAlert("Modification de l'opération réussi.", Messagehandler::ALERT_SUCCESS);
 
 				Response::redirect("/operation/view/$id");
 			} else {
@@ -186,7 +186,7 @@ class Controller_Operation extends Controller_Template {
 
 		$operation = Operation::fetchSingle($id);
 		if ($operation === null) {
-			Messagehandler::prepareAlert("L'opération n'existe pas (quelqu'un vient peut-être de le supprimer).", "danger");
+			Messagehandler::prepareAlert("L'opération n'existe pas (quelqu'un vient peut-être de le supprimer).", Messagehandler::ALERT_DANGER);
 			Redirect::redirectBack();
 		}
 
@@ -199,9 +199,9 @@ class Controller_Operation extends Controller_Template {
 		// Suppression de l'opération
 		$error = Operation::deleteOnDB($id);
 		if ($error === null) {
-			Messagehandler::prepareAlert("L'opération n°$id a bien été supprimé.", "success");
+			Messagehandler::prepareAlert("L'opération n°$id a bien été supprimé.", Messagehandler::ALERT_SUCCESS);
 		} else {
-			Messagehandler::prepareAlert($error, "danger");
+			Messagehandler::prepareAlert($error, Messagehandler::ALERT_DANGER);
 		}
 
 		// Redirection vers la page choisi

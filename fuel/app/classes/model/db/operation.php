@@ -482,7 +482,7 @@ class Operation extends Model {
 
 		if ($this->id === null || Operation::fetchSingle($this->id) === null) {
 			if (Compte::getInstance() === null) {
-				Messagehandler::prepareAlert("Pour créer une opération, vous devez être connecter à un compte.", "danger");
+				Messagehandler::prepareAlert("Pour créer une opération, vous devez être connecter à un compte.", Messagehandler::ALERT_DANGER);
 				return false;
 			}
 

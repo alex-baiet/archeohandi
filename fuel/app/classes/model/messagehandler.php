@@ -4,8 +4,17 @@ namespace Model;
 
 /** Gère les notifications sur le site. */
 class Messagehandler {
+	const ALERT_PRIMARY = "primary";
+	const ALERT_SECONDARY = "secondary";
+	const ALERT_SUCCESS = "success";
+	const ALERT_DANGER = "danger";
+	const ALERT_WARNING = "warning";
+	const ALERT_INFO = "info";
+	const ALERT_LIGHT = "light";
+	const ALERT_DARK = "dark";
+
 	/** Prepare l'affichage d'une alert qui sera afficher lors du prochain chargement de page. */
-	public static function prepareAlert(string $msg, string $type = "primary") {
+	public static function prepareAlert(string $msg, string $type = Messagehandler::ALERT_PRIMARY) {
 		Helper::startSession();
 		if (empty($msg)) return;
 
