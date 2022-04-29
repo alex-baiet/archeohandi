@@ -38,8 +38,42 @@
 	line-height: 1.25;
 }
 
+/* Ne reprend que la forme de .view-sheet */
+.view-sheet-shape {
+	position: relative;
+	overflow: hidden;
+	
+	background-color: #0000000a;
+	margin: 0 0 1rem 0;
+	box-shadow: 0 0 0.5rem #0004;
+	border-radius: 1rem;
+}
+
 /* Mise en forme si l'information écrit signigie "il n'y a rien" */
 .no-data {
 	color: #21252980;
 	font-style: italic;
+}
+
+.map-overlay {
+	position: absolute;
+	z-index: 1000;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	background-color: #0008;
+
+	transition-duration: 1s;
+}
+
+.map-overlay > p {
+	position: absolute;
+	top: 50%;
+	width: 100%;
+	text-align: center;
+	transform: translateY(-50%);
+
+	font-size: 2rem;
+	color: white;
 }

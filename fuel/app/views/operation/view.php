@@ -29,6 +29,7 @@ $sujets = $operation->getSubjects();
 <!-- Contenu de la page. Affichage des informations de l'opération -->
 <div class="row">
 	<div class="col-lg">
+		<!-- Informations globales -->
 		<section class="view-sheet">
 			<h2>Informations</h2>
 			<div class="info">Date de saisie : <?= Dataview::dataToView($operation->getDateAjout(), function ($value) { return Helper::dateDBToFrench($value); }) ?></div>
@@ -47,9 +48,40 @@ $sujets = $operation->getSubjects();
 			<div class="info">EA : <?= Dataview::dataToView($operation->getEA()) ?></div>
 			<div class="info">OA : <?= Dataview::dataToView($operation->getOA()) ?></div>
 		</section>
+
+		<!-- Bibliographie -->
+		<section class="view-sheet">
+			<h2>Bibliographie</h2>
+			<div class="info"><?= Dataview::descriptionToView($operation->getBibliographie()) ?></div>
+			<ul>
+				<?php foreach ($operation->getUrls() as $url) : ?>
+					<li><a href="<?= $url ?>" target="_blank"><?= $url ?></a></li>
+				<?php endforeach; ?>
+			</ul>
+		</section>
 	</div>
 
 	<div class="col-lg">
+		<!-- Carte Leaflet -->
+		<div id="map_parent" class="view-sheet-shape">
+			<div id="map" style="height: 300px"></div>
+			<div id='map_overlay' class='map-overlay' style="display: none; opacity: 0;"><p>Position inconnu</p></div>
+		</div>
+		<script>
+			Leaflet.initMap("map");
+			<?php if ($operation->getLongitude() !== null && $operation->getLatitude() !== null) : ?>
+				Leaflet.setMarker(<?= $operation->getLatitude() ?>, <?= $operation->getLongitude() ?>);
+			<?php else : ?>
+				// Ajoute un titre qui cache la map
+				Leaflet.map.whenReady(function () {
+					const overlay = document.getElementById("map_overlay");
+					overlay.style.display = "block";
+					window.requestAnimationFrame(function () { overlay.style.opacity = 1; })
+				})
+			<?php endif; ?>
+		</script>
+
+		<!-- Personnes -->
 		<section class="view-sheet">
 			<h2>Personnes</h2>
 			<h3>Responsable</h3>
@@ -86,16 +118,6 @@ $sujets = $operation->getSubjects();
 					<?php endforeach; ?>
 				</ul>
 			<?php endif; ?>
-		</section>
-
-		<section class="view-sheet">
-			<h2>Bibliographie</h2>
-			<div class="info"><?= Dataview::descriptionToView($operation->getBibliographie()) ?></div>
-			<ul>
-				<?php foreach ($operation->getUrls() as $url) : ?>
-					<li><a href="<?= $url ?>" target="_blank"><?= $url ?></a></li>
-				<?php endforeach; ?>
-			</ul>
 		</section>
 		<br>
 	</div>

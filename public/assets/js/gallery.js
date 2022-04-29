@@ -1,5 +1,3 @@
-import { Window } from "./window.js";
-
 /*
 Rend les images "can-zoom" affichable en pleine écran.
 */

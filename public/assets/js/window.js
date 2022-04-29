@@ -1,6 +1,6 @@
 
 /** Permet de faciliter l'utilisation de fonction concernant "window". */
-export class Window {
+class Window {
   static _onload = []
 
   /**
