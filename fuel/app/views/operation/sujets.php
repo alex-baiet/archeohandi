@@ -1,6 +1,7 @@
 <?php
 
 use Fuel\Core\Form;
+use Model\Dataview;
 use Model\Db\Compte;
 use Model\Db\Operation;
 use Model\Db\Typedepot;
@@ -81,8 +82,18 @@ $sujets = $operation->getSubjects();
 									<?php endif; ?>
 								</td>
 								<td><?= $sujet->getSexe() ?></td>
-								<td><?= "{$sujet->getDateMin()} - {$sujet->getDateMax()}" ?></td>
-								<td><?= $sujet->getMilieuVie() ?></td>
+								<td>
+									<?php
+									$arr = array();
+									if ($sujet->getDateMin() !== null) $arr[] = $sujet->getDateMin();
+									if ($sujet->getDateMax() !== null) $arr[] = $sujet->getDateMax();
+									echo Dataview::dataToView($arr, function ($value) {
+										if (count($value) === 2 && $value[0] === $value[1]) return $value[0];
+										return implode(" - ", $value);
+									}, false);
+									?>
+								</td>
+								<td><?= Dataview::dataToView($sujet->getMilieuVie(), null, false) ?></td>
 								<td><?= $typeDepot->getNom() ?></td>
 								<td><?= $typeSepulture->getNom() ?></td>
 								<td class="col-auto">

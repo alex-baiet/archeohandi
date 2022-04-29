@@ -1,6 +1,7 @@
 <?php
 // View d'une liste d'opération et de leurs sujets.
 
+use Model\Dataview;
 use Model\Db\Archeo;
 use Model\Searchresult;
 
@@ -38,14 +39,14 @@ $lines = $lines;
 					$author = $account->getPrenom() . " " . $account->getNom();
 				}
 				?>
-				<td><?= $author ?></td>
+				<td><?= Dataview::dataToView($author, null, false) ?></td>
 				<td>
 					<?= $op->getNomOp() ?>
 					<?php if (!empty($op->getUrlsImg())) : ?>
 						<i class="bi bi-images opacity-50"></i>
 					<?php endif; ?>
 				</td>
-				<td><?= $op->getAnnee() ?></td>
+				<td><?= Dataview::dataToView($op->getAnnee(), null, false) ?></td>
 				<td><a href="/public/operation/view/<?= $op->getId() ?>">Consulter</a></td>
 			</tr>
 			<tr id="row_subjects_<?= $op->getId() ?>" style="display:none;">
@@ -93,11 +94,31 @@ $lines = $lines;
 											<?php endif; ?>
 										</td>
 										<td><?= $subject->getSexe() ?></td>
-										<td><?= $subject->getDateMin() . " - " . $subject->getDateMax() ?></td>
-										<td><?= $subject->getMilieuVie() ?></td>
+										<td>
+											<?php
+											$arr = array();
+											if ($subject->getDateMin() !== null) $arr[] = $subject->getDateMin();
+											if ($subject->getDateMax() !== null) $arr[] = $subject->getDateMax();
+											echo Dataview::dataToView($arr, function ($value) {
+												if (count($value) === 2 && $value[0] === $value[1]) return $value[0];
+												return implode(" - ", $value);
+											}, false);
+											?>
+										</td>
+										<td><?= Dataview::dataToView($subject->getMilieuVie(), null, false) ?></td>
 										<td><?= $subject->getTypeDepot()->getNom() ?></td>
 										<td><?= $subject->getTypeSepulture()->getNom() ?></td>
-										<td><?= $subject->getAgeMin() . " - " . $subject->getAgeMax() ?></td>
+										<td>
+											<?php
+											$arr = array();
+											if ($subject->getAgeMin() !== null) $arr[] = $subject->getAgeMin();
+											if ($subject->getAgeMax() !== null) $arr[] = $subject->getAgeMax();
+											echo Dataview::dataToView($arr, function ($value) {
+												if (count($value) === 2 && $value[0] === $value[1]) return $value[0];
+												return implode(" - ", $value);
+											}, false);
+											?>
+										</td>
 										<td><a href="/public/sujet/view/<?= $subject->getId() ?>">Consulter</a></td>
 									</tr>
 								<?php endforeach ?>
