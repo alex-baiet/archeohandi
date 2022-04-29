@@ -142,14 +142,11 @@ Asset::js("form.js");
 		</div>
 	</div>
 
-	<!-- Type de l'opération -->
+	<!-- Numéro de l'opération -->
 	<div class="col-md-4">
 		<div class="form-floating">
-			<select name="id_type_op" id="form_id_type_op" class="form-select" title="Sélectionner le type de l'opération">
-				<?php $idType = $operation->getIdTypeOp() !== null ? $operation->getIdTypeOp() : -1; ?>
-				<?= Typeoperation::fetchOptions($idType); ?>
-			</select>
-			<label for="form_id_type_op">Type d'opération</label>
+			<input name="numero_operation" id="form_numero_operation" value="<?= $operation->getNumeroOperation() ?>" type="text" class="form-control" placeholder="Numéro d'opération" maxlength="256" title="Indiquez le numéro de l'opération (propre à l'opérateur)">
+			<label for="form_numero_operation">Numéro de l'opération</label>
 		</div>
 	</div>
 </div>
@@ -172,14 +169,16 @@ Asset::js("form.js");
 		</div>
 	</div>
 
-	<!-- Numéro de l'opération -->
+	<!-- Type de l'opération -->
 	<div class="col-md-4">
 		<div class="form-floating">
-			<input name="numero_operation" id="form_numero_operation" value="<?= $operation->getNumeroOperation() ?>" type="text" class="form-control" placeholder="Numéro d'opération" maxlength="256" title="Indiquez le numéro de l'opération (propre à l'opérateur)">
-			<label for="form_numero_operation">Numéro de l'opération</label>
+			<select name="id_type_op" id="form_id_type_op" class="form-select" title="Sélectionner le type de l'opération">
+				<?php $idType = $operation->getIdTypeOp() !== null ? $operation->getIdTypeOp() : -1; ?>
+				<?= Typeoperation::fetchOptions($idType); ?>
+			</select>
+			<label for="form_id_type_op">Type d'opération</label>
 		</div>
 	</div>
-
 </div>
 <div class="row my-2">
 
