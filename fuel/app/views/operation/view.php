@@ -83,7 +83,7 @@ $sujets = $operation->getSubjects();
 
 		<!-- Personnes -->
 		<section class="view-sheet">
-			<h2>Personnes</h2>
+			<h2>Équipe</h2>
 			<h3>Responsable</h3>
 			<?php if (empty($operation->getResponsable())) : ?>
 				<span class="no-data">Aucun responsable</span>
