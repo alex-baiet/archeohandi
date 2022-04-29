@@ -173,32 +173,8 @@ if (!empty($msg)) {
 		</div>
 	</div>
 
-	<!-- Contexte normatif -->
-	<div class="col-md-4">
-		<div class="form-floating">
-			<?=
-			Form::select(
-				"contexte_normatif",
-				$subject->getContexteNormatif(),
-				array(
-					"" => "Indéterminé",
-					"Standard" => "Standard",
-					"Atypique" => "Atypique"
-				),
-				array(
-					"class" => "form-select",
-					"title" => "Indiquer le type de contexte"
-				)
-			);
-			?>
-			<label for="form_contexte_normatif">Contexte normatif</label>
-		</div>
-	</div>
-</div>
-
-<div class="row g-2">
 	<!-- Milieu de vie -->
-	<div class="col-md-6">
+	<div class="col-md-4">
 		<div class="form-floating">
 			<?=
 			Form::select(
@@ -216,6 +192,30 @@ if (!empty($msg)) {
 			);
 			?>
 			<label for="form_milieu_vie">Milieu de vie</label>
+		</div>
+	</div>
+</div>
+
+<div class="row g-2">
+	<!-- Contexte normatif -->
+	<div class="col-md-6">
+		<div class="form-floating">
+			<?=
+			Form::select(
+				"contexte_normatif",
+				$subject->getContexteNormatif(),
+				array(
+					"" => "Indéterminé",
+					"Standard" => "Standard",
+					"Atypique" => "Atypique"
+				),
+				array(
+					"class" => "form-select",
+					"title" => "Indiquer le type de contexte"
+				)
+			);
+			?>
+			<label for="form_contexte_normatif">Contexte normatif</label>
 		</div>
 	</div>
 
