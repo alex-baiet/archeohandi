@@ -28,12 +28,19 @@ use Fuel\Core\Asset;
 <!-- Informations complémentaires -->
 <div class="container">
 	<div class="row center">
-		<div class="col-6" style="text-align: justify;">
-			<p class="fs-6 text-justify">
-				Cette base a été conçue par V. Loin (stagiaire) et A. Baiet (apprenti Université de Marne-la-Vallée) sous la tutelle technique de J.-B. Barreau (CNRS).<br>
-				La création de l'arborescence de la base a été élaborée par V. Delattre (Inrap), à l'origine du projet Archéologie du Handicap et par R. Colleter (Inrap) et C. Le Forestier (Inrap).<br>
-				Ce projet est une Action de Recherche Collective menée par l'Inrap. L'association Archéologie des nécropoles participe également à cette aventure.<br>
-				Pour plus d'informations :<br><a href="https://archeohandi.hypotheses.org/" target="_blank">https://archeohandi.hypotheses.org/</a>
+		<div class="col-6">
+			<p class="paragraph">
+				Cette base a été conçue par <b>Virgile Loin</b> (stagiaire) et <b>Alex Baiet</b> (apprenti Université de Marne-la-Vallée) sous la tutelle technique de Jean-Baptiste Barreau (CNRS).
+			</p>
+			<p class="paragraph">
+				La création de l'arborescence de la base a été élaborée par <b>Valérie Delattre</b> (Inrap),
+				à l'origine du projet Archéologie du Handicap et par <b>Rozenn Colleter</b> (Inrap) et <b>Cyrille Le Forestier</b> (Inrap).
+			</p>
+			<p class="paragraph">
+				Ce projet est une Action de Recherche Collective menée par l'Inrap. L'association Archéologie des nécropoles participe également à cette aventure.
+			</p>
+			<p class="paragraph">
+				Pour plus d'informations : <a href="https://archeohandi.hypotheses.org/" target="_blank">https://archeohandi.hypotheses.org/</a>
 			</p>
 		</div>
 		<div class="col-6" style="text-align: justify;">

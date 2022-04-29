@@ -1,14 +1,10 @@
 <?php
 
-use Fuel\Core\Asset;
 use Fuel\Core\Form;
-use Fuel\Core\View;
 use Model\Db\Compte;
 use Model\Db\Operation;
-use Model\Db\Organisme;
 use Model\Db\Typedepot;
 use Model\Db\Typesepulture;
-use Model\Helper;
 
 /** @var Operation Operation actuelle. */
 $operation = $operation;
@@ -26,7 +22,7 @@ $sujets = $operation->getSubjects();
 	}
 </script>
 
-<h2>
+<h1 class="m-2">
 	<?php if (!empty($sujets)) : ?>
 		Sujets handicapés (<?= count($sujets); ?>)
 	<?php else : ?>
@@ -38,7 +34,7 @@ $sujets = $operation->getSubjects();
 			Ajouter des sujets <i class="bi bi-plus-circle-fill"></i>
 		</a>
 	<?php endif; ?>
-</h2>
+</h1>
 
 <!-- Tableau des sujets -->
 <?php if (!empty($sujets)) : ?>
