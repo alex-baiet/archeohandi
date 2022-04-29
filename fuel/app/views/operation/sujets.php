@@ -74,7 +74,12 @@ $sujets = $operation->getSubjects();
 									<?php endif; ?>
 								</td>
 								<td><?= $sujet->getId() ?></td>
-								<td><?= $sujet->getIdSujetHandicape() ?></td>
+								<td>
+									<?= $sujet->getIdSujetHandicape() ?>
+									<?php if (!empty($sujet->getUrlsImg())) : ?>
+										<i class="bi bi-images opacity-50"></i>
+									<?php endif; ?>
+								</td>
 								<td><?= $sujet->getSexe() ?></td>
 								<td><?= "{$sujet->getDateMin()} - {$sujet->getDateMax()}" ?></td>
 								<td><?= $sujet->getMilieuVie() ?></td>

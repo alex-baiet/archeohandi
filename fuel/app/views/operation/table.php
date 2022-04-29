@@ -39,7 +39,12 @@ $lines = $lines;
 				}
 				?>
 				<td><?= $author ?></td>
-				<td><?= $op->getNomOp() ?></td>
+				<td>
+					<?= $op->getNomOp() ?>
+					<?php if (!empty($op->getUrlsImg())) : ?>
+						<i class="bi bi-images opacity-50"></i>
+					<?php endif; ?>
+				</td>
 				<td><?= $op->getAnnee() ?></td>
 				<td><a href="/public/operation/view/<?= $op->getId() ?>">Consulter</a></td>
 			</tr>
@@ -81,7 +86,12 @@ $lines = $lines;
 									<tr><?php /* Affichage d'un sujet */ ?>
 										<td><?= Archeo::getCompleteIcon($subject->getComplet()) ?></td>
 										<td><?= $subject->getId() ?></td>
-										<td><?= $subject->getIdSujetHandicape() ?></td>
+										<td>
+											<?= $subject->getIdSujetHandicape() ?>
+											<?php if (!empty($subject->getUrlsImg())) : ?>
+												<i class="bi bi-images opacity-50"></i>
+											<?php endif; ?>
+										</td>
 										<td><?= $subject->getSexe() ?></td>
 										<td><?= $subject->getDateMin() . " - " . $subject->getDateMax() ?></td>
 										<td><?= $subject->getMilieuVie() ?></td>
