@@ -16,9 +16,9 @@ $lines = $lines;
 			<th>#</th>
 			<th>État</th>
 			<th>Id</th>
-			<th>Auteur de la saisie</th>
+			<th class="mobile-off">Auteur de la saisie</th>
 			<th>Nom du site</th>
-			<th>Année</th>
+			<th class="mobile-off">Année</th>
 			<th>Actions</th>
 		</tr>
 	</thead>
@@ -39,14 +39,14 @@ $lines = $lines;
 					$author = $account->getPrenom() . " " . $account->getNom();
 				}
 				?>
-				<td><?= Dataview::dataToView($author, null, false) ?></td>
+				<td class="mobile-off"><?= Dataview::dataToView($author, null, false) ?></td>
 				<td>
 					<?= $op->getNomOp() ?>
 					<?php if (!empty($op->getUrlsImg())) : ?>
 						<i class="bi bi-images opacity-50"></i>
 					<?php endif; ?>
 				</td>
-				<td><?= Dataview::dataToView($op->getAnnee(), null, false) ?></td>
+				<td class="mobile-off"><?= Dataview::dataToView($op->getAnnee(), null, false) ?></td>
 				<td><a href="/public/operation/view/<?= $op->getId() ?>">Consulter</a></td>
 			</tr>
 			<tr id="row_subjects_<?= $op->getId() ?>" style="display:none;">
@@ -73,12 +73,12 @@ $lines = $lines;
 									<th>État</th>
 									<th>Id</th>
 									<th>Nom</th>
-									<th>Sexe</th>
+									<th class="mobile-off">Sexe</th>
 									<th>Datation</th>
-									<th>Milieu de vie</th>
-									<th>Type de dépôt</th>
-									<th>Type de sépulture</th>
-									<th>Âge</th>
+									<th class="mobile-off">Milieu de vie</th>
+									<th class="mobile-off">Type de dépôt</th>
+									<th class="mobile-off">Type de sépulture</th>
+									<th class="mobile-off">Âge</th>
 									<th>Actions</th>
 								</tr>
 							</thead>
@@ -93,7 +93,7 @@ $lines = $lines;
 												<i class="bi bi-images opacity-50"></i>
 											<?php endif; ?>
 										</td>
-										<td><?= $subject->getSexe() ?></td>
+										<td class="mobile-off"><?= $subject->getSexe() ?></td>
 										<td>
 											<?php
 											$arr = array();
@@ -105,10 +105,10 @@ $lines = $lines;
 											}, false);
 											?>
 										</td>
-										<td><?= Dataview::dataToView($subject->getMilieuVie(), null, false) ?></td>
-										<td><?= $subject->getTypeDepot()->getNom() ?></td>
-										<td><?= $subject->getTypeSepulture()->getNom() ?></td>
-										<td>
+										<td class="mobile-off"><?= Dataview::dataToView($subject->getMilieuVie(), null, false) ?></td>
+										<td class="mobile-off"><?= $subject->getTypeDepot()->getNom() ?></td>
+										<td class="mobile-off"><?= $subject->getTypeSepulture()->getNom() ?></td>
+										<td class="mobile-off">
 											<?php
 											$arr = array();
 											if ($subject->getAgeMin() !== null) $arr[] = $subject->getAgeMin();

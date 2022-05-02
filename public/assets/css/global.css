@@ -38,3 +38,10 @@ td {
 	border-width: 1px;
 	border-style: solid;
 }
+
+/* Telephone ou écran pas large uniquement */
+@media screen and (max-width: 900px) {
+	.mobile-off {
+		display: none;
+	}
+}
