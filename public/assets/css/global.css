@@ -30,6 +30,11 @@ td {
 	border-width: 1px;
 	border-style: solid;
 	border-color: #0006;
+	margin-bottom: 1rem;
+}
+
+.table-scroll > table {
+	margin: 0;
 }
 
 /* Liste pour l'autocompletion */

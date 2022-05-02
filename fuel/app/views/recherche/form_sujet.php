@@ -190,167 +190,104 @@ $options = $options;
 
 <br />
 
-<div class="row">
-	<div class="col-md-6">
-		<h3>Atteinte invalidante</h3>
-		<p class="text-muted">
-			Sélectionner un diagnostique sans indiquer la localisation permet de rechercher les sujets touchés, quel que soit la localisation du diagnostique.
-		</p>
+<h3>Atteinte invalidante</h3>
+<p class="text-muted">
+	Sélectionner un diagnostique sans indiquer la localisation permet de rechercher les sujets touchés, quel que soit la localisation du diagnostique.
+</p>
 
-		<table class="table table-bordered table-no-padding table-diagnostic">
-			<!-- Tous les titres -->
-			<?php
-			$localisations = Localisation::fetchAll();
-			$appareils = Appareil::fetchAll();
-			//$countSubject = count($subject->getGroup()->getOperation()->getSubjects());
-			?>
-			<thead>
+<div class="table-scroll" style="max-height: none; max-width: 600px">
+	<table class="table table-bordered table-no-padding table-diagnostic">
+		<!-- Tous les titres -->
+		<?php
+		$localisations = Localisation::fetchAll();
+		$appareils = Appareil::fetchAll();
+		//$countSubject = count($subject->getGroup()->getOperation()->getSubjects());
+		?>
+		<thead>
+			<tr>
+				<td style="width: 300px;"></td>
+				<?php $i = 0;
+				foreach ($localisations as $locali) : ?>
+					<td style="vertical-align: bottom;">
+						<?php if (strpos($locali->getUrlImg(), "right") !== false) : ?>
+							<div style="text-align: center;">D</div>
+						<?php elseif (strpos($locali->getUrlImg(), "left") !== false) : ?>
+							<div style="text-align: center;">G</div>
+						<?php endif; ?>
+						<?= Asset::img($locali->getUrlImg(), array("style" => "width: 50 px; height: 25px; margin-right: 5px; margin-left: 5px;", "alt" => $locali->getNom())); ?>
+					</td>
+				<?php $i++;
+				endforeach; ?>
+			</tr>
+		</thead>
+		<tbody>
+			<?php foreach (Diagnostic::fetchAll() as $diagnostic) : ?>
+				<?php
+				$hasDiagnosis = isset($options["diagnostics"][$diagnostic->getId()]);
+				?>
 				<tr>
-					<td style="width: 300px;"></td>
-					<?php $i = 0;
-					foreach ($localisations as $locali) : ?>
-						<td style="vertical-align: bottom;">
-							<?php if (strpos($locali->getUrlImg(), "right") !== false) : ?>
-								<div style="text-align: center;">D</div>
-							<?php elseif (strpos($locali->getUrlImg(), "left") !== false) : ?>
-								<div style="text-align: center;">G</div>
-							<?php endif; ?>
-							<?= Asset::img($locali->getUrlImg(), array("style" => "width: 50 px; height: 25px; margin-right: 5px; margin-left: 5px;", "alt" => $locali->getNom())); ?>
-						</td>
-					<?php $i++;
-					endforeach; ?>
-				</tr>
-			</thead>
-			<tbody>
-				<?php foreach (Diagnostic::fetchAll() as $diagnostic) : ?>
-					<?php
-					$hasDiagnosis = isset($options["diagnostics"][$diagnostic->getId()]);
-					?>
-					<tr>
-						<!-- Titre des diagnostics -->
-						<th>
-							<div class="form-check form-switch">
-								<label id="form_diagnostic_label_<?= $diagnostic->getId(); ?>" for="form_diagnostic_<?= $diagnostic->getId() ?>" class="form-check-label"><?= $diagnostic->getNom() ?></label>
-								<input name="diagnostic_<?= $diagnostic->getId() ?>" id="form_diagnostic_<?= $diagnostic->getId() ?>" type="checkbox" class="form-check-input" <?php if ($hasDiagnosis) : ?>checked<?php endif; ?>>
-							</div>
-						</th>
-						<!-- Checkbox des zones atteintes -->
-						<?php foreach ($localisations as $locali) : ?>
-							<td>
-								<?php
-								$classes = "form-check-input";
-								$hidden = false;
-								$disabled = false;
-								$checked = false;
-								// Ajout des classes pour que la fonction js sache quoi faire sur le checkbox
-								if ($diagnostic->isSpotMandatory($locali->getId())) $classes .= " always-disabled auto-check";
-								if (!$diagnostic->isLocated($locali->getId())) {
-									$classes .= " always-disabled";
-									$hidden = true;
-								}
+					<!-- Titre des diagnostics -->
+					<th>
+						<div class="form-check form-switch">
+							<label id="form_diagnostic_label_<?= $diagnostic->getId(); ?>" for="form_diagnostic_<?= $diagnostic->getId() ?>" class="form-check-label"><?= $diagnostic->getNom() ?></label>
+							<input name="diagnostic_<?= $diagnostic->getId() ?>" id="form_diagnostic_<?= $diagnostic->getId() ?>" type="checkbox" class="form-check-input" <?php if ($hasDiagnosis) : ?>checked<?php endif; ?>>
+						</div>
+					</th>
+					<!-- Checkbox des zones atteintes -->
+					<?php foreach ($localisations as $locali) : ?>
+						<td>
+							<?php
+							$classes = "form-check-input";
+							$hidden = false;
+							$disabled = false;
+							$checked = false;
+							// Ajout des classes pour que la fonction js sache quoi faire sur le checkbox
+							if ($diagnostic->isSpotMandatory($locali->getId())) $classes .= " always-disabled auto-check";
+							if (!$diagnostic->isLocated($locali->getId())) {
+								$classes .= " always-disabled";
+								$hidden = true;
+							}
 
-								// Maj affichage du checkbox de la localisation si le diagnostic est coché par défaut
-								if ($hasDiagnosis) {
-									$spotIds = $options["diagnostics"][$diagnostic->getId()];
-									$spots = array();
-									foreach ($spotIds as $value) {
-										$spots[] = Localisation::fetchSingle($value);
-									}
-									$subjectDia = new Subjectdiagnosis($diagnostic, $spots);
-									if ($subjectDia->isLocatedFromId($locali->getId())) $checked = true;
-									if (
-										!$diagnostic->isLocated($locali->getId())
-										|| $diagnostic->isSpotMandatory($locali->getId())
-									) {
-										$disabled = true;
-									}
-								} else {
+							// Maj affichage du checkbox de la localisation si le diagnostic est coché par défaut
+							if ($hasDiagnosis) {
+								$spotIds = $options["diagnostics"][$diagnostic->getId()];
+								$spots = array();
+								foreach ($spotIds as $value) {
+									$spots[] = Localisation::fetchSingle($value);
+								}
+								$subjectDia = new Subjectdiagnosis($diagnostic, $spots);
+								if ($subjectDia->isLocatedFromId($locali->getId())) $checked = true;
+								if (
+									!$diagnostic->isLocated($locali->getId())
+									|| $diagnostic->isSpotMandatory($locali->getId())
+								) {
 									$disabled = true;
 								}
-								?>
-								<input name="diagnostics[<?= $diagnostic->getId() ?>][]" id="form_diagnostic_<?= $diagnostic->getId() ?>" value="<?= $locali->getId() ?>" type="checkbox" class="form-check-input <?= $classes ?>" <?= $hidden ? "hidden" : null ?> <?= $disabled ? "disabled" : null ?> <?= $checked ? "checked" : null ?>>
-							</td>
-						<?php endforeach; ?>
+							} else {
+								$disabled = true;
+							}
+							?>
+							<input name="diagnostics[<?= $diagnostic->getId() ?>][]" id="form_diagnostic_<?= $diagnostic->getId() ?>" value="<?= $locali->getId() ?>" type="checkbox" class="form-check-input <?= $classes ?>" <?= $hidden ? "hidden" : null ?> <?= $disabled ? "disabled" : null ?> <?= $checked ? "checked" : null ?>>
+						</td>
+					<?php endforeach; ?>
 
-						<script>
-							updateCheckboxOnSwitch(<?= $diagnostic->getId(); ?>);
-						</script>
-					</tr>
-				<?php endforeach; ?>
-			</tbody>
-		</table>
-		<br />
-		<!-- Pathologies -->
-		<?php foreach (Pathology::fetchAll() as $pathology) : ?>
-			<div class="form-check form-switch">
-				<?php
-				$checked = "";
-				if (isset($options["pathologies"]) && in_array($pathology->getId(), $options["pathologies"])) $checked = " checked";
-				?>
-				<label id="form_pathologies_label_<?= $pathology->getId() ?>" for="form_pathologies_<?= $pathology->getId() ?>" class="form-check-label"><?= $pathology->getName() ?></label>
-				<input name="pathologies[]" id="form_pathologies_<?= $pathology->getId() ?>" value="<?= $pathology->getId() ?>" type="checkbox" class="form-check-input"<?= $checked ?>>
-			</div>
-		<?php endforeach; ?>
-
-	</div>
-
-	<div class="col-md-6">
-	<?php if (false) : ?>
-		<!-- Dépôt -->
-		<h3>Dépôt</h3>
-		<!-- Numéro de dépôt -->
-		<div class="form-floating my-2">
-			<input name="num_inventaire" id="form_num_inventaire" value="<?= Helper::arrayGetValue("num_inventaire", $options) ?>" type="text" class="form-control" placeholder="Numéro de dépôt" maxlength="256" title="Indiquez le numéro du dépôt">
-			<label for="form_num_inventaire">Numéro de dépôt</label>
-		</div>
-		<!-- Commune du dépôt -->
-		<div class="form-floating my-2">
-			<input name="depot_commune" id="form_depot_commune" value="<?= Helper::arrayGetValue("depot_commune", $options) ?>" type="text" class="form-control" placeholder="Commune" maxlength="256" autocomplete="off" title="Indiquez la commune du dépôt du sujet">
-			<label for="form_depot_commune">Commune</label>
-		</div>
-		<script>
-			addAutocomplete("form_depot_commune", "CONCAT(nom, ', ', departement)", "commune", [
-				["nom", "LIKE", "?%"],
-				["departement", "LIKE", "?%", "or"]
-			]);
-		</script>
-		<!-- Adresse du dépôt -->
-		<div class="form-floating my-2">
-			<input name="depot_adresse" id="form_depot_adresse" value="<?= Helper::arrayGetValue("depot_adresse", $options) ?>" type="text" class="form-control" placeholder="Adresse du dépôt" maxlength="256" title="Indiquez l'adresse du dépôt du sujet">
-			<label for="form_depot_adresse">Adresse du dépôt</label>
-		</div>
-
-		<!-- Accessoires -->
-		<h3 class="mt-4">Accessoire</h3>
-		<?php foreach (Mobilier::fetchAll() as $mobilier) : ?>
-			<div class="form-check form-switch">
-				<label for="form_id_mobiliers_<?= $mobilier->getId() ?>" class="form-check-label"><?= $mobilier->getNom() ?></label>
-				<input name="id_mobiliers[]" id="form_id_mobiliers_<?= $mobilier->getId() ?>" value="<?= $mobilier->getId() ?>" type="checkbox" class="form-check-input">
-			</div>
-		<?php endforeach; ?>
-		<div>
-			<label class="form-check-label" for="form_description_mobilier">Description du mobilier</label>
-			<textarea class="form-control" name="description_mobilier" id="form_description_mobilier" rows="2"></textarea>
-		</div>
-
-		<!-- Appareils de compensation -->
-		<h3 class="mt-4">Appareil compensatoire</h3>
-		<?php foreach (Appareil::fetchAll() as $item) : ?>
-			<div class="form-check form-switch">
-				<label for="form_appareils_<?= $item->getId() ?>" class="form-check-label"><?= $item->getName() ?></label>
-				<input name="appareils[]" id="form_appareils_<?= $item->getId() ?>" value="<?= $item->getId() ?>" type="checkbox" class="form-check-input">
-			</div>
-		<?php endforeach; ?>
-		<?php endif; ?>
-	</div>
-
+					<script>
+						updateCheckboxOnSwitch(<?= $diagnostic->getId(); ?>);
+					</script>
+				</tr>
+			<?php endforeach; ?>
+		</tbody>
+	</table>
 </div>
-<br />
 
-<?php if (false) : ?>
-<!-- Commentaire du diagnostic -->
-<label for="comment_diagnostic">Commentaire du diagnostic</label>
-<div class="input-group">
-	<textarea class="form-control" name="comment_diagnostic" value="<?= Helper::arrayGetValue("comment_diagnostic", $options) ?>" rows="2" maxlength="65535" title="Ecrivez ici des commentaires sur le diagnostic si besoin"></textarea>
-</div>
-<?php endif ?>
+<!-- Pathologies -->
+<?php foreach (Pathology::fetchAll() as $pathology) : ?>
+	<div class="form-check form-switch">
+		<?php
+		$checked = "";
+		if (isset($options["pathologies"]) && in_array($pathology->getId(), $options["pathologies"])) $checked = " checked";
+		?>
+		<label id="form_pathologies_label_<?= $pathology->getId() ?>" for="form_pathologies_<?= $pathology->getId() ?>" class="form-check-label"><?= $pathology->getName() ?></label>
+		<input name="pathologies[]" id="form_pathologies_<?= $pathology->getId() ?>" value="<?= $pathology->getId() ?>" type="checkbox" class="form-check-input"<?= $checked ?>>
+	</div>
+<?php endforeach; ?>
