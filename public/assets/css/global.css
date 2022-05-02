@@ -25,8 +25,11 @@ td {
 
 /* Tableau scrollable */
 .table-scroll {
-  height: 600px;
-  overflow-y: scroll;
+  max-height: 600px;
+  overflow-y: auto;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #0006;
 }
 
 /* Liste pour l'autocompletion */

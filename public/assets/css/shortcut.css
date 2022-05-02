@@ -21,8 +21,16 @@
 	padding: 0;
 }
 
+.margin-0 {
+	margin: 0;
+}
+
 .div-center {
 	position: relative;
 	top: 50%;
 	transform: translateY(-50%);
+}
+
+.red {
+	color: red;
 }

@@ -10,7 +10,7 @@ $lines = $lines;
 
 ?>
 
-<table class="table table-bordered text-center">
+<table class="table table-bordered text-center margin-0">
 	<thead>
 		<tr>
 			<th>#</th>

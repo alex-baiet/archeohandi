@@ -256,95 +256,98 @@ if (!empty($msg)) {
 		<h3>Atteinte invalidante</h3>
 		<p class="text-muted"><em>D : Partie droite, G : Partie gauche</em></p>
 
-		<table class="table table-bordered table-no-padding table-diagnostic">
-			<!-- Tous les titres -->
-			<?php
-			$localisations = Localisation::fetchAll();
-			$appareils = Appareil::fetchAll();
-			//$countSubject = count($subject->getGroup()->getOperation()->getSubjects());
-			?>
-			<thead>
-				<tr>
-					<td style="width: 300px;"></td>
-					<?php $i = 0;
-					foreach ($localisations as $locali) : ?>
-						<td style="vertical-align: bottom;">
-							<?php if (strpos($locali->getUrlImg(), "right") !== false) : ?>
-								<div style="text-align: center;">D</div>
-							<?php elseif (strpos($locali->getUrlImg(), "left") !== false) : ?>
-								<div style="text-align: center;">G</div>
-							<?php endif; ?>
-							<?= Asset::img($locali->getUrlImg(), array("style" => "width: 50 px; height: 25px; margin-right: 5px; margin-left: 5px;", "alt" => $locali->getNom())); ?>
-						</td>
-					<?php $i++;
-					endforeach; ?>
-					<th>Nb cas concerné</th>
-					<th>Nb cas observable</th>
-					<th>Prévalence*</th>
-				</tr>
-			</thead>
-			<tbody>
-				<?php foreach (Diagnostic::fetchAll() as $diagnostic) : ?>
-					<?php
-					$hasDiagnosis = $subject->hasDiagnosis($diagnostic->getId());
-					?>
+		<div class="table-scroll" style="max-height: none; margin-bottom: 1rem;">
+			<table class="table table-bordered table-no-padding table-diagnostic margin-0">
+				<!-- Tous les titres -->
+				<?php
+				$localisations = Localisation::fetchAll();
+				$appareils = Appareil::fetchAll();
+				//$countSubject = count($subject->getGroup()->getOperation()->getSubjects());
+				?>
+				<thead>
 					<tr>
-						<!-- Titre des diagnostics -->
-						<th>
-							<div class="form-check form-switch">
-								<label id="form_diagnostic_label_<?= $diagnostic->getId(); ?>" for="form_diagnostic_<?= $diagnostic->getId() ?>" class="form-check-label"><?= $diagnostic->getNom() ?></label>
-								<input name="diagnostic_<?= $diagnostic->getId() ?>" id="form_diagnostic_<?= $diagnostic->getId() ?>" type="checkbox" class="form-check-input" <?php if ($hasDiagnosis) : ?>checked<?php endif; ?>
-									onchange="FormSujet.updatePrevalence(<?= $diagnostic->getId() ?>, this.checked ? 1 : -1)">
-							</div>
-						</th>
-						<!-- Checkbox des zones atteintes -->
-						<?php foreach ($localisations as $locali) : ?>
-							<td>
-								<?php
-								$classes = "form-check-input";
-								$hidden = false;
-								$disabled = false;
-								$checked = false;
-								// Ajout des classes pour que la fonction js sache quoi faire sur le checkbox
-								if ($diagnostic->isSpotMandatory($locali->getId())) $classes .= " always-disabled auto-check";
-								if (!$diagnostic->isLocated($locali->getId())) {
-									$classes .= " always-disabled";
-									$hidden = true;
-								}
+						<td style="width: 300px;"></td>
+						<?php $i = 0;
+						foreach ($localisations as $locali) : ?>
+							<td style="vertical-align: bottom;">
+								<?php if (strpos($locali->getUrlImg(), "right") !== false) : ?>
+									<div style="text-align: center;">D</div>
+								<?php elseif (strpos($locali->getUrlImg(), "left") !== false) : ?>
+									<div style="text-align: center;">G</div>
+								<?php endif; ?>
+								<?= Asset::img($locali->getUrlImg(), array("style" => "width: 50 px; height: 25px; margin-right: 5px; margin-left: 5px;", "alt" => $locali->getNom())); ?>
+							</td>
+						<?php $i++;
+						endforeach; ?>
+						<th>Nb cas concerné</th>
+						<th>Nb cas observable</th>
+						<th>Prévalence*</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php foreach (Diagnostic::fetchAll() as $diagnostic) : ?>
+						<?php
+						$hasDiagnosis = $subject->hasDiagnosis($diagnostic->getId());
+						?>
+						<tr>
+							<!-- Titre des diagnostics -->
+							<th>
+								<div class="form-check form-switch">
+									<label id="form_diagnostic_label_<?= $diagnostic->getId(); ?>" for="form_diagnostic_<?= $diagnostic->getId() ?>" class="form-check-label"><?= $diagnostic->getNom() ?></label>
+									<input name="diagnostic_<?= $diagnostic->getId() ?>" id="form_diagnostic_<?= $diagnostic->getId() ?>" type="checkbox" class="form-check-input" <?php if ($hasDiagnosis) : ?>checked<?php endif; ?>
+										onchange="FormSujet.updatePrevalence(<?= $diagnostic->getId() ?>, this.checked ? 1 : -1)">
+								</div>
+							</th>
+							<!-- Checkbox des zones atteintes -->
+							<?php foreach ($localisations as $locali) : ?>
+								<td>
+									<?php
+									$classes = "form-check-input";
+									$hidden = false;
+									$disabled = false;
+									$checked = false;
+									// Ajout des classes pour que la fonction js sache quoi faire sur le checkbox
+									if ($diagnostic->isSpotMandatory($locali->getId())) $classes .= " always-disabled auto-check";
+									if (!$diagnostic->isLocated($locali->getId())) {
+										$classes .= " always-disabled";
+										$hidden = true;
+									}
 
-								// Maj affichage du checkbox de la localisation si le diagnostic est coché par défaut
-								if ($hasDiagnosis) {
-									$subjectDia = $subject->getDiagnosis($diagnostic->getId());
-									if ($subjectDia->isLocatedFromId($locali->getId())) $checked = true;
-									if (
-										!$diagnostic->isLocated($locali->getId())
-										|| $diagnostic->isSpotMandatory($locali->getId())
-									) {
+									// Maj affichage du checkbox de la localisation si le diagnostic est coché par défaut
+									if ($hasDiagnosis) {
+										$subjectDia = $subject->getDiagnosis($diagnostic->getId());
+										if ($subjectDia->isLocatedFromId($locali->getId())) $checked = true;
+										if (
+											!$diagnostic->isLocated($locali->getId())
+											|| $diagnostic->isSpotMandatory($locali->getId())
+										) {
+											$disabled = true;
+										}
+									} else {
 										$disabled = true;
 									}
-								} else {
-									$disabled = true;
-								}
-								?>
-								<input name="diagnostics[<?= $diagnostic->getId() ?>][]" id="form_diagnostic_<?= $diagnostic->getId() ?>" value="<?= $locali->getId() ?>" type="checkbox" class="form-check-input <?= $classes ?>" <?= $hidden ? "hidden" : null ?> <?= $disabled ? "disabled" : null ?> <?= $checked ? "checked" : null ?>>
+									?>
+									<input name="diagnostics[<?= $diagnostic->getId() ?>][]" id="form_diagnostic_<?= $diagnostic->getId() ?>" value="<?= $locali->getId() ?>" type="checkbox" class="form-check-input <?= $classes ?>" <?= $hidden ? "hidden" : null ?> <?= $disabled ? "disabled" : null ?> <?= $checked ? "checked" : null ?>>
+								</td>
+							<?php endforeach; ?>
+							
+							<?php /* Prévalence */ ?>
+							<td style="text-align:center;" id="count_concerned_<?= $diagnostic->getId() ?>"><?= $operation->countConcernedSubject($diagnostic->getId()) ?></td>
+							<td style="text-align:center;">
+								<input type="text" id="count_observable_<?= $diagnostic->getId() ?>" name="observables[<?= $diagnostic->getId() ?>]" value="<?= $operation->getObservable($diagnostic->getId()) ?>" class="form-control" style="padding: 3px 12px 3px 12px;"
+									onchange="FormSujet.updatePrevalence(<?= $diagnostic->getId() ?>)">
 							</td>
-						<?php endforeach; ?>
-						
-						<?php /* Prévalence */ ?>
-						<td style="text-align:center;" id="count_concerned_<?= $diagnostic->getId() ?>"><?= $operation->countConcernedSubject($diagnostic->getId()) ?></td>
-						<td style="text-align:center;">
-							<input type="text" id="count_observable_<?= $diagnostic->getId() ?>" name="observables[<?= $diagnostic->getId() ?>]" value="<?= $operation->getObservable($diagnostic->getId()) ?>" class="form-control" style="padding: 3px 12px 3px 12px;"
-								onchange="FormSujet.updatePrevalence(<?= $diagnostic->getId() ?>)">
-						</td>
-						<td style="text-align:center;" id="prevalence_<?= $diagnostic->getId() ?>"><?= round($operation->prevalence($diagnostic->getId()) * 1000.0) ?></td>
+							<td style="text-align:center;" id="prevalence_<?= $diagnostic->getId() ?>"><?= round($operation->prevalence($diagnostic->getId()) * 1000.0) ?></td>
 
-						<script>
-							updateCheckboxOnSwitch(<?= $diagnostic->getId(); ?>);
-						</script>
-					</tr>
-				<?php endforeach; ?>
-			</tbody>
-		</table>
+							<script>
+								updateCheckboxOnSwitch(<?= $diagnostic->getId(); ?>);
+							</script>
+						</tr>
+					<?php endforeach; ?>
+				</tbody>
+			</table>
+		</div>
+
 		<br />
 		<!-- Pathologies -->
 		<?php foreach (Pathology::fetchAll() as $pathology) : ?>
@@ -401,7 +404,7 @@ if (!empty($msg)) {
 		<?php endforeach; ?>
 		<div>
 			<label class="form-check-label" for="form_description_mobilier">Description du mobilier</label>
-			<textarea class="form-control" name="description_mobilier" id="form_description_mobilier" rows="2"><?= $subject->getDescriptionMobilier() ?></textarea>
+			<textarea class="form-control" name="description_mobilier" id="form_description_mobilier" rows="4"><?= $subject->getDescriptionMobilier() ?></textarea>
 		</div>
 
 		<!-- Appareils de compensation -->
@@ -421,7 +424,7 @@ if (!empty($msg)) {
 <!-- Commentaire du diagnostic -->
 <label for="comment_diagnostic">Commentaire du diagnostic</label>
 <div class="input-group">
-	<textarea class="form-control" name="comment_diagnostic" rows="2" maxlength="65535" title="Ecrivez ici des commentaires sur le diagnostic si besoin"><?= $subject->getCommentDiagnosis(); ?></textarea>
+	<textarea class="form-control" name="comment_diagnostic" rows="4" maxlength="65535" title="Ecrivez ici des commentaires sur le diagnostic si besoin"><?= $subject->getCommentDiagnosis(); ?></textarea>
 </div>
 
 <!-- Commentaire du diagnostic -->
@@ -432,7 +435,7 @@ if (!empty($msg)) {
 	<label for="form_genetiques_actif">Données génétiques</label>
 </div>
 <div class="input-group" id="genetique_parent">
-	<textarea class="form-control" name="genetique" rows="2" maxlength="65535" title="Ecrivez ici les informations sur les données génétiques"
+	<textarea class="form-control" name="genetique" rows="4" maxlength="65535" title="Ecrivez ici les informations sur les données génétiques"
 	style="width: 100%;"
 	><?= $subject->getDonneesGenetiques(); ?></textarea>
 </div>
