@@ -16,3 +16,13 @@
 .text-justify {
 	text-align: justify;
 }
+
+.padding-0 {
+	padding: 0;
+}
+
+.div-center {
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+}

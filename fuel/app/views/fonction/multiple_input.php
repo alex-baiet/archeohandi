@@ -55,12 +55,13 @@ if (isset($autocompletion)) {
 	</div>
 <?php endif; ?>
 
-<div class="row my-2">
-	<div class="col-md-9" id="form_<?= $name; ?>_parent">
+<div class="my-2">
+	<div id="form_<?= $name; ?>_parent">
 		<?php $i=0; foreach ($datas as $item) : ?>
 			<div class="row" id="form_<?= $name; ?>_copy_<?= $i; ?>">
 
-				<div class="col-md">
+				<div class="col">
+					<?php /* Input principal */ ?>
 					<div class="form-floating">
 						<input
 							name="<?= $name ?>[]"
@@ -89,7 +90,7 @@ if (isset($autocompletion)) {
 				</div>
 
 				<?php if ($imageInput) : ?>
-					<div class="col-auto" style="padding:0; background-color: white;">
+					<div class="col-auto" style="padding-left: 0; background-color: white;">
 						<img
 							id="<?= $name ?>_preview_<?= $i ?>"
 							src="<?= $item ?>" alt="Image indisponible"
@@ -98,27 +99,23 @@ if (isset($autocompletion)) {
 					</div>
 				<?php endif; ?>
 
-				<div class="col-auto">
-					<div class="my-2">
-						<button type="button" class="btn btn-danger" onclick="removeCopy('<?= $name; ?>', <?= $i; ?>);"><i class="bi bi-x"></i></button>
-					</div>
+				<div class="col-auto" style="padding-left: 0">
+					<button type="button" class="btn btn-danger div-center" onclick="removeCopy('<?= $name; ?>', <?= $i; ?>);"><i class="bi bi-x"></i></button>
 				</div>
 
 			</div>
 		<?php $i++; endforeach; ?>
 	</div>
 
-	<div class="col-md-3">
-		<div class="my-2">
-			<button type="button" class="btn btn-primary me-md-2"
-				<?php if ($imageInput) : ?>
-					onclick="addCopyImg('<?= $name; ?>');"
-				<?php else : ?>
-					onclick="addCopy(`<?= $name; ?>`, <?= isset($autocompletion) ? $completionParams : `null` ?>);"
-				<?php endif; ?>
-			>
-				<i class="bi bi-plus"></i>
-			</button>
-		</div>
+	<div class="text-center my-1">
+		<button type="button" class="btn btn-primary me-md-2"
+			<?php if ($imageInput) : ?>
+				onclick="addCopyImg('<?= $name; ?>');"
+			<?php else : ?>
+				onclick="addCopy(`<?= $name; ?>`, <?= isset($autocompletion) ? $completionParams : `null` ?>);"
+			<?php endif; ?>
+		>
+			<i class="bi bi-plus"></i>
+		</button>
 	</div>
 </div>
