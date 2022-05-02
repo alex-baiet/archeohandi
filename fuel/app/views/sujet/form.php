@@ -256,8 +256,8 @@ if (!empty($msg)) {
 		<h3>Atteinte invalidante</h3>
 		<p class="text-muted"><em>D : Partie droite, G : Partie gauche</em></p>
 
-		<div class="table-scroll" style="max-height: none; margin-bottom: 1rem;">
-			<table class="table table-bordered table-no-padding table-diagnostic margin-0">
+		<div class="table-scroll" style="max-height: none;">
+			<table class="table table-bordered table-no-padding table-diagnostic">
 				<!-- Tous les titres -->
 				<?php
 				$localisations = Localisation::fetchAll();
