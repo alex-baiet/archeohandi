@@ -33,36 +33,6 @@ if (Constants::MAINTENANCE === true) {
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="shortcut icon" href="/public/assets/img/favicon.png" type="image/x-icon">
 
-	<!-- CSS -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
-	<?= Asset::css('bootstrap/bootstrap.min.css') ?>
-	<?= Asset::css('accueil.css') ?>
-	<?= Asset::css('error.css') ?>
-	<?= Asset::css('form.css') ?>
-	<?= Asset::css('gallery.css') ?>
-	<?= Asset::css('global.css') ?>
-	<?= Asset::css('mobile.css') ?>
-	<?= Asset::css('result.css') ?>
-	<?= Asset::css('shortcut.css') ?>
-	<?= Asset::css('view.css') ?>
-
-	<!-- Leaflet -->
-	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
-	<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
-	<?php /*<!-- Load Esri Leaflet from CDN -->
-	<script src="https://unpkg.com/esri-leaflet@3.0.7/dist/esri-leaflet.js"
-    integrity="sha512-ciMHuVIB6ijbjTyEdmy1lfLtBwt0tEHZGhKVXDzW7v7hXOe+Fo3UA1zfydjCLZ0/vLacHkwSARXB5DmtNaoL/g=="
-    crossorigin=""></script>
-	<!-- Load Esri Leaflet Geocoder from CDN -->
-	<link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@3.1.1/dist/esri-leaflet-geocoder.css"
-    integrity="sha512-IM3Hs+feyi40yZhDH6kV8vQMg4Fh20s9OzInIIAc4nx7aMYMfo+IenRUekoYsHZqGkREUgx0VvlEsgm7nCDW9g=="
-    crossorigin="">
-  <script src="https://unpkg.com/esri-leaflet-geocoder@3.1.1/dist/esri-leaflet-geocoder.js"
-    integrity="sha512-enHceDibjfw6LYtgWU03hke20nVTm+X5CRi9ity06lGQNtC9GkBNl/6LoER6XzSudGiXy++avi1EbIg9Ip4L1w=="
-    crossorigin=""></script>*/ ?>
-	<?= Asset::js('leaflet/leaflet-heat.js') ?>
-	<?= Asset::js('leaflet.js') ?>
-
 	<!-- JQuery -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
@@ -73,9 +43,28 @@ if (Constants::MAINTENANCE === true) {
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+	<?= Asset::css('bootstrap/bootstrap.min.css') ?>
 
-	<!-- D3JS -->
-	<script src="https://d3js.org/d3.v7.min.js"></script>
+	<!-- Leaflet -->
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
+	<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+
+	<?= Asset::js('leaflet/leaflet-heat.js') ?>
+
+	<?= Asset::css('leaflet/leaflet.legend.css') ?>
+	<?= Asset::js('leaflet/leaflet.legend.js') ?>
+
+	<!-- CSS -->
+	<?= Asset::css('accueil.css') ?>
+	<?= Asset::css('error.css') ?>
+	<?= Asset::css('form.css') ?>
+	<?= Asset::css('gallery.css') ?>
+	<?= Asset::css('global.css') ?>
+	<?= Asset::css('mobile.css') ?>
+	<?= Asset::css('result.css') ?>
+	<?= Asset::css('shortcut.css') ?>
+	<?= Asset::css('view.css') ?>
 
 	<!-- Javascript -->
 	<?= Asset::js('helper.js') ?>
@@ -87,6 +76,7 @@ if (Constants::MAINTENANCE === true) {
 	<?= Asset::js('search.js') ?>
 	<?= Asset::js('window.js') ?>
 	<?= Asset::js('gallery.js') ?>
+	<?= Asset::js('leaflet.js') ?>
 	<?= Asset::js('db.js') ?>
 	<?= Asset::js('db/archeo.js') ?>
 	<?= Asset::js('db/search_result.js') ?>

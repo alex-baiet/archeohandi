@@ -28,7 +28,7 @@ $sujets = $operation->getSubjects();
 
 <!-- Contenu de la page. Affichage des informations de l'opération -->
 <div class="row">
-	<div class="col-lg">
+	<div class="col-lg-6">
 		<!-- Informations globales -->
 		<section class="view-sheet">
 			<h2>Informations</h2>
@@ -61,7 +61,7 @@ $sujets = $operation->getSubjects();
 		</section>
 	</div>
 
-	<div class="col-lg">
+	<div class="col-lg-6">
 		<!-- Carte Leaflet -->
 		<div id="map_parent" class="view-sheet-shape">
 			<div id="map" style="height: 300px"></div>

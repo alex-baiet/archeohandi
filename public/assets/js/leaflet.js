@@ -97,4 +97,17 @@ class Leaflet {
 		var heat = L.heatLayer(points, {radius: radius}).addTo(Leaflet.map);
 	}
 
+	static test() {
+		Leaflet.initMap("map");
+
+		L.control.Legend({
+			position: "bottomleft",
+			legends: [{
+					label: "Marker1",
+					type: "image",
+					url: "marker/marker-red.png",
+			}]
+		}).addTo(Leaflet.map);
+	}
+
 }

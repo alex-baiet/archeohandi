@@ -19,7 +19,7 @@ $subject = $subject;
 </p>
 
 <div class="row">
-	<div class="col-lg">
+	<div class="col-lg-4">
 		<!-- Informations générales -->
 		<section class="view-sheet">
 			<h2>Informations générales</h2>
@@ -89,7 +89,7 @@ $subject = $subject;
 		</section>
 	</div>
 
-	<div class="col-lg">
+	<div class="col-lg-4">
 		<!-- Groupe du sujet -->
 		<section class="view-sheet">
 			<h2>Groupe du sujet</h2>
@@ -140,7 +140,7 @@ $subject = $subject;
 
 	</div>
 
-	<div class="col-lg">
+	<div class="col-lg-4">
 		<!-- Atteinte invalidante -->
 		<section class="view-sheet">
 			<h2>Atteinte invalidante</h2>
