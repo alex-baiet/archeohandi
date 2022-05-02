@@ -1,0 +1,15 @@
+
+.logo {
+	height: 50px;
+	margin: 15px;
+}
+
+.logo-link:link {
+	text-decoration: none;
+}
+
+/* Flexbox ne prenant que la largeur minimal nécessaire */
+.home-row {
+	padding: 1rem;
+	gap: 0.5rem;
+}

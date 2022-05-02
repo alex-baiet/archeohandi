@@ -36,12 +36,13 @@ if (Constants::MAINTENANCE === true) {
 	<!-- CSS -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
 	<?= Asset::css('bootstrap/bootstrap.min.css') ?>
-	<?= Asset::css('global.css') ?>
-	<?= Asset::css('form.css') ?>
-	<?= Asset::css('result.css') ?>
+	<?= Asset::css('accueil.css') ?>
 	<?= Asset::css('error.css') ?>
-	<?= Asset::css('shortcut.css') ?>
+	<?= Asset::css('form.css') ?>
 	<?= Asset::css('gallery.css') ?>
+	<?= Asset::css('global.css') ?>
+	<?= Asset::css('result.css') ?>
+	<?= Asset::css('shortcut.css') ?>
 	<?= Asset::css('view.css') ?>
 
 	<!-- Javascript -->
@@ -86,7 +87,7 @@ if (Constants::MAINTENANCE === true) {
 </head>
 
 <body>
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="position: sticky; top: 0px; z-index: 1000; transform: translateY(-1px);">
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="position: sticky; top: 0px; z-index: 1000;">
 		<div class="container-fluid">
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
