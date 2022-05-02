@@ -128,3 +128,31 @@ TRUNCATE etre_responsable;
 TRUNCATE etre_paleopathologiste;
 TRUNCATE etre_anthropologue;
 TRUNCATE personne;
+
+-- Maj complet des operations dont une personne a des droits
+UPDATE operation
+SET complet=1
+WHERE EXISTS(
+    SELECT login
+    FROM compte
+    JOIN droit_compte
+    ON compte.login=droit_compte.login_compte
+    WHERE operation.id=droit_compte.id_operation
+      AND compte.login="nameye"
+);
+
+-- Maj complet des sujets dont une personne a des droits
+UPDATE sujet_handicape
+SET complet=1
+WHERE EXISTS(
+    SELECT login
+    FROM compte
+    JOIN droit_compte
+    ON compte.login=droit_compte.login_compte
+    JOIN operation
+    ON operation.id=droit_compte.id_operation
+    JOIN groupe
+    ON groupe.id_operation=operation.id
+    WHERE groupe.id=sujet_handicape.id
+      AND compte.login="nameye"
+)
