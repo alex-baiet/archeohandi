@@ -1,0 +1,14 @@
+
+/* Ecran large uniquement */
+@media screen and (max-width: 900px) {
+	.pc-only {
+		display: none;
+	}
+}
+
+/* Telephone ou écran pas large uniquement */
+@media screen and (min-width: 900px) {
+	.mobile-only {
+		display: none;
+	}
+}

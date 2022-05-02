@@ -41,6 +41,7 @@ if (Constants::MAINTENANCE === true) {
 	<?= Asset::css('form.css') ?>
 	<?= Asset::css('gallery.css') ?>
 	<?= Asset::css('global.css') ?>
+	<?= Asset::css('mobile.css') ?>
 	<?= Asset::css('result.css') ?>
 	<?= Asset::css('shortcut.css') ?>
 	<?= Asset::css('view.css') ?>

@@ -69,6 +69,7 @@ $sujets = $operation->getSubjects();
 		</div>
 		<script>
 			Leaflet.initMap("map");
+			Leaflet.disableDragging();
 			<?php if ($operation->getLongitude() !== null && $operation->getLatitude() !== null) : ?>
 				Leaflet.setMarker(<?= $operation->getLatitude() ?>, <?= $operation->getLongitude() ?>);
 			<?php else : ?>
@@ -119,7 +120,6 @@ $sujets = $operation->getSubjects();
 				</ul>
 			<?php endif; ?>
 		</section>
-		<br>
 	</div>
 </div>
 

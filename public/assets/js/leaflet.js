@@ -85,7 +85,11 @@ class Leaflet {
 			this.circle = L.circle([lat, lng], { radius: radius });
 			this.circle.addTo(this.map);
 		}
+	}
 
-	}	
+	/** Empêche de déplacer la carte. */
+	static disableDragging() {
+		Leaflet.map.dragging.disable();
+	}
 
 }
