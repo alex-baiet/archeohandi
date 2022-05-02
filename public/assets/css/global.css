@@ -38,3 +38,9 @@ td {
 	border-width: 1px;
 	border-style: solid;
 }
+
+@media screen and (max-width: 900px) {
+	.autocompletion {
+		max-height: 200px;
+	}
+}

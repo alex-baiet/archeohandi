@@ -49,11 +49,11 @@ $sujets = $operation->getSubjects();
 							<th scope="col">État</th>
 							<th scope="col">Numéro</th>
 							<th scope="col">Nom</th>
-							<th scope="col">Sexe</th>
-							<th scope="col">Datation</th>
-							<th scope="col">Milieu de vie</th>
-							<th scope="col">Type de dépôt</th>
-							<th scope="col">Type de sépulture</th>
+							<th scope="col" class="pc-only">Sexe</th>
+							<th scope="col" class="pc-only">Datation</th>
+							<th scope="col" class="pc-only">Milieu de vie</th>
+							<th scope="col" class="pc-only">Type de dépôt</th>
+							<th scope="col" class="pc-only">Type de sépulture</th>
 							<th scope="col">Actions</th>
 						</tr>
 					</thead>
@@ -81,8 +81,8 @@ $sujets = $operation->getSubjects();
 										<i class="bi bi-images opacity-50"></i>
 									<?php endif; ?>
 								</td>
-								<td><?= $sujet->getSexe() ?></td>
-								<td>
+								<td class="pc-only"><?= $sujet->getSexe() ?></td>
+								<td class="pc-only">
 									<?php
 									$arr = array();
 									if ($sujet->getDateMin() !== null) $arr[] = $sujet->getDateMin();
@@ -93,9 +93,9 @@ $sujets = $operation->getSubjects();
 									}, false);
 									?>
 								</td>
-								<td><?= Dataview::dataToView($sujet->getMilieuVie(), null, false) ?></td>
-								<td><?= $typeDepot->getNom() ?></td>
-								<td><?= $typeSepulture->getNom() ?></td>
+								<td class="pc-only"><?= Dataview::dataToView($sujet->getMilieuVie(), null, false) ?></td>
+								<td class="pc-only"><?= $typeDepot->getNom() ?></td>
+								<td class="pc-only"><?= $typeSepulture->getNom() ?></td>
 								<td class="col-auto">
 
 									<a title="Consulter #<?= $sujet->getId(); ?>" href="/public/sujet/view/<?= $sujet->getId(); ?>">Consulter</a>
