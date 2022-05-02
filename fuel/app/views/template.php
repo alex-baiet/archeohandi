@@ -125,7 +125,7 @@ if (Constants::MAINTENANCE === true) {
 							<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Compte</a>
 
 						<?php endif; ?>
-						<div class="dropdown-menu">
+						<div class="dropdown-menu dropdown-menu-dark bg-dark">
 							<?php if ($account !== null) : ?>
 								<!-- Operations personnelles -->
 								<a class="dropdown-item" href="/public/operation/personnel">Mes opérations</a>
