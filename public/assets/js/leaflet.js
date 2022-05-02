@@ -17,15 +17,15 @@ class Leaflet {
 
 		L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
 			attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-			maxZoom: 18,
-			minZoom: 5,
+			// maxZoom: 18,
+			// minZoom: 5,
 			id: 'mapbox/streets-v11',
 			tileSize: 512,
 			zoomOffset: -1,
 			accessToken: 'pk.eyJ1IjoieW91bGFjIiwiYSI6ImNreDA0YzZ1dzBubGEydHB6ZzJtZHJqaWwifQ.D5slRhh0SpY8Cy0LO6N0Hg'
 		}).addTo(Leaflet.map);
 
-		this.map.setMaxBounds(bounds);
+		// this.map.setMaxBounds(bounds);
 		document.getElementsByClassName("leaflet-control-zoom")[0].style.display = "none";
 
 		// Initialisation geocodeService
@@ -90,6 +90,11 @@ class Leaflet {
 	/** Empêche de déplacer la carte. */
 	static disableDragging() {
 		Leaflet.map.dragging.disable();
+	}
+
+
+	static addHeatmap(points, radius=25) {
+		var heat = L.heatLayer(points, {radius: radius}).addTo(Leaflet.map);
 	}
 
 }

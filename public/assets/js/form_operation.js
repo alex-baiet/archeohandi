@@ -70,6 +70,9 @@ class FormOperation {
 
 	/** Prépare tous ce qu'il faut pour la carte. */
 	static prepareMap(addAllMap = false) {
+		const heatmapIntensity = 1000;
+		const heatmapRadius = 12;
+
 		Leaflet.initMap("map");
 
 		const inputLon = document.getElementById("form_longitude");
@@ -89,15 +92,22 @@ class FormOperation {
 		// Ajout marqueurs pour toutes les autres operation
 		if (addAllMap) {
 			DB.query(
-				`SELECT operation.longitude, operation.latitude, operation.adresse, commune.nom
+				`SELECT operation.longitude, operation.latitude, operation.adresse, commune.nom, COUNT(sujet_handicape.id) AS sujet_count
 				FROM operation
 				JOIN commune ON commune.id = operation.id_commune
+				JOIN groupe ON groupe.id_operation = operation.id
+				JOIN sujet_handicape ON sujet_handicape.id_groupe = groupe.id
 				WHERE operation.longitude IS NOT NULL
-				AND operation.latitude IS NOT NULL`,
+				AND operation.latitude IS NOT NULL
+				GROUP BY operation.id`,
 				function (json) {
+					// Leaflet.addHeatmap([[47, 2, 1000]]);
+					var points = [];
 					for (const op of json) {
-						Leaflet.addMarker(op["latitude"], op["longitude"], `${op["nom"]}, ${op["adresse"]}`);
+						// Leaflet.addMarker(op["latitude"], op["longitude"], `${op["nom"]}, ${op["adresse"]}`);
+						points.push([Number(op["latitude"]), Number(op["longitude"]), heatmapIntensity * op["sujet_count"]]);
 					}
+					Leaflet.addHeatmap(points, heatmapRadius)
 				}
 			);
 		}
