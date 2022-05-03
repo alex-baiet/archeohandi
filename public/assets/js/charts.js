@@ -2,7 +2,7 @@ class Charts {
 	/** @type {Map<number, SearchResult>|null} Toutes les données des opérations et sujets. */
 	static _data = null;
 
-	static diagnosticPie() {
+	static diagnosticGraph() {
 		const data = this._loadData();
 
 		const idList = [];
@@ -20,9 +20,9 @@ class Charts {
 			WHERE sujet_handicape.id IN (${idList.join(',')})
 			GROUP BY diagnostic.nom;`,
 			function (json) {
-				const data = []
+				const content = []
 				for (const value of json) {
-					data.push({ name: value["nom"], y: Number(value["count"]) });
+					content.push({ name: value["nom"], y: Number(value["count"]) });
 				}
 
 				// Affichage du highchart
@@ -62,11 +62,77 @@ class Charts {
 					},
 					series: [{
 						name: 'Ratio',
-						data: data
+						data: content
 					}]
 				});
 			}
 		);
+	}
+
+	static sexGraph() {
+		const data = this._loadData();
+
+		content = [
+			{ name: "Homme", y: 0 },
+			{ name: "Femme", y: 0 },
+			{ name: "Indéterminé", y: 0 },
+		];
+		for (const [id, res] of data) {
+			for (const subject of res.subjects) {
+				switch (subject.sexe) {
+					case "Homme":
+						content[0].y++;
+						break;
+					case "Femme":
+						content[1].y++;
+						break;
+					default:
+						content[2].y++;
+						break;
+				}
+			}
+		}
+
+		// Affichage du highchart
+		Highcharts.chart('container', {
+			chart: {
+				plotBackgroundColor: null,
+				plotBorderWidth: null,
+				plotShadow: false,
+				type: 'pie'
+			},
+			title: {
+				text: 'Répartition des sexes'
+			},
+			tooltip: {
+				pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+			},
+			accessibility: {
+				point: {
+					valueSuffix: '%'
+				}
+			},
+			plotOptions: {
+				pie: {
+					allowPointSelect: true,
+					cursor: 'pointer',
+					dataLabels: {
+						enabled: true,
+						format: '<b>{point.name}</b><br>{point.percentage:.1f} %',
+						distance: -50,
+						filter: {
+							property: 'percentage',
+							operator: '>',
+							value: 4
+						}
+					}
+				}
+			},
+			series: [{
+				name: 'Ratio',
+				data: content
+			}]
+		});
 	}
 
 	static _loadData() {
