@@ -65,6 +65,7 @@ Helper::postQuery("https://archeohandi.huma-num.fr/public/recherche/api", $_POST
 						</button>
 
 						<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+							<li><button class="dropdown-item" onclick="Charts.dateGraph()">Ancienneté</a></li>
 							<li><button class="dropdown-item" onclick="Charts.diagnosticGraph()">Diagnostics</a></li>
 							<li><button class="dropdown-item" onclick="Charts.sexGraph()">Sexe</a></li>
 						</ul>
@@ -75,7 +76,7 @@ Helper::postQuery("https://archeohandi.huma-num.fr/public/recherche/api", $_POST
 					<div id="container"></div>
 				</figure>
 				<script>
-					Charts.diagnosticGraph()
+					Charts.diagnosticGraph();
 				</script>
 			</div>
 		</div>
