@@ -23,7 +23,6 @@ class Charts {
 		// Compte des sujets par siècle
 		for (const [id, res] of data) {
 			for (const subject of res.subjects) {
-				// console.log(`${subject.date_min} ${subject.date_max}`);
 				// Calcul de l'année
 				let year = null;
 				if (subject.date_min === null && subject.date_max === null) continue;
@@ -58,7 +57,7 @@ class Charts {
 
 		Highcharts.chart('container', {
 			chart: { type: 'column' },
-			title: { text: 'Sujets par siècle' },
+			title: { text: 'Nombre de sujets par siècle' },
 			// subtitle: { text: 'Source: WorldClimate.com' },
 			xAxis: {
 				categories: centuries,
@@ -71,7 +70,7 @@ class Charts {
 			legend: { enabled: false },
 			tooltip: {
 				headerFormat: '<span style="font-size:10px">{point.key}e siècle</span><table>',
-				pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+				pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name} : </td>' +
 					'<td style="padding:0"><b>{point.y:.0f}</b></td></tr>',
 				footerFormat: '</table>',
 				shared: true,
@@ -108,48 +107,43 @@ class Charts {
 			WHERE sujet_handicape.id IN (${idList.join(',')})
 			GROUP BY diagnostic.nom;`,
 			function (json) {
-				const content = []
+				const categories = [];
+				const content = [];
 				for (const value of json) {
-					content.push({ name: value["nom"], y: Number(value["count"]) });
+					categories.push(value.nom);
+					content.push(Number(value.count) / idList.length * 100);
 				}
 
 				// Affichage du highchart
 				Highcharts.chart('container', {
-					chart: {
-						plotBackgroundColor: null,
-						plotBorderWidth: null,
-						plotShadow: false,
-						type: 'pie'
+					chart: { type: 'column' },
+					title: { text: 'Taux de sujets handicapés par diagnostics' },
+					// subtitle: { text: 'Source: WorldClimate.com' },
+					xAxis: {
+						categories: categories,
+						crosshair: true
 					},
-					title: {
-						text: 'Diagnostics des sujets'
+					yAxis: {
+						min: 0,
+						title: { text: 'Taux de sujet atteints (%)' }
 					},
+					legend: { enabled: false },
 					tooltip: {
-						pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-					},
-					accessibility: {
-						point: {
-							valueSuffix: '%'
-						}
+						headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+						pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name} : </td>' +
+							'<td style="padding:0"><b>{point.y:.1f}%</b></td></tr>',
+						footerFormat: '</table>',
+						shared: true,
+						useHTML: true
 					},
 					plotOptions: {
-						pie: {
-							allowPointSelect: true,
-							cursor: 'pointer',
-							dataLabels: {
-								enabled: true,
-								format: '<b>{point.name}</b><br>{point.percentage:.1f} %',
-								distance: -50,
-								filter: {
-									property: 'percentage',
-									operator: '>',
-									value: 4
-								}
-							}
+						column: {
+							pointPadding: 0.2,
+							borderWidth: 0
 						}
 					},
 					series: [{
-						name: 'Ratio',
+						name: 'Taux',
 						data: content
 					}]
 				});
@@ -183,20 +177,17 @@ class Charts {
 			GROUP BY pathologie.nom
 			ORDER BY pathologie.nom;`,
 			function (json) {
-				console.log(json);
 				const categories = [];
 				const content = [];
 				
 				for (const value of json) {
 					categories.push(value.nom);
 					content.push(Number(value.count) / idList.length * 100);
-					console.log(value.count);
 				}
-				console.log(content);
 
 				Highcharts.chart('container', {
 					chart: { type: 'column' },
-					title: { text: 'Nombre de sujets malades par pathologie' },
+					title: { text: 'Taux de sujets malades par pathologie' },
 					// subtitle: { text: 'Source: WorldClimate.com' },
 					xAxis: {
 						categories: categories,
@@ -232,7 +223,7 @@ class Charts {
 
 	static periodGraph() {
 		this._generatePie(
-			"Répartition des périodes",
+			"Répartition des sujets par période",
 			function (subject) { return subject.chronologie; }
 		);
 	}
@@ -293,7 +284,7 @@ class Charts {
 				text: title
 			},
 			tooltip: {
-				pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+				pointFormat: '{series.name} : <b>{point.percentage:.1f}%</b>'
 			},
 			accessibility: {
 				point: {
@@ -317,7 +308,7 @@ class Charts {
 				}
 			},
 			series: [{
-				name: 'Ratio',
+				name: ' Taux',
 				data: content
 			}]
 		});
