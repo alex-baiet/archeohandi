@@ -136,7 +136,7 @@ if (Constants::MAINTENANCE === true) {
 								<!-- Déconnexion -->
 								<form action="/public/compte/deconnexion" method="POST">
 									<input type="hidden" name="previous_page" value="<?= Uri::current() ?>">
-									<button type="submit" name="disconnect" value="1" class="dropdown-item">Se déconnecter</button>
+									<button type="submit" name="disconnect" value="1" class="dropdown-item">Se déconnecter <i class="bi bi-box-arrow-right"></i></button>
 								</form>
 							<?php endif; ?>
 						</div>
