@@ -40,7 +40,7 @@ Asset::js("form.js");
 					<input name="departement" id="form_departement" value="<?= $commune !== null ? $commune->getDepartement() : null ?>" type="text" class="form-control"
 						placeholder="Département" autocomplete="chrome-fait-chier" title="Indiquez le département de l'opération" oninput="FormOperation.checkDepartementExist()">
 					<div class="form-msg-error">Le département n'existe pas.</div>
-					<label for="form_departement">Nom du département</label>
+					<label for="form_departement">Nom du département<span class="red">*</span></label>
 					<script>
 						addAutocomplete(`form_departement`, `DISTINCT departement`, `commune`, [
 							[`departement`, `LIKE`, `?%`]
@@ -55,7 +55,7 @@ Asset::js("form.js");
 					<input name="commune" id="form_commune" value="<?= $commune !== null ? $commune->getNom() : null ?>" type="text" class="form-control"
 						placeholder="Commune" title="Indiquez la commune de l'opération" oninput="FormOperation.checkCommuneExist()" autocomplete="chrome-fait-des-decisions-debiles-avec-l-autocompletion">
 					<div class="form-msg-error">La commune n'existe pas.</div>
-					<label for="form_commune">Commune</label>
+					<label for="form_commune">Commune<span class="red">*</span></label>
 					<script>
 						addAutocompleteCommune();
 					</script>

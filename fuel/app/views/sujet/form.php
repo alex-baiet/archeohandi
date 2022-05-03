@@ -82,7 +82,7 @@ if (!empty($msg)) {
 		<div class="form-floating">
 			<input name="id_sujet_handicape" id="form_id_sujet_handicape" value="<?= $subject->getIdSujetHandicape(); ?>" type="text" class="form-control" placeholder="Identifiant du sujet" maxlength="256" onclick="this.required=`required`" title="Indiquez le nom du sujet">
 			<div class="form-msg-error">Veuillez indiquer une valeur pour ce champ</div>
-			<label for="form_id_sujet_handicape">Identifiant du sujet</label>
+			<label for="form_id_sujet_handicape">Identifiant du sujet<span class="red">*</span></label>
 		</div>
 	</div>
 </div>

@@ -17,7 +17,7 @@ use Model\Helper;
 			<div class="col-md">
 				<div class="form-floating">
 					<input type="text" id="form_login" name="login" class="form-control" placeholder="Login" value="<?= Helper::arrayGetString("login", $_POST) ?>">
-					<label for="form_login">Login</label>
+					<label for="form_login">Login<span class="red">*</span></label>
 				</div>
 			</div>
 		</div>
@@ -27,7 +27,7 @@ use Model\Helper;
 			<div class="col-md">
 				<div class="form-floating">
 					<input type="password" id="form_mdp" name="mdp" class="form-control" placeholder="Mot de passe" value="<?= Helper::arrayGetString("mdp", $_POST) ?>">
-					<label for="form_mdp">Mot de passe</label>
+					<label for="form_mdp">Mot de passe<span class="red">*</span></label>
 				</div>
 			</div>
 		</div>

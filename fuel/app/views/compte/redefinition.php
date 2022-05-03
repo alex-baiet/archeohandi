@@ -16,7 +16,7 @@ use Model\Helper;
 			<div class="col-md">
 				<div class="form-floating">
 					<input type="text" id="form_login" name="login" class="form-control" placeholder="Login" value="<?= Helper::arrayGetValue("login", $_POST) ?>">
-					<label for="form_login">Login</label>
+					<label for="form_login">Login<span class="red">*</span></label>
 				</div>
 			</div>
 		</div>
@@ -26,7 +26,7 @@ use Model\Helper;
 			<div class="col-md">
 				<div class="form-floating">
 					<input type="text" id="form_email" name="email" class="form-control" placeholder="Email" value="<?= Helper::arrayGetValue("email", $_POST) ?>">
-					<label for="form_email">Email</label>
+					<label for="form_email">Email<span class="red">*</span></label>
 				</div>
 			</div>
 		</div>

@@ -26,7 +26,7 @@ $defaultAttr = array("type" => "text", "class" => "form-control", "placeholder" 
 						placeholder="Prénom" autocomplete="off"
 						onkeyup="this.required=`required`">
 					<div class="form-msg-error">Veuillez remplir ce champ.</div>
-					<label for="form_prenom">Prénom</label>
+					<label for="form_prenom">Prénom<span class="red">*</span></label>
 				</div>
 			</div>
 
@@ -38,7 +38,7 @@ $defaultAttr = array("type" => "text", "class" => "form-control", "placeholder" 
 						placeholder="Nom" autocomplete="off"
 						onkeyup="this.required=`required`">
 					<div class="form-msg-error">Veuillez remplir ce champ.</div>
-					<label for="form_nom">NOM</label>
+					<label for="form_nom">NOM<span class="red">*</span></label>
 				</div>
 			</div>
 		</div>
@@ -54,7 +54,7 @@ $defaultAttr = array("type" => "text", "class" => "form-control", "placeholder" 
 						placeholder="Email" autocomplete="off"
 						onkeyup="this.required=`required`">
 					<div class="form-msg-error">Le mail n'est pas valide.</div>
-					<label for="form_email">Email</label>
+					<label for="form_email">Email<span class="red">*</span></label>
 				</div>
 			</div>
 		</div>
