@@ -49,9 +49,6 @@ if (Constants::MAINTENANCE === true) {
 
 	<?= Asset::js('leaflet/leaflet-heat.js') ?>
 
-	<?= Asset::css('leaflet/leaflet.legend.css') ?>
-	<?= Asset::js('leaflet/leaflet.legend.js') ?>
-
 	<!-- CSS -->
 	<?= Asset::css('accueil.css') ?>
 	<?= Asset::css('error.css') ?>
