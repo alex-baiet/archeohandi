@@ -2,6 +2,20 @@ class Charts {
 	/** @type {Map<number, SearchResult>|null} Toutes les données des opérations et sujets. */
 	static _data = null;
 
+	static contextGraph() {
+		this._generatePie(
+			"Répartition des sexes",
+			function (subject) { return subject.contexte; }
+		);
+	}
+
+	static contextPrescriptiveGraph() {
+		this._generatePie(
+			"Répartition des sexes",
+			function (subject) { return subject.contexte_normatif; }
+		);
+	}
+
 	static dateGraph() {
 		const data = this._loadData();
 		const dates = new Map();
@@ -147,28 +161,55 @@ class Charts {
 		);
 	}
 
+	static environmentLifeGraph() {
+		this._generatePie(
+			"Répartition des sexes",
+			function (subject) { return subject.milieu_vie; }
+		);
+	}
+
 	static sexGraph() {
+		this._generatePie(
+			"Répartition des sexes",
+			function (subject) { return subject.sexe; }
+		);
+	}
+
+	static typeDepotGraph() {
+		this._generatePie(
+			"Répartition des sexes",
+			function (subject) { return subject.type_depot; }
+		);
+	}
+
+	static typeSepultureGraph() {
+		this._generatePie(
+			"Répartition des sexes",
+			function (subject) { return subject.type_sepulture; }
+		);
+	}
+
+	/**
+	 * Créer un camembert selon les données des sujets de la recherches.
+	 * @param {string} title Titre du graph
+	 * @param {(subject: Subject) => any} dataHandler Fonction renvoyant une donnée du sujet
+	 */
+	static _generatePie(title, dataHandler) {
 		const data = this._loadData();
 
-		content = [
-			{ name: "Homme", y: 0 },
-			{ name: "Femme", y: 0 },
-			{ name: "Indéterminé", y: 0 },
-		];
+		const contentMap = new Map();
 		for (const [id, res] of data) {
 			for (const subject of res.subjects) {
-				switch (subject.sexe) {
-					case "Homme":
-						content[0].y++;
-						break;
-					case "Femme":
-						content[1].y++;
-						break;
-					default:
-						content[2].y++;
-						break;
-				}
+				const data = dataHandler(subject);
+				if (data === null) continue;
+				if (!contentMap.has(data)) contentMap.set(data, 0);
+				contentMap.set(data, contentMap.get(data) + 1);
 			}
+		}
+
+		const content = [];
+		for (const [name, count] of contentMap) {
+			content.push({ name: name, y: count});
 		}
 
 		// Affichage du highchart
@@ -180,7 +221,7 @@ class Charts {
 				type: 'pie'
 			},
 			title: {
-				text: 'Répartition des sexes'
+				text: title
 			},
 			tooltip: {
 				pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
