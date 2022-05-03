@@ -19,7 +19,7 @@ class Controller_Sujet extends Controller_Template {
 	 * Page de consultation des infos d'un sujet handicapé.
 	 * @param $id Id du sujet.
 	 */
-	public function action_view($id) {
+	public function action_description($id) {
 		Compte::checkPermissionRedirect("Vous devez être connecté pour pouvoir consulter un sujet.", Compte::PERM_WRITE);
 
 		$subject = Sujethandicape::fetchSingle($id);
@@ -34,7 +34,7 @@ class Controller_Sujet extends Controller_Template {
 		$this->template->content = View::forge(
 			'sujet/template',
 			array(
-				"content" => View::forge("sujet/view", $data),
+				"content" => View::forge("sujet/description", $data),
 				"subject" => $subject
 			)
 		);
@@ -44,7 +44,7 @@ class Controller_Sujet extends Controller_Template {
 	 * Page d'édition d'un sujet handicapé.
 	 * @param $id Id du sujet.
 	 */
-	public function action_edit($id) {
+	public function action_edition($id) {
 		$subject = Sujethandicape::fetchSingle($id);
 		$operation = $subject->getOperation();
 		
@@ -68,7 +68,7 @@ class Controller_Sujet extends Controller_Template {
 			$subject = new Sujethandicape($_POST, true);
 			if ($subject->saveOnDB() && Controller_Sujet::DEBUG === false) {
 				Messagehandler::prepareAlert("Modification du sujet réussi.", Messagehandler::ALERT_SUCCESS);
-				Response::redirect("sujet/view/$id");
+				Response::redirect("sujet/description/$id");
 			} else if (Controller_Sujet::DEBUG === true) {
 				echo "POST";
 				Helper::varDump($_POST);
@@ -83,7 +83,7 @@ class Controller_Sujet extends Controller_Template {
 		$this->template->content = View::forge(
 			'sujet/template',
 			array(
-				"content" => View::forge("sujet/edit", $data),
+				"content" => View::forge("sujet/edition", $data),
 				"subject" => $subject
 			)
 		);
@@ -93,7 +93,7 @@ class Controller_Sujet extends Controller_Template {
 	 * Page de création d'un nouveau sujet handicapé.
 	 * @param $id Id de l'opération parent au sujet.
 	 */
-	public function action_add($id) {
+	public function action_ajout($id) {
 		Compte::checkPermissionRedirect("Vous n'êtes pas autorisés à ajouter un sujet sur cette opération.", Compte::PERM_WRITE, $id);
 
 		$data = array('idOperation' => $id);
@@ -125,7 +125,7 @@ class Controller_Sujet extends Controller_Template {
 		}
 
 		$this->template->title = "Nouveau sujet";
-		$this->template->content = View::forge('sujet/add', $data);
+		$this->template->content = View::forge('sujet/ajout', $data);
 	}
 
 	/**

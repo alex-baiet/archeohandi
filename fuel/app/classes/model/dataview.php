@@ -7,7 +7,7 @@ use Closure;
 class Dataview {
 
 	/**
-	 * Renvoie la valeur sous forme de string pour l'afficher sur sujet/view ou operations/view.
+	 * Renvoie la valeur sous forme de string pour l'afficher sur sujet/description ou operations/view.
 	 * @param $value Valeur à afficher.
 	 * @param Closure $transformer Fonction pour transformer la valeur si elle n'est pas vide.
 	 */

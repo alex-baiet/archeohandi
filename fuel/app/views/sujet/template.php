@@ -21,14 +21,14 @@ $currentTab = Uri::segment(2);
 	
 	<ul class="nav nav-tabs justify-content-center mt-2">
 		<li class="nav-item">
-			<a class="nav-link" id="view" href="/public/sujet/view/<?= $subject->getId() ?>">
+			<a class="nav-link" id="view" href="/public/sujet/description/<?= $subject->getId() ?>">
 				<span class="pc-only">Informations sur le sujet</span>
 				<span class="mobile-only">Informations</span>
 			</a>
 		</li>
 		<?php if (Compte::checkPermission(Compte::PERM_WRITE, $subject->getGroup()->getOperation()->getId())) : ?>
 			<li class="nav-item">
-				<a class="nav-link" id="edit" href="/public/sujet/edit/<?= $subject->getId() ?>">
+				<a class="nav-link" id="edition" href="/public/sujet/edition/<?= $subject->getId() ?>">
 					<span class="pc-only">Éditer le sujet</span>
 					<span class="mobile-only">Édition</span>
 				</a>

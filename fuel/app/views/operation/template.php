@@ -17,14 +17,14 @@ $idOperation = Uri::segment(3);
 	<!-- Navigation dans l'opération -->
 	<ul class="nav nav-tabs justify-content-center mt-4">
 		<li class="nav-item">
-			<a class="nav-link" id="view" href="/public/operation/view/<?= $idOperation ?>">
+			<a class="nav-link" id="view" href="/public/operation/description/<?= $idOperation ?>">
 				<span class="pc-only">Informations sur le site</span>
 				<span class="mobile-only">Informations</span>
 			</a>
 		</li>
 		<?php if (Compte::checkPermission(Compte::PERM_ADMIN, $idOperation)) : ?>
 			<li class="nav-item">
-				<a class="nav-link" id="edit" href="/public/operation/edit/<?= $idOperation ?>">
+				<a class="nav-link" id="edition" href="/public/operation/edition/<?= $idOperation ?>">
 					<span class="pc-only">Éditer les informations du site</span>
 					<span class="mobile-only">Édition</span>
 				</a>

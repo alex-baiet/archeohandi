@@ -31,7 +31,7 @@ $sujets = $operation->getSubjects();
 	<?php endif; ?>
 
 	<?php if (Compte::checkPermission(Compte::PERM_WRITE, $operation->getId())) : ?>
-		<a class="btn btn-primary btn-sm" href="/public/sujet/add/<?= $operation->getId(); ?>">
+		<a class="btn btn-primary btn-sm" href="/public/sujet/ajout/<?= $operation->getId(); ?>">
 			Ajouter des sujets <i class="bi bi-plus-circle-fill"></i>
 		</a>
 	<?php endif; ?>
@@ -98,11 +98,11 @@ $sujets = $operation->getSubjects();
 								<td class="pc-only"><?= $typeSepulture->getNom() ?></td>
 								<td class="col-auto">
 
-									<a title="Consulter #<?= $sujet->getId(); ?>" href="/public/sujet/view/<?= $sujet->getId(); ?>">Consulter</a>
+									<a title="Consulter #<?= $sujet->getId(); ?>" href="/public/sujet/description/<?= $sujet->getId(); ?>">Consulter</a>
 
 									<?php if (Compte::checkPermission(Compte::PERM_WRITE, $operation->getId())) : ?>
 										<br>
-										<a title="Editer #<?= $sujet->getId(); ?>" href="/public/sujet/edit/<?= $sujet->getId(); ?>">Modifier</a>
+										<a title="Editer #<?= $sujet->getId(); ?>" href="/public/sujet/edition/<?= $sujet->getId(); ?>">Modifier</a>
 
 										<?= Form::open(array("method" => "POST")); ?>
 										<a href="" data-bs-toggle="modal" data-bs-target="#validationPopup" onclick="deleteSubject(<?= $sujet->getId(); ?>)">Supprimer</a>

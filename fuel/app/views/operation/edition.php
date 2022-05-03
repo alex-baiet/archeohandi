@@ -16,7 +16,7 @@ $errors = $errors;
 	Pour plus d'informations sur un champ, laissez la souris au dessus du champ pour afficher un texte d'aide.
 </p>
 
-<form action="/public/operation/edit/<?= $operation->getId() ?>" method="post" class="form-sheet" autocomplete="off">
+<form action="/public/operation/edition/<?= $operation->getId() ?>" method="post" class="form-sheet" autocomplete="off">
 	<?= View::forge("operation/form", array("operation" => $operation)); ?>
 
 	<div class="row">

@@ -73,7 +73,7 @@ class Controller_Operation extends Controller_Template {
 	}
 
 	/** Page d'ajout d'une opération. */
-	public function action_add() {
+	public function action_ajout() {
 		Compte::checkPermissionRedirect("Vous devez avoir un compte pour pouvoir créer une opération.", Compte::PERM_WRITE);
 
 		// Ajout d'une opération
@@ -83,18 +83,18 @@ class Controller_Operation extends Controller_Template {
 			if ($operation->saveOnDB()) {
 				// Ajout de l'opération avec succès
 				Messagehandler::prepareAlert("Ajout de l'opération réussi.", Messagehandler::ALERT_SUCCESS);
-				Response::redirect("/sujet/add/{$operation->getId()}");
+				Response::redirect("/sujet/ajout/{$operation->getId()}");
 			}
 		}
 
 		$this->template->title = 'Nouvelle opération';
 		$data = array();
 		if (isset($operation)) $data["operation"] = $operation;
-		$this->template->content = View::forge('operation/add', $data);
+		$this->template->content = View::forge('operation/ajout', $data);
 	}
 
 	/** Page affichant les informations d'une opération. */
-	public function action_view($id) {
+	public function action_description($id) {
 		Compte::checkPermissionRedirect("Vous devez être connecté pour pouvoir consulter une opération.", Compte::PERM_WRITE);
 
 		$data = array();
@@ -110,7 +110,7 @@ class Controller_Operation extends Controller_Template {
 		$this->template->title = 'Consultation de l\'opération '.$id;
 		$this->template->content = View::forge(
 			'operation/template',
-			array("content" => View::forge("operation/view", $data))
+			array("content" => View::forge("operation/description", $data))
 		);
 	}
 
@@ -136,7 +136,7 @@ class Controller_Operation extends Controller_Template {
 	}
 
 	/** Page d'édition d'une opération. */
-	public function action_edit($id){
+	public function action_edition($id){
 		Compte::checkPermissionRedirect("Seul le créateur de l'opération peut modifier les informations de l'opération.", Compte::PERM_WRITE, $id);
 
 		// Récupération des informations de l'opération
@@ -159,7 +159,7 @@ class Controller_Operation extends Controller_Template {
 				$operation->saveOnDB();
 				Messagehandler::prepareAlert("Modification de l'opération réussi.", Messagehandler::ALERT_SUCCESS);
 
-				Response::redirect("/operation/view/$id");
+				Response::redirect("/operation/description/$id");
 			} else {
 				// Les données ne sont pas valides : on affiche les problèmes
 				$errors = $result;
@@ -170,7 +170,7 @@ class Controller_Operation extends Controller_Template {
 		$this->template->title = 'Modification de l\'opération '.$id;
 		$this->template->content = View::forge(
 			'operation/template',
-			array("content" => View::forge("operation/edit", $data))
+			array("content" => View::forge("operation/edition", $data))
 		);
 	}
 

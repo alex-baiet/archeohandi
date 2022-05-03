@@ -10,7 +10,7 @@ $subject = $subject;
 ?>
 
 <h1 class="m-2">Modifier le sujet N°<?= $subject->getId(); ?>
-	<a class="btn btn-sm btn-secondary" href="/public/sujet/edit/<?= $subject->getId(); ?>">Réinitialiser les champs <i class="bi bi-arrow-repeat"></i></a>
+	<a class="btn btn-sm btn-secondary" href="/public/sujet/edition/<?= $subject->getId(); ?>">Réinitialiser les champs <i class="bi bi-arrow-repeat"></i></a>
 </h1>
 <p class="text-muted">
 	Sujet de l'opération <b><em>"<?= $subject->getOperation()->getNomOp() ?>"</em></b><br>

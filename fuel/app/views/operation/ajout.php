@@ -18,7 +18,7 @@ $operation;
 		Pour plus d'informations, laissez la souris au dessus du champ pour afficher un texte d'aide.
 	</p>
 	
-	<form action="/public/operation/add" method="POST" class="form-sheet" autocomplete="off">
+	<form action="/public/operation/ajout" method="POST" class="form-sheet" autocomplete="off">
 		<?php
 		$data = array();
 		if (isset($operation)) $data["operation"] = $operation;

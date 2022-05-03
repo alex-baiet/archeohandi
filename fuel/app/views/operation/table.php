@@ -47,7 +47,7 @@ $lines = $lines;
 					<?php endif; ?>
 				</td>
 				<td class="pc-only"><?= Dataview::dataToView($op->getAnnee(), null, false) ?></td>
-				<td><a href="/public/operation/view/<?= $op->getId() ?>">Consulter</a></td>
+				<td><a href="/public/operation/description/<?= $op->getId() ?>">Consulter</a></td>
 			</tr>
 			<tr id="row_subjects_<?= $op->getId() ?>" style="display:none;">
 				<td colspan="100%" style="
@@ -119,7 +119,7 @@ $lines = $lines;
 											}, false);
 											?>
 										</td>
-										<td><a href="/public/sujet/view/<?= $subject->getId() ?>">Consulter</a></td>
+										<td><a href="/public/sujet/description/<?= $subject->getId() ?>">Consulter</a></td>
 									</tr>
 								<?php endforeach ?>
 							</tbody>
