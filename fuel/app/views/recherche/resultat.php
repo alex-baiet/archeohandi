@@ -1,5 +1,6 @@
 <?php
 
+use Fuel\Core\Asset;
 use Fuel\Core\View;
 use Model\Db\Compte;
 use Model\Helper;
@@ -15,6 +16,13 @@ foreach ($results as $data) {
 }
 
 ?>
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<?= Asset::css('highcharts.css') ?>
+<?= Asset::js('charts.js') ?>
 
 <script>
 	Search.setDataId("data");
@@ -42,7 +50,7 @@ Helper::postQuery("https://archeohandi.huma-num.fr/public/recherche/api", $_POST
 
 	<?php if (!empty($results)) : ?>
 		<div class="row">
-			<div class="col-xl-12">
+			<div class="col-xl-8">
 				<div class="table-scroll">
 					<?= View::forge("operation/table", array("lines" => $results)) ?>
 				</div>
@@ -50,22 +58,24 @@ Helper::postQuery("https://archeohandi.huma-num.fr/public/recherche/api", $_POST
 
 			<!-- Charts -->
 			<div class="col-xl-4">
-			<div class="dropdown">
-			<div class="dropdown">
-  <!-- <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Dropdown button
-  </button>
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="#">Action</a>
-    <a class="dropdown-item" href="#">Another action</a>
-    <a class="dropdown-item" href="#">Something else here</a>
-  </div>
-</div> -->
+				<div class="text-center">
+					<div class="dropdown">
+						<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+							Changer de graphique
+						</button>
 
-				<!-- <figure class="highcharts-figure">
+						<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+							<li><button class="dropdown-item" onclick="Charts.diagnosticPie()">Diagnostics</a></li>
+						</ul>
+					</div>
+				</div>
+
+				<figure class="highcharts-figure">
 					<div id="container"></div>
 				</figure>
-				<script>Charts.diagnosticPie()</script> -->
+				<script>
+					Charts.diagnosticPie()
+				</script>
 			</div>
 		</div>
 	<?php else : ?>

@@ -1,6 +1,8 @@
 <?php
 
 use Fuel\Core\Asset;
+use Model\Helper;
+
 ?>
 
 <!-- HighChart -->
@@ -11,18 +13,54 @@ use Fuel\Core\Asset;
 <?= Asset::css('highcharts.css') ?>
 <?= Asset::js('charts.js') ?>
 
-<div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-    Dropdown button
-  </button>
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-    <li><a class="dropdown-item" href="#">Action</a></li>
-    <li><a class="dropdown-item" href="#">Another action</a></li>
-    <li><a class="dropdown-item" href="#">Something else here</a></li>
-  </ul>
+<pre id="data" style="display: none;">
+<?=
+Helper::postQuery("https://archeohandi.huma-num.fr/public/recherche/api", array(
+	"id_operation" => "",
+	"departement" => "",
+	"commune" => "",
+	"insee" => "",
+	"adresse" => "",
+	"longitude" => "",
+	"latitude" => "",
+	"radius" => "100",
+	"annee_min" => "",
+	"annee_max" => "",
+	"organisme" => "",
+	"id_type_op" => "",
+	"id_sujet" => "",
+	"id_sujet_handicape" => "",
+	"id_chronologie" => "",
+	"sexe" => "",
+	"age_min" => "",
+	"age_max" => "",
+	"date_min" => "",
+	"date_max" => "",
+	"id_type_depot" => "",
+	"id_sepulture" => "",
+	"contexte_normatif" => "",
+	"milieu_vie" => "",
+	"contexte" => "",
+	"search" => "1"
+));
+?>
+</pre>
+
+<div class="text-center">
+	<div class="dropdown">
+		<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+			Changer de graphique
+		</button>
+
+		<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+			<li><button class="dropdown-item" onclick="Charts.diagnosticPie()">Diagnostics</a></li>
+		</ul>
+	</div>
 </div>
 
 <figure class="highcharts-figure">
 	<div id="container"></div>
 </figure>
-<script>Charts.diagnosticPie()</script>
+<script>
+	Charts.diagnosticPie()
+</script>

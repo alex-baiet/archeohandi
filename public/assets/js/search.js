@@ -17,7 +17,7 @@ class Search {
 	 * Export les données en CSV.
 	 */
 	static exportToCSV() {
-		if (this._data === null) this._loadData();
+		if (this._data === null) this.loadData();
 
 		let csv = "";
 		const operationFields = Operation.getFields();
@@ -83,30 +83,35 @@ class Search {
 		}
 	}
 
-	/** Charge les données. */
-	static _loadData() {
-		// Récupération des données
-		const container = document.getElementById(this._dataId);
-		const content = container.innerHTML;
-		const json = JSON.parse(content);
+	/**
+	 * Charge les données contenu dans le div#data de la page.
+	 * @returns {Map<number, SearchResult>} Liste des opérations et sujets.
+	 */
+	static loadData() {
+		if (this._data === null) {
+			// Récupération des données
+			const container = document.getElementById(this._dataId);
+			const content = container.innerHTML;
+			const json = JSON.parse(content);
 
-		// Transformation en objets
-		this._data = new Map();
-		for (let [idOp, pair] of Object.entries(json)) {
-			idOp = Number(idOp);
+			// Transformation en objets
+			this._data = new Map();
+			for (let [idOp, pair] of Object.entries(json)) {
+				idOp = Number(idOp);
 
-			// Chargement operation
-			const operation = new Operation(pair["operation"]);
+				// Chargement operation
+				const operation = new Operation(pair["operation"]);
 
-			// Chargement sujets
-			const subjects = [];
-			for (const [idSub, subData] of Object.entries(pair["subjects"])) {
-				subjects.push(new Subject(subData));
+				// Chargement sujets
+				const subjects = [];
+				for (const [idSub, subData] of Object.entries(pair["subjects"])) {
+					subjects.push(new Subject(subData));
+				}
+
+				let result = new SearchResult(operation, subjects)
+				this._data.set(idOp, result);
 			}
-
-			let result = new SearchResult(operation, subjects)
-			this._data.set(idOp, result);
 		}
-
+		return this._data;
 	}
 }
