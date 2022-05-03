@@ -4,14 +4,14 @@ class Charts {
 
 	static contextGraph() {
 		this._generatePie(
-			"Répartition des sexes",
+			"Répartition des contextes",
 			function (subject) { return subject.contexte; }
 		);
 	}
 
 	static contextPrescriptiveGraph() {
 		this._generatePie(
-			"Répartition des sexes",
+			"Répartition des contextes normatif",
 			function (subject) { return subject.contexte_normatif; }
 		);
 	}
@@ -50,15 +50,11 @@ class Charts {
 			if (century > maxCentury) maxCentury = century;
 		}
 
-		console.log(minCentury);
-		console.log(maxCentury);
 		for (let century = minCentury; century <= maxCentury; century++) {
 			centuries.push(Helper.romanize(century));
 			if (dates.has(century)) content.push(dates.get(century));
 			else content.push(0);
 		}
-		console.log(dates);
-		console.log(content);
 
 		Highcharts.chart('container', {
 			chart: { type: 'column' },
@@ -163,8 +159,81 @@ class Charts {
 
 	static environmentLifeGraph() {
 		this._generatePie(
-			"Répartition des sexes",
+			"Répartition des milieux de vie",
 			function (subject) { return subject.milieu_vie; }
+		);
+	}
+
+	static pathologyGraph() {
+		const data = this._loadData();
+		
+		const idList = [];
+		for (const [idOp, res] of data) {
+			for (const subject of res.subjects) {
+				idList.push(subject.id);
+			}
+		}
+
+		DB.query(
+			`SELECT pathologie.nom, COUNT(DISTINCT sujet.id) AS count
+			FROM pathologie
+			JOIN atteinte_pathologie AS ap ON ap.id_pathologie = pathologie.id
+			JOIN sujet_handicape AS sujet ON ap.id_sujet = sujet.id
+			WHERE sujet.id IN (${idList.join(',')})
+			GROUP BY pathologie.nom
+			ORDER BY pathologie.nom;`,
+			function (json) {
+				console.log(json);
+				const categories = [];
+				const content = [];
+				
+				for (const value of json) {
+					categories.push(value.nom);
+					content.push(Number(value.count) / idList.length * 100);
+					console.log(value.count);
+				}
+				console.log(content);
+
+				Highcharts.chart('container', {
+					chart: { type: 'column' },
+					title: { text: 'Nombre de sujets malades par pathologie' },
+					// subtitle: { text: 'Source: WorldClimate.com' },
+					xAxis: {
+						categories: categories,
+						crosshair: true
+					},
+					yAxis: {
+						min: 0,
+						title: { text: 'Taux de sujet malades (%)' }
+					},
+					legend: { enabled: false },
+					tooltip: {
+						headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+						pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name} : </td>' +
+							'<td style="padding:0"><b>{point.y:.1f}%</b></td></tr>',
+						footerFormat: '</table>',
+						shared: true,
+						useHTML: true
+					},
+					plotOptions: {
+						column: {
+							pointPadding: 0.2,
+							borderWidth: 0
+						}
+					},
+					series: [{
+						name: 'Taux',
+						data: content
+					}]
+				});
+			}
+		);
+	}
+
+	static periodGraph() {
+		this._generatePie(
+			"Répartition des périodes",
+			function (subject) { return subject.chronologie; }
 		);
 	}
 
@@ -177,14 +246,14 @@ class Charts {
 
 	static typeDepotGraph() {
 		this._generatePie(
-			"Répartition des sexes",
+			"Répartition des types des dépôts",
 			function (subject) { return subject.type_depot; }
 		);
 	}
 
 	static typeSepultureGraph() {
 		this._generatePie(
-			"Répartition des sexes",
+			"Répartition des types des sépultures",
 			function (subject) { return subject.type_sepulture; }
 		);
 	}
