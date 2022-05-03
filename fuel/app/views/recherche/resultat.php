@@ -41,9 +41,33 @@ Helper::postQuery("https://archeohandi.huma-num.fr/public/recherche/api", $_POST
 	</p>
 
 	<?php if (!empty($results)) : ?>
-	<div class="table-scroll">
-		<?= View::forge("operation/table", array("lines" => $results)) ?>
-	</div>
+		<div class="row">
+			<div class="col-xl-12">
+				<div class="table-scroll">
+					<?= View::forge("operation/table", array("lines" => $results)) ?>
+				</div>
+			</div>
+
+			<!-- Charts -->
+			<div class="col-xl-4">
+			<div class="dropdown">
+			<div class="dropdown">
+  <!-- <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Dropdown button
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a class="dropdown-item" href="#">Action</a>
+    <a class="dropdown-item" href="#">Another action</a>
+    <a class="dropdown-item" href="#">Something else here</a>
+  </div>
+</div> -->
+
+				<!-- <figure class="highcharts-figure">
+					<div id="container"></div>
+				</figure>
+				<script>Charts.diagnosticPie()</script> -->
+			</div>
+		</div>
 	<?php else : ?>
 		<h2 class="text-muted text-center">Aucun résultat pour la recherche</h2>
 	<?php endif; ?>
