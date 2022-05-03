@@ -1,7 +1,13 @@
+/**
+ * Génère des graph en fonction des données de sujets récupérés.
+ * Les données de sujets doivent être dans un élément #data.
+ * Le div du graph doit avoir comme id #container.
+ */
 class Charts {
 	/** @type {Map<number, SearchResult>|null} Toutes les données des opérations et sujets. */
 	static _data = null;
 
+	/** Créer un camembert sur le champ "contexte" des sujets. */
 	static contextGraph() {
 		this._generatePie(
 			"Répartition des contextes",
@@ -9,6 +15,7 @@ class Charts {
 		);
 	}
 
+	/** Créer un camembert sur le champ "contexte normatif" des sujets. */
 	static contextPrescriptiveGraph() {
 		this._generatePie(
 			"Répartition des contextes normatif",
@@ -16,6 +23,7 @@ class Charts {
 		);
 	}
 
+	/** Créer un graph à colonnes sur la datation des sujets. */
 	static dateGraph() {
 		const data = this._loadData();
 		const dates = new Map();
@@ -38,23 +46,24 @@ class Charts {
 			}
 		}
 
-		// Mise en forme de la donnée
-		const centuries = [];
-		const content = [];
+		// Définition des siècles min et max à afficher
 		let minCentury = 21;
 		let maxCentury = 1;
 		for (const century of dates.keys()) {
-			// Définition des siècles min et max
 			if (century < minCentury) minCentury = century;
 			if (century > maxCentury) maxCentury = century;
 		}
 
+		// Mise en forme de la donnée pour la passer a Highcharts
+		const centuries = [];
+		const content = [];
 		for (let century = minCentury; century <= maxCentury; century++) {
 			centuries.push(Helper.romanize(century));
 			if (dates.has(century)) content.push(dates.get(century));
 			else content.push(0);
 		}
 
+		// Initialisation du graph
 		Highcharts.chart('container', {
 			chart: { type: 'column' },
 			title: { text: 'Nombre de sujets par siècle' },
@@ -89,9 +98,11 @@ class Charts {
 		});
 	}
 
+	/** Créer un graph de répartition des diagnostics des sujets. */
 	static diagnosticGraph() {
 		const data = this._loadData();
 
+		// Récupération id de tous les sujets
 		const idList = [];
 		for (const [idOp, res] of data) {
 			for (const subject of res.subjects) {
@@ -100,6 +111,7 @@ class Charts {
 		}
 
 		DB.query(
+			// Requete récupérant le nombre de sujet par diagnostic
 			`SELECT diagnostic.nom, COUNT(DISTINCT sujet_handicape.id) AS count
 			FROM diagnostic
 			JOIN localisation_sujet ON localisation_sujet.id_diagnostic = diagnostic.id
@@ -107,6 +119,8 @@ class Charts {
 			WHERE sujet_handicape.id IN (${idList.join(',')})
 			GROUP BY diagnostic.nom;`,
 			function (json) {
+
+				// Mise en forme de la donnée pour Highcharts
 				const categories = [];
 				const content = [];
 				for (const value of json) {
@@ -114,7 +128,7 @@ class Charts {
 					content.push(Number(value.count) / idList.length * 100);
 				}
 
-				// Affichage du highchart
+				// Affichage du graph
 				Highcharts.chart('container', {
 					chart: { type: 'column' },
 					title: { text: 'Taux de sujets handicapés par diagnostics' },
@@ -151,6 +165,7 @@ class Charts {
 		);
 	}
 
+	/** Créer un camembert sur le champ "milieu vie" des sujets. */
 	static environmentLifeGraph() {
 		this._generatePie(
 			"Répartition des milieux de vie",
@@ -158,9 +173,11 @@ class Charts {
 		);
 	}
 
+	/** Créer un graph sur le les pathologies des sujets. */
 	static pathologyGraph() {
 		const data = this._loadData();
 		
+		// Récupération id de tous les sujets
 		const idList = [];
 		for (const [idOp, res] of data) {
 			for (const subject of res.subjects) {
@@ -169,6 +186,7 @@ class Charts {
 		}
 
 		DB.query(
+			// Requete récupérant le nombre de sujet par pathologie
 			`SELECT pathologie.nom, COUNT(DISTINCT sujet.id) AS count
 			FROM pathologie
 			JOIN atteinte_pathologie AS ap ON ap.id_pathologie = pathologie.id
@@ -177,6 +195,8 @@ class Charts {
 			GROUP BY pathologie.nom
 			ORDER BY pathologie.nom;`,
 			function (json) {
+
+				// Mise en forme des données à passer à Hichcharts
 				const categories = [];
 				const content = [];
 				
@@ -185,10 +205,10 @@ class Charts {
 					content.push(Number(value.count) / idList.length * 100);
 				}
 
+				// Création graph
 				Highcharts.chart('container', {
 					chart: { type: 'column' },
 					title: { text: 'Taux de sujets malades par pathologie' },
-					// subtitle: { text: 'Source: WorldClimate.com' },
 					xAxis: {
 						categories: categories,
 						crosshair: true
@@ -221,6 +241,7 @@ class Charts {
 		);
 	}
 
+	/** Créer un camembert sur la chronologie des sujets. */
 	static periodGraph() {
 		this._generatePie(
 			"Répartition des sujets par période",
@@ -228,6 +249,7 @@ class Charts {
 		);
 	}
 
+	/** Créer un camembert sur le sexe des sujets. */
 	static sexGraph() {
 		this._generatePie(
 			"Répartition des sexes",
@@ -235,6 +257,7 @@ class Charts {
 		);
 	}
 
+	/** Créer un camembert sur le champ "type_depot" des sujets. */
 	static typeDepotGraph() {
 		this._generatePie(
 			"Répartition des types des dépôts",
@@ -242,6 +265,7 @@ class Charts {
 		);
 	}
 
+	/** Créer un camembert sur le champ "type_sepulture" des sujets. */
 	static typeSepultureGraph() {
 		this._generatePie(
 			"Répartition des types des sépultures",
@@ -257,16 +281,19 @@ class Charts {
 	static _generatePie(title, dataHandler) {
 		const data = this._loadData();
 
+		// Récupération des données et compte des données
 		const contentMap = new Map();
 		for (const [id, res] of data) {
 			for (const subject of res.subjects) {
 				const data = dataHandler(subject);
 				if (data === null) continue;
+				// Comptage de la donnée
 				if (!contentMap.has(data)) contentMap.set(data, 0);
 				contentMap.set(data, contentMap.get(data) + 1);
 			}
 		}
 
+		// Mise en forme données pour Highcharts
 		const content = [];
 		for (const [name, count] of contentMap) {
 			content.push({ name: name, y: count});
@@ -314,9 +341,12 @@ class Charts {
 		});
 	}
 
+	/** Charge les données contenu dans la div #data. */
 	static _loadData() {
-		Search.setDataId("data");
-		if (this._data === null) this._data = Search.loadData();
+		if (this._data === null) {
+			Search.setDataId("data");
+			this._data = Search.loadData();
+		}
 		return this._data;
 	}
 }
