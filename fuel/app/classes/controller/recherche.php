@@ -38,8 +38,11 @@ class Controller_Recherche extends Controller_Template {
 
 		$data = array();
 
+		Helper::varDump(microtime(), true);
+
 		// Récupération des infos selon la recherche
 		$json = Helper::postQuery("https://archeohandi.huma-num.fr/public/recherche/api", $_POST);
+		Helper::varDump(microtime(), true);
 		$results = array();
 		if ($json == false) {
 			Messagehandler::prepareAlert("Un problème est survenu lors de la recherche des résultats.", Messagehandler::ALERT_DANGER);
@@ -196,8 +199,6 @@ class Controller_Recherche extends Controller_Template {
 
 		// Recherche par pathologie
 		if (!empty($_POST["pathologies"])) {
-			// $query->join(array("atteinte_pathologie", "ap"))->on("ap.id_sujet", "=", "sujet.id");
-
 			$i=0;
 			$where = "";
 			foreach ($_POST["pathologies"] as $pathology) {
@@ -216,28 +217,6 @@ class Controller_Recherche extends Controller_Template {
 			));
 		}
 
-		// Recherche par atteinte invalidante
-		if (!empty($_POST["pathologies"])) {
-			// $query->join(array("atteinte_pathologie", "ap"))->on("ap.id_sujet", "=", "sujet.id");
-
-			$i=0;
-			$where = "";
-			foreach ($_POST["pathologies"] as $pathology) {
-				if ($i++ === 0) $where = "ap.id_pathologie=$pathology";
-				else $where .= " OR ap.id_pathologie=$pathology";
-			}
-			$query->where(DB::expr(
-				"(
-					SELECT COUNT(copy.id)
-					FROM sujet_handicape AS copy
-					JOIN atteinte_pathologie AS ap
-					ON ap.id_sujet=copy.id
-					WHERE copy.id=sujet.id
-					AND ($where)
-				)=$i"
-			));
-		}
-		
 		$result = $query->execute()->as_array();
 		/** @var Sujethandicape[] */
 		$subjects = array();
@@ -245,7 +224,7 @@ class Controller_Recherche extends Controller_Template {
 			$subjects[] = new Sujethandicape($sub);
 		}
 
-		// Recherche des diagnostics sans passer par SQL pcq c trop compliqué
+		// Recherche des diagnostics sans passer par SQL car c'est trop compliqué
 		foreach (Diagnostic::fetchAll() as $dia) {
 			$diaId = $dia->getId();
 			$name = "diagnostic_$diaId";
