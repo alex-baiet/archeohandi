@@ -2,12 +2,9 @@
 
 use Fuel\Core\Controller;
 use Fuel\Core\DB;
-use Fuel\Core\Input;
 use Fuel\Core\Response;
 use Fuel\Core\View;
-use Model\Db\Commune;
 use Model\Db\Compte;
-use Model\Helper;
 
 class Controller_Fonction extends Controller {
 

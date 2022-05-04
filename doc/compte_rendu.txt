@@ -1,37 +1,23 @@
 Bonjour,
 voici mon compte rendu pour cette semaine.
 
-Compte rendu (14/03/22 - 18/03/22)
+Compte rendu (25/04/22 - 29/04/22)
 
 Tâches accomplies :
 
-- Amélioration du système de redirection :
-    - Redirection par défaut vers l'accueil;
-    - Modification du sujet redirige vers la page de consultation du sujet;
-    - Idem pour l'opération;
-- Retour sur la page de recherche avec les options mis précédemment possible;
-- Modification système de suppression des sujets / opérations;
-- Création de la page des opérations personnels;
-- Ajout compteur de sujets et d'opérations sur plusieurs pages;
-- Amélioration visuel de la plupart des tableaux;
-- Correction de l'ordre d'affichage des opérations, qui était un peu bizarre;
-- Amélioration du mode d'emploi;
-- Ajout export CSV des résultats de recherche;
-- Essayer de supprimer le dernier champ d'une liste de champ le vide (ex: champs des paleopatologistes);
-- Maj des valeurs concernant la prevalence en direct, plus besoin de recharger la page;
-- Modifications gestions des personnes sur la base de données. Les personnes étaient directement écrits dans la table "operations", maintenant ils sont écrits sur des tables à part en fonction de leurs rôles;
-- Ajout completion automatique des personnes;
-- Amélioration des titres des onglets (préfixés par "Archeohandi");
-- Suppression du bouton pour remonter la page, il était visuellement buggé;
-- Ajout de documentations (commentaires dans le code, readme, autres documents) un peu partout dans le projet;
-- Correction de la completion automatique des communes sur chrome ET sur tous les autres navigateurs;
-- Opérations vides affichés lors de la recherche en fonction des circonstances;
-- Ajout completion automatique de l'organisme à la création du compte;
-- Liste de complétion automatique devenu déroulant;
-- Correction de l'affichage du tableau des diagnostics sur des résolutions plus petites;
+Archeohandi
 
-
-La liste est plus longue que d'habitude... En espérant faire encore plus la prochaine fois !
+Adaptation du site sur mobile
+Modifications des fiches de Nathalie Ameye, mis comme étant "complet"
+Ajout heatmap représentant la densité des sujets handicapés retrouvés dans la page de recherche
+Correction import de Bootstrap
+Ajout plein de graphiques différents sur la page de résultat de recherche (utilisation de Highcharts)
+Ajout asterix rouge indiquant les champs obligatoires
+Ajout icone de deconnexion
+Traduction des liens en français
+Correction d'anciennes données faussant les graphiques 
+Simplification nom de la table "mobilier_archeologique" en "mobilier"
+Correction de la sélection impossible d'un organisme commençant/terminant par un espace
 
 Bon week-end,
 Alex BAIET
