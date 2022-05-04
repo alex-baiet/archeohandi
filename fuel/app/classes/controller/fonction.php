@@ -63,7 +63,7 @@ class Controller_Fonction extends Controller {
 		/** @var string Nom du nouvelle organisme. */
 		$name = $_POST["name"];
 
-		DB::insert("organisme")->set(array("nom" => $name))->execute();
+		DB::insert("organisme")->set(array("nom" => trim($name)))->execute();
 
 		return "1";
 	}

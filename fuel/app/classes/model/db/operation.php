@@ -448,7 +448,7 @@ class Operation extends Model {
 
 			if ($this->annee !== null && !Helper::stringIsInt($this->annee)) $validation->invalidate("L'année indiquée doit être un nombre.");
 			if ($this->getCommune() === null) $validation->invalidate("La commune n'existe pas.");
-			if ($this->getOrganisme() === null) $validation->invalidate("L'organisation n'existe pas.");
+			if ($this->getOrganisme() === null) $validation->invalidate("L'organisme n'existe pas.");
 			if ($this->getTypeOperation() === null) $validation->invalidate("Le type d'opération n'existe pas.");
 			$this->aRevoir = Helper::secureString($this->aRevoir);
 
