@@ -38,11 +38,8 @@ class Controller_Recherche extends Controller_Template {
 
 		$data = array();
 
-		Helper::varDump(microtime(), true);
-
 		// Récupération des infos selon la recherche
 		$json = Helper::postQuery("https://archeohandi.huma-num.fr/public/recherche/api", $_POST);
-		Helper::varDump(microtime(), true);
 		$results = array();
 		if ($json == false) {
 			Messagehandler::prepareAlert("Un problème est survenu lors de la recherche des résultats.", Messagehandler::ALERT_DANGER);
