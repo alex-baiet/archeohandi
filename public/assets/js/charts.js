@@ -78,10 +78,8 @@ class Charts {
 			},
 			legend: { enabled: false },
 			tooltip: {
-				headerFormat: '<span style="font-size:10px">{point.key}e siècle</span><table>',
-				pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name} : </td>' +
-					'<td style="padding:0"><b>{point.y:.0f}</b></td></tr>',
-				footerFormat: '</table>',
+				headerFormat: '<span style="font-size:10px">{point.key}e siècle</span><br>',
+				pointFormat: '<span style="color:{series.color};">{series.name} :</span> <b>{point.y:.0f}</b>',
 				shared: true,
 				useHTML: true
 			},
@@ -143,10 +141,8 @@ class Charts {
 					},
 					legend: { enabled: false },
 					tooltip: {
-						headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-						pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name} : </td>' +
-							'<td style="padding:0"><b>{point.y:.1f}%</b></td></tr>',
-						footerFormat: '</table>',
+						headerFormat: '<span style="font-size:10px">{point.key}</span><br>',
+						pointFormat: '<span style="color:{series.color};">{series.name} :</span> <b>{point.y:.1f}%</b>',
 						shared: true,
 						useHTML: true
 					},
@@ -219,10 +215,8 @@ class Charts {
 					},
 					legend: { enabled: false },
 					tooltip: {
-						headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-						pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name} : </td>' +
-							'<td style="padding:0"><b>{point.y:.1f}%</b></td></tr>',
-						footerFormat: '</table>',
+						headerFormat: '<span style="font-size:10px">{point.key}</span><br>',
+						pointFormat: '<span style="color:{series.color};">{series.name} :</span> <b>{point.y:.1f}%</b>',
 						shared: true,
 						useHTML: true
 					},
