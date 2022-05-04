@@ -296,7 +296,7 @@ class Sujethandicape extends Model {
 			$this->furnitures = array();
 			if ($this->id !== null) {
 				$results = Helper::querySelect("SELECT mob.id, mob.nom 
-					FROM mobilier_archeologique AS mob 
+					FROM mobilier AS mob 
 					JOIN accessoire_sujet AS acc ON mob.id=acc.id_mobilier
 					WHERE acc.id_sujet={$this->id};");
 				$this->furnitures = array();

@@ -5,7 +5,7 @@ namespace Model\Db;
 use Fuel\Core\Model;
 use Model\Helper;
 
-/** Représentation de la table "mobilier_archeologique" de la BDD. */
+/** Représentation de la table "mobilier" de la BDD. */
 class Mobilier extends Model {
 	private int $id;
 	private string $nom;
@@ -25,7 +25,7 @@ class Mobilier extends Model {
 	 */
 	public static function fetchSingle(int $id) {
 		if (!is_numeric($id)) return null;
-		$res = Helper::querySelectSingle("SELECT * FROM mobilier_archeologique WHERE id=$id;");
+		$res = Helper::querySelectSingle("SELECT * FROM mobilier WHERE id=$id;");
 		if ($res === null) return null;
 
 		return new Mobilier($res);
@@ -36,7 +36,7 @@ class Mobilier extends Model {
 	 * @return Mobilier[]
 	 */
 	public static function fetchAll(): array {
-		$results = Helper::querySelect("SELECT * FROM mobilier_archeologique;");
+		$results = Helper::querySelect("SELECT * FROM mobilier;");
 		$objects = array();
 		foreach ($results as $res) {
 			$objects[] = new Mobilier($res);
