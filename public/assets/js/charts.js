@@ -172,7 +172,7 @@ class Charts {
 	/** Créer un graph sur le les pathologies des sujets. */
 	static pathologyGraph() {
 		const data = this._loadData();
-		
+
 		// Récupération id de tous les sujets
 		const idList = [];
 		for (const [idOp, res] of data) {
@@ -195,7 +195,7 @@ class Charts {
 				// Mise en forme des données à passer à Hichcharts
 				const categories = [];
 				const content = [];
-				
+
 				for (const value of json) {
 					categories.push(value.nom);
 					content.push(Number(value.count) / idList.length * 100);
@@ -241,6 +241,87 @@ class Charts {
 			"Répartition des sujets par période",
 			function (subject) { return subject.chronologie; }
 		);
+	}
+
+	/** Créer un camembert sur la chronologie par groupe de sujets. */
+	static periodGroupGraph() {
+		const data = this._loadData();
+		
+		// Récupération id de tous les sujets
+		const idList = [];
+		for (const [idOp, res] of data) {
+			for (const subject of res.subjects) {
+				idList.push(subject.id);
+			}
+		}
+
+		DB.query(
+			`SELECT DISTINCT chronologie.nom, groupe.id_operation, groupe.nmi
+			FROM groupe
+			JOIN chronologie
+			ON chronologie.id = groupe.id_chronologie
+			JOIN sujet_handicape AS sujet ON groupe.id = sujet.id_groupe
+			WHERE sujet.id IN (${idList.join(',')})
+			;`,
+			json => {
+				// Récupération des données et compte des données
+				const contentMap = new Map();
+				for (const item of json) {
+					const data = item["nom"];
+					// Comptage de la donnée
+					if (!contentMap.has(data)) contentMap.set(data, 0);
+					contentMap.set(data, contentMap.get(data) + 1);
+				}
+
+				// Mise en forme données pour Highcharts
+				const content = [];
+				for (const [name, count] of contentMap) {
+					content.push({ name: name, y: count });
+				}
+
+				// Affichage du highchart
+				Highcharts.chart('container', {
+					chart: {
+						plotBackgroundColor: null,
+						plotBorderWidth: null,
+						plotShadow: false,
+						type: 'pie'
+					},
+					title: {
+						text: "Répartition des groupes de sujets par période"
+					},
+					tooltip: {
+						pointFormat: '{series.name} : <b>{point.percentage:.1f}%</b>'
+					},
+					accessibility: {
+						point: {
+							valueSuffix: '%'
+						}
+					},
+					plotOptions: {
+						pie: {
+							allowPointSelect: true,
+							cursor: 'pointer',
+							dataLabels: {
+								enabled: true,
+								format: '<b>{point.name}</b><br>{point.percentage:.1f} %',
+								distance: -50,
+								filter: {
+									property: 'percentage',
+									operator: '>',
+									value: 4
+								}
+							}
+						}
+					},
+					series: [{
+						name: ' Taux',
+						data: content
+					}]
+				});
+			}
+		)
+
 	}
 
 	/** Créer un camembert sur le sexe des sujets. */
@@ -290,7 +371,7 @@ class Charts {
 		// Mise en forme données pour Highcharts
 		const content = [];
 		for (const [name, count] of contentMap) {
-			content.push({ name: name, y: count});
+			content.push({ name: name, y: count });
 		}
 
 		// Affichage du highchart

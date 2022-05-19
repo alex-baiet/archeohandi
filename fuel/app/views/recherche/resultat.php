@@ -71,7 +71,8 @@ Helper::postQuery("https://archeohandi.huma-num.fr/public/recherche/api", $_POST
 							<li><button class="dropdown-item" onclick="Charts.diagnosticGraph()">Diagnostic</a></li>
 							<li><button class="dropdown-item" onclick="Charts.environmentLifeGraph()">Milieu de vie</a></li>
 							<li><button class="dropdown-item" onclick="Charts.pathologyGraph()">Pathologie</a></li>
-							<li><button class="dropdown-item" onclick="Charts.periodGraph()">Période chronologique</a></li>
+							<li><button class="dropdown-item" onclick="Charts.periodGraph()">Période des sujets</a></li>
+							<li><button class="dropdown-item" onclick="Charts.periodGroupGraph()">Période des groupes</a></li>
 							<li><button class="dropdown-item" onclick="Charts.sexGraph()">Sexe</a></li>
 							<li><button class="dropdown-item" onclick="Charts.typeDepotGraph()">Type de dépôt</a></li>
 							<li><button class="dropdown-item" onclick="Charts.typeSepultureGraph()">Type de sépulture</a></li>

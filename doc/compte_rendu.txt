@@ -1,23 +1,20 @@
 Bonjour,
 voici mon compte rendu pour cette semaine.
 
-Compte rendu (25/04/22 - 29/04/22)
+Compte rendu (16/05/22 - 20/05/22)
 
 Tâches accomplies :
 
+ADN
+
+Ajout d'un jeu pour la roue (https://archeologie-des-necropoles.com/activites-roue.php)
+Réajout du sitemap.xml à Google pour rendre le site visible via la barre de recherche (actuellement le site n'est toujours pas visible...)
+Correction affichage de toutes les pages du catalogue
+Ouverture des liens de la page "actuatités" dans un nouvel onglet
+
 Archeohandi
 
-Adaptation du site sur mobile
-Modifications des fiches de Nathalie Ameye, mis comme étant "complet"
-Ajout heatmap représentant la densité des sujets handicapés retrouvés dans la page de recherche
-Correction import de Bootstrap
-Ajout plein de graphiques différents sur la page de résultat de recherche (utilisation de Highcharts)
-Ajout asterix rouge indiquant les champs obligatoires
-Ajout icone de deconnexion
-Traduction des liens en français
-Correction d'anciennes données faussant les graphiques 
-Simplification nom de la table "mobilier_archeologique" en "mobilier"
-Correction de la sélection impossible d'un organisme commençant/terminant par un espace
+Rien.
 
 Bon week-end,
 Alex BAIET
