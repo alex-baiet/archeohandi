@@ -1,0 +1,115 @@
+Informations globales
+  auteur
+  responsable
+  annee
+  organisme
+
+Géographie
+  latitude
+  longitude
+  altitude
+  adresse
+  type_toponyme
+  commune.nom
+  commune.departement
+  commune.region
+  commune.code_insee
+  depot
+
+Composition du site
+  voie_ancienne
+  limite
+  chemin
+  stele_nombre
+  marqueur_autre
+  type_decor
+  ossuaire_nombre
+  contenant_type
+    nom et nombre
+  sepulture_necropole
+  sepulture_dispersee
+  sepulture_estimation
+
+Les sujets
+  constitution osseuse
+  constitution materiel
+  sepulture_relegation
+  nmi_reduction
+  maladie
+    maladie_traumatique
+    maladie_virale
+    maladie_infectieuse
+  accessoires
+    nom et nombre
+  age
+    categorie et nombre
+  sexe
+    nom et nombre
+  periode
+    nom et nombre
+
+Autres
+  code_pcr
+  prospection
+  surface_fouillee
+  surface_estimee
+  photos
+  releves
+  dedicace
+  methode_datation
+  methode_sexe
+  methode_age
+  type_necropole
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  topographie
+
+
+
+

@@ -7,6 +7,64 @@ class Charts {
 	/** @type {Map<number, SearchResult>|null} Toutes les données des opérations et sujets. */
 	static _data = null;
 
+	/** Créer un graph sur le les pathologies des sujets. */
+	static accessoryGraph() {
+		const idList = this._gatherSubjectIds();
+
+		DB.query(
+			// Requete récupérant le nombre de sujet par pathologie
+			`SELECT mobilier.nom, COUNT(acc.id_sujet) AS count
+			FROM mobilier
+			JOIN accessoire_sujet AS acc ON acc.id_mobilier = mobilier.id
+			WHERE sujet.id IN (${idList.join(',')})
+			GROUP BY mobilier.nom
+			ORDER BY mobilier.nom
+			;`,
+			function (json) {
+
+				// Mise en forme des données à passer à Hichcharts
+				const categories = [];
+				const content = [];
+
+				for (const value of json) {
+					categories.push(value.nom);
+					content.push(Number(value.count) / idList.length * 100);
+				}
+
+				// Création graph
+				Highcharts.chart('container', {
+					chart: { type: 'column' },
+					title: { text: "Taux de sujets accompagnés d'un accessoire" },
+					xAxis: {
+						categories: categories,
+						crosshair: true
+					},
+					yAxis: {
+						min: 0,
+						title: { text: 'Taux de sujet malades (%)' }
+					},
+					legend: { enabled: false },
+					tooltip: {
+						headerFormat: '<span style="font-size:10px">{point.key}</span><br>',
+						pointFormat: '<span style="color:{series.color};">{series.name} :</span> <b>{point.y:.1f}%</b>',
+						shared: true,
+						useHTML: true
+					},
+					plotOptions: {
+						column: {
+							pointPadding: 0.2,
+							borderWidth: 0
+						}
+					},
+					series: [{
+						name: 'Taux',
+						data: content
+					}]
+				});
+			}
+		);
+	}
+
 	/** Créer un camembert sur le champ "contexte" des sujets. */
 	static contextGraph() {
 		this._generatePie(
@@ -171,15 +229,7 @@ class Charts {
 
 	/** Créer un graph sur le les pathologies des sujets. */
 	static pathologyGraph() {
-		const data = this._loadData();
-
-		// Récupération id de tous les sujets
-		const idList = [];
-		for (const [idOp, res] of data) {
-			for (const subject of res.subjects) {
-				idList.push(subject.id);
-			}
-		}
+		const idList = this._gatherSubjectIds();
 
 		DB.query(
 			// Requete récupérant le nombre de sujet par pathologie
@@ -423,5 +473,23 @@ class Charts {
 			this._data = Search.loadData();
 		}
 		return this._data;
+	}
+
+	/**
+	 * Renvoie les ids de tous les sujets.
+	 * @returns {number[]}
+	 */
+	static _gatherSubjectIds() {
+		const data = this._loadData();
+
+		// Récupération id de tous les sujets
+		const idList = [];
+		for (const [idOp, res] of data) {
+			for (const subject of res.subjects) {
+				idList.push(subject.id);
+			}
+		}
+
+		return idList;
 	}
 }

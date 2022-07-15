@@ -1,0 +1,97 @@
+Informations globales
+  auteur
+  responsable
+  annee
+
+Position
+  latitude
+  longitude
+  altitude
+  adresse
+  type_toponyme
+  commune.nom
+  commune.departement
+  commune.region
+  commune.code_insee
+
+La fouille
+  voie_ancienne
+  limite
+  chemin
+
+Sépultures et décorations
+  stele_nombre
+  marqueur_autre
+  type_decor
+  ossuaire_nombre
+
+Les sujets
+  constitution osseuses
+  constitution materiel
+  sepulture_relegation
+  nmi_reduction
+  maladie_traumatique
+  maladie_virale
+  maladie_infectieuse
+
+Autres
+  code_pcr
+  prospection
+  surface_fouillee
+  surface_estimee
+  photos
+  releves
+  dedicace
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  topographie
+
+
+
+

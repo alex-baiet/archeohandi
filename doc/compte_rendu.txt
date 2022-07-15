@@ -1,20 +1,17 @@
 Bonjour,
 voici mon compte rendu pour cette semaine.
 
-Compte rendu (16/05/22 - 20/05/22)
+Compte rendu (27/06/22 - 02/07/22)
 
 Tâches accomplies :
 
-ADN
+Carte des sites
 
-Ajout d'un jeu pour la roue (https://archeologie-des-necropoles.com/activites-roue.php)
-Réajout du sitemap.xml à Google pour rendre le site visible via la barre de recherche (actuellement le site n'est toujours pas visible...)
-Correction affichage de toutes les pages du catalogue
-Ouverture des liens de la page "actuatités" dans un nouvel onglet
-
-Archeohandi
-
-Rien.
+Ajout des images aux sites
+Correction de la structure globale du projet
+Ajout formulaire de modification de site
+Correction de nombreuses données
+Amélioration des champs à valeurs multiples
 
 Bon week-end,
 Alex BAIET
