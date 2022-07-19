@@ -65,7 +65,7 @@ Helper::postQuery("https://archeohandi.huma-num.fr/public/recherche/api", $_POST
 						</button>
 
 						<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-							<li><button class="dropdown-item" onclick="Charts.dateGraph()">Ancienneté</a></li>
+							<li><button class="dropdown-item" onclick="Charts.dateGraph()">Siècles</a></li>
 							<li><button class="dropdown-item" onclick="Charts.contextGraph()">Contexte</a></li>
 							<li><button class="dropdown-item" onclick="Charts.contextPrescriptiveGraph()">Contexte normatif</a></li>
 							<li><button class="dropdown-item" onclick="Charts.diagnosticGraph()">Diagnostic</a></li>
