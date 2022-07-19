@@ -31,11 +31,11 @@ use Fuel\Core\Asset;
 
 		<div class="col-sm-6">
 			<p class="text-justify">
-				Cette base a été conçue par <b>Virgile Loin</b> (stagiaire) et <b>Alex Baiet</b> (apprenti Université de Marne-la-Vallée) sous la tutelle technique de Jean-Baptiste Barreau (CNRS).
-			</p>
-			<p class="text-justify">
 				La création de l'arborescence de la base a été élaborée par <b>Valérie Delattre</b> (Inrap),
 				à l'origine du projet Archéologie du Handicap et par <b>Rozenn Colleter</b> (Inrap) et <b>Cyrille Le Forestier</b> (Inrap).
+			</p>
+			<p class="text-justify">
+				Cette base a été conçue par <b>Virgile Louin</b> (stagiaire) et <b>Alex Baiet</b> (apprenti à l'université de Marne-la-Vallée) sous la tutelle technique de <b>Jean-Baptiste Barreau</b> (CNRS).
 			</p>
 			<p class="text-justify">
 				Ce projet est une Action de Recherche Collective menée par l'Inrap. L'association Archéologie des nécropoles participe également à cette aventure.
