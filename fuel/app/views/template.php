@@ -59,6 +59,7 @@ if (Constants::MAINTENANCE === true) {
 	<?= Asset::css('result.css') ?>
 	<?= Asset::css('shortcut.css') ?>
 	<?= Asset::css('view.css') ?>
+	<?= Asset::css('referents.css') ?>
 
 	<!-- Javascript -->
 	<?= Asset::js('helper.js') ?>
@@ -71,13 +72,12 @@ if (Constants::MAINTENANCE === true) {
 	<?= Asset::js('window.js') ?>
 	<?= Asset::js('gallery.js') ?>
 	<?= Asset::js('leaflet.js') ?>
+	<?= Asset::js('referents.js') ?>
 	<?= Asset::js('db.js') ?>
 	<?= Asset::js('db/archeo.js') ?>
 	<?= Asset::js('db/search_result.js') ?>
 	<?= Asset::js('db/operation.js') ?>
 	<?= Asset::js('db/subject.js') ?>
-
-
 </head>
 
 <body>
@@ -106,6 +106,10 @@ if (Constants::MAINTENANCE === true) {
 
 						<li class="nav-item active">
 							<a class="nav-link" href="/public/assets/other/mode_emploi.pdf" target="_blank">Mode d'emploi</a>
+						</li>
+
+						<li class="nav-item active">
+							<a class="nav-link" href="/public/autre/referents">Référents</a>
 						</li>
 					<?php endif; ?>
 
