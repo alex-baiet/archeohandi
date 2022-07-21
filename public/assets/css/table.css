@@ -10,6 +10,7 @@
 	border-style: none; */
 }
 
+/* #region Sous-table */
 .table-child-parent {
 	border-color: black;
 	border-width: 1px;
@@ -20,3 +21,18 @@
 	background-color: #f4f4f4;
 	margin: 0;
 }
+/* #endregion */
+
+/* #region Icônes */
+/* Icone de validation */
+.bi-check-circle-fill::before {
+	color: #070;
+	font-size: 24px;
+}
+
+/* Icone de danger */
+.bi-exclamation-diamond-fill::before {
+	color: #c70;
+	font-size: 24px;
+}
+/* #endregion */

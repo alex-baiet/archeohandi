@@ -3,18 +3,6 @@ td {
 	vertical-align: middle;
 }
 
-/* Icone de validation */
-.bi-check-circle-fill::before {
-	color: #070;
-	font-size: 24px;
-}
-
-/* Icone de danger */
-.bi-exclamation-diamond-fill::before {
-	color: #c70;
-	font-size: 24px;
-}
-
 .table-no-padding td {
 	padding: 0;
 }
@@ -35,20 +23,4 @@ td {
 
 .table-scroll > table {
 	margin: 0;
-}
-
-/* Liste pour l'autocompletion */
-.autocompletion {
-	max-height: 400px;
-	overflow-y: auto;
-	background-color: white;
-	border-color: #0004;
-	border-width: 1px;
-	border-style: solid;
-}
-
-@media screen and (max-width: 900px) {
-	.autocompletion {
-		max-height: 200px;
-	}
 }

@@ -30,7 +30,7 @@ class Controller_Recherche extends Template {
 		$this->title('Recherche');
 		$this->jquery(true);
     $this->leaflet(true);
-    $this->css(["highcharts.css", "result.css", "view.css", "form.css"]);
+    $this->css(["highcharts.css", "table.css", "view.css", "form.css"]);
     $this->js(["leaflet/leaflet-heat.js", "form_operation.js", "db.js"]);
 		$this->content(View::forge('recherche/index', $data));
 	}
@@ -67,7 +67,7 @@ class Controller_Recherche extends Template {
 
 		$this->title('Résultat de recherche');
 		$this->jquery(true);
-    $this->css(["highcharts.css", "result.css", "view.css"]);
+    $this->css(["highcharts.css", "table.css", "view.css"]);
     $this->js([
 			"https://code.highcharts.com/highcharts.js",
 			"https://code.highcharts.com/modules/exporting.js",

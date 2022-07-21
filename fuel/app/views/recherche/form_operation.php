@@ -13,10 +13,6 @@ $defaultAttr = array("type" => "text", "class" => "form-control", "placeholder" 
 
 ?>
 
-<?=
-Asset::js("form.js");
-?>
-
 <!-- Id operation -->
 <div class="row my-2">
 	<div class="col-md-12">

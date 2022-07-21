@@ -39,7 +39,7 @@ class Controller_Operation extends Template {
 		$data['countOp'] = $countOp;
 
 		$this->title('Opérations');
-    $this->css(["result.css", "gallery.css"]);
+    $this->css(["table.css", "gallery.css"]);
     $this->js(["nested_table.js"]);
 		$this->content(View::forge('operation/index', $data, false));
 	}
@@ -71,7 +71,7 @@ class Controller_Operation extends Template {
 
 		$data["lines"] = $lines;
 		$this->title('Opérations personnelles');
-    $this->css(["result.css"]);
+    $this->css(["table.css"]);
     $this->js(["nested_table.js"]);
 		$this->content(View::forge('operation/personnel', $data, false));
 	}
@@ -141,6 +141,7 @@ class Controller_Operation extends Template {
 		// Ajout des données à la view
 		$data["operation"] = $operation;
 		$this->title("Sujets de l'opération $id");
+		$this->css(["table.css"]);
     $this->js(["page_manager.js"]);
 		$this->content(View::forge(
 			'operation/template',
