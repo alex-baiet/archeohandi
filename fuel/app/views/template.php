@@ -50,8 +50,8 @@ if (Constants::MAINTENANCE === true) {
 	<?php endif; ?>
 
 	<!-- Bootstrap 5.0.2 -->
-	<?= Asset::css('bootstrap/bootstrap.min.css') ?>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+	<?= Asset::css("bootstrap/bootstrap.min.css") ?>
+	<?= Asset::js("bootstrap/bootstrap.bundle.min.js") ?>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
 	
 	<?php if ($leaflet) : ?>

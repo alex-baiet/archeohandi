@@ -40,7 +40,7 @@ class Validation extends Model {
 			echo '
 				<div class="alert alert-danger alert-dismissible text-center my-2 fade show" role="alert">
 					' . $this->invalidReason . '
-					<button type="button" class="btn-close" data-dismiss="alert" aria-label="Fermer">
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer">
 				</div>';
 		}
 	}
