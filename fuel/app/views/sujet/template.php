@@ -21,7 +21,7 @@ $currentTab = Uri::segment(2);
 	
 	<ul class="nav nav-tabs justify-content-center mt-2">
 		<li class="nav-item">
-			<a class="nav-link" id="view" href="/public/sujet/description/<?= $subject->getId() ?>">
+			<a class="nav-link" id="description" href="/public/sujet/description/<?= $subject->getId() ?>">
 				<span class="pc-only">Informations sur le sujet</span>
 				<span class="mobile-only">Informations</span>
 			</a>
