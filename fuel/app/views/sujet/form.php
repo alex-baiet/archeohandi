@@ -334,7 +334,7 @@ if (!empty($msg)) {
 							<?php /* Prévalence */ ?>
 							<td style="text-align:center;" id="count_concerned_<?= $diagnostic->getId() ?>"><?= $operation->countConcernedSubject($diagnostic->getId()) ?></td>
 							<td style="text-align:center;">
-								<input type="text" id="count_observable_<?= $diagnostic->getId() ?>" name="observables[<?= $diagnostic->getId() ?>]" value="<?= $operation->getObservable($diagnostic->getId()) ?>" class="form-control" style="padding: 3px 12px 3px 12px;"
+								<input type="number" id="count_observable_<?= $diagnostic->getId() ?>" name="observables[<?= $diagnostic->getId() ?>]" value="<?= $operation->getObservable($diagnostic->getId()) ?>" class="form-control" style="padding: 3px 12px 3px 12px;" autocomplete="off"
 									onchange="FormSujet.updatePrevalence(<?= $diagnostic->getId() ?>)">
 							</td>
 							<td style="text-align:center;" id="prevalence_<?= $diagnostic->getId() ?>"><?= round($operation->prevalence($diagnostic->getId()) * 1000.0) ?></td>
