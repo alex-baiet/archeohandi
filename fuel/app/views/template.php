@@ -12,7 +12,16 @@ $content = $content;
 /** @var string */
 $title = $title;
 /** @var bool */
+$jquery = isset($jquery) ? $jquery : false;
+/** @var bool */
+$leaflet = isset($leaflet) ? $leaflet : false;
+/** @var bool */
 $navActive = isset($navActive) ? $navActive : true;
+/** @var array */
+$css = isset($css) ? $css : [];
+/** @var array */
+$js = isset($js) ? $js : [];
+
 
 if (Constants::MAINTENANCE === true) {
 	if (Uri::current() !== "https://archeohandi.huma-num.fr/public/accueil" && !Compte::checkPermission(Compte::PERM_ADMIN)) {
@@ -33,51 +42,33 @@ if (Constants::MAINTENANCE === true) {
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="shortcut icon" href="/public/assets/img/favicon.png" type="image/x-icon">
 
-	<!-- JQuery -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<?php if ($jquery) : ?>
+		<!-- JQuery 3.5.1 -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<?php endif; ?>
 
 	<!-- Bootstrap 5.0.2 -->
 	<?= Asset::css('bootstrap/bootstrap.min.css') ?>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
 	
-	<!-- Leaflet -->
-	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
-	<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
-
-	<?= Asset::js('leaflet/leaflet-heat.js') ?>
+	<?php if ($leaflet) : ?>
+		<!-- Leaflet -->
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
+		<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+		<?= Asset::js('leaflet.js') ?>
+	<?php endif; ?>
 
 	<!-- CSS -->
-	<?= Asset::css('accueil.css') ?>
-	<?= Asset::css('error.css') ?>
-	<?= Asset::css('form.css') ?>
-	<?= Asset::css('gallery.css') ?>
 	<?= Asset::css('global.css') ?>
 	<?= Asset::css('mobile.css') ?>
-	<?= Asset::css('result.css') ?>
-	<?= Asset::css('shortcut.css') ?>
-	<?= Asset::css('view.css') ?>
-	<?= Asset::css('referents.css') ?>
+	<?php foreach ($css as $file) echo Asset::css($file); ?>
 
 	<!-- Javascript -->
 	<?= Asset::js('helper.js') ?>
-	<?= Asset::js('form.js') ?>
-	<?= Asset::js('form_operation.js') ?>
-	<?= Asset::js('form_sujet.js') ?>
-	<?= Asset::js('page_manager.js') ?>
-	<?= Asset::js('nested_table.js') ?>
-	<?= Asset::js('search.js') ?>
-	<?= Asset::js('window.js') ?>
-	<?= Asset::js('gallery.js') ?>
-	<?= Asset::js('leaflet.js') ?>
-	<?= Asset::js('referents.js') ?>
-	<?= Asset::js('db.js') ?>
-	<?= Asset::js('db/archeo.js') ?>
-	<?= Asset::js('db/search_result.js') ?>
-	<?= Asset::js('db/operation.js') ?>
-	<?= Asset::js('db/subject.js') ?>
+	<?php foreach ($js as $file) echo Asset::js($file); ?>
 </head>
 
 <body>
