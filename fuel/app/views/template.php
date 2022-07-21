@@ -64,6 +64,7 @@ if (Constants::MAINTENANCE === true) {
 	<!-- CSS -->
 	<?= Asset::css('global.css') ?>
 	<?= Asset::css('mobile.css') ?>
+	<?= Asset::css('shortcut.css') ?>
 	<?php foreach ($css as $file) echo Asset::css($file); ?>
 
 	<!-- Javascript -->

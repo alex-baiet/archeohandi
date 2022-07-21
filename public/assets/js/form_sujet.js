@@ -70,8 +70,6 @@ class FormSujet {
 			if (valuePreva > 1000) valuePreva = 1000
 		}
 
-		console.log(valuePreva);
 		prevalence.innerHTML = Math.round(valuePreva);
-
 	}
 }

@@ -1,6 +1,5 @@
 <?php
 
-use Fuel\Core\Controller_Template;
 use Fuel\Core\DB;
 use Fuel\Core\Response;
 use Fuel\Core\View;
@@ -11,8 +10,9 @@ use Model\Db\Sujethandicape;
 use Model\Helper;
 use Model\Messagehandler;
 use Model\Searchresult;
+use Model\Template;
 
-class Controller_Recherche extends Controller_Template {
+class Controller_Recherche extends Template {
 	/** Page de choix de la recherche. */
 	public function action_index() {
 		Compte::checkPermissionRedirect("Vous devez vous connecter pour accéder à cette page.", Compte::PERM_WRITE);
@@ -27,8 +27,12 @@ class Controller_Recherche extends Controller_Template {
 			$data["options"] = $options;
 		}
 
-		$this->template->title = 'Recherche';
-		$this->template->content = View::forge('recherche/index', $data);
+		$this->title('Recherche');
+		$this->jquery(true);
+    $this->leaflet(true);
+    $this->css(["highcharts.css", "result.css", "view.css", "form.css"]);
+    $this->js(["leaflet/leaflet-heat.js", "form_operation.js", "db.js"]);
+		$this->content(View::forge('recherche/index', $data));
 	}
 
 	/** Page des résultats de recherche. */
@@ -61,8 +65,17 @@ class Controller_Recherche extends Controller_Template {
 
 		$data["results"] = $results;
 
-		$this->template->title = 'Résultat de recherche';
-		$this->template->content = View::forge('recherche/resultat', $data);
+		$this->title('Résultat de recherche');
+		$this->jquery(true);
+    $this->css(["highcharts.css", "result.css", "view.css"]);
+    $this->js([
+			"https://code.highcharts.com/highcharts.js",
+			"https://code.highcharts.com/modules/exporting.js",
+			"https://code.highcharts.com/modules/export-data.js",
+			"https://code.highcharts.com/modules/accessibility.js",
+			"db.js", "db/archeo.js", "db/search_result.js", "db/subject.js", "db/operation.js",
+			"window.js", "charts.js", "search.js"]);
+		$this->content(View::forge('recherche/resultat', $data));
 	}
 
 	/** Page des résultats de recherche au format JSON. */

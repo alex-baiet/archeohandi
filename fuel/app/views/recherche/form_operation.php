@@ -2,7 +2,6 @@
 
 use Fuel\Core\Asset;
 use Fuel\Core\View;
-use Model\Db\Operation;
 use Model\Db\Typeoperation;
 use Model\Helper;
 
@@ -139,7 +138,7 @@ Asset::js("form.js");
 		<div class="form-floating">
 			<input name="annee_min" id="form_annee_min" value="<?= Helper::arrayGetValue("annee_min", $options) ?>" type="number" class="form-control" placeholder="Année de l'opération" min="1800" max="<?= date("Y") ?>" title="Mettez l'année minimum de l'opération">
 			<div class="form-msg-error">La valeur doit être un nombre entre 1800 et <?= date("Y") ?></div>
-			<label for="form_annee">Année minimum de l'opération</label>
+			<label for="form_annee">Année minimal</label>
 		</div>
 	</div>
 
@@ -147,7 +146,7 @@ Asset::js("form.js");
 		<div class="form-floating">
 			<input name="annee_max" id="form_annee_max" value="<?= Helper::arrayGetValue("annee_max", $options) ?>" type="number" class="form-control" placeholder="Année de l'opération" min="1800" max="<?= date("Y") ?>" title="Mettez l'année maximum de l'opération">
 			<div class="form-msg-error">La valeur doit être un nombre entre 1800 et <?= date("Y") ?></div>
-			<label for="form_annee">Année maximum de l'opération</label>
+			<label for="form_annee">Année maximal</label>
 		</div>
 	</div>
 

@@ -1,6 +1,5 @@
 <?php
 
-use Fuel\Core\Controller_Template;
 use Fuel\Core\Input;
 use Fuel\Core\Response;
 use Fuel\Core\View;
@@ -10,9 +9,10 @@ use Model\Db\Sujethandicape;
 use Model\Helper;
 use Model\Messagehandler;
 use Model\Redirect;
+use Model\Template;
 
 /** Contient les pages de gestions des sujets handicapés. */
-class Controller_Sujet extends Controller_Template {
+class Controller_Sujet extends Template {
 	private const DEBUG = false;
 
 	/**
@@ -30,14 +30,16 @@ class Controller_Sujet extends Controller_Template {
 
 		$data = array("subject" => $subject);
 		if (Controller_Sujet::DEBUG === true) Helper::varDump($subject);
-		$this->template->title = "Consultation du sujet $id";
-		$this->template->content = View::forge(
+		$this->title("Consultation du sujet $id");
+    $this->css(["gallery.css", "view.css"]);
+    $this->js(["page_manager.js"]);
+		$this->content(View::forge(
 			'sujet/template',
 			array(
 				"content" => View::forge("sujet/description", $data),
 				"subject" => $subject
 			)
-		);
+		));
 	}
 
 	/**
@@ -79,14 +81,17 @@ class Controller_Sujet extends Controller_Template {
 
 		$data = array("subject" => $subject);
 
-		$this->template->title = "Modification du sujet $id";
-		$this->template->content = View::forge(
+		$this->title("Modification du sujet $id");
+		$this->jquery(true);
+    $this->css(["form.css"]);
+    $this->js(["form.js", "form_sujet.js", "page_manager.js"]);
+		$this->content(View::forge(
 			'sujet/template',
 			array(
 				"content" => View::forge("sujet/edition", $data),
 				"subject" => $subject
 			)
-		);
+		));
 	}
 
 	/**
@@ -124,8 +129,11 @@ class Controller_Sujet extends Controller_Template {
 			}
 		}
 
-		$this->template->title = "Nouveau sujet";
-		$this->template->content = View::forge('sujet/ajout', $data);
+		$this->title("Nouveau sujet");
+		$this->jquery(true);
+    $this->css(["form.css"]);
+    $this->js(["form.js", "form_sujet.js", "page_manager.js"]);
+		$this->content(View::forge('sujet/ajout', $data));
 	}
 
 	/**

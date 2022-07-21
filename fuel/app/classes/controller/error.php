@@ -1,17 +1,18 @@
 <?php
 
-use Fuel\Core\Controller_Template;
 use Fuel\Core\View;
+use Model\Template;
 
 /**
  * Pages d'affichage d'erreur
  */
-class Controller_Error extends Controller_Template {
+class Controller_Error extends Template {
 	public function action_404() {
-		$this->template->title = 'Créer un compte';
-		$this->template->content = View::forge('error/template', array(
+		$this->title('Créer un compte');
+    $this->css(["error.css"]);
+		$this->content(View::forge('error/template', array(
 			"title" => "404",
 			"body" => "La page que vous recherchez n'existe pas."
-		));
+		)));
 	}
 }

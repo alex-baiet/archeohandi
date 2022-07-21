@@ -1,8 +1,3 @@
-<?php
-
-?>
-
-
 <form enctype="multipart/form-data" action="" method="POST">
 	<div class="mb-3">
 		<label for="file" class="form-label">CSV</label>

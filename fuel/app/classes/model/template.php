@@ -3,9 +3,15 @@
 namespace Model;
 
 use Fuel\Core\Controller_Template;
+use Fuel\Core\View;
 
 /** Base des pages */
 abstract class Template extends Controller_Template {
+	/**
+	 * View utilisé par la page.
+	 * @param View|string $view
+	 */
+	public function content($view) { $this->template->content = $view; }
 	/** Change le titre de l'onglet. */
 	public function title(string $value) { $this->template->title = $value; }
 	/** Importe ou non la bibliothèque JQuery. */

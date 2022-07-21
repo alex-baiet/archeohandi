@@ -8,9 +8,10 @@ use Model\Db\Personne;
 use Model\Db\Sujethandicape;
 use Model\Helper;
 use Model\Script\Import;
+use Model\Template;
 
 /** Contient des scripts à utilisation unique. (en gros des scripts devenus inutiles) */
-class Controller_Script extends Controller_Template {
+class Controller_Script extends Template {
 	private const ACTIVE = false;
 
 	/** Vérifie que les scripts peuvent être exécutés. */
@@ -49,8 +50,8 @@ class Controller_Script extends Controller_Template {
 
 		$data = array();
 		
-		$this->template->title = 'Import CSV';
-		$this->template->content = View::forge('script/import_csv', $data, false);
+		$this->title('Import CSV');
+		$this->content(View::forge('script/import_csv', $data, false));
 	}
 
 	/** Resultat d'import des csv (ne fonctionne pas) */
@@ -66,15 +67,13 @@ class Controller_Script extends Controller_Template {
 		}
 		$data["resultsOp"] = $resultsOp;
 		
-		$this->template->title = 'Import CSV | Résultats';
-		$this->template->content = View::forge('script/import_csv_result', $data, false);
+		$this->title('Import résultats');
+		$this->content(View::forge('script/import_csv_result', $data, false));
 	}
 
 	/** Permet de créer un depot propre a chaque sujet pour tous les sujets ayant un depot en commun avec un autre sujet. */
 	public function action_split_sujet_depot() {
 		if (!$this->checkPermission()) return;
-
-		$data = array();
 
 		// Récupération des sujets ayant un depot en commun avec au moins un autre sujet
 		$results = $query = DB::query("SELECT *
@@ -106,8 +105,8 @@ class Controller_Script extends Controller_Template {
 			// $subject->saveOnDB();
 		}
 		
-		$this->template->title = 'Script';
-		$this->template->content = '';
+		$this->title('Script');
+		$this->content("");
 	}
 
 	/** Permet de créer un depot propre a chaque sujet pour tous les sujets ayant un depot en commun avec un autre sujet. */
@@ -144,8 +143,8 @@ class Controller_Script extends Controller_Template {
 			// $subject->saveOnDB();
 		}
 		
-		$this->template->title = 'Script';
-		$this->template->content = '';
+		$this->title('Script');
+		$this->content("");
 	}
 
 	/**
@@ -187,8 +186,8 @@ class Controller_Script extends Controller_Template {
 			$data["file"] = "";
 		}
 
-		$this->template->title = 'Script';
-		$this->template->content = View::forge('script/add_insee', $data, false);
+		$this->title("Script");
+		$this->content(View::forge('script/add_insee', $data, false));
 	}
 
 	private const I_INSEE = 0;
@@ -229,8 +228,8 @@ class Controller_Script extends Controller_Template {
 			echo "Nombre total de remplacement : $countReplaced<br>";
 		}
 
-		$this->template->title = 'Script';
-		$this->template->content = View::forge('script/add_insee', $data, false);
+		$this->title('Script');
+		$this->content(View::forge('script/add_insee', $data, false));
 	}
 
 	/** Retourne la colonne correspondant. */

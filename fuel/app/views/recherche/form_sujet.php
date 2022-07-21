@@ -6,7 +6,6 @@ use Model\Db\Appareil;
 use Model\Db\Chronology;
 use Model\Db\Diagnostic;
 use Model\Db\Localisation;
-use Model\Db\Mobilier;
 use Model\Db\Pathology;
 use Model\Db\Sex;
 use Model\Db\Subjectdiagnosis;

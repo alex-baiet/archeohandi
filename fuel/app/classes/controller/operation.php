@@ -1,6 +1,5 @@
 <?php
 
-use Fuel\Core\Controller_Template;
 use Fuel\Core\DB;
 use Fuel\Core\Input;
 use Fuel\Core\Response;
@@ -11,8 +10,9 @@ use Model\Helper;
 use Model\Messagehandler;
 use Model\Redirect;
 use Model\Searchresult;
+use Model\Template;
 
-class Controller_Operation extends Controller_Template {
+class Controller_Operation extends Template {
 	
 	/** Page d'affichages de toutes les opérations. */
 	public function action_index() {
@@ -38,8 +38,10 @@ class Controller_Operation extends Controller_Template {
 		$countOp = intval(Helper::querySelectSingle("SELECT COUNT(id) AS total FROM operation")["total"]);
 		$data['countOp'] = $countOp;
 
-		$this->template->title = 'Opérations';
-		$this->template->content = View::forge('operation/index', $data, false);
+		$this->title('Opérations');
+    $this->css(["result.css", "gallery.css"]);
+    $this->js(["nested_table.js"]);
+		$this->content(View::forge('operation/index', $data, false));
 	}
 
 	/** Page des opérations personnels uniquement (opérations sur lesquels l'utilisateur a des droits). */
@@ -68,8 +70,10 @@ class Controller_Operation extends Controller_Template {
 		}
 
 		$data["lines"] = $lines;
-		$this->template->title = 'Opérations personnelles';
-		$this->template->content = View::forge('operation/personnel', $data, false);
+		$this->title('Opérations personnelles');
+    $this->css(["result.css"]);
+    $this->js(["nested_table.js"]);
+		$this->content(View::forge('operation/personnel', $data, false));
 	}
 
 	/** Page d'ajout d'une opération. */
@@ -87,10 +91,15 @@ class Controller_Operation extends Controller_Template {
 			}
 		}
 
-		$this->template->title = 'Nouvelle opération';
 		$data = array();
 		if (isset($operation)) $data["operation"] = $operation;
-		$this->template->content = View::forge('operation/ajout', $data);
+
+		$this->title('Nouvelle opération');
+		$this->jquery(true);
+    $this->leaflet(true);
+    $this->css(["form.css"]);
+    $this->js(["form.js", "form_operation.js"]);
+		$this->content(View::forge('operation/ajout', $data));
 	}
 
 	/** Page affichant les informations d'une opération. */
@@ -107,11 +116,14 @@ class Controller_Operation extends Controller_Template {
 
 		// Ajout des données à la view
 		$data["operation"] = $operation;
-		$this->template->title = 'Consultation de l\'opération '.$id;
-		$this->template->content = View::forge(
+		$this->title("Consultation de l'opération $id");
+    $this->leaflet(true);
+    $this->css(["view.css", "gallery.css"]);
+    $this->js(["page_manager.js"]);
+		$this->content(View::forge(
 			'operation/template',
 			array("content" => View::forge("operation/description", $data))
-		);
+		));
 	}
 
 	/** Page des sujets d'une opération. */
@@ -128,15 +140,16 @@ class Controller_Operation extends Controller_Template {
 
 		// Ajout des données à la view
 		$data["operation"] = $operation;
-		$this->template->title = 'Sujets de l\'opération '.$id;
-		$this->template->content = View::forge(
+		$this->title("Sujets de l'opération $id");
+    $this->js(["page_manager.js"]);
+		$this->content(View::forge(
 			'operation/template',
 			array("content" => View::forge("operation/sujets", $data))
-		);
+		));
 	}
 
 	/** Page d'édition d'une opération. */
-	public function action_edition($id){
+	public function action_edition($id) {
 		Compte::checkPermissionRedirect("Seul le créateur de l'opération peut modifier les informations de l'opération.", Compte::PERM_WRITE, $id);
 
 		// Récupération des informations de l'opération
@@ -167,11 +180,15 @@ class Controller_Operation extends Controller_Template {
 		}
 
 		$data = array('operation'=> $operation, 'errors' => $errors);
-		$this->template->title = 'Modification de l\'opération '.$id;
-		$this->template->content = View::forge(
+		$this->title("Modification de l'opération $id");
+		$this->jquery(true);
+    $this->leaflet(true);
+    $this->css(["form.css"]);
+    $this->js(["form.js", "form_operation.js", "page_manager.js"]);
+		$this->content(View::forge(
 			'operation/template',
 			array("content" => View::forge("operation/edition", $data))
-		);
+		));
 	}
 
 	/**

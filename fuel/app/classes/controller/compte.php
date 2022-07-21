@@ -33,8 +33,9 @@ class Controller_Compte extends Template {
 		}
 
 		$data = array();
-		$this->template->title = 'Connexion';
-		$this->template->content = View::forge('compte/connexion', $data);
+		$this->title('Connexion');
+    $this->css(["form.css"]);
+		$this->content(View::forge('compte/connexion', $data));
 	}
 
 	/** Reset le mot de passe. */
@@ -62,14 +63,14 @@ class Controller_Compte extends Template {
 		}
 
 		$data = array();
-		$this->template->title = 'Redéfinition';
-		$this->template->content = View::forge('compte/redefinition', $data);
+		$this->title('Redéfinition');
+		$this->css(["form.css"]);
+		$this->content(View::forge('compte/redefinition', $data));
 	}
 
 	/** Page création d'un compte. */
 	public function action_creation() {
 		Compte::checkTestRedirect("Vous êtes déjà connecté.", Compte::checkPermission(Compte::PERM_DISCONNECTED) || Compte::checkPermission(Compte::PERM_ADMIN));
-		$this->template->title = 'Créer un compte';
 
 		$data = array();
 		if (isset($_POST["create"])) {
@@ -130,7 +131,11 @@ class Controller_Compte extends Template {
 			}
 		}
 
-		$this->template->content = View::forge('compte/creation', $data);
+		$this->title('Créer un compte');
+		$this->jquery(true);
+    $this->css(["form.css"]);
+    $this->js(["form.js"]);
+		$this->content(View::forge('compte/creation', $data));
 	}
 
 	/** Page admin uniquement : permet de créer le compte */
@@ -181,8 +186,8 @@ class Controller_Compte extends Template {
 		}
 
 		$data = array();
-		$this->template->title = 'Confirmation création';
-		$this->template->content = View::forge('compte/creation_confirmation', $data);
+		$this->title('Confirmation création');
+		$this->content(View::forge('compte/creation_confirmation', $data));
 	}
 	
 	/** Page admin uniquement : permet de créer le compte */

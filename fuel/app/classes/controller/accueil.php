@@ -1,15 +1,16 @@
 <?php
 
-use Fuel\Core\Controller_Template;
 use Fuel\Core\View;
+use Model\Template;
 
-class Controller_Accueil extends Controller_Template {
+class Controller_Accueil extends Template {
 
   /** Page d'accueil du site. */
   public function action_index(){
     $data = array();
-    $this->template->navActive = false;
-    $this->template->title = 'Accueil';
-    $this->template->content = View::forge('accueil/index', $data);
+    $this->navActive(false);
+    $this->title('Accueil');
+    $this->css(["accueil.css"]);
+    $this->content(View::forge('accueil/index', $data));
   }
 }

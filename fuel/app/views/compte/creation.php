@@ -1,6 +1,5 @@
 <?php
 
-use Fuel\Core\Form;
 use Model\Db\Compte;
 use Model\Helper;
 

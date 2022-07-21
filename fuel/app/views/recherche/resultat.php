@@ -1,8 +1,6 @@
 <?php
 
-use Fuel\Core\Asset;
 use Fuel\Core\View;
-use Model\Db\Compte;
 use Model\Helper;
 use Model\Searchresult;
 
@@ -17,21 +15,12 @@ foreach ($results as $data) {
 
 ?>
 
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script src="https://code.highcharts.com/modules/export-data.js"></script>
-<script src="https://code.highcharts.com/modules/accessibility.js"></script>
-<?= Asset::css('highcharts.css') ?>
-<?= Asset::js('charts.js') ?>
-
 <script>
 	Search.setDataId("data");
 </script>
 
 <pre id="data" style="display: none;">
-<?=
-Helper::postQuery("https://archeohandi.huma-num.fr/public/recherche/api", $_POST);
-?>
+<?= Helper::postQuery("https://archeohandi.huma-num.fr/public/recherche/api", $_POST); ?>
 </pre>
 
 <div class="container">

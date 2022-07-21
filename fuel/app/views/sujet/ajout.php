@@ -1,6 +1,5 @@
 <?php
 
-use Fuel\Core\Asset;
 use Fuel\Core\View;
 use Model\Db\Operation;
 use Model\Db\Sujethandicape;
@@ -10,9 +9,6 @@ $idOperation = $idOperation;
 /** @var Sujethandicape */
 if (isset($subject)) $subject = $subject;
 
-?>
-<?=
-Asset::js("form.js");
 ?>
 
 <div class="container">
