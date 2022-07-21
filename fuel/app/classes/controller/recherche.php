@@ -81,7 +81,7 @@ class Controller_Recherche extends Template {
 	/** Page des résultats de recherche au format JSON. */
 	public function action_api() {
 		// if (!Compte::checkPermission(Compte::PERM_WRITE)) return Response::forge("401", 401);
-		if (empty($_POST)) return Response::forge("0", 403);
+		if (empty($_POST)) return Response::forge("0", 403, ["Content-Type" => "application/json"]);
 
 		// Définition des modèles de recherche
 		$refOp = new Operation($_POST);
