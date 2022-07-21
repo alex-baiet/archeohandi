@@ -77,3 +77,12 @@
 	font-size: 2rem;
 	color: white;
 }
+
+.link-list {
+	overflow-x: auto;
+}
+
+.link-list > li {
+	line-height: 1.2;
+	margin-bottom: 0.25rem;
+}

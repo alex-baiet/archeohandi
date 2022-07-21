@@ -53,7 +53,7 @@ $sujets = $operation->getSubjects();
 		<section class="view-sheet">
 			<h2>Bibliographie</h2>
 			<div class="info"><?= Dataview::descriptionToView($operation->getBibliographie()) ?></div>
-			<ul>
+			<ul class="link-list">
 				<?php foreach ($operation->getUrls() as $url) : ?>
 					<li><a href="<?= $url ?>" target="_blank"><?= $url ?></a></li>
 				<?php endforeach; ?>
