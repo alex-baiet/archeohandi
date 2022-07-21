@@ -10,7 +10,7 @@ use Model\Helper;
 		Retour à la <a href="/public/compte/connexion">connexion</a>
 	</p>
 
-	<form action="" method="post" style="background-color: #F5F5F5; padding: 10px;">
+	<form action="" method="post" class="form-sheet">
 		<!-- Login -->
 		<div class="row my-2">
 			<div class="col-md">

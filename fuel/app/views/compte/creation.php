@@ -14,9 +14,9 @@ $defaultAttr = array("type" => "text", "class" => "form-control", "placeholder" 
 		Vous avez déjà un compte ? <a href="/public/compte/connexion">Se connecter</a>
 	</p>
 
-	<form action="" method="POST" style="background-color: #F5F5F5; padding: 10px;">
+	<form action="" method="POST" class="form-sheet">
 
-		<div class="row my-4">
+		<div class="row mb-4">
 			<!-- Prenom -->
 			<div class="col-md-6">
 				<p class="text-muted" style="margin-bottom:0;">Indiquez le prénom avec la 1<sup>ère</sup> lettre en majuscule.</p>

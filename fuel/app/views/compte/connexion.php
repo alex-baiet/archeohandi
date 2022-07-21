@@ -11,7 +11,7 @@ use Model\Helper;
 		Vous n'avez pas de compte ? <a href="/public/compte/creation">Créer un compte</a>
 	</p>
 
-	<?= Form::open(array("method" => "POST", "style" => "background-color: #F5F5F5; padding: 10px;")); ?>
+	<?= Form::open(array("method" => "POST", "class" => "form-sheet")); ?>
 		<!-- Login -->
 		<div class="row my-2">
 			<div class="col-md">
