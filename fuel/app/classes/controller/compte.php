@@ -193,9 +193,7 @@ class Controller_Compte extends Template {
 	/** Page admin uniquement : permet de créer le compte */
 	public function action_deconnexion() {
 		Compte::disconnect();
-
-		if (isset($_POST["previous_page"])) Response::redirect($_POST["previous_page"]);
-		else Redirect::redirectBack();
+		Response::redirect("accueil");
 	}
 
 }
