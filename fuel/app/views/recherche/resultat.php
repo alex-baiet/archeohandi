@@ -54,7 +54,6 @@ foreach ($results as $data) {
 						</button>
 
 						<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-							<li><button class="dropdown-item" onclick="Charts.dateGraph()">Siècles</a></li>
 							<li><button class="dropdown-item" onclick="Charts.contextGraph()">Contexte</a></li>
 							<li><button class="dropdown-item" onclick="Charts.contextPrescriptiveGraph()">Contexte normatif</a></li>
 							<li><button class="dropdown-item" onclick="Charts.diagnosticGraph()">Diagnostic</a></li>
@@ -63,6 +62,7 @@ foreach ($results as $data) {
 							<li><button class="dropdown-item" onclick="Charts.periodGraph()">Période des sujets</a></li>
 							<li><button class="dropdown-item" onclick="Charts.periodGroupGraph()">Période des groupes</a></li>
 							<li><button class="dropdown-item" onclick="Charts.sexGraph()">Sexe</a></li>
+							<li><button class="dropdown-item" onclick="Charts.dateGraph()">Siècles</a></li>
 							<li><button class="dropdown-item" onclick="Charts.typeDepotGraph()">Type de dépôt</a></li>
 							<li><button class="dropdown-item" onclick="Charts.typeSepultureGraph()">Type de sépulture</a></li>
 						</ul>

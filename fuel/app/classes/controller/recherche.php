@@ -31,7 +31,7 @@ class Controller_Recherche extends Template {
 		$this->jquery(true);
     $this->leaflet(true);
     $this->css(["highcharts.css", "table.css", "view.css", "form.css"]);
-    $this->js(["leaflet/leaflet-heat.js", "form_operation.js", "db.js"]);
+    $this->js(["form.js", "form_operation.js", "leaflet/leaflet-heat.js", "db.js"]);
 		$this->content(View::forge('recherche/index', $data));
 	}
 
