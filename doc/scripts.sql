@@ -147,12 +147,9 @@ SET complet=1
 WHERE EXISTS(
     SELECT login
     FROM compte
-    JOIN droit_compte
-    ON compte.login=droit_compte.login_compte
-    JOIN operation
-    ON operation.id=droit_compte.id_operation
-    JOIN groupe
-    ON groupe.id_operation=operation.id
+    JOIN droit_compte ON compte.login=droit_compte.login_compte
+    JOIN operation ON operation.id=droit_compte.id_operation
+    JOIN groupe ON groupe.id_operation=operation.id
     WHERE groupe.id=sujet_handicape.id
       AND compte.login="nameye"
 )
