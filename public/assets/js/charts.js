@@ -16,7 +16,7 @@ class Charts {
 			`SELECT mobilier.nom, COUNT(acc.id_sujet) AS count
 			FROM mobilier
 			JOIN accessoire_sujet AS acc ON acc.id_mobilier = mobilier.id
-			WHERE sujet.id IN (${idList.join(',')})
+			WHERE acc.id_sujet IN (${idList.join(', ')})
 			GROUP BY mobilier.nom
 			ORDER BY mobilier.nom
 			;`,
@@ -41,7 +41,7 @@ class Charts {
 					},
 					yAxis: {
 						min: 0,
-						title: { text: 'Taux de sujet malades (%)' }
+						title: { text: "Taux de sujets avec un accessoire (%)" }
 					},
 					legend: { enabled: false },
 					tooltip: {
