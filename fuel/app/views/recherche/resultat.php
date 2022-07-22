@@ -55,9 +55,8 @@ foreach ($results as $data) {
 						</button>
 
 						<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-							<?php if (Compte::checkPermission(Compte::PERM_ADMIN)) : ?>
-								<li><button class="dropdown-item" onclick="Charts.accessoryGraph()">Accessoires</a></li>
-							<?php endif; ?>
+							<li><button class="dropdown-item" onclick="Charts.accessoryGraph()">Accessoires</a></li>
+							<li><button class="dropdown-item" onclick="Charts.aidGraph()">Appareils compensatoires</a></li>
 							<li><button class="dropdown-item" onclick="Charts.contextGraph()">Contexte</a></li>
 							<li><button class="dropdown-item" onclick="Charts.contextPrescriptiveGraph()">Contexte normatif</a></li>
 							<li><button class="dropdown-item" onclick="Charts.diagnosticGraph()">Diagnostic</a></li>
