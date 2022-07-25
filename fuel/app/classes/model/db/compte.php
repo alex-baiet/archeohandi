@@ -9,9 +9,7 @@ use Model\Helper;
 use Model\Messagehandler;
 use Model\Redirect;
 
-/**
- * Contient des fonctions de gestions des droits, et représentation de la table "compte" de la BDD.
- */
+/** Contient des fonctions de gestions des droits, et représentation de la table "compte" de la BDD. */
 class Compte {
 	public const PERM_ADMIN = "admin";
 	public const PERM_WRITE = "write";
@@ -54,12 +52,14 @@ class Compte {
 		return Compte::$instance;
 	}
 
+	/** Récupère le Compte correspondant au login depuis la bdd. */
 	public static function fetchSingle(string $login): ?Compte {
 		$res = Helper::querySelectSingle("SELECT * FROM compte WHERE login=\"$login\";");
 		if ($res === null) return null;
 		return new Compte($res);
 	}
 
+	/** True si un compte avec l'email donné existe déjà dans la bdd. */
 	public static function emailExist(string $email): bool {
 		// Test un compte existe déjà ?
 		$results = DB::select()->from("compte")->where("email", "=", $email)->execute()->as_array();
@@ -69,6 +69,7 @@ class Compte {
 	#region Création de compte
 	/**
 	 * Créer un nouveau compte dans la BDD.
+	 * 
 	 * @param string $firstName 
 	 * @param string $lastName
 	 * @param string $email
@@ -138,9 +139,7 @@ class Compte {
 	}
 	#endregion
 
-	/**
-	 * Connecte l'utilisateur au compte correspondant.
-	 */
+	/** Connecte l'utilisateur au compte correspondant. */
 	public static function connect(string $login, string $password, bool $isEncrypted = false): bool {
 		$encryptPass = $isEncrypted ? $password : md5($password);
 
@@ -163,6 +162,7 @@ class Compte {
 		return false;
 	}
 
+	/** Déconnecte l'utilisateur de son compte. */
 	public static function disconnect(): void {
 		Cookie::delete("login");
 		Cookie::delete("mdp");

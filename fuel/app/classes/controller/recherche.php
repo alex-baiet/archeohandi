@@ -12,6 +12,7 @@ use Model\Messagehandler;
 use Model\Searchresult;
 use Model\Template;
 
+/** Page de recherche d'opérations et de sujets. Affiche aussi des graphiques. */
 class Controller_Recherche extends Template {
 	/** Page de choix de la recherche. */
 	public function action_index() {

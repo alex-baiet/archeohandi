@@ -6,6 +6,7 @@ use Fuel\Core\Response;
 use Fuel\Core\View;
 use Model\Db\Compte;
 
+/** Pages d'API. */
 class Controller_Fonction extends Controller {
 
 	/**

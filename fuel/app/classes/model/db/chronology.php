@@ -5,9 +5,7 @@ namespace Model\Db;
 use Fuel\Core\Model;
 use Model\Helper;
 
-/**
- * Représentation de la table "chronologie" de la BDD.
- */
+/** Représentation de la table "chronologie" de la BDD. */
 class Chronology extends Model {
 	private int $id;
 	private string $name;
@@ -58,5 +56,4 @@ class Chronology extends Model {
 	public function getName() { return $this->name; }
 	public function getStart() { return $this->start; }
 	public function getEnd() { return $this->end; }
-
 }

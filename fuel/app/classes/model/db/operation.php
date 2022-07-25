@@ -438,7 +438,7 @@ class Operation extends Model {
 	}
 
 	#region Validation
-	/** Vérifie que toutes les valeurs sont correctes. */
+	/** True si toutes les données sont prêtes à être ajoutées à la bdd. */
 	public function validate(): bool {
 		return $this->validation->validate(function () {
 			$validation = $this->validation;

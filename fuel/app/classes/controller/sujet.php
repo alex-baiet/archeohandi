@@ -11,7 +11,7 @@ use Model\Messagehandler;
 use Model\Redirect;
 use Model\Template;
 
-/** Contient les pages de gestions des sujets handicapés. */
+/** Pages de gestions des sujets handicapés. */
 class Controller_Sujet extends Template {
 	private const DEBUG = false;
 

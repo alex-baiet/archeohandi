@@ -6,12 +6,9 @@ use Fuel\Core\View;
 use Model\Db\Compte;
 use Model\Helper;
 use Model\Messagehandler;
-use Model\Redirect;
 use Model\Template;
 
-/**
- * Gestion des pages des connexion et de création ici
- */
+/** Gestion des pages des connexion et de création ici */
 class Controller_Compte extends Template {
 	private const DEBUG = false;
 	/** Token de sécurité devant être validé pour pouvoir créer un compte. */

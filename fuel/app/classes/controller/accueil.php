@@ -3,6 +3,7 @@
 use Fuel\Core\View;
 use Model\Template;
 
+/** Page d'accueil. */
 class Controller_Accueil extends Template {
 
   /** Page d'accueil du site. */

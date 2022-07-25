@@ -5,9 +5,7 @@ namespace Model\Db;
 use Fuel\Core\Model;
 use Model\Helper;
 
-/**
- * Représentation de la table "appareil_compensatoire" de la BDD.
- */
+/** Représentation de la table "appareil_compensatoire" de la BDD. */
 class Appareil extends Model {
 	private int $id;
 	private string $name;

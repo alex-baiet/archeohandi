@@ -5,7 +5,7 @@ use Model\Db\Compte;
 use Model\Template;
 
 /**
- * Pages sans catégorie.
+ * Pages diverses sans catégorie.
  */
 class Controller_Autre extends Template {
 

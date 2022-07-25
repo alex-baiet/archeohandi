@@ -58,10 +58,12 @@ class Diagnostic extends Model {
 		return $this->spots;
 	}
 
+	/** True si le diagnostic est à la position indiqué. */
 	public function isLocated(int $idSpot): bool {
 		return isset($this->getSpots()[$idSpot]);
 	}
 
+	/** True si le diagnostic touche obligatoirement la position, quel que soit le sujet. */
 	public function isSpotMandatory(int $idSpot): bool {
 		if (!$this->isLocated($idSpot)) return false;
 		return $this->getSpots()[$idSpot] === 1;

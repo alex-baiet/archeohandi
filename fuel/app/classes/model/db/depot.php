@@ -69,6 +69,7 @@ class Depot extends Model {
 		);
 	}
 
+	/** True si toutes les données sont prêtes à être ajoutées à la bdd. */
 	public function validate(): bool {
 		return $this->validation->validate(function () {
 			// $validation = $this->validation;
@@ -76,6 +77,7 @@ class Depot extends Model {
 		});
 	}
 
+	/** Ajoutes les données à la bdd. */
 	public function saveOnDB($saveAsNew = false) {
 		if (!$this->validate()) return false;
 

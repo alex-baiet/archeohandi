@@ -12,6 +12,7 @@ use Model\Redirect;
 use Model\Searchresult;
 use Model\Template;
 
+/** Page concernant les opérations. */
 class Controller_Operation extends Template {
 	
 	/** Page d'affichages de toutes les opérations. */

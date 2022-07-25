@@ -10,9 +10,7 @@ class Mobilier extends Model {
 	private int $id;
 	private string $nom;
 
-	/**
-	 * Créer l'objet à partir des données en paramètre.
-	 */
+	/** Créer l'objet à partir des données en paramètre. */
 	public function __construct(array $data) {
 		$this->id = $data["id"];
 		$this->nom = $data["nom"];

@@ -117,6 +117,7 @@ class Groupe extends Model {
 		return true;
 	}
 
+	/** True si toutes les données sont prêtes à être ajoutées à la bdd. */
 	public function validate() {
 		return $this->validation->validate(function () {
 			$validation = $this->validation;
