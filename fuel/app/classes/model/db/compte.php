@@ -157,6 +157,12 @@ class Compte {
 	}
 	#endregion
 
+	/** Supprime le compte de la BDD. */
+	public static function delete(string $login) {
+		DB::delete("droit_compte")->where("login_compte", "=", $login)->execute();
+		DB::delete("compte")->where("login", "=", $login)->execute();
+	}
+
 	/** Connecte l'utilisateur au compte correspondant. */
 	public static function connect(string $login, string $password, bool $isEncrypted = false): bool {
 		$encryptPass = $isEncrypted ? $password : md5($password);

@@ -8,9 +8,9 @@ use Model\Db\Compte;
 use Model\Messagehandler;
 
 /** @var string */
-$content = $content;
+$content = isset($content) ? $content : "";
 /** @var string */
-$title = $title ? $title : "";
+$title = isset($title) ? $title : "";
 /** @var bool */
 $jquery = isset($jquery) ? $jquery : false;
 /** @var bool */

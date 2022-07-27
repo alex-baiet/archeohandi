@@ -41,13 +41,17 @@ class Controller_Compte extends Template {
 		return $counts;
 	}
 
-	// public function action_delete_account() {
-	// 	Compte::checkPermissionRedirect("Vous devez être administrateur pour accéder à cette page.", Compte::PERM_ADMIN);
+	public function action_delete() {
+		Compte::checkPermissionRedirect("Vous devez être administrateur pour accéder à cette page.", Compte::PERM_ADMIN);
 
-	// 	if (!isset($_POST["login"])) Redirect::redirectBack();
-	// 	// DB::delete("compte")
-	// 	Redirect::redirectBack();
-	// }
+		if (!isset($_POST["login"])) {
+			Messagehandler::prepareAlert("Indiquer un login a supprimer.", Messagehandler::ALERT_DANGER);
+			Redirect::redirectBack();
+		}
+		Compte::delete($_POST["login"]);
+		Messagehandler::prepareAlert("Le compte a bien été supprimé.", Messagehandler::ALERT_SUCCESS);
+		Redirect::redirectBack();
+	}
 
 	/** Page connexion à un compte existant. */
 	public function action_connexion() {
