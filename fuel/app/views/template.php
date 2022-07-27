@@ -10,7 +10,7 @@ use Model\Messagehandler;
 /** @var string */
 $content = $content;
 /** @var string */
-$title = $title;
+$title = $title ? $title : "";
 /** @var bool */
 $jquery = isset($jquery) ? $jquery : false;
 /** @var bool */

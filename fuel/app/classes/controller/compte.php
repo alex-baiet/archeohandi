@@ -6,6 +6,7 @@ use Fuel\Core\View;
 use Model\Db\Compte;
 use Model\Helper;
 use Model\Messagehandler;
+use Model\Redirect;
 use Model\Template;
 
 /** Gestion des pages des connexion et de création ici */
@@ -39,6 +40,14 @@ class Controller_Compte extends Template {
 		}
 		return $counts;
 	}
+
+	// public function action_delete_account() {
+	// 	Compte::checkPermissionRedirect("Vous devez être administrateur pour accéder à cette page.", Compte::PERM_ADMIN);
+
+	// 	if (!isset($_POST["login"])) Redirect::redirectBack();
+	// 	// DB::delete("compte")
+	// 	Redirect::redirectBack();
+	// }
 
 	/** Page connexion à un compte existant. */
 	public function action_connexion() {

@@ -106,8 +106,8 @@ $defaultAttr = array("type" => "text", "class" => "form-control", "placeholder" 
 					Ce bouton n'est visible que par les administrateurs et permet de créer immédiatement un compte sans passer par les mails.
 				</p>
 				<div class="col-md">
-					<input type="checkbox" class="form-checkbox" name="immediate" class="form_immediate" value="1">
-					<label for="form_immediate">Création immédiate (admins uniquement)</label>
+					<input type="checkbox" class="form-checkbox" id="immediate" name="immediate" class="form_immediate" value="1">
+					<label for="immediate">Création immédiate (admins uniquement)</label>
 				</div>
 			</div>
 		<?php endif; ?>

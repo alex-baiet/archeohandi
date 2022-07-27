@@ -28,6 +28,7 @@ class Compte {
 	private ?string $prenom = null;
 	private ?string $nom = null;
 	private ?string $email = null;
+	private ?string $creation = null;
 
 	public function __construct(array $data) {
 		Archeo::mergeValue($this->login, $data, "login");
@@ -36,6 +37,7 @@ class Compte {
 		Archeo::mergeValue($this->prenom, $data, "prenom");
 		Archeo::mergeValue($this->nom, $data, "nom");
 		Archeo::mergeValue($this->email, $data, "email");
+		Archeo::mergeValue($this->creation, $data, "creation");
 	}
 	
 	/** Permet de récupérer le compte avec lequel l'utilisateur est actuellement connecté. */
@@ -105,6 +107,7 @@ class Compte {
 				"nom" => $lastName,
 				"email" => $email,
 				"organisme" => $organisme,
+				"creation" => DB::expr("CURRENT_DATE()")
 			))
 			->execute();
 
