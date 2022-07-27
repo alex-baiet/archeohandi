@@ -28,6 +28,7 @@ class Compte {
 	private ?string $prenom = null;
 	private ?string $nom = null;
 	private ?string $email = null;
+	private ?string $organisme = null;
 	private ?string $creation = null;
 
 	public function __construct(array $data) {
@@ -37,6 +38,7 @@ class Compte {
 		Archeo::mergeValue($this->prenom, $data, "prenom");
 		Archeo::mergeValue($this->nom, $data, "nom");
 		Archeo::mergeValue($this->email, $data, "email");
+		Archeo::mergeValue($this->organisme, $data, "organisme");
 		Archeo::mergeValue($this->creation, $data, "creation");
 	}
 	
@@ -278,4 +280,7 @@ class Compte {
 	public function getPrenom(): ?string { return $this->prenom; }
 	public function getNom(): ?string { return $this->nom; }
 	public function getEmail(): ?string { return $this->email; }
+	public function getOrganisme(): ?string { return $this->organisme; }
+	/** Date de création du compte */
+	public function getCreation(): ?string { return $this->creation; }
 }

@@ -219,4 +219,11 @@ class Helper {
 
 		return mail($to, $title, $content, $headers);
 	}
+
+	/** Transforme une date MySQL au format français. */
+	public static function dbDateBeautify(string $date): string {
+		$parts = explode("-", $date);
+		if (count($parts) !== 3) return "";
+		return "{$parts[2]}/{$parts[1]}/{$parts[0]}";
+	}
 }
