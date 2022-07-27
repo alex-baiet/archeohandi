@@ -15,6 +15,32 @@ class Controller_Compte extends Template {
 	private const TOKEN = "c7e626f1f507f3798570649c91ff9a5e";
 
 	/** Page connexion à un compte existant. */
+	public function action_admin() {
+		Compte::checkPermissionRedirect("Vous devez être administrateur pour accéder à cette page.", Compte::PERM_ADMIN);
+
+		$data = ["accounts" => Compte::fetchAll()];
+
+		$data["adminCounters"] = $this->accountCounter("admin");
+		$data["writeCounters"] = $this->accountCounter("write");
+		
+		$this->title('Administrateur');
+    $this->css(["table.css"]);
+		$this->content(View::forge('compte/admin', $data));
+	}
+
+	private function accountCounter(string $droit): array {
+		$results = Helper::querySelect("SELECT login_compte AS login, COUNT(id_operation) as count
+			FROM droit_compte
+			WHERE droit = '$droit'
+			GROUP BY login");
+		$counts = [];
+		foreach ($results as $res) {
+			$counts[$res["login"]] = $res["count"];
+		}
+		return $counts;
+	}
+
+	/** Page connexion à un compte existant. */
 	public function action_connexion() {
 		Compte::checkPermissionRedirect("Vous êtes déjà connecté.", Compte::PERM_DISCONNECTED);
 

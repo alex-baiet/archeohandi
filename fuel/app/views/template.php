@@ -107,27 +107,38 @@ if (Constants::MAINTENANCE === true) {
 
 					<!-- Bouton compte -->
 					<li class="nav-item dropdown">
-						<?php
-						$account = Compte::getInstance();
-						if ($account !== null) :
-						?>
-							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"  aria-expanded="false"><?= $account->getLogin(); ?></a>
-						<?php else : ?>
-							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"  aria-expanded="false">Compte</a>
-						<?php endif; ?>
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"  aria-expanded="false">
+							<?php
+							$account = Compte::getInstance();
+							if ($account !== null) :
+							?>
+								<?= $account->getLogin(); ?>
+							<?php else : ?>
+								Compte
+							<?php endif; ?>
+						</a>
+
 						<div class="dropdown-menu dropdown-menu-dark bg-dark" aria-labelledby="navbarDropdown">
 							<?php if ($account !== null) : ?>
 								<!-- Operations personnelles -->
 								<a class="dropdown-item" href="/public/operation/personnel">Mes opérations</a>
 							<?php endif; ?>
+
 							<?php if (Compte::checkPermission(Compte::PERM_DISCONNECTED)) : ?>
 								<!-- Connexion -->
 								<a class="dropdown-item" href="/public/compte/connexion">Se connecter</a>
 							<?php endif; ?>
+
 							<?php if (Compte::checkPermission(Compte::PERM_DISCONNECTED) || Compte::checkPermission(Compte::PERM_ADMIN)) : ?>
 								<!-- Création d'un nouveau compte -->
 								<a class="dropdown-item" href="/public/compte/creation">Créer un compte</a>
 							<?php endif; ?>
+
+							<?php if (Compte::checkPermission(Compte::PERM_ADMIN)) : ?>
+								<!-- Création d'un nouveau compte -->
+								<a class="dropdown-item" href="/public/compte/admin">Administrateur</a>
+							<?php endif; ?>
+
 							<?php if ($account !== null) : ?>
 								<!-- Déconnexion -->
 								<form action="/public/compte/deconnexion" method="POST">

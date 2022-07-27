@@ -52,6 +52,19 @@ class Compte {
 		return Compte::$instance;
 	}
 
+	/**
+	 * Renvoie tous les comptes existants.
+	 * @return Compte[]
+	 */
+	public static function fetchAll(): array {
+		$results = Helper::querySelect("SELECT * FROM compte");
+		$accounts = [];
+		foreach ($results as $res) {
+			$accounts[] = new Compte($res);
+		}
+		return $accounts;
+	}
+
 	/** Récupère le Compte correspondant au login depuis la bdd. */
 	public static function fetchSingle(string $login): ?Compte {
 		$res = Helper::querySelectSingle("SELECT * FROM compte WHERE login=\"$login\";");
