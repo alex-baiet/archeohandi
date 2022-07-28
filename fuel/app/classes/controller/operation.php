@@ -41,7 +41,7 @@ class Controller_Operation extends Template {
 
 		$this->title('Opérations');
     $this->css(["table.css", "gallery.css"]);
-    $this->js(["nested_table.js"]);
+    $this->js(["nested_table.js", "fast_search.js"]);
 		$this->content(View::forge('operation/index', $data, false));
 	}
 

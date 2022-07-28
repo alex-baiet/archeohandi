@@ -83,7 +83,7 @@ if (Constants::MAINTENANCE === true) {
 			</a>
 
 			<div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-				<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+				<ul class="navbar-nav mr-auto mt-2 mt-lg-0" style="width: 100%">
 
 					<?php if ($navActive) : ?>
 						<li class="nav-item active">
@@ -104,6 +104,9 @@ if (Constants::MAINTENANCE === true) {
 							<a class="nav-link" href="/public/autre/referents">Référents</a>
 						</li>
 					<?php endif; ?>
+						
+					<!-- Espace -->
+					<li style="flex-grow: 1"></li>
 
 					<!-- Bouton compte -->
 					<li class="nav-item dropdown">

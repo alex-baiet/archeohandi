@@ -2,16 +2,26 @@
 
 use Fuel\Core\View;
 use Model\Db\Compte;
-use Model\Db\Operation;
+use Model\Searchresult;
 
-/** @var Operation[] */
+/** @var Searchresult[] */
 $lines = $lines;
 /** @var int */
 $countSubject = $countSubject;
 /** @var int */
 $countOp = $countOp;
 
+$json = "[";
+foreach ($lines as $key => $op) {
+	$json .= json_encode($op->toArray()).",";
+}
+$json = substr($json, 0, strlen($json)-1) ."]";
+
 ?>
+
+<script>
+	FastSearch.init(<?= $json ?>);
+</script>
 
 <!-- Entête de la page -->
 <div class="container">
@@ -29,7 +39,8 @@ $countOp = $countOp;
 		<b><?= $countOp ?></b> opérations existantes pour un total de <b><?= $countSubject ?></b> sujets enregistrés.<br>
 	</p>
 
-	<br />
+	<input id="search" class="form-control my-3" type="text" placeholder="Rechercher" aria-label="Champ de recherche rapide" onkeyup="FastSearch.search(this)" autocomplete="off">
+
 	<!-- Contenu de la page -->
 	<div class="table-scroll">
 		<?= View::forge("operation/table", array("lines" => $lines)) ?>

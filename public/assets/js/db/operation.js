@@ -24,30 +24,30 @@ class Operation extends Archeo {
 		"complet",
 	];
 
-	id = null;
-	annee = null;
-	id_commune = null;
-	commune = null;
-	departement = null;
-	region = null;
-	adresse = null;
-	X = null;
-	Y = null;
-	id_organisme = null;
-	organisme = null;
-	id_type_op = null;
-	type_operation = null;
-	ea = null;
-	oa = null;
-	patriarche = null;
-	numero_operation = null;
-	arrete_prescription = null;
-	responsable = null;
-	anthropologues = null;
-	paleopathologistes = null;
-	bibliographie = null;
-	date_ajout = null;
-	complet = null;
+	/** @type {?number} */ id = null;
+	/** @type {?number} */ annee = null;
+	/** @type {?number} */ id_commune = null;
+	/** @type {?string} */ commune = null;
+	/** @type {?string} */ departement = null;
+	/** @type {?string} */ region = null;
+	/** @type {?string} */ adresse = null;
+	/** @type {?number} */ X = null;
+	/** @type {?number} */ Y = null;
+	/** @type {?number} */ id_organisme = null;
+	/** @type {?string} */ organisme = null;
+	/** @type {?number} */ id_type_op = null;
+	/** @type {?string} */ type_operation = null;
+	/** @type {?string} */ ea = null;
+	/** @type {?string} */ oa = null;
+	/** @type {?string} */ patriarche = null;
+	/** @type {?string} */ numero_operation = null;
+	/** @type {?string} */ arrete_prescription = null;
+	/** @type {?string} */ responsable = null;
+	/** @type {?string} */ anthropologues = null;
+	/** @type {?string} */ paleopathologistes = null;
+	/** @type {?string} */ bibliographie = null;
+	/** @type {?string} */ date_ajout = null;
+	/** @type {?bool}   */ complet = null;
 
 	/**
 	 * Construit l'opération en fonction des données indiquées.

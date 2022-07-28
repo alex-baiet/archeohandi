@@ -28,7 +28,7 @@ $lines = $lines;
 			$op = $data->operation
 		?>
 			<?php /* Affichage de l'opération */ ?>
-			<tr>
+			<tr id="row_op_<?= $op->getId() ?>">
 				<td class="btn-fold" id="btn_<?= $op->getId() ?>" onclick="NestedTable.switchTableView(`row_subjects_<?= $op->getId() ?>`, `btn_<?= $op->getId() ?>`)"></td>
 				<td><?= Archeo::getCompleteIcon($op->getComplet()) ?></td>
 				<td><?= $op->getId() ?></td>
