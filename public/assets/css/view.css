@@ -49,12 +49,6 @@
 	border-radius: 1rem;
 }
 
-/* Mise en forme si l'information écrit signigie "il n'y a rien" */
-.no-data {
-	color: #21252980;
-	font-style: italic;
-}
-
 .map-overlay {
 	position: absolute;
 	z-index: 1000;

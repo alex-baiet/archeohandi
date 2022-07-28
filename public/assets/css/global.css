@@ -24,3 +24,9 @@ td {
 .table-scroll > table {
 	margin: 0;
 }
+
+/* Mise en forme pour une information vide */
+.no-data {
+	color: #21252980;
+	font-style: italic;
+}

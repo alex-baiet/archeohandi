@@ -1,5 +1,6 @@
 <?php
 
+use Model\Dataview;
 use Model\Db\Compte;
 use Model\Helper;
 
@@ -44,10 +45,13 @@ $writeCounters = $writeCounters;
 						<tr class="text-center">
 							<td><?= $account->getLogin() ?></td>
 							<td><?= $account->getEmail() ?></td>
-							<td><?= $account->getOrganisme() ?></td>
-							<td><?= Helper::arrayGetValue($account->getLogin(), $adminCounters, 0) ?></td>
-							<td><?= Helper::arrayGetValue($account->getLogin(), $writeCounters, 0) ?></td>
-							<td><?= $account->getCreation() ? Helper::dbDateBeautify($account->getCreation()) : "< 27/07/2022" ?></td>
+							<td><?= Dataview::dataToView($account->getOrganisme(), null, false) ?></td>
+							<td><?= Dataview::dataToView(Helper::arrayGetValue($account->getLogin(), $adminCounters, 0), null, false, "0") ?></td>
+							<td><?= Dataview::dataToView(Helper::arrayGetValue($account->getLogin(), $writeCounters, 0), null, false, "0") ?></td>
+							<td><?php
+								$date = $account->getCreation() !== null ? Helper::dbDateBeautify($account->getCreation()) : "";
+								echo Dataview::dataToView($date, null, false, "< 27/07/2022") 
+							?></td>
 							<td>
 								<a href="#" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="showConfirmPopup(`<?= $account->getLogin() ?>`)">
 									Supprimer
