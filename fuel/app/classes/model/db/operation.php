@@ -509,10 +509,13 @@ class Operation extends Model {
 		}
 
 		// Maj des personnes
+		$ros = $this->getResponsables();
+		$paleos = $this->getPaleopathologistes();
+		$anthros = $this->getAnthropologues();
 		Personne::deleteOperationNames($this->getId());
-		Personne::saveOperationNames($this->getId(), "etre_responsable", $this->getResponsables());
-		Personne::saveOperationNames($this->getId(), "etre_paleopathologiste", $this->getPaleopathologistes());
-		Personne::saveOperationNames($this->getId(), "etre_anthropologue", $this->getAnthropologues());
+		Personne::saveOperationNames($this->getId(), "etre_responsable", $ros);
+		Personne::saveOperationNames($this->getId(), "etre_paleopathologiste", $paleos);
+		Personne::saveOperationNames($this->getId(), "etre_anthropologue", $anthros);
 
 		// Maj droits des comptes
 		if (isset($this->accounts)) {
@@ -534,8 +537,9 @@ class Operation extends Model {
 		);
 
 		// Maj nombres cas observable
+		$observables = $this->getObservables();
 		DB::delete("observable")->where("id_operation", "=", $this->getId())->execute();
-		foreach ($this->getObservables() as $idDiagnostic => $count) {
+		foreach ($observables as $idDiagnostic => $count) {
 			if ($count > 0) {
 				DB::insert("observable")->set(array(
 					"id_operation" => $this->getId(),
