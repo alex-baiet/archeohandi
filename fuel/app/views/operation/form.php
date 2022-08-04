@@ -282,6 +282,9 @@ View::forge("fonction/multiple_input", array(
 
 <!-- Comptes -->
 <h3 class="text-center mt-4">Comptes autorisés</h3>
+<p class="text-muted">
+	Indiquez ici les comptes ayant le droit d'ajouter et modifier les sujets de l'opération.
+</p>
 
 <?php
 $accounts = $operation->getAccounts();
